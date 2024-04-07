@@ -1,0 +1,211 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{905D5EB0-13A1-4AA2-9991-32C72A222B27}|TotalHRInsight\\TotalHRInsight.csproj|c:\\users\\gretk\\onedrive\\documents\\universidad\\2024\\programacion avanzada\\totalhrinsight\\totalhrinsight\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{905D5EB0-13A1-4AA2-9991-32C72A222B27}|TotalHRInsight\\TotalHRInsight.csproj|solutionrelative:totalhrinsight\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|c:\\users\\gretk\\onedrive\\documents\\universidad\\2024\\programacion avanzada\\totalhrinsight\\totalhrinsight.dal\\permiso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|solutionrelative:totalhrinsight.dal\\permiso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{905D5EB0-13A1-4AA2-9991-32C72A222B27}|TotalHRInsight\\TotalHRInsight.csproj|c:\\users\\gretk\\onedrive\\documents\\universidad\\2024\\programacion avanzada\\totalhrinsight\\totalhrinsight\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{905D5EB0-13A1-4AA2-9991-32C72A222B27}|TotalHRInsight\\TotalHRInsight.csproj|solutionrelative:totalhrinsight\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|c:\\users\\gretk\\onedrive\\documents\\universidad\\2024\\programacion avanzada\\totalhrinsight\\totalhrinsight.dal\\planilla.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|solutionrelative:totalhrinsight.dal\\planilla.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|c:\\users\\gretk\\onedrive\\documents\\universidad\\2024\\programacion avanzada\\totalhrinsight\\totalhrinsight.dal\\producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|solutionrelative:totalhrinsight.dal\\producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|c:\\users\\gretk\\onedrive\\documents\\universidad\\2024\\programacion avanzada\\totalhrinsight\\totalhrinsight.dal\\asistencia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|solutionrelative:totalhrinsight.dal\\asistencia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|c:\\users\\gretk\\onedrive\\documents\\universidad\\2024\\programacion avanzada\\totalhrinsight\\totalhrinsight.dal\\sucursal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|solutionrelative:totalhrinsight.dal\\sucursal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|c:\\users\\gretk\\onedrive\\documents\\universidad\\2024\\programacion avanzada\\totalhrinsight\\totalhrinsight.dal\\pedido.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|solutionrelative:totalhrinsight.dal\\pedido.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|c:\\users\\gretk\\onedrive\\documents\\universidad\\2024\\programacion avanzada\\totalhrinsight\\totalhrinsight.dal\\totalhrinsightdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|solutionrelative:totalhrinsight.dal\\totalhrinsightdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|c:\\users\\gretk\\onedrive\\documents\\universidad\\2024\\programacion avanzada\\totalhrinsight\\totalhrinsight.dal\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|solutionrelative:totalhrinsight.dal\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|c:\\users\\gretk\\onedrive\\documents\\universidad\\2024\\programacion avanzada\\totalhrinsight\\totalhrinsight.dal\\authdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|solutionrelative:totalhrinsight.dal\\authdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "TotalHRInsight\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "TotalHRInsight\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-04-07T06:33:28.909Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Permiso.cs",
+              "DocumentMoniker": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\Permiso.cs",
+              "RelativeDocumentMoniker": "TotalHRInsight.DAL\\Permiso.cs",
+              "ToolTip": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\Permiso.cs",
+              "RelativeToolTip": "TotalHRInsight.DAL\\Permiso.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABEAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-07T06:19:34.684Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Planilla.cs",
+              "DocumentMoniker": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\Planilla.cs",
+              "RelativeDocumentMoniker": "TotalHRInsight.DAL\\Planilla.cs",
+              "ToolTip": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\Planilla.cs",
+              "RelativeToolTip": "TotalHRInsight.DAL\\Planilla.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABkAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-07T06:14:50.975Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Asistencia.cs",
+              "DocumentMoniker": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\Asistencia.cs",
+              "RelativeDocumentMoniker": "TotalHRInsight.DAL\\Asistencia.cs",
+              "ToolTip": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\Asistencia.cs",
+              "RelativeToolTip": "TotalHRInsight.DAL\\Asistencia.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-07T06:14:42.011Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Producto.cs",
+              "DocumentMoniker": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\Producto.cs",
+              "RelativeDocumentMoniker": "TotalHRInsight.DAL\\Producto.cs",
+              "ToolTip": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\Producto.cs",
+              "RelativeToolTip": "TotalHRInsight.DAL\\Producto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-07T06:06:55.83Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Sucursal.cs",
+              "DocumentMoniker": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\Sucursal.cs",
+              "RelativeDocumentMoniker": "TotalHRInsight.DAL\\Sucursal.cs",
+              "ToolTip": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\Sucursal.cs",
+              "RelativeToolTip": "TotalHRInsight.DAL\\Sucursal.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-07T06:02:12.514Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Pedido.cs",
+              "DocumentMoniker": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\Pedido.cs",
+              "RelativeDocumentMoniker": "TotalHRInsight.DAL\\Pedido.cs",
+              "ToolTip": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\Pedido.cs",
+              "RelativeToolTip": "TotalHRInsight.DAL\\Pedido.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAIwCEAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-07T05:47:53.799Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight\\Program.cs",
+              "RelativeDocumentMoniker": "TotalHRInsight\\Program.cs",
+              "ToolTip": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight\\Program.cs",
+              "RelativeToolTip": "TotalHRInsight\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-07T05:36:14.162Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ApplicationUser.cs",
+              "DocumentMoniker": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\ApplicationUser.cs",
+              "RelativeDocumentMoniker": "TotalHRInsight.DAL\\ApplicationUser.cs",
+              "ToolTip": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\ApplicationUser.cs",
+              "RelativeToolTip": "TotalHRInsight.DAL\\ApplicationUser.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-07T05:15:34.626Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AuthDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\AuthDbContext.cs",
+              "RelativeDocumentMoniker": "TotalHRInsight.DAL\\AuthDbContext.cs",
+              "ToolTip": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\AuthDbContext.cs",
+              "RelativeToolTip": "TotalHRInsight.DAL\\AuthDbContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-07T05:08:04.456Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "TotalHRInsightDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\TotalHRInsightDbContext.cs",
+              "RelativeDocumentMoniker": "TotalHRInsight.DAL\\TotalHRInsightDbContext.cs",
+              "ToolTip": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight.DAL\\TotalHRInsightDbContext.cs",
+              "RelativeToolTip": "TotalHRInsight.DAL\\TotalHRInsightDbContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-07T02:25:33.466Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+C:\Users\gretk\OneDrive\Documents\Universidad\2024\Programacion Avanzada\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.csproj.AssemblyReference.cache
+C:\Users\gretk\OneDrive\Documents\Universidad\2024\Programacion Avanzada\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\gretk\OneDrive\Documents\Universidad\2024\Programacion Avanzada\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.AssemblyInfoInputs.cache
+C:\Users\gretk\OneDrive\Documents\Universidad\2024\Programacion Avanzada\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.AssemblyInfo.cs
+C:\Users\gretk\OneDrive\Documents\Universidad\2024\Programacion Avanzada\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.csproj.CoreCompileInputs.cache
+C:\Users\gretk\OneDrive\Documents\Universidad\2024\Programacion Avanzada\TotalHRInsight\TotalHRInsight.DAL\bin\Debug\net8.0\TotalHRInsight.DAL.deps.json
+C:\Users\gretk\OneDrive\Documents\Universidad\2024\Programacion Avanzada\TotalHRInsight\TotalHRInsight.DAL\bin\Debug\net8.0\TotalHRInsight.DAL.dll
+C:\Users\gretk\OneDrive\Documents\Universidad\2024\Programacion Avanzada\TotalHRInsight\TotalHRInsight.DAL\bin\Debug\net8.0\TotalHRInsight.DAL.pdb
+C:\Users\gretk\OneDrive\Documents\Universidad\2024\Programacion Avanzada\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.dll
+C:\Users\gretk\OneDrive\Documents\Universidad\2024\Programacion Avanzada\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\refint\TotalHRInsight.DAL.dll
+C:\Users\gretk\OneDrive\Documents\Universidad\2024\Programacion Avanzada\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.pdb
+C:\Users\gretk\OneDrive\Documents\Universidad\2024\Programacion Avanzada\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\ref\TotalHRInsight.DAL.dll
