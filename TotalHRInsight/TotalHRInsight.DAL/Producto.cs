@@ -24,7 +24,7 @@ namespace TotalHRInsight.DAL
             [Required]
             public DateOnly FechaVencimiento { get; set; }
 
-            public decimal PrecioUnitario { get; set; }
+            public float PrecioUnitario { get; set; }
 
         }
 }

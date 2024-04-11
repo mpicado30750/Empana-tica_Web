@@ -1,0 +1,56 @@
+﻿@model TotalHRInsight.DAL.Asistencia
+
+@{
+    ViewData["Title"] = "Crear Asistencia";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .btn-inicio {
+        background-color: #B42D29;
+        border-color: #B42D29;
+        color: #FAFCFD;
+    }
+</style>
+
+<h1>Crear Asistencia</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="FechaEntrada" class="control-label">Fecha de Entrada</label>
+                <input asp-for="FechaEntrada" class="form-control" />
+                <span asp-validation-for="FechaEntrada" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FechaSalida" class="control-label">Fecha de Salida</label>
+                <input asp-for="FechaSalida" class="form-control" />
+                <span asp-validation-for="FechaSalida" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="UsuarioCrecionId" class="control-label">ID de Usuario de Creación</label>
+                <input asp-for="UsuarioCrecionId" class="form-control" />
+                <span asp-validation-for="UsuarioCrecionId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-inicio">Crear Asistencia</button>
+                <a asp-action="Index">Regresar a la Lista</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

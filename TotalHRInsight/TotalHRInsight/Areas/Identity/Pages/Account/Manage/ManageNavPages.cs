@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace  TotalHRInsight.Areas.Identity.Pages.Account.Manage

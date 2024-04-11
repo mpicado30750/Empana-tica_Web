@@ -1,0 +1,67 @@
+﻿@model TotalHRInsight.DAL.Pedido
+
+@{
+    ViewData["Title"] = "Crear";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .btn-inicio {
+        background-color: #B42D29;
+        border-color: #B42D29;
+        color: #FAFCFD;
+    }
+</style>
+
+<h1>Crear Pedido</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="FechaPedido" class="control-label">Fecha del Pedido</label>
+                <input asp-for="FechaPedido" class="form-control" />
+                <span asp-validation-for="FechaPedido" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CantidadPedido" class="control-label">Cantidad del Pedido</label>
+                <input asp-for="CantidadPedido" class="form-control" />
+                <span asp-validation-for="CantidadPedido" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MontoTotal" class="control-label">Monto Total</label>
+                <input asp-for="MontoTotal" class="form-control" />
+                <span asp-validation-for="MontoTotal" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="UsuarioCrecionId" class="control-label">ID de Usuario de Creación</label>
+                <input asp-for="UsuarioCrecionId" class="form-control" />
+                <span asp-validation-for="UsuarioCrecionId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="IdSucursal" class="control-label">ID de Sucursal</label>
+                <input asp-for="IdSucursal" class="form-control" />
+                <span asp-validation-for="IdSucursal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-inicio">Crear Pedido</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-inicio" asp-action="Index">Volver a la Lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

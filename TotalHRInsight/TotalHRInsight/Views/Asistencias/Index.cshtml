@@ -1,0 +1,62 @@
+﻿@model IEnumerable<TotalHRInsight.DAL.Asistencia>
+
+@{
+    ViewData["Title"] = "Lista de Asistencias";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .btn-inicio {
+        background-color: #B42D29;
+        border-color: #B42D29;
+        color: #FAFCFD;
+    }
+</style>
+
+<h1>Lista de Asistencias</h1>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <a class="btn btn-inicio" asp-action="Create">Crear Nueva</a>
+        <a class="btn btn-inicio">Informe</a>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    Fecha de Entrada
+                </th>
+                <th>
+                    Fecha de Salida
+                </th>
+                <th>
+                    ID de Usuario de Creación
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaEntrada)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaSalida)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UsuarioCrecionId)
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.idAsistencia">Editar</a>
+                        <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@item.idAsistencia">Detalles</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

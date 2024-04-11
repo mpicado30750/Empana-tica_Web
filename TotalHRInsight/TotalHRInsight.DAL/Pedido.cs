@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Routing.Constraints;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,7 +22,7 @@ namespace TotalHRInsight.DAL
         [Required]
         public int CantidadPedido { get; set; }
 
-        public decimal MontoTotal {  get; set; } 
+        public float  MontoTotal {  get; set; } 
         
         public int UsuarioCrecionId {  get; set; }
         

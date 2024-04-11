@@ -1,0 +1,44 @@
+﻿@model TotalHRInsight.DAL.Sucursal
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .btn-inicio {
+        background-color: #B42D29;
+        border-color: #B42D29;
+        color: #FAFCFD;
+    }
+</style>
+
+<h1>Crear Sucursal</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NombreSucursal" class="control-label">Nombre de la Sucursal</label>
+                <input asp-for="NombreSucursal" class="form-control" />
+                <span asp-validation-for="NombreSucursal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UbicacionSucursal" class="control-label">Ubicación de la Sucursal</label>
+                <input asp-for="UbicacionSucursal" class="form-control" />
+                <span asp-validation-for="UbicacionSucursal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-inicio">Crear Sucursal</button>
+                <a asp-action="Index">Volver a la Lista</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

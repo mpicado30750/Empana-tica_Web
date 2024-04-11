@@ -1,0 +1,75 @@
+﻿@model IEnumerable<TotalHRInsight.DAL.Pedido>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .btn-inicio {
+        background-color: #B42D29;
+        border-color: #B42D29;
+        color: #FAFCFD;
+    }
+</style>
+
+<h1>Pedidos</h1>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <a class="btn btn-inicio" asp-action="Create">Crear Nuevo</a>
+        <a class="btn btn-inicio">Informe</a>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    Fecha del Pedido
+                </th>
+                <th>
+                    Cantidad del Pedido
+                </th>
+                <th>
+                    Monto Total
+                </th>
+                <th>
+                    ID de Usuario de Creación
+                </th>
+                <th>
+                    ID de Sucursal
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaPedido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CantidadPedido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MontoTotal)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UsuarioCrecionId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdSucursal)
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.IdPedido">Editar</a>
+                        <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@item.IdPedido">Detalles</a>
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.IdPedido">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

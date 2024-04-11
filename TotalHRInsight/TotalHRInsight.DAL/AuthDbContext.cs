@@ -12,12 +12,12 @@ namespace TotalHRInsight.DAL
     {
         public AuthDbContext() { }
 
-        public AuthDbContext(DbContextOptions<AuthDbContext>options) : base (options) { }
+        public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlite();
+            optionsBuilder.UseSqlServer();
         }
     }
 }

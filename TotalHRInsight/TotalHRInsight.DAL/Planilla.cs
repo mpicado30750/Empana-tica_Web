@@ -21,7 +21,7 @@ namespace TotalHRInsight.DAL
             public DateOnly FechaFin { get; set; }
             
             [Required]
-            public decimal MontoTotal { get; set; }
+            public float MontoTotal { get; set; }
 
             [Required]
             public int UsuarioCrecionId { get; set; }
