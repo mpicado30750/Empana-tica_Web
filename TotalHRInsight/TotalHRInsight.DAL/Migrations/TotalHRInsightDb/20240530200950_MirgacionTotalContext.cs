@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -6,71 +7,91 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 {
     /// <inheritdoc />
-    public partial class Inicial : Migration
+    public partial class MirgacionTotalContext : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateTable(
                 name: "ApplicationUser",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    PrimwerApellido = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    SegundoApellido = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Nombre = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PrimwerApellido = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SegundoApellido = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     FechaNacimiento = table.Column<DateOnly>(type: "date", nullable: false),
-                    FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NumeroTelefono = table.Column<float>(type: "real", nullable: false),
-                    Salario = table.Column<float>(type: "real", nullable: false),
+                    FechaRegistro = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    NumeroTelefono = table.Column<float>(type: "float", nullable: false),
+                    Salario = table.Column<float>(type: "float", nullable: false),
                     Estado = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    UserName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    NormalizedUserName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Email = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    NormalizedEmail = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    EmailConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SecurityStamp = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PhoneNumber = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ApplicationUser", x => x.Id);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Sucursales",
                 columns: table => new
                 {
                     IdSucursal = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NombreSucursal = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UbicacionSucursal = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    NombreSucursal = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UbicacionSucursal = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sucursales", x => x.IdSucursal);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Planillas",
                 columns: table => new
                 {
                     IdPlanilla = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     FechaInicio = table.Column<DateOnly>(type: "date", nullable: false),
                     FechaFin = table.Column<DateOnly>(type: "date", nullable: false),
-                    MontoTotal = table.Column<float>(type: "real", nullable: false),
+                    MontoTotal = table.Column<float>(type: "float", nullable: false),
                     UsuarioCrecionId = table.Column<int>(type: "int", nullable: false),
                     IdAsistencia = table.Column<int>(type: "int", nullable: false),
                     IdPermiso = table.Column<int>(type: "int", nullable: false),
-                    UsuarioCreacionId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UsuarioCreacionId = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -80,21 +101,23 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.UsuarioCreacionId,
                         principalTable: "ApplicationUser",
                         principalColumn: "Id");
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Pedidos",
                 columns: table => new
                 {
                     IdPedido = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     FechaPedido = table.Column<DateOnly>(type: "date", nullable: false),
                     CantidadPedido = table.Column<int>(type: "int", nullable: false),
-                    MontoTotal = table.Column<float>(type: "real", nullable: false),
+                    MontoTotal = table.Column<float>(type: "float", nullable: false),
                     UsuarioCrecionId = table.Column<int>(type: "int", nullable: false),
                     IdSucursal = table.Column<int>(type: "int", nullable: false),
                     SucursalIdSucursal = table.Column<int>(type: "int", nullable: true),
-                    UsuarioCreacionId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UsuarioCreacionId = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -109,18 +132,20 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.SucursalIdSucursal,
                         principalTable: "Sucursales",
                         principalColumn: "IdSucursal");
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Asistencia",
                 columns: table => new
                 {
                     idAsistencia = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FechaEntrada = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FechaSalida = table.Column<DateTime>(type: "datetime2", nullable: false),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    FechaEntrada = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    FechaSalida = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UsuarioCrecionId = table.Column<int>(type: "int", nullable: false),
-                    UsuarioCreacionId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UsuarioCreacionId = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     PlanillaIdPlanilla = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -136,21 +161,24 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.PlanillaIdPlanilla,
                         principalTable: "Planillas",
                         principalColumn: "IdPlanilla");
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Permisos",
                 columns: table => new
                 {
                     idPermisos = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     FechaInicio = table.Column<DateOnly>(type: "date", nullable: false),
                     FechaFin = table.Column<DateOnly>(type: "date", nullable: false),
-                    TipoPermiso = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TipoPermiso = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     CantidadDias = table.Column<int>(type: "int", nullable: false),
-                    Estado = table.Column<bool>(type: "bit", nullable: false),
+                    Estado = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     UsuarioCrecionId = table.Column<int>(type: "int", nullable: false),
-                    UsuarioCreacionId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UsuarioCreacionId = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     PlanillaIdPlanilla = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -166,19 +194,22 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.PlanillaIdPlanilla,
                         principalTable: "Planillas",
                         principalColumn: "IdPlanilla");
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Productos",
                 columns: table => new
                 {
                     IdProducto = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NombreProducto = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    NombreProducto = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Descripcion = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     CantidadDisponible = table.Column<int>(type: "int", nullable: false),
                     FechaVencimiento = table.Column<DateOnly>(type: "date", nullable: false),
-                    PrecioUnitario = table.Column<float>(type: "real", nullable: false),
+                    PrecioUnitario = table.Column<float>(type: "float", nullable: false),
                     PedidoIdPedido = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -189,7 +220,8 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.PedidoIdPedido,
                         principalTable: "Pedidos",
                         principalColumn: "IdPedido");
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Asistencia_PlanillaIdPlanilla",

@@ -16,8 +16,10 @@ namespace TotalHRInsight.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            var connectionString = "Server=roundhouse.proxy.rlwy.net;Port=45244;Database=railway;User=root;Password=YTveVlqCWmsrXYLgSnfYWtOZjthVoXzd;";
+
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer();
+            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
         }
     }
 }

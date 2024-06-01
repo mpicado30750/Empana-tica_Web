@@ -12,35 +12,35 @@ using TotalHRInsight.DAL;
 namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 {
     [DbContext(typeof(TotalHRInsightDbContext))]
-    [Migration("20240407225340_Inicial")]
-    partial class Inicial
+    [Migration("20240530200950_MirgacionTotalContext")]
+    partial class MirgacionTotalContext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
             modelBuilder.Entity("TotalHRInsight.DAL.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<decimal>("Estado")
                         .HasColumnType("decimal(18,4)");
@@ -49,58 +49,58 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .HasColumnType("date");
 
                     b.Property<DateTime>("FechaRegistro")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<float>("NumeroTelefono")
-                        .HasColumnType("real");
+                        .HasColumnType("float");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("PrimwerApellido")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<float>("Salario")
-                        .HasColumnType("real");
+                        .HasColumnType("float");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("SegundoApellido")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -113,19 +113,19 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idAsistencia"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("idAsistencia"));
 
                     b.Property<DateTime>("FechaEntrada")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("FechaSalida")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int?>("PlanillaIdPlanilla")
                         .HasColumnType("int");
 
                     b.Property<string>("UsuarioCreacionId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("UsuarioCrecionId")
                         .HasColumnType("int");
@@ -145,7 +145,7 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPedido"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdPedido"));
 
                     b.Property<int>("CantidadPedido")
                         .HasColumnType("int");
@@ -157,13 +157,13 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .HasColumnType("int");
 
                     b.Property<float>("MontoTotal")
-                        .HasColumnType("real");
+                        .HasColumnType("float");
 
                     b.Property<int?>("SucursalIdSucursal")
                         .HasColumnType("int");
 
                     b.Property<string>("UsuarioCreacionId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("UsuarioCrecionId")
                         .HasColumnType("int");
@@ -183,13 +183,13 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idPermisos"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("idPermisos"));
 
                     b.Property<int>("CantidadDias")
                         .HasColumnType("int");
 
                     b.Property<bool>("Estado")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<DateOnly>("FechaFin")
                         .HasColumnType("date");
@@ -202,10 +202,10 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     b.Property<string>("TipoPermiso")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("UsuarioCreacionId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("UsuarioCrecionId")
                         .HasColumnType("int");
@@ -225,7 +225,7 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPlanilla"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdPlanilla"));
 
                     b.Property<DateOnly>("FechaFin")
                         .HasColumnType("date");
@@ -240,10 +240,10 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .HasColumnType("int");
 
                     b.Property<float>("MontoTotal")
-                        .HasColumnType("real");
+                        .HasColumnType("float");
 
                     b.Property<string>("UsuarioCreacionId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("UsuarioCrecionId")
                         .HasColumnType("int");
@@ -261,27 +261,27 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdProducto"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdProducto"));
 
                     b.Property<int>("CantidadDisponible")
                         .HasColumnType("int");
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<DateOnly>("FechaVencimiento")
                         .HasColumnType("date");
 
                     b.Property<string>("NombreProducto")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("PedidoIdPedido")
                         .HasColumnType("int");
 
                     b.Property<float>("PrecioUnitario")
-                        .HasColumnType("real");
+                        .HasColumnType("float");
 
                     b.HasKey("IdProducto");
 
@@ -296,15 +296,15 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdSucursal"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdSucursal"));
 
                     b.Property<string>("NombreSucursal")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("UbicacionSucursal")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("IdSucursal");
 

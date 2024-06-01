@@ -1,10 +1,5 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -47,78 +42,58 @@ namespace TotalHRInsight.Areas.Identity.Pages.Account
             _emailSender = emailSender;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string ReturnUrl { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
-            [Required(ErrorMessage = "El campo nombre es requerido")]
-            [MaxLength(100, ErrorMessage= "El largo maximo es de 100")]
-            public string Nombre { get; set; }
-
-            [Required]
-            [MaxLength(100, ErrorMessage = "El largo maximo es de 100")]
-            public string PrimerApellido { get; set; }
-
-            [Required]
-            [MaxLength(100, ErrorMessage = "El largo maximo es de 100")]
-            public string SegundoApellido { get; set; }
-
-            [Required]
-            public DateOnly FechaNacimiento { get; set; }
-
-            [Required]
-            public DateOnly FechaResgistro { get; set; }
-
-            [Required]
-            public float NumeroTelefono { get; set; }
-
-            public float Salario { get; set; }
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-        }
+            [DataType(DataType.Password)]
+            [Display(Name = "Confirm password")]
+            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            public string ConfirmPassword { get; set; }
 
+            [Required(ErrorMessage = "El campo nombre es requerido")]
+            [MaxLength(100, ErrorMessage = "El largo máximo es de 100")]
+            public string Nombre { get; set; }
+
+            [Required]
+            [MaxLength(100, ErrorMessage = "El largo máximo es de 100")]
+            public string PrimwerApellido { get; set; } // Cambiado para coincidir con la clase ApplicationUser
+
+            [Required]
+            [MaxLength(100, ErrorMessage = "El largo máximo es de 100")]
+            public string SegundoApellido { get; set; }
+
+            [Required]
+            [DataType(DataType.Date)]
+            public DateOnly FechaNacimiento { get; set; } // Cambiado para coincidir con la clase ApplicationUser
+
+            [Required]
+            [DataType(DataType.Date)]
+            public DateTime FechaRegistro { get; set; } = DateTime.Now;
+
+            [Required]
+            [Phone]
+            public string NumeroTelefono { get; set; }
+
+            [Required]
+            public float Salario { get; set; }
+        }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -136,14 +111,15 @@ namespace TotalHRInsight.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
                 user.Nombre = Input.Nombre;
-                user.PrimwerApellido = Input.PrimerApellido;
+                user.PrimwerApellido = Input.PrimwerApellido; // Cambiado para coincidir con la clase ApplicationUser
                 user.SegundoApellido = Input.SegundoApellido;
                 user.FechaNacimiento = Input.FechaNacimiento;
-                user.FechaRegistro = DateTime.Today;
+                user.FechaRegistro = Input.FechaRegistro;
+                user.PhoneNumber = Input.NumeroTelefono;
                 user.Salario = Input.Salario;
-                user.NumeroTelefono = Input.NumeroTelefono;
-                user.Estado = 1;
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -178,7 +154,6 @@ namespace TotalHRInsight.Areas.Identity.Pages.Account
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return Page();
         }
 

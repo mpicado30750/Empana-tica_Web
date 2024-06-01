@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\VisualProjects\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight\\TotalHRInsight.csproj": {}
+    "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web - Copy\\TotalHRInsight\\TotalHRInsight\\TotalHRInsight.csproj": {}
   },
   "projects": {
-    "D:\\VisualProjects\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj": {
+    "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web - Copy\\TotalHRInsight\\TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\VisualProjects\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj",
+        "projectUniqueName": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web - Copy\\TotalHRInsight\\TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj",
         "projectName": "TotalHRInsight.DAL",
-        "projectPath": "D:\\VisualProjects\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj",
-        "packagesPath": "C:\\Users\\gretk\\.nuget\\packages\\",
-        "outputPath": "D:\\VisualProjects\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight.DAL\\obj\\",
+        "projectPath": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web - Copy\\TotalHRInsight\\TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj",
+        "packagesPath": "C:\\Users\\josue\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web - Copy\\TotalHRInsight\\TotalHRInsight.DAL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\gretk\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\josue\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -48,19 +47,23 @@
           "dependencies": {
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.3, )"
+              "version": "[8.0.6, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[8.0.3, )"
+              "version": "[8.0.6, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.3, )"
+              "version": "[8.0.6, )"
             },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
+            "MySql.Data": {
               "target": "Package",
-              "version": "[8.0.3, )"
+              "version": "[8.4.0, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[8.0.2, )"
             }
           },
           "imports": [
@@ -79,21 +82,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\VisualProjects\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight\\TotalHRInsight.csproj": {
+    "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web - Copy\\TotalHRInsight\\TotalHRInsight\\TotalHRInsight.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\VisualProjects\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight\\TotalHRInsight.csproj",
+        "projectUniqueName": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web - Copy\\TotalHRInsight\\TotalHRInsight\\TotalHRInsight.csproj",
         "projectName": "TotalHRInsight",
-        "projectPath": "D:\\VisualProjects\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight\\TotalHRInsight.csproj",
-        "packagesPath": "C:\\Users\\gretk\\.nuget\\packages\\",
-        "outputPath": "D:\\VisualProjects\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight\\obj\\",
+        "projectPath": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web - Copy\\TotalHRInsight\\TotalHRInsight\\TotalHRInsight.csproj",
+        "packagesPath": "C:\\Users\\josue\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web - Copy\\TotalHRInsight\\TotalHRInsight\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\gretk\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\josue\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -101,15 +104,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\VisualProjects\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj": {
-                "projectPath": "D:\\VisualProjects\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj"
+              "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web - Copy\\TotalHRInsight\\TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj": {
+                "projectPath": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web - Copy\\TotalHRInsight\\TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj"
               }
             }
           }
@@ -131,37 +133,45 @@
           "dependencies": {
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.3, )"
+              "version": "[8.0.6, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[8.0.3, )"
+              "version": "[8.0.6, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.3, )"
+              "version": "[8.0.6, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.3, )"
+              "version": "[8.0.6, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[8.0.3, )"
+              "version": "[8.0.4, )"
             },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
-              "version": "[8.0.3, )"
+              "version": "[8.0.4, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.3, )"
+              "version": "[8.0.6, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.4.0, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
               "version": "[8.0.2, )"
             }
@@ -185,7 +195,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
