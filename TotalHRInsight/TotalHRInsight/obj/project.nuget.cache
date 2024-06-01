@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "s1r9xM0gG3MLNcDywz5WOLfFV1LVxg41BQ5B/3e9aT4CsaTBoaqsaarTGoPN5harApdUSjDFSF63AC2vrqPjyQ==",
+  "dgSpecHash": "Qq2Hqt3Lqmk=",
   "success": true,
-  "projectFilePath": "C:\\Users\\gretk\\OneDrive\\Documents\\Universidad\\2024\\Programacion Avanzada\\TotalHRInsight\\TotalHRInsight\\TotalHRInsight.csproj",
+  "projectFilePath": "D:\\VisualProjects\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight\\TotalHRInsight.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\gretk\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\gretk\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

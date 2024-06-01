@@ -10,3 +10,29 @@ C:\Users\gretk\OneDrive\Documents\Universidad\2024\Programacion Avanzada\TotalHR
 C:\Users\gretk\OneDrive\Documents\Universidad\2024\Programacion Avanzada\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\refint\TotalHRInsight.DAL.dll
 C:\Users\gretk\OneDrive\Documents\Universidad\2024\Programacion Avanzada\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.pdb
 C:\Users\gretk\OneDrive\Documents\Universidad\2024\Programacion Avanzada\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\ref\TotalHRInsight.DAL.dll
+C:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\bin\Debug\net8.0\TotalHRInsight.DAL.deps.json
+C:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\bin\Debug\net8.0\TotalHRInsight.DAL.dll
+C:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\bin\Debug\net8.0\TotalHRInsight.DAL.pdb
+C:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.csproj.AssemblyReference.cache
+C:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.AssemblyInfoInputs.cache
+C:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.AssemblyInfo.cs
+C:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.csproj.CoreCompileInputs.cache
+C:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.sourcelink.json
+C:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.dll
+C:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\refint\TotalHRInsight.DAL.dll
+C:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.pdb
+C:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\ref\TotalHRInsight.DAL.dll
+D:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\bin\Debug\net8.0\TotalHRInsight.DAL.deps.json
+D:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\bin\Debug\net8.0\TotalHRInsight.DAL.dll
+D:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\bin\Debug\net8.0\TotalHRInsight.DAL.pdb
+D:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.csproj.AssemblyReference.cache
+D:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.GeneratedMSBuildEditorConfig.editorconfig
+D:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.AssemblyInfoInputs.cache
+D:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.AssemblyInfo.cs
+D:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.csproj.CoreCompileInputs.cache
+D:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.sourcelink.json
+D:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.dll
+D:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\refint\TotalHRInsight.DAL.dll
+D:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.pdb
+D:\VisualProjects\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\ref\TotalHRInsight.DAL.dll
