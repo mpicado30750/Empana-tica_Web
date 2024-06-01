@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "N8weFC4Cy7jk26DZ0BxUPYqAeznb/cBATu2lph9m1U+Qupv5KVRWu9dfGVqPK/hyjf9ahm7v+j/FoginkkEyTw==",
+  "dgSpecHash": "S0RwPjYM0tP3FuVn0Pr/ggbw1omTJUAJ/dQ3hXPFOhXugOkL7wRVvR/YHDs+o6pzZ3hUtYRyray4MQepVFbKbA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web - Copy\\TotalHRInsight\\TotalHRInsight\\TotalHRInsight.csproj",
+  "projectFilePath": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight\\TotalHRInsight.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\josue\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\josue\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

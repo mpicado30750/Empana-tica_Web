@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lrV94yExBaftIA/d3nv5ljxyQNy+3DbWni2GnfIjaiGunI64C+eYqe4MkJ3UZkbsa3G5Ku+dMziRpOAtFtEoTw==",
+  "dgSpecHash": "/+Tb03AvWVS6d67Ucky+bSA5azsC4pL6P/iQJGHf+w0R1n8t/B8flsyviGP9Ul2aW17QLXsKoAtN9DgXDkZQBw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web - Copy\\TotalHRInsight\\TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj",
+  "projectFilePath": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\josue\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
     "C:\\Users\\josue\\.nuget\\packages\\google.protobuf\\3.25.1\\google.protobuf.3.25.1.nupkg.sha512",
