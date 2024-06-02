@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TotalHRInsight", "TotalHRIn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TotalHRInsight.DAL", "TotalHRInsight.DAL\TotalHRInsight.DAL.csproj", "{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TotalHRInsight.API", "TotalHRInsightAPI\TotalHRInsight.API.csproj", "{C1D04B67-3A32-4225-BFD1-E9D98AE78810}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TotalHRInsightAPI", "TotalHRInsightAPI\TotalHRInsightAPI.csproj", "{C1D04B67-3A32-4225-BFD1-E9D98AE78810}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TotalHRInsight.DTO", "TotalHRInsight.DTO\TotalHRInsight.DTO.csproj", "{A8496B78-2F7C-497D-9C41-624CFF24EDDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TotalHRInsight.DTO", "TotalHRInsight.DTO\TotalHRInsight.DTO.csproj", "{A8496B78-2F7C-497D-9C41-624CFF24EDDB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

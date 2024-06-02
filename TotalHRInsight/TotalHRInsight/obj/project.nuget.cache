@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "S0RwPjYM0tP3FuVn0Pr/ggbw1omTJUAJ/dQ3hXPFOhXugOkL7wRVvR/YHDs+o6pzZ3hUtYRyray4MQepVFbKbA==",
+  "dgSpecHash": "fp+37J6c8XT//XUC3NIQIVqIYiUkurSsdr7onbK2h9hLysCjI/jYR6eOFdaC3j36W2qunQL/nZccdzzT0TnvBw==",
   "success": true,
   "projectFilePath": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight\\TotalHRInsight.csproj",
   "expectedPackageFiles": [
@@ -121,6 +121,7 @@
     "C:\\Users\\josue\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
     "C:\\Users\\josue\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\josue\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
+    "C:\\Users\\josue\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.6\\microsoft.visualstudio.azure.containers.tools.targets.1.19.6.nupkg.sha512",
     "C:\\Users\\josue\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration\\8.0.2\\microsoft.visualstudio.web.codegeneration.8.0.2.nupkg.sha512",
     "C:\\Users\\josue\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.core\\8.0.2\\microsoft.visualstudio.web.codegeneration.core.8.0.2.nupkg.sha512",
     "C:\\Users\\josue\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.design\\8.0.2\\microsoft.visualstudio.web.codegeneration.design.8.0.2.nupkg.sha512",

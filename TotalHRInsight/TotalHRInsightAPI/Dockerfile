@@ -1,29 +1,27 @@
-# Usar la imagen base de ASP.NET Core Runtime
+#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER app
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-# Usar la imagen SDK para la construcción
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-# Asegúrate de copiar los archivos csproj en las rutas correctas y restaurar
-COPY ["TotalHRInsight.API/TotalHRInsight.API.csproj", "TotalHRInsight.API/"]
-COPY ["TotalHRInsight.API/TotalHRInsight.DAL/TotalHRInsight.DAL.csproj", "TotalHRInsight.API/TotalHRInsight.DAL/"]
-COPY ["TotalHRInsight.API/TotalHRInsight.DTO/TotalHRInsight.DTO.csproj", "TotalHRInsight.API/TotalHRInsight.DTO/"]
-RUN dotnet restore "TotalHRInsight.API/TotalHRInsight.API.csproj"
-
-# Copiar todos los demás archivos del proyecto
+COPY ["TotalHRInsightAPI/TotalHRInsightAPI.csproj", "TotalHRInsightAPI/"]
+COPY ["TotalHRInsight.DAL/TotalHRInsight.DAL.csproj", "TotalHRInsight.DAL/"]
+COPY ["TotalHRInsight.DTO/TotalHRInsight.DTO.csproj", "TotalHRInsight.DTO/"]
+RUN dotnet restore "./TotalHRInsightAPI/TotalHRInsightAPI.csproj"
 COPY . .
-WORKDIR "/src/TotalHRInsight.API"
-RUN dotnet build "TotalHRInsight.API.csproj" -c Release -o /app/build
+WORKDIR "/src/TotalHRInsightAPI"
+RUN dotnet build "./TotalHRInsightAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# Publicar la aplicación
 FROM build AS publish
-RUN dotnet publish "TotalHRInsight.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./TotalHRInsightAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# Crear la imagen final
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "TotalHRInsight.API.dll"]
+ENTRYPOINT ["dotnet", "TotalHRInsightAPI.dll"]

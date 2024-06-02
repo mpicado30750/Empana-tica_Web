@@ -16,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 var port = builder.Configuration["PORT"];
 
 //set listening urls
-builder.WebHost.UseUrls($"http://*:{port}");
+//builder.WebHost.UseUrls($"http://*:{port}");
 
 // Connection string
 var connectionString = builder.Configuration.GetConnectionString("ConnTHRIDB") ?? throw new InvalidOperationException("Connection string 'ConnTHRIDB' not found.");
@@ -79,6 +79,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 // Map GET routes
-app.MapGet("/test", () => "Hello World");
+app.MapGet("/", () => "Hello World");
 
 app.Run();
