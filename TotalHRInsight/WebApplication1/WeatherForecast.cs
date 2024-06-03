@@ -1,4 +1,4 @@
-namespace TotalHRInsightAPI
+namespace WebApplication1
 {
     public class WeatherForecast
     {

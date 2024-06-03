@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{C1D04B67-3A32-4225-BFD1-E9D98AE78810}|TotalHRInsightAPI\\TotalHRInsightAPI.csproj|solutionrelative:totalhrinsightapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{C1D04B67-3A32-4225-BFD1-E9D98AE78810}|TotalHRInsightAPI\\TotalHRInsightAPI.csproj|c:\\users\\josue\\onedrive\\escritorio\\proyectouniversidad\\empana-tica_web\\totalhrinsight\\totalhrinsightapi\\controllers\\pedidoescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C1D04B67-3A32-4225-BFD1-E9D98AE78810}|TotalHRInsightAPI\\TotalHRInsightAPI.csproj|solutionrelative:totalhrinsightapi\\controllers\\pedidoescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|c:\\users\\josue\\onedrive\\escritorio\\proyectouniversidad\\empana-tica_web\\totalhrinsight\\totalhrinsight.dal\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A1EC9B0A-B0CA-40F6-BD75-51870089A9F3}|TotalHRInsight.DAL\\TotalHRInsight.DAL.csproj|solutionrelative:totalhrinsight.dal\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -22,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 344,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,7 +34,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "PedidoesController.cs",
+              "DocumentMoniker": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsightAPI\\Controllers\\PedidoesController.cs",
+              "RelativeDocumentMoniker": "TotalHRInsightAPI\\Controllers\\PedidoesController.cs",
+              "ToolTip": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsightAPI\\Controllers\\PedidoesController.cs",
+              "RelativeToolTip": "TotalHRInsightAPI\\Controllers\\PedidoesController.cs",
+              "ViewState": "AQIAACYAAAAAAAAAAAAgwDIAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-03T01:04:38.316Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Dockerfile",
               "DocumentMoniker": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsightAPI\\Dockerfile",
               "RelativeDocumentMoniker": "TotalHRInsightAPI\\Dockerfile",
@@ -43,7 +60,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ApplicationUser.cs",
               "DocumentMoniker": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight.DAL\\ApplicationUser.cs",
               "RelativeDocumentMoniker": "TotalHRInsight.DAL\\ApplicationUser.cs",
@@ -62,7 +79,7 @@
               "RelativeDocumentMoniker": "TotalHRInsightAPI\\Program.cs",
               "ToolTip": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsightAPI\\Program.cs",
               "RelativeToolTip": "TotalHRInsightAPI\\Program.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAABMAAAAAAAAA",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABIAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-02T19:03:27.297Z",
               "EditorCaption": ""
