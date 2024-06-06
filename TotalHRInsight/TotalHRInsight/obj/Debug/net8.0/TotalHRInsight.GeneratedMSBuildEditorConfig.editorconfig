@@ -58,16 +58,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRW1haWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[Z:/Diseño y Desarrollo de Sistemas SC-702/Proyecto/Empana-tica_Web/TotalHRInsight/TotalHRInsight/Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRW5hYmxlQXV0aGVudGljYXRvci5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [Z:/Diseño y Desarrollo de Sistemas SC-702/Proyecto/Empana-tica_Web/TotalHRInsight/TotalHRInsight/Areas/Identity/Pages/Account/Manage/ExternalLogins.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRXh0ZXJuYWxMb2dpbnMuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[Z:/Diseño y Desarrollo de Sistemas SC-702/Proyecto/Empana-tica_Web/TotalHRInsight/TotalHRInsight/Areas/Identity/Pages/Account/Manage/GenerateRecoveryCodes.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcR2VuZXJhdGVSZWNvdmVyeUNvZGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [Z:/Diseño y Desarrollo de Sistemas SC-702/Proyecto/Empana-tica_Web/TotalHRInsight/TotalHRInsight/Areas/Identity/Pages/Account/Manage/Index.cshtml]
@@ -78,16 +70,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcUGVyc29uYWxEYXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[Z:/Diseño y Desarrollo de Sistemas SC-702/Proyecto/Empana-tica_Web/TotalHRInsight/TotalHRInsight/Areas/Identity/Pages/Account/Manage/ResetAuthenticator.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcUmVzZXRBdXRoZW50aWNhdG9yLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [Z:/Diseño y Desarrollo de Sistemas SC-702/Proyecto/Empana-tica_Web/TotalHRInsight/TotalHRInsight/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcU2V0UGFzc3dvcmQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[Z:/Diseño y Desarrollo de Sistemas SC-702/Proyecto/Empana-tica_Web/TotalHRInsight/TotalHRInsight/Areas/Identity/Pages/Account/Manage/ShowRecoveryCodes.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcU2hvd1JlY292ZXJ5Q29kZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [Z:/Diseño y Desarrollo de Sistemas SC-702/Proyecto/Empana-tica_Web/TotalHRInsight/TotalHRInsight/Areas/Identity/Pages/Account/Manage/_Layout.cshtml]
