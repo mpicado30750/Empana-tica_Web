@@ -36,3 +36,16 @@ C:\Users\josue\OneDrive\Escritorio\ProyectoUniversidad\Empana-tica_Web\TotalHRIn
 C:\Users\josue\OneDrive\Escritorio\ProyectoUniversidad\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\refint\TotalHRInsight.DAL.dll
 C:\Users\josue\OneDrive\Escritorio\ProyectoUniversidad\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.pdb
 C:\Users\josue\OneDrive\Escritorio\ProyectoUniversidad\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\ref\TotalHRInsight.DAL.dll
+Z:\Diseño y Desarrollo de Sistemas SC-702\Proyecto\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\bin\Debug\net8.0\TotalHRInsight.DAL.deps.json
+Z:\Diseño y Desarrollo de Sistemas SC-702\Proyecto\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\bin\Debug\net8.0\TotalHRInsight.DAL.dll
+Z:\Diseño y Desarrollo de Sistemas SC-702\Proyecto\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\bin\Debug\net8.0\TotalHRInsight.DAL.pdb
+Z:\Diseño y Desarrollo de Sistemas SC-702\Proyecto\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.csproj.AssemblyReference.cache
+Z:\Diseño y Desarrollo de Sistemas SC-702\Proyecto\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.GeneratedMSBuildEditorConfig.editorconfig
+Z:\Diseño y Desarrollo de Sistemas SC-702\Proyecto\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.AssemblyInfoInputs.cache
+Z:\Diseño y Desarrollo de Sistemas SC-702\Proyecto\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.AssemblyInfo.cs
+Z:\Diseño y Desarrollo de Sistemas SC-702\Proyecto\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.csproj.CoreCompileInputs.cache
+Z:\Diseño y Desarrollo de Sistemas SC-702\Proyecto\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.sourcelink.json
+Z:\Diseño y Desarrollo de Sistemas SC-702\Proyecto\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.dll
+Z:\Diseño y Desarrollo de Sistemas SC-702\Proyecto\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\refint\TotalHRInsight.DAL.dll
+Z:\Diseño y Desarrollo de Sistemas SC-702\Proyecto\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\TotalHRInsight.DAL.pdb
+Z:\Diseño y Desarrollo de Sistemas SC-702\Proyecto\Empana-tica_Web\TotalHRInsight\TotalHRInsight.DAL\obj\Debug\net8.0\ref\TotalHRInsight.DAL.dll
