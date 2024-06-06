@@ -22,6 +22,12 @@ public class AuthController : ControllerBase
         _configuration = configuration;
     }
 
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return Ok(new { success = true, message = "User logged out successfully." });
+    }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDto model)
@@ -53,5 +59,50 @@ public class AuthController : ControllerBase
         }
         return Unauthorized();
     }
+
+    [HttpPost("verify-email")]
+    public async Task<IActionResult> VerifyEmail([FromBody] VerifyEmailDto model)
+    {
+        var user = await _userManager.FindByEmailAsync(model.Email);
+        if (user == null)
+        {
+            return BadRequest(new { success = false, message = "Invalid email address." });
+        }
+
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var encodedToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(token));
+
+        return Ok(new { success = true, message = "Email exists.", token = encodedToken });
+    }
+
+    [HttpPost("change_password")]
+    public async Task<IActionResult> ChangePassword([FromBody] ResetPasswordDto model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var user = await _userManager.FindByEmailAsync(model.Email);
+        if (user == null)
+        {
+            return BadRequest(new { success = false, message = "Invalid email address." });
+        }
+
+        var decodedToken = Encoding.UTF8.GetString(Convert.FromBase64String(model.Token));
+
+        var result = await _userManager.ResetPasswordAsync(user, decodedToken, model.NewPassword);
+        if (result.Succeeded)
+        {
+            return Ok(new { success = true, message = "Password has been changed successfully." });
+        }
+
+        foreach (var error in result.Errors)
+        {
+            ModelState.AddModelError(string.Empty, error.Description);
+        }
+        return BadRequest(ModelState);
+    }
+
 }
 

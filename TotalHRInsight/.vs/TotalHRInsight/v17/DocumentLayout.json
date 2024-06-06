@@ -1,18 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "Z:\\Dise\u00F1o y Desarrollo de Sistemas SC-702\\Proyecto\\Empana-tica_Web\\TotalHRInsight\\",
+  "WorkspaceRootPath": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web\\TotalHRInsight\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{905D5EB0-13A1-4AA2-9991-32C72A222B27}|TotalHRInsight\\TotalHRInsight.csproj|z:\\dise\u00F1o y desarrollo de sistemas sc-702\\proyecto\\empana-tica_web\\totalhrinsight\\totalhrinsight\\areas\\identity\\pages\\account\\manage\\_managenav.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{905D5EB0-13A1-4AA2-9991-32C72A222B27}|TotalHRInsight\\TotalHRInsight.csproj|solutionrelative:totalhrinsight\\areas\\identity\\pages\\account\\manage\\_managenav.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{C1D04B67-3A32-4225-BFD1-E9D98AE78810}|TotalHRInsightAPI\\TotalHRInsight.API.csproj|c:\\users\\josue\\onedrive\\escritorio\\proyectouniversidad\\empana-tica_web\\totalhrinsight\\totalhrinsightapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C1D04B67-3A32-4225-BFD1-E9D98AE78810}|TotalHRInsightAPI\\TotalHRInsight.API.csproj|solutionrelative:totalhrinsightapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{905D5EB0-13A1-4AA2-9991-32C72A222B27}|TotalHRInsight\\TotalHRInsight.csproj|z:\\dise\u00F1o y desarrollo de sistemas sc-702\\proyecto\\empana-tica_web\\totalhrinsight\\totalhrinsight\\areas\\identity\\pages\\account\\manage\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{905D5EB0-13A1-4AA2-9991-32C72A222B27}|TotalHRInsight\\TotalHRInsight.csproj|solutionrelative:totalhrinsight\\areas\\identity\\pages\\account\\manage\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A8496B78-2F7C-497D-9C41-624CFF24EDDB}|TotalHRInsight.DTO\\TotalHRInsight.DTO.csproj|c:\\users\\josue\\onedrive\\escritorio\\proyectouniversidad\\empana-tica_web\\totalhrinsight\\totalhrinsight.dto\\verifyemaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A8496B78-2F7C-497D-9C41-624CFF24EDDB}|TotalHRInsight.DTO\\TotalHRInsight.DTO.csproj|solutionrelative:totalhrinsight.dto\\verifyemaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{905D5EB0-13A1-4AA2-9991-32C72A222B27}|TotalHRInsight\\TotalHRInsight.csproj|z:\\dise\u00F1o y desarrollo de sistemas sc-702\\proyecto\\empana-tica_web\\totalhrinsight\\totalhrinsight\\areas\\identity\\pages\\account\\manage\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{905D5EB0-13A1-4AA2-9991-32C72A222B27}|TotalHRInsight\\TotalHRInsight.csproj|solutionrelative:totalhrinsight\\areas\\identity\\pages\\account\\manage\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{C1D04B67-3A32-4225-BFD1-E9D98AE78810}|TotalHRInsightAPI\\TotalHRInsight.API.csproj|c:\\users\\josue\\onedrive\\escritorio\\proyectouniversidad\\empana-tica_web\\totalhrinsight\\totalhrinsightapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C1D04B67-3A32-4225-BFD1-E9D98AE78810}|TotalHRInsightAPI\\TotalHRInsight.API.csproj|solutionrelative:totalhrinsightapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 344,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,41 +30,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "_ManageNav.cshtml",
-              "DocumentMoniker": "Z:\\Dise\u00F1o y Desarrollo de Sistemas SC-702\\Proyecto\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight\\Areas\\Identity\\Pages\\Account\\Manage\\_ManageNav.cshtml",
-              "RelativeDocumentMoniker": "TotalHRInsight\\Areas\\Identity\\Pages\\Account\\Manage\\_ManageNav.cshtml",
-              "ToolTip": "Z:\\Dise\u00F1o y Desarrollo de Sistemas SC-702\\Proyecto\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight\\Areas\\Identity\\Pages\\Account\\Manage\\_ManageNav.cshtml",
-              "RelativeToolTip": "TotalHRInsight\\Areas\\Identity\\Pages\\Account\\Manage\\_ManageNav.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAAiAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-06T02:22:32.356Z",
+              "DocumentIndex": 1,
+              "Title": "VerifyEmailDto.cs",
+              "DocumentMoniker": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight.DTO\\VerifyEmailDto.cs",
+              "RelativeDocumentMoniker": "TotalHRInsight.DTO\\VerifyEmailDto.cs",
+              "ToolTip": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight.DTO\\VerifyEmailDto.cs",
+              "RelativeToolTip": "TotalHRInsight.DTO\\VerifyEmailDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-06T20:48:20.943Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "_ViewImports.cshtml",
-              "DocumentMoniker": "Z:\\Dise\u00F1o y Desarrollo de Sistemas SC-702\\Proyecto\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight\\Areas\\Identity\\Pages\\Account\\Manage\\_ViewImports.cshtml",
-              "RelativeDocumentMoniker": "TotalHRInsight\\Areas\\Identity\\Pages\\Account\\Manage\\_ViewImports.cshtml",
-              "ToolTip": "Z:\\Dise\u00F1o y Desarrollo de Sistemas SC-702\\Proyecto\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight\\Areas\\Identity\\Pages\\Account\\Manage\\_ViewImports.cshtml",
-              "RelativeToolTip": "TotalHRInsight\\Areas\\Identity\\Pages\\Account\\Manage\\_ViewImports.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-06T02:22:14.827Z",
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsightAPI\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "TotalHRInsightAPI\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsightAPI\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "TotalHRInsightAPI\\Controllers\\AuthController.cs",
+              "ViewState": "AQIAADsAAAAAAAAAAAAuwEEAAABEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-06T20:46:52.74Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "Z:\\Dise\u00F1o y Desarrollo de Sistemas SC-702\\Proyecto\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight\\Areas\\Identity\\Pages\\Account\\Manage\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "TotalHRInsight\\Areas\\Identity\\Pages\\Account\\Manage\\_Layout.cshtml",
-              "ToolTip": "Z:\\Dise\u00F1o y Desarrollo de Sistemas SC-702\\Proyecto\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsight\\Areas\\Identity\\Pages\\Account\\Manage\\_Layout.cshtml",
-              "RelativeToolTip": "TotalHRInsight\\Areas\\Identity\\Pages\\Account\\Manage\\_Layout.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-06T02:21:52.003Z",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsightAPI\\Program.cs",
+              "RelativeDocumentMoniker": "TotalHRInsightAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\josue\\OneDrive\\Escritorio\\ProyectoUniversidad\\Empana-tica_Web\\TotalHRInsight\\TotalHRInsightAPI\\Program.cs",
+              "RelativeToolTip": "TotalHRInsightAPI\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-06T20:45:06.214Z",
               "EditorCaption": ""
             }
           ]
