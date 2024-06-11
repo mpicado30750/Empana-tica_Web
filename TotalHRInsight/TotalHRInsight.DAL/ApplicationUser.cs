@@ -20,7 +20,7 @@ namespace TotalHRInsight.DAL
 
         [Required]
         [MaxLength(100)]
-        public string PrimwerApellido { get; set; }
+        public string PrimerApellido { get; set; }
 
         [Required]
         [MaxLength(100)]

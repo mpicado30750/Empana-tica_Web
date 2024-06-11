@@ -73,7 +73,7 @@ namespace TotalHRInsight.Areas.Identity.Pages.Account
 
             [Required]
             [MaxLength(100, ErrorMessage = "El largo máximo es de 100")]
-            public string PrimwerApellido { get; set; } // Cambiado para coincidir con la clase ApplicationUser
+            public string PrimerApellido { get; set; } // Cambiado para coincidir con la clase ApplicationUser
 
             [Required]
             [MaxLength(100, ErrorMessage = "El largo máximo es de 100")]
@@ -90,10 +90,7 @@ namespace TotalHRInsight.Areas.Identity.Pages.Account
             [Required]
             [Phone]
             public string NumeroTelefono { get; set; }
-
-            [Required]
-            public float Salario { get; set; }
-        }
+		}
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -113,12 +110,11 @@ namespace TotalHRInsight.Areas.Identity.Pages.Account
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
                 user.Nombre = Input.Nombre;
-                user.PrimwerApellido = Input.PrimwerApellido; // Cambiado para coincidir con la clase ApplicationUser
+                user.PrimerApellido = Input.PrimerApellido; // Cambiado para coincidir con la clase ApplicationUser
                 user.SegundoApellido = Input.SegundoApellido;
                 user.FechaNacimiento = Input.FechaNacimiento;
                 user.FechaRegistro = Input.FechaRegistro;
                 user.PhoneNumber = Input.NumeroTelefono;
-                user.Salario = Input.Salario;
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

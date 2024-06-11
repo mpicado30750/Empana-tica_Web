@@ -33,7 +33,7 @@
         var user = UserManager.FindByNameAsync(userName).Result;
         if (user != null)
         {
-            return $"{user.Nombre} {user.PrimwerApellido}";
+            return $"{user.Nombre} {user.PrimerApellido}";
         }
         return userName;
     }
