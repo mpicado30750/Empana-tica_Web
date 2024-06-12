@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TotalHRInsight.DAL.Planilla>
+﻿@model IEnumerable<TotalHRInsight.DAL.Permiso>
 
 @{
     ViewData["Title"] = "Index";
@@ -20,16 +20,16 @@
                 @Html.DisplayNameFor(model => model.FechaFin)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MontoTotal)
+                @Html.DisplayNameFor(model => model.TipoPermiso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CantidadDias)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.UsuarioCrecionId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdAsistencia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdPermiso)
             </th>
             <th></th>
         </tr>
@@ -44,21 +44,21 @@
                 @Html.DisplayFor(modelItem => item.FechaFin)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MontoTotal)
+                @Html.DisplayFor(modelItem => item.TipoPermiso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantidadDias)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UsuarioCrecionId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdAsistencia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdPermiso)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdPlanilla">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdPlanilla">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdPlanilla">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.idPermisos">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.idPermisos">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.idPermisos">Delete</a>
             </td>
         </tr>
 }

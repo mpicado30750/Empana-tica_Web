@@ -8,23 +8,27 @@ using System.Threading.Tasks;
 
 namespace TotalHRInsight.DAL
 {
-        [Table("Productos")]
-        public class Producto
-        {
-            [Key]
-            public int IdProducto { get; set; }
+    [Table("Productos")]
+    public class Producto
+    {
+        [Key]
+        public int IdProducto { get; set; }
 
-            [Required]
-            public string NombreProducto { get; set; }
-            public string Descripcion { get; set; }
+        [Required]
+        public string NombreProducto { get; set; }
 
-            [Required]
-            public int CantidadDisponible { get; set; }
+        [Required]
+        public string Descripcion { get; set; }
 
-            [Required]
-            public DateOnly FechaVencimiento { get; set; }
+        [Required]
+        public int CantidadDisponible { get; set; }
 
-            public float PrecioUnitario { get; set; }
+        [Required]
+        public DateOnly FechaVencimiento { get; set; }
 
-        }
+        [Required]
+        public float PrecioUnitario { get; set; }
+
+        public ICollection<PedidosProductos> PedidosProductos { get; set; } = new List<PedidosProductos>();
+    }
 }

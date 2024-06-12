@@ -1,4 +1,4 @@
-﻿@model TotalHRInsight.DAL.Planilla
+﻿@model TotalHRInsight.DAL.Permiso
 
 @{
     ViewData["Title"] = "Create";
@@ -7,7 +7,7 @@
 
 <h1>Create</h1>
 
-<h4>Planilla</h4>
+<h4>Permiso</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -24,24 +24,24 @@
                 <span asp-validation-for="FechaFin" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MontoTotal" class="control-label"></label>
-                <input asp-for="MontoTotal" class="form-control" />
-                <span asp-validation-for="MontoTotal" class="text-danger"></span>
+                <label asp-for="TipoPermiso" class="control-label"></label>
+                <input asp-for="TipoPermiso" class="form-control" />
+                <span asp-validation-for="TipoPermiso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CantidadDias" class="control-label"></label>
+                <input asp-for="CantidadDias" class="form-control" />
+                <span asp-validation-for="CantidadDias" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
+                </label>
             </div>
             <div class="form-group">
                 <label asp-for="UsuarioCrecionId" class="control-label"></label>
                 <input asp-for="UsuarioCrecionId" class="form-control" />
                 <span asp-validation-for="UsuarioCrecionId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdAsistencia" class="control-label"></label>
-                <input asp-for="IdAsistencia" class="form-control" />
-                <span asp-validation-for="IdAsistencia" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdPermiso" class="control-label"></label>
-                <input asp-for="IdPermiso" class="form-control" />
-                <span asp-validation-for="IdPermiso" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -21,7 +21,8 @@ namespace TotalHRInsight.Controllers
         // GET: Pedidoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pedidos.ToListAsync());
+            var totalHRInsightDbContext = _context.Pedidos.Include(p => p.Sucursal).Include(p => p.UsuarioCreacion);
+            return View(await totalHRInsightDbContext.ToListAsync());
         }
 
         // GET: Pedidoes/Details/5
@@ -33,6 +34,8 @@ namespace TotalHRInsight.Controllers
             }
 
             var pedido = await _context.Pedidos
+                .Include(p => p.Sucursal)
+                .Include(p => p.UsuarioCreacion)
                 .FirstOrDefaultAsync(m => m.IdPedido == id);
             if (pedido == null)
             {
@@ -45,6 +48,8 @@ namespace TotalHRInsight.Controllers
         // GET: Pedidoes/Create
         public IActionResult Create()
         {
+            ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
+            ViewData["UsuarioCrecionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
             return View();
         }
 
@@ -53,7 +58,7 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdPedido,FechaPedido,CantidadPedido,MontoTotal,UsuarioCrecionId,IdSucursal")] Pedido pedido)
+        public async Task<IActionResult> Create([Bind("IdPedido,FechaPedido,UsuarioCrecionId,IdSucursal,EstadoPedido,MontoTotal")] Pedido pedido)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +66,8 @@ namespace TotalHRInsight.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", pedido.IdSucursal);
+            ViewData["UsuarioCrecionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", pedido.UsuarioCrecionId);
             return View(pedido);
         }
 
@@ -77,6 +84,8 @@ namespace TotalHRInsight.Controllers
             {
                 return NotFound();
             }
+            ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", pedido.IdSucursal);
+            ViewData["UsuarioCrecionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", pedido.UsuarioCrecionId);
             return View(pedido);
         }
 
@@ -85,7 +94,7 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdPedido,FechaPedido,CantidadPedido,MontoTotal,UsuarioCrecionId,IdSucursal")] Pedido pedido)
+        public async Task<IActionResult> Edit(int id, [Bind("IdPedido,FechaPedido,UsuarioCrecionId,IdSucursal,EstadoPedido,MontoTotal")] Pedido pedido)
         {
             if (id != pedido.IdPedido)
             {
@@ -112,6 +121,8 @@ namespace TotalHRInsight.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", pedido.IdSucursal);
+            ViewData["UsuarioCrecionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", pedido.UsuarioCrecionId);
             return View(pedido);
         }
 
@@ -124,6 +135,8 @@ namespace TotalHRInsight.Controllers
             }
 
             var pedido = await _context.Pedidos
+                .Include(p => p.Sucursal)
+                .Include(p => p.UsuarioCreacion)
                 .FirstOrDefaultAsync(m => m.IdPedido == id);
             if (pedido == null)
             {

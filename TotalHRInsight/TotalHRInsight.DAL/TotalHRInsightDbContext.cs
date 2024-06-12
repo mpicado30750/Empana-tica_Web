@@ -20,6 +20,7 @@ namespace TotalHRInsight.DAL
         public virtual DbSet<Pedido> Pedidos { get; set; }
         public virtual DbSet<Permiso> Permisos { get; set; }
         public virtual DbSet<Asistencia> Asistencias { get; set; }
+        public virtual DbSet<PedidosProductos> PedidosProductos { get;set; }
 
 
     }

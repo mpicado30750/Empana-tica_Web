@@ -20,16 +20,21 @@ namespace TotalHRInsight.DAL
         public DateOnly FechaPedido { get; set; }
 
         [Required]
-        public int CantidadPedido { get; set; }
+        [ForeignKey("UsuarioCreacion")]
+        public string UsuarioCrecionId {  get; set; }
 
-        public float  MontoTotal {  get; set; } 
-        
-        public int UsuarioCrecionId {  get; set; }
-        
+        [Required]
+        [ForeignKey("Sucursal")]
         public int IdSucursal { get; set; }
+
+        [Required]
+        public string EstadoPedido { get; set; }
+
+        [Required]
+        public float MontoTotal { get; set; }
 
         public Sucursal? Sucursal {  get; set; }
         public ApplicationUser? UsuarioCreacion { get; set; }
-        public ICollection <Producto> Productos { get; set; } =new List<Producto> ();
+        public ICollection <PedidosProductos> PedidosProductos { get; set; } =new List<PedidosProductos> ();
     }
 }
