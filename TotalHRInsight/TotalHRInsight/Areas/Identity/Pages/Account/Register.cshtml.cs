@@ -110,12 +110,12 @@ namespace TotalHRInsight.Areas.Identity.Pages.Account
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
                 user.Nombre = Input.Nombre;
-                user.PrimerApellido = Input.PrimerApellido; // Cambiado para coincidir con la clase ApplicationUser
+                user.PrimerApellido = Input.PrimerApellido; 
                 user.SegundoApellido = Input.SegundoApellido;
                 user.FechaNacimiento = Input.FechaNacimiento;
                 user.FechaRegistro = Input.FechaRegistro;
                 user.PhoneNumber = Input.NumeroTelefono;
-
+                 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -123,6 +123,7 @@ namespace TotalHRInsight.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
+                    await _userManager.AddToRoleAsync(user, "Usuario");
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(

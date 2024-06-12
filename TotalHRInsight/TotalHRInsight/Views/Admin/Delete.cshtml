@@ -1,0 +1,15 @@
+﻿@model TotalHRInsight.DAL.ApplicationUser // Asegúrate de que estás pasando el modelo correcto, que sería tu entidad Usuario
+
+@{
+    ViewData["Title"] = "Desactivar Usuario";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h3>¿Estás seguro de que deseas desactivar a @Model.Nombre?</h3>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="DeleteConfirmed" class="btn btn-danger" /> |
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

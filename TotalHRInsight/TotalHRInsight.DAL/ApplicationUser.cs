@@ -35,11 +35,11 @@ namespace TotalHRInsight.DAL
         public float NumeroTelefono { get; set; }
 
         [Required]
-        public float Salario { get; set; }
         [Column(TypeName = "decimal(18,4)")]
+        public float Salario { get; set; }
 
         [Required]
-        [DefaultValue(1)]
-        public int Estado {  get; set; }
+        [DefaultValue(true)]
+        public bool Estado {  get; set; }
     }
 }

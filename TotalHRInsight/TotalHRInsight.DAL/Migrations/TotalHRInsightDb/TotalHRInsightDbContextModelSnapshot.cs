@@ -39,8 +39,8 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<decimal>("Estado")
-                        .HasColumnType("decimal(18,4)");
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
 
                     b.Property<DateOnly>("FechaNacimiento")
                         .HasColumnType("date");
@@ -77,7 +77,7 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("PrimwerApellido")
+                    b.Property<string>("PrimerApellido")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");

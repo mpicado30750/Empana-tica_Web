@@ -1,0 +1,19 @@
+﻿@model EditUserViewModel
+
+@{
+    ViewData["Title"] = "Edit User Role";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="SelectedRoleId">Role</label>
+        <select asp-for="SelectedRoleId" asp-items="@Model.Roles" class="form-control"></select>
+        <span asp-validation-for="SelectedRoleId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update Role</button>
+</form>

@@ -1,0 +1,102 @@
+﻿@model IEnumerable<UserRoleViewModel>
+
+@{
+    ViewData["Title"] = "Índice";
+}
+
+<p>
+    <a asp-action="CrearUsuario" class="btn btn-primary">Crear Nuevo Usuario</a>
+</p>
+
+<div class="card-container">
+    @foreach (var viewModel in Model)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@viewModel.User.Nombre</h5>
+                <p class="card-text">Estado: @{
+                        if (@viewModel.User.Estado)
+                        {
+                            <a>Actvio</a>
+                        }
+                        else
+                        {
+                            <a>Desactivado</a>
+                        }
+                    }</p>
+                <p class="card-text">Rol(es): @string.Join(", ", viewModel.Roles)</p>
+                <div class="card-actions">
+                    <a href="@Url.Action("Edit", new { id = viewModel.User.Id })" class="btn btn-secondary">Editar</a>
+                    @if (viewModel.User.Estado)
+                    {
+                        <a href="@Url.Action("Delete", new { id = viewModel.User.Id })" class="btn btn-danger">Eliminar</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Activar", new { id = viewModel.User.Id })" class="btn btn-success">Activar</a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .card {
+        width: calc(33.333% - 20px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+        background-color: #f8f9fa;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        color: #333;
+    }
+
+    .card-text {
+        color: #666;
+        margin-bottom: 10px;
+    }
+
+    .card-actions > a {
+        margin-right: 10px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+</style>
