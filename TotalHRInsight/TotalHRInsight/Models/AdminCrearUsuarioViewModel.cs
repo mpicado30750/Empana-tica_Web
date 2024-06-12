@@ -5,7 +5,7 @@ namespace TotalHRInsight.Models
 {
     public class AdminCrearUsuarioViewModel
     {
-        public string Id { get; set; }
+        //public string Id { get; set; }
 
         [Required]
         [MaxLength(100)]
@@ -27,8 +27,7 @@ namespace TotalHRInsight.Models
         public DateOnly FechaNacimiento { get; set; }
 
         [Required]
-        [Phone]
-        public string NumeroTelefono { get; set; }
+        public float NumeroTelefono { get; set; }
 
         [Required]
             [EmailAddress]

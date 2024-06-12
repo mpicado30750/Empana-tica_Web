@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TotalHRInsight.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class MirgacionAuthContext : Migration
+    public partial class PrimeraMigracionAuth : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,7 +33,6 @@ namespace TotalHRInsight.DAL.Migrations
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.InsertData(
                     table: "AspNetRoles",
                     columns: new[] { "Id", "Name", "NormalizedName" },
@@ -43,7 +42,6 @@ namespace TotalHRInsight.DAL.Migrations
                         { "A", "Admin", "Admin" },
                         { "U", "Usuario", "Usuario" }
                     });
-
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
@@ -59,8 +57,8 @@ namespace TotalHRInsight.DAL.Migrations
                     FechaNacimiento = table.Column<DateOnly>(type: "date", nullable: false),
                     FechaRegistro = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     NumeroTelefono = table.Column<float>(type: "float", nullable: false),
-                    Salario = table.Column<float>(type: "float", nullable: false),
-                    Estado = table.Column<bool>(type: "bit", nullable: false),
+                    Salario = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    Estado = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)

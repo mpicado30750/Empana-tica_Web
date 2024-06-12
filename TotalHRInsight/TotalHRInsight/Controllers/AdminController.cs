@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using TotalHRInsight.DAL;
 using TotalHRInsight.Models;
 
@@ -55,8 +56,8 @@ namespace TotalHRInsight.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> CrearUsuario(AdminCrearUsuarioViewModel usuarioModel, IFormFile ImagenUsuario)
+        //[Authorize(Roles = "Admin")]
+        public async Task<IActionResult> CrearUsuario(AdminCrearUsuarioViewModel usuarioModel)
         {
             if (ModelState.IsValid)
             {
@@ -66,6 +67,10 @@ namespace TotalHRInsight.Controllers
                 user.Nombre = usuarioModel.Nombre;
                 user.PrimerApellido = usuarioModel.PrimerApellido;
                 user.SegundoApellido = usuarioModel.SegundoApellido;
+                user.Salario = usuarioModel.Salario;
+                user.FechaNacimiento = usuarioModel.FechaNacimiento;
+                user.FechaRegistro = DateTime.Now;
+                user.NumeroTelefono = usuarioModel.NumeroTelefono;
                 user.Estado = true;
                 var result = await _userManager.CreateAsync(user, usuarioModel.Password);
                 if (result.Succeeded)
@@ -96,13 +101,20 @@ namespace TotalHRInsight.Controllers
 
             var userRoles = await _userManager.GetRolesAsync(user);
             var roles = await _roleManager.Roles.ToListAsync();
+            var listaRol = _roleManager.Roles;
+            ViewData["Roles"] = new SelectList(listaRol, "Id", "Name");
             var model = new EditUserViewModel
             {
                 Id = user.Id,
-                // ... (otros campos)
-                SelectedRoleId = roles.FirstOrDefault(r => userRoles.Contains(r.Name))?.Id,
-                Roles = new SelectList(roles, "Id", "Name")
-            };
+                Nombre = user.Nombre,
+                PrimerApellido = user.PrimerApellido,
+                SegundoApellido = user.SegundoApellido,
+                Salario = user.Salario,
+                FechaNacimiento = user.FechaNacimiento,
+                NumeroTelefono = user.NumeroTelefono,
+                Email = user.Email,
+                SelectedRoleId = roles.FirstOrDefault(r => userRoles.Contains(r.Name))?.Id
+        };
 
             return View(model);
         }
@@ -115,8 +127,7 @@ namespace TotalHRInsight.Controllers
         {
             if (!ModelState.IsValid)
             {
-                // Repopulate the roles list if validation fails
-                model.Roles = new SelectList(await _roleManager.Roles.ToListAsync(), "Id", "Name", model.SelectedRoleId);
+                ViewData["Roles"] = new SelectList(await _roleManager.Roles.ToListAsync(), "Id", "Name", model.SelectedRoleId);
                 return View(model);
             }
 
@@ -124,6 +135,28 @@ namespace TotalHRInsight.Controllers
             if (user == null)
             {
                 return NotFound();
+            }
+
+            // Actualizar las propiedades del usuario
+            user.Nombre = model.Nombre;
+            user.PrimerApellido = model.PrimerApellido;
+            user.SegundoApellido = model.SegundoApellido;
+            user.Salario = model.Salario;
+            user.FechaNacimiento = model.FechaNacimiento;
+            user.NumeroTelefono = model.NumeroTelefono;
+            user.Email = model.Email;
+
+            // Guardar los cambios en el usuario
+            var updateResult = await _userManager.UpdateAsync(user);
+            if (!updateResult.Succeeded)
+            {
+                // Si no se pudo actualizar, agrega los errores al ModelState y muestra la vista de nuevo
+                foreach (var error in updateResult.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                ViewData["Roles"] = new SelectList(await _roleManager.Roles.ToListAsync(), "Id", "Name", model.SelectedRoleId);
+                return View(model);
             }
 
             // Fetch the current roles of the user
@@ -147,6 +180,7 @@ namespace TotalHRInsight.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
 
 
 

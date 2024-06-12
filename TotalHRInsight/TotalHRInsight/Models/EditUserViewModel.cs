@@ -12,6 +12,31 @@ namespace TotalHRInsight.Models
         [Display(Name = "Role")]
         public string SelectedRoleId { get; set; }  // This will hold the selected role ID from the dropdown
 
-        public SelectList Roles { get; set; }  // This will populate the dropdown in the view
-    }
+        [Required]
+        [MaxLength(100)]
+        public string Nombre { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string PrimerApellido { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string SegundoApellido { get; set; }
+
+        [Required]
+        public float Salario { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        public DateOnly FechaNacimiento { get; set; }
+
+        [Required]
+        public float NumeroTelefono { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+}
 }

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 {
     /// <inheritdoc />
-    public partial class MirgacionTotalContext : Migration
+    public partial class PrimeraMigracionTotal : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,8 +30,8 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                     FechaNacimiento = table.Column<DateOnly>(type: "date", nullable: false),
                     FechaRegistro = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     NumeroTelefono = table.Column<float>(type: "float", nullable: false),
-                    Salario = table.Column<float>(type: "float", nullable: false),
-                    Estado = table.Column<bool>(type: "bit", nullable: false),
+                    Salario = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    Estado = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     UserName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NormalizedUserName = table.Column<string>(type: "longtext", nullable: true)

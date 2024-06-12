@@ -40,7 +40,7 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("Estado")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<DateOnly>("FechaNacimiento")
                         .HasColumnType("date");
@@ -82,8 +82,8 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<float>("Salario")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Salario")
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");

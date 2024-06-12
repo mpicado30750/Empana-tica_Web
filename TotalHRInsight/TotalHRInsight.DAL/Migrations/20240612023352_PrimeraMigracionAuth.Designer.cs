@@ -12,8 +12,8 @@ using TotalHRInsight.DAL;
 namespace TotalHRInsight.DAL.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20240530182727_MirgacionAuthContext")]
-    partial class MirgacionAuthContext
+    [Migration("20240612023352_PrimeraMigracionAuth")]
+    partial class PrimeraMigracionAuth
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -176,8 +176,8 @@ namespace TotalHRInsight.DAL.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<decimal>("Estado")
-                        .HasColumnType("decimal(18,4)");
+                    b.Property<bool>("Estado")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<DateOnly>("FechaNacimiento")
                         .HasColumnType("date");
@@ -216,13 +216,13 @@ namespace TotalHRInsight.DAL.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("PrimwerApellido")
+                    b.Property<string>("PrimerApellido")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<float>("Salario")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Salario")
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");

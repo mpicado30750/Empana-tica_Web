@@ -9,22 +9,22 @@ using TotalHRInsight.DAL;
 
 namespace TotalHRInsight.Controllers
 {
-    public class PedidosController : Controller
+    public class PedidoesController : Controller
     {
         private readonly TotalHRInsightDbContext _context;
 
-        public PedidosController(TotalHRInsightDbContext context)
+        public PedidoesController(TotalHRInsightDbContext context)
         {
             _context = context;
         }
 
-        // GET: Pedidos
+        // GET: Pedidoes
         public async Task<IActionResult> Index()
         {
             return View(await _context.Pedidos.ToListAsync());
         }
 
-        // GET: Pedidos/Details/5
+        // GET: Pedidoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -42,13 +42,13 @@ namespace TotalHRInsight.Controllers
             return View(pedido);
         }
 
-        // GET: Pedidos/Create
+        // GET: Pedidoes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Pedidos/Create
+        // POST: Pedidoes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -64,7 +64,7 @@ namespace TotalHRInsight.Controllers
             return View(pedido);
         }
 
-        // GET: Pedidos/Edit/5
+        // GET: Pedidoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,7 +80,7 @@ namespace TotalHRInsight.Controllers
             return View(pedido);
         }
 
-        // POST: Pedidos/Edit/5
+        // POST: Pedidoes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -115,7 +115,7 @@ namespace TotalHRInsight.Controllers
             return View(pedido);
         }
 
-        // GET: Pedidos/Delete/5
+        // GET: Pedidoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,7 +133,7 @@ namespace TotalHRInsight.Controllers
             return View(pedido);
         }
 
-        // POST: Pedidos/Delete/5
+        // POST: Pedidoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
