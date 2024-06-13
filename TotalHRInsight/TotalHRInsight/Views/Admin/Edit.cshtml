@@ -45,6 +45,18 @@
                 <span asp-validation-for="Salario" class="text-danger"></span>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="form-floating mb-3">
+                <input asp-for="Password" class="form-control" autocomplete="new-password" />
+                <label asp-for="Password">Contraseña</label>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" />
+                <label asp-for="ConfirmPassword">Confirmar Contraseña</label>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+        </div>
     </div>
     <div class="form-floating mb-3">
         <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder=" " />

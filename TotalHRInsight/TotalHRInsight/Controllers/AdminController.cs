@@ -119,12 +119,17 @@ namespace TotalHRInsight.Controllers
             return View(model);
         }
 
-
         // POST: Admin/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditUserViewModel model)
         {
+            // Remove the validation for Password and ConfirmPassword if they are empty
+            if (string.IsNullOrEmpty(model.Password))
+            {
+                ModelState.Remove(nameof(model.Password));
+                ModelState.Remove(nameof(model.ConfirmPassword));
+            }
             if (!ModelState.IsValid)
             {
                 ViewData["Roles"] = new SelectList(await _roleManager.Roles.ToListAsync(), "Id", "Name", model.SelectedRoleId);
@@ -137,7 +142,6 @@ namespace TotalHRInsight.Controllers
                 return NotFound();
             }
 
-            // Actualizar las propiedades del usuario
             user.Nombre = model.Nombre;
             user.PrimerApellido = model.PrimerApellido;
             user.SegundoApellido = model.SegundoApellido;
@@ -146,11 +150,34 @@ namespace TotalHRInsight.Controllers
             user.NumeroTelefono = model.NumeroTelefono;
             user.Email = model.Email;
 
-            // Guardar los cambios en el usuario
+            if (!string.IsNullOrEmpty(model.Password) && model.Password == model.ConfirmPassword)
+            {
+                var removePasswordResult = await _userManager.RemovePasswordAsync(user);
+                if (!removePasswordResult.Succeeded)
+                {
+                    foreach (var error in removePasswordResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    ViewData["Roles"] = new SelectList(await _roleManager.Roles.ToListAsync(), "Id", "Name", model.SelectedRoleId);
+                    return View(model);
+                }
+
+                var addPasswordResult = await _userManager.AddPasswordAsync(user, model.Password);
+                if (!addPasswordResult.Succeeded)
+                {
+                    foreach (var error in addPasswordResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    ViewData["Roles"] = new SelectList(await _roleManager.Roles.ToListAsync(), "Id", "Name", model.SelectedRoleId);
+                    return View(model);
+                }
+            }
+
             var updateResult = await _userManager.UpdateAsync(user);
             if (!updateResult.Succeeded)
             {
-                // Si no se pudo actualizar, agrega los errores al ModelState y muestra la vista de nuevo
                 foreach (var error in updateResult.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
@@ -159,10 +186,8 @@ namespace TotalHRInsight.Controllers
                 return View(model);
             }
 
-            // Fetch the current roles of the user
             var currentRoles = await _userManager.GetRolesAsync(user);
 
-            // Find the new role by ID from the model
             var newRole = await _roleManager.FindByIdAsync(model.SelectedRoleId);
             if (newRole == null)
             {
@@ -170,19 +195,14 @@ namespace TotalHRInsight.Controllers
                 return View(model);
             }
 
-            // Update the user role if it has changed
             if (!currentRoles.Contains(newRole.Name))
             {
-                // Remove all roles currently assigned to the user and add the new role
                 await _userManager.RemoveFromRolesAsync(user, currentRoles);
                 await _userManager.AddToRoleAsync(user, newRole.Name);
             }
 
             return RedirectToAction(nameof(Index));
         }
-
-
-
 
 
         // GET: Admin/Delete/5
