@@ -34,14 +34,15 @@ namespace TotalHRInsight.DAL.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
             migrationBuilder.InsertData(
-        table: "AspNetRoles",
-        columns: new[] { "Id", "Name", "NormalizedName" },
-        values: new object[,]
-        {
-            { "S", "Supervisor", "Supervisor" },
-            { "A", "Admin", "Admin" },
-            { "U", "Usuario", "Usuario" }
-        });
+                   table: "AspNetRoles",
+                   columns: new[] { "Id", "Name", "NormalizedName" },
+                   values: new object[,]
+                   {
+                        { "S", "Supervisor", "Supervisor" },
+                        { "A", "Administrador", "Administrador" },
+                        { "U", "Usuario", "Usuario" }
+                   });
+
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new

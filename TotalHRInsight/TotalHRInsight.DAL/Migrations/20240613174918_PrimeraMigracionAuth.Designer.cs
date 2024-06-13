@@ -12,7 +12,7 @@ using TotalHRInsight.DAL;
 namespace TotalHRInsight.DAL.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20240612163334_PrimeraMigracionAuth")]
+    [Migration("20240613174918_PrimeraMigracionAuth")]
     partial class PrimeraMigracionAuth
     {
         /// <inheritdoc />

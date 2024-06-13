@@ -1,11 +1,11 @@
 ﻿@model TotalHRInsight.DAL.Asistencia
 
 @{
-    ViewData["Title"] = "Detalles Asistencia";
+    ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Detalles</h1>
+<h1>Details</h1>
 
 <div>
     <h4>Asistencia</h4>
@@ -32,6 +32,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.idAsistencia">Editar</a> |
-    <a asp-action="Index">Atrás</a>
+    <a asp-action="Edit" asp-route-id="@Model?.idAsistencia">Edit</a> |
+    <a asp-action="Index">Back to List</a>
 </div>

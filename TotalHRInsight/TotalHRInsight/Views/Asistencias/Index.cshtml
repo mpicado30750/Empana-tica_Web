@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<TotalHRInsight.DAL.Asistencia>
 
 @{
-    ViewData["Title"] = "Registro Asistencia";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Registro de Asistencia</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Nuevo Registro</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -38,10 +38,9 @@
                 @Html.DisplayFor(modelItem => item.UsuarioCrecionId)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.idAsistencia" class="btn btn-primary">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.idAsistencia" class="btn btn-success">Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@item.idAsistencia" class="btn btn-danger">Eliminar</a>
-
+                <a asp-action="Edit" asp-route-id="@item.idAsistencia">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.idAsistencia">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.idAsistencia">Delete</a>
             </td>
         </tr>
 }

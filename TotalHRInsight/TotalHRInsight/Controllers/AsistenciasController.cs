@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +13,12 @@ namespace TotalHRInsight.Controllers
     public class AsistenciasController : Controller
     {
         private readonly TotalHRInsightDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AsistenciasController(TotalHRInsightDbContext context)
+        public AsistenciasController(TotalHRInsightDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Asistencias
@@ -43,8 +46,10 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Asistencias/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var users = await _userManager.Users.ToListAsync();
+            ViewData["UsuarioId"] = new SelectList(users, "Id", "Nombre");
             return View();
         }
 

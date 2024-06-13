@@ -16,52 +16,6 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ApplicationUser",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Nombre = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PrimerApellido = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    SegundoApellido = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    FechaNacimiento = table.Column<DateOnly>(type: "date", nullable: false),
-                    FechaRegistro = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    NumeroTelefono = table.Column<float>(type: "float", nullable: false),
-                    Salario = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    Estado = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    UserName = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    NormalizedUserName = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    NormalizedEmail = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    EmailConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    PasswordHash = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    SecurityStamp = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PhoneNumber = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ApplicationUser", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Productos",
                 columns: table => new
                 {
@@ -117,9 +71,9 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                 {
                     table.PrimaryKey("PK_Planillas", x => x.IdPlanilla);
                     table.ForeignKey(
-                        name: "FK_Planillas_ApplicationUser_UsuarioCreacionId",
+                        name: "FK_Planillas_AspNetUsers_UsuarioCreacionId",
                         column: x => x.UsuarioCreacionId,
-                        principalTable: "ApplicationUser",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -142,9 +96,9 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                 {
                     table.PrimaryKey("PK_Pedidos", x => x.IdPedido);
                     table.ForeignKey(
-                        name: "FK_Pedidos_ApplicationUser_UsuarioCrecionId",
+                        name: "FK_Pedidos_AspNetUsers_UsuarioCrecionId",
                         column: x => x.UsuarioCrecionId,
-                        principalTable: "ApplicationUser",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -173,9 +127,9 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                 {
                     table.PrimaryKey("PK_Asistencia", x => x.idAsistencia);
                     table.ForeignKey(
-                        name: "FK_Asistencia_ApplicationUser_UsuarioCreacionId",
+                        name: "FK_Asistencia_AspNetUsers_UsuarioCreacionId",
                         column: x => x.UsuarioCreacionId,
-                        principalTable: "ApplicationUser",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Asistencia_Planillas_PlanillaIdPlanilla",
@@ -206,9 +160,9 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                 {
                     table.PrimaryKey("PK_Permisos", x => x.idPermisos);
                     table.ForeignKey(
-                        name: "FK_Permisos_ApplicationUser_UsuarioCreacionId",
+                        name: "FK_Permisos_AspNetUsers_UsuarioCreacionId",
                         column: x => x.UsuarioCreacionId,
-                        principalTable: "ApplicationUser",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Permisos_Planillas_PlanillaIdPlanilla",
@@ -319,7 +273,7 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                 name: "Sucursales");
 
             migrationBuilder.DropTable(
-                name: "ApplicationUser");
+                name: "AspNetUsers");
         }
     }
 }

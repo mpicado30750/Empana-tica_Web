@@ -12,7 +12,7 @@ using TotalHRInsight.DAL;
 namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 {
     [DbContext(typeof(TotalHRInsightDbContext))]
-    [Migration("20240612163901_PrimeraMigracionTotal")]
+    [Migration("20240613175046_PrimeraMigracionTotal")]
     partial class PrimeraMigracionTotal
     {
         /// <inheritdoc />
@@ -104,7 +104,7 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("ApplicationUser");
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("TotalHRInsight.DAL.Asistencia", b =>

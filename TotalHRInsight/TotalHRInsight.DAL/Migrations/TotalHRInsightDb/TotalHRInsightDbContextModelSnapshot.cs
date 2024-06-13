@@ -101,7 +101,7 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("ApplicationUser");
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("TotalHRInsight.DAL.Asistencia", b =>

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace TotalHRInsight.DAL
 {
+    [Table("AspNetUsers")]
     public class ApplicationUser:IdentityUser
     {
         [Required]
