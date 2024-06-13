@@ -9,7 +9,7 @@
     {
         <li class="nav-item">
             <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-                Hola @GetUserRole(UserManager.GetUserName(User))!
+                @GetUserRole(UserManager.GetUserName(User))
             </a>
         </li>
         <li class="nav-item">
@@ -39,7 +39,7 @@
             if (roles != null && roles.Count > 0)
             {
                 // Assuming a user has only one role, return the first one.
-                return $"{user.Nombre} {roles.First()}";
+                return $"{roles.First()} {user.Nombre} {user.PrimerApellido}";
             }
         }
         return "Error ";
