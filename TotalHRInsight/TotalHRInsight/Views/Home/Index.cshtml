@@ -13,9 +13,13 @@
             {
                 <p>Bienvenido al panel de administración donde puedes gestionar todos los aspectos de la aplicación.</p>
             }
-            else
+            else if (userRole == "Supervisor")
             {
                 <p>¡Bienvenido, estimado Supervisor! Aquí puedes gestionar tus citas y registros de pacientes.</p>
+            }
+            else
+            {
+                <p>¡Bienvenido a nuestro sitio, estimado cliente! Consulta aquí los registros de salud de tus mascotas y tus próximas citas.</p>
             }
         }
         else
