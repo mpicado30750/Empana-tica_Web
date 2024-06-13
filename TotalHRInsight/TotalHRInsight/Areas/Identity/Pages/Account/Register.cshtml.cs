@@ -51,35 +51,35 @@ namespace TotalHRInsight.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "El campo nombre es requerido")]
+            [EmailAddress(ErrorMessage = "El correo electrónico debe de tener un formato correcto")]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "Debe de crear una contraseña")]
+            [StringLength(100, ErrorMessage = "La contraseña debe de tener un minumo de 6 caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
-
+            [Required(ErrorMessage = "El campo es requerido")]
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "La contraseña y la confirmación no coinciden.")]
             public string ConfirmPassword { get; set; }
 
             [Required(ErrorMessage = "El campo nombre es requerido")]
             [MaxLength(100, ErrorMessage = "El largo máximo es de 100")]
             public string Nombre { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "El campo es requerido")]
             [MaxLength(100, ErrorMessage = "El largo máximo es de 100")]
             public string PrimerApellido { get; set; } // Cambiado para coincidir con la clase ApplicationUser
 
-            [Required]
+            [Required(ErrorMessage = "El campo es requerido")]
             [MaxLength(100, ErrorMessage = "El largo máximo es de 100")]
             public string SegundoApellido { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "La fecha de nacimiento es requerida")]
             [DataType(DataType.Date)]
             public DateOnly FechaNacimiento { get; set; } // Cambiado para coincidir con la clase ApplicationUser
 
@@ -87,7 +87,7 @@ namespace TotalHRInsight.Areas.Identity.Pages.Account
             [DataType(DataType.Date)]
             public DateTime FechaRegistro { get; set; } = DateTime.Now;
 
-            [Required]
+            [Required(ErrorMessage = "El número de teléfono es requerido")]
             [Phone]
             public string NumeroTelefono { get; set; }
 		}
@@ -120,7 +120,7 @@ namespace TotalHRInsight.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("Usuario creado exitosamente.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     await _userManager.AddToRoleAsync(user, "Usuario");

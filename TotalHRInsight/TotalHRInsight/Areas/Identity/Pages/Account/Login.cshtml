@@ -23,12 +23,12 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                     <div class="form-group mb-3">
                         <label asp-for="Input.Email" class="form-label">Correo Electrónico</label>
-                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="nombre@example.com" />
+                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true"/>
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
                         <label asp-for="Input.Password" class="form-label">Contraseña</label>
-                        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="contraseña" />
+                        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true"/>
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
