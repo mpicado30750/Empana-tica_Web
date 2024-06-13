@@ -8,7 +8,9 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hola @GetUserNameWithLastName(UserManager.GetUserName(User))!</a>
+            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                Hola @GetUserRole(UserManager.GetUserName(User))!
+            </a>
         </li>
         <li class="nav-item">
             <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
@@ -19,7 +21,7 @@
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Regitrar Usuario</a>
+            <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Registrar Usuario</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Iniciar sesión</a>
@@ -28,13 +30,18 @@
 </ul>
 
 @functions {
-    public string GetUserNameWithLastName(string userName)
+    public string GetUserRole(string userName)
     {
         var user = UserManager.FindByNameAsync(userName).Result;
         if (user != null)
         {
-            return $"{user.Nombre} {user.PrimerApellido}";
+            var roles = UserManager.GetRolesAsync(user).Result;
+            if (roles != null && roles.Count > 0)
+            {
+                // Assuming a user has only one role, return the first one.
+                return $"{user.Nombre} {roles.First()}";
+            }
         }
-        return userName;
+        return "Error ";
     }
 }
