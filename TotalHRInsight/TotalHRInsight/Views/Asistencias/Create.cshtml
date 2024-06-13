@@ -1,11 +1,11 @@
 ﻿@model TotalHRInsight.DAL.Asistencia
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Nuevo Registro";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Nuevo Registro</h1>
 
 <h4>Asistencia</h4>
 <hr />
@@ -28,15 +28,16 @@
                 <input asp-for="UsuarioCrecionId" class="form-control" />
                 <span asp-validation-for="UsuarioCrecionId" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Crear" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
+<br />
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Atrás</a>
 </div>
 
 @section Scripts {

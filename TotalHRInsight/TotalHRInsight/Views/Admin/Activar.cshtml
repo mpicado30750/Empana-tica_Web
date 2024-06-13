@@ -1,12 +1,12 @@
 ﻿@model TotalHRInsight.DAL.ApplicationUser // Asegúrate de que estás pasando el modelo correcto, que sería tu entidad Usuario
 
 @{
-    ViewData["Title"] = "Ativar Usuario";
+    ViewData["Title"] = "Activar Usuario";
 }
 
 <h2>@ViewData["Title"]</h2>
 
-<h3>¿Estás seguro de que deseas Ativar a @Model.Nombre?</h3>
+<h3>¿Estás seguro de que deseas Activar a @Model.Nombre?</h3>
 
 <form asp-action="Activar" method="post">
     <input type="hidden" asp-for="Id" />
