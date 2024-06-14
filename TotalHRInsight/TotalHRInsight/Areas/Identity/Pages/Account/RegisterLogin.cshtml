@@ -56,12 +56,12 @@
 					<span asp-validation-for="Input.Email" class="text-danger"></span>
 				</div>
 				<div class="form-floating mb-3">
-					<input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true"/>
+					<input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
 					<label asp-for="Input.Password">Contraseña</label>
 					<span asp-validation-for="Input.Password" class="text-danger"></span>
 				</div>
 				<div class="form-floating mb-3">
-					<input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true"/>
+					<input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
 					<label asp-for="Input.ConfirmPassword">Confirmar Contraseña</label>
 					<span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
 				</div>
@@ -69,7 +69,9 @@
 			<div class="text-center">
 				<button id="registerSubmit" type="submit" class="btn btn-lg btn-registrar">Registrar</button>
 			</div>
-
+			<div class="text-center">
+				<a href="/" class="btn btn-secondary">Volver</a> <!-- Botón para volver -->
+			</div>
 		</div>
 	</form>
 </div>

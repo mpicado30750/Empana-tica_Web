@@ -1,0 +1,81 @@
+﻿@page
+@model RegisterModel
+@{
+	ViewData["Title"] = "Registro";
+}
+
+<h1 style="margin-bottom: 10px;">@ViewData["Title"]</h1>
+<h2 style="margin-bottom: 20px;">Crea una nueva cuenta</h2>
+
+<style>
+	.btn-registrar {
+		background-color: #B42D29;
+		border-color: #B42D29;
+		color: #FAFCFD;
+	}
+</style>
+
+<div class="centered-form">
+	<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+		<div class="row">
+
+			<div class="col-md-6">
+
+				<div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+				<div class="form-floating mb-3">
+					<input asp-for="Input.Nombre" class="form-control" aria-required="true" />
+					<label asp-for="Input.Nombre">Nombre</label>
+					<span asp-validation-for="Input.Nombre" class="text-danger"></span>
+				</div>
+				<div class="form-floating mb-3">
+					<input asp-for="Input.PrimerApellido" class="form-control" aria-required="true" />
+					<label asp-for="Input.PrimerApellido">Primer Apellido</label>
+					<span asp-validation-for="Input.PrimerApellido" class="text-danger"></span>
+				</div>
+				<div class="form-floating mb-3">
+					<input asp-for="Input.SegundoApellido" class="form-control" aria-required="true" />
+					<label asp-for="Input.SegundoApellido">Segundo Apellido</label>
+					<span asp-validation-for="Input.SegundoApellido" class="text-danger"></span>
+				</div>
+				<div class="form-floating mb-3">
+					<input asp-for="Input.FechaNacimiento" id="datepicker" class="form-control" aria-required="true" />
+					<label asp-for="Input.FechaNacimiento">Fecha de Nacimiento</label>
+					<span asp-validation-for="Input.FechaNacimiento" class="text-danger"></span>
+				</div>
+
+			</div>
+			<div class="col-md-6">
+				<div class="form-floating mb-3">
+					<input asp-for="Input.NumeroTelefono" class="form-control" aria-required="true" />
+					<label asp-for="Input.NumeroTelefono">Número de Teléfono</label>
+					<span asp-validation-for="Input.NumeroTelefono" class="text-danger"></span>
+				</div>
+				<div class="form-floating mb-3">
+					<input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+					<label asp-for="Input.Email">Correo Electrónico</label>
+					<span asp-validation-for="Input.Email" class="text-danger"></span>
+				</div>
+				<div class="form-floating mb-3">
+					<input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+					<label asp-for="Input.Password">Contraseña</label>
+					<span asp-validation-for="Input.Password" class="text-danger"></span>
+				</div>
+				<div class="form-floating mb-3">
+					<input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+					<label asp-for="Input.ConfirmPassword">Confirmar Contraseña</label>
+					<span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+				</div>
+			</div>
+			<div class="text-center">
+				<button id="registerSubmit" type="submit" class="btn btn-lg btn-registrar">Registrar</button>
+			</div>
+			<div class="text-center">
+				<a href="/Admin" class="btn btn-secondary">Volver</a> <!-- Botón para volver -->
+			</div>
+		</div>
+	</form>
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
