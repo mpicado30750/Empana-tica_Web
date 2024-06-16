@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,12 +12,10 @@ namespace TotalHRInsight.Controllers
     public class AsistenciasController : Controller
     {
         private readonly TotalHRInsightDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AsistenciasController(TotalHRInsightDbContext context, UserManager<ApplicationUser> userManager)
+        public AsistenciasController(TotalHRInsightDbContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
         // GET: Asistencias
@@ -46,10 +43,8 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Asistencias/Create
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-            var users = await _userManager.Users.ToListAsync();
-            ViewData["UsuarioId"] = new SelectList(users, "Id", "Nombre");
             return View();
         }
 
@@ -58,7 +53,7 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("idAsistencia,FechaEntrada,FechaSalida,UsuarioCrecionId")] Asistencia asistencia)
+        public async Task<IActionResult> Create([Bind("idAsistencia,FechaEntrada,FechaSalida,Longitud,Latitud,Ubicacion,UsuarioCrecionId")] Asistencia asistencia)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +85,7 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("idAsistencia,FechaEntrada,FechaSalida,UsuarioCrecionId")] Asistencia asistencia)
+        public async Task<IActionResult> Edit(int id, [Bind("idAsistencia,FechaEntrada,FechaSalida,Longitud,Latitud,Ubicacion,UsuarioCrecionId")] Asistencia asistencia)
         {
             if (id != asistencia.idAsistencia)
             {

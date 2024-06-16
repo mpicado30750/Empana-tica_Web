@@ -9,22 +9,22 @@ using TotalHRInsight.DAL;
 
 namespace TotalHRInsight.Controllers
 {
-    public class ProductoesController : Controller
+    public class ProductosController : Controller
     {
         private readonly TotalHRInsightDbContext _context;
 
-        public ProductoesController(TotalHRInsightDbContext context)
+        public ProductosController(TotalHRInsightDbContext context)
         {
             _context = context;
         }
 
-        // GET: Productoes
+        // GET: Productos
         public async Task<IActionResult> Index()
         {
             return View(await _context.Productos.ToListAsync());
         }
 
-        // GET: Productoes/Details/5
+        // GET: Productos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -42,18 +42,18 @@ namespace TotalHRInsight.Controllers
             return View(producto);
         }
 
-        // GET: Productoes/Create
+        // GET: Productos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Productoes/Create
+        // POST: Productos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdProducto,NombreProducto,Descripcion,CantidadDisponible,FechaVencimiento,PrecioUnitario")] Producto producto)
+        public async Task<IActionResult> Create([Bind("IdProducto,NombreProducto,Descripcion,CantidadDisponible,Unidad,FechaVencimiento,PrecioUnitario")] Producto producto)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace TotalHRInsight.Controllers
             return View(producto);
         }
 
-        // GET: Productoes/Edit/5
+        // GET: Productos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,12 +80,12 @@ namespace TotalHRInsight.Controllers
             return View(producto);
         }
 
-        // POST: Productoes/Edit/5
+        // POST: Productos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdProducto,NombreProducto,Descripcion,CantidadDisponible,FechaVencimiento,PrecioUnitario")] Producto producto)
+        public async Task<IActionResult> Edit(int id, [Bind("IdProducto,NombreProducto,Descripcion,CantidadDisponible,Unidad,FechaVencimiento,PrecioUnitario")] Producto producto)
         {
             if (id != producto.IdProducto)
             {
@@ -115,7 +115,7 @@ namespace TotalHRInsight.Controllers
             return View(producto);
         }
 
-        // GET: Productoes/Delete/5
+        // GET: Productos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,7 +133,7 @@ namespace TotalHRInsight.Controllers
             return View(producto);
         }
 
-        // POST: Productoes/Delete/5
+        // POST: Productos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
