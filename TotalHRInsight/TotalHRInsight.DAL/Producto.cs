@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Routing.Constraints;
 
 namespace TotalHRInsight.DAL
 {
@@ -22,6 +23,8 @@ namespace TotalHRInsight.DAL
 
         [Required]
         public int CantidadDisponible { get; set; }
+        [Required]
+        public float Unidad { get; set; }
 
         [Required]
         public DateOnly FechaVencimiento { get; set; }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TotalHRInsight.DAL;
 
@@ -11,9 +12,11 @@ using TotalHRInsight.DAL;
 namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 {
     [DbContext(typeof(TotalHRInsightDbContext))]
-    partial class TotalHRInsightDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240616222234_unidadP")]
+    partial class unidadP
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,18 +121,8 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                     b.Property<DateTime>("FechaSalida")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<float>("Latitud")
-                        .HasColumnType("float");
-
-                    b.Property<float>("Longitud")
-                        .HasColumnType("float");
-
                     b.Property<int?>("PlanillaIdPlanilla")
                         .HasColumnType("int");
-
-                    b.Property<string>("Ubicacion")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<string>("UsuarioCreacionId")
                         .HasColumnType("varchar(255)");
