@@ -51,11 +51,17 @@ public class AuthController : ControllerBase
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
 
-            return Ok(new
+            if (user.Estado)
             {
-                token = new JwtSecurityTokenHandler().WriteToken(token),
-                expiration = token.ValidTo
-            });
+				return Ok(new
+				{
+					token = new JwtSecurityTokenHandler().WriteToken(token),
+					expiration = token.ValidTo,
+					idUser = user.Id,
+					nombreUser = user.Nombre,
+					apellidoUser = user.PrimerApellido
+				});
+			}
         }
         return Unauthorized();
     }
