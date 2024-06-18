@@ -1,23 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TotalHRInsight.DAL
 {
-    [Table("Sucursales")]
-    public class Sucursal
-    {
-        [Key]
-        public int IdSucursal { get; set; }
+	[Table("Sucursales")]
+	public class Sucursal
+	{
+		[Key]
+		public int IdSucursal { get; set; }
 
-        [Required]
-        public string NombreSucursal { get; set; }
+		[Required(ErrorMessage = "El nombre de la sucursal es obligatorio")]
+		[MaxLength(100, ErrorMessage = "El nombre de la sucursal no puede exceder los 100 caracteres")]
+		public string NombreSucursal { get; set; }
 
-        [Required]
-        public string UbicacionSucursal { get; set; }
-    }
+		[Required(ErrorMessage = "La ubicación de la sucursal es obligatoria")]
+		public string UbicacionSucursal { get; set; }
+
+		[Required(ErrorMessage = "Este campo es requerido")]
+		public double Longitud { get; set; }
+
+		[Required(ErrorMessage = "Este campo es requerido")]
+		public double Latitud { get; set; }
+	}
 }

@@ -33,7 +33,7 @@ namespace TotalHRInsight.Controllers
             }
 
             var permiso = await _context.Permisos
-                .FirstOrDefaultAsync(m => m.idPermisos == id);
+                .FirstOrDefaultAsync(m => m.IdPermisos == id);
             if (permiso == null)
             {
                 return NotFound();
@@ -87,7 +87,7 @@ namespace TotalHRInsight.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("idPermisos,FechaInicio,FechaFin,TipoPermiso,CantidadDias,Estado,UsuarioCrecionId")] Permiso permiso)
         {
-            if (id != permiso.idPermisos)
+            if (id != permiso.IdPermisos)
             {
                 return NotFound();
             }
@@ -101,7 +101,7 @@ namespace TotalHRInsight.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PermisoExists(permiso.idPermisos))
+                    if (!PermisoExists(permiso.IdPermisos))
                     {
                         return NotFound();
                     }
@@ -124,7 +124,7 @@ namespace TotalHRInsight.Controllers
             }
 
             var permiso = await _context.Permisos
-                .FirstOrDefaultAsync(m => m.idPermisos == id);
+                .FirstOrDefaultAsync(m => m.IdPermisos == id);
             if (permiso == null)
             {
                 return NotFound();
@@ -150,7 +150,7 @@ namespace TotalHRInsight.Controllers
 
         private bool PermisoExists(int id)
         {
-            return _context.Permisos.Any(e => e.idPermisos == id);
+            return _context.Permisos.Any(e => e.IdPermisos == id);
         }
     }
 }

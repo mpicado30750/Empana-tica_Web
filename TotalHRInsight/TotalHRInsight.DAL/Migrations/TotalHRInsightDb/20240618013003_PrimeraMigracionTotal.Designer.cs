@@ -12,8 +12,8 @@ using TotalHRInsight.DAL;
 namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 {
     [DbContext(typeof(TotalHRInsightDbContext))]
-    [Migration("20240616222234_unidadP")]
-    partial class unidadP
+    [Migration("20240618013003_PrimeraMigracionTotal")]
+    partial class PrimeraMigracionTotal
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,8 +45,8 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                     b.Property<bool>("Estado")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateOnly>("FechaNacimiento")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("FechaNacimiento")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("FechaRegistro")
                         .HasColumnType("datetime(6)");
@@ -68,8 +68,8 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                     b.Property<string>("NormalizedUserName")
                         .HasColumnType("longtext");
 
-                    b.Property<float>("NumeroTelefono")
-                        .HasColumnType("float");
+                    b.Property<int>("NumeroTelefono")
+                        .HasColumnType("int");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("longtext");
@@ -85,8 +85,8 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<decimal>("Salario")
-                        .HasColumnType("decimal(18,4)");
+                    b.Property<float>("Salario")
+                        .HasColumnType("float(18,4)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
@@ -121,14 +121,22 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                     b.Property<DateTime>("FechaSalida")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<double>("Latitud")
+                        .HasColumnType("double");
+
+                    b.Property<double>("Longitud")
+                        .HasColumnType("double");
+
                     b.Property<int?>("PlanillaIdPlanilla")
                         .HasColumnType("int");
 
-                    b.Property<string>("UsuarioCreacionId")
-                        .HasColumnType("varchar(255)");
+                    b.Property<string>("Ubicacion")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
-                    b.Property<int>("UsuarioCrecionId")
-                        .HasColumnType("int");
+                    b.Property<string>("UsuarioCreacionId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("idAsistencia");
 
@@ -149,18 +157,19 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     b.Property<string>("EstadoPedido")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
-                    b.Property<DateOnly>("FechaPedido")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("FechaPedido")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("IdSucursal")
                         .HasColumnType("int");
 
-                    b.Property<float>("MontoTotal")
-                        .HasColumnType("float");
+                    b.Property<double>("MontoTotal")
+                        .HasColumnType("double(18,2)");
 
-                    b.Property<string>("UsuarioCrecionId")
+                    b.Property<string>("UsuarioCreacionId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
@@ -168,7 +177,7 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     b.HasIndex("IdSucursal");
 
-                    b.HasIndex("UsuarioCrecionId");
+                    b.HasIndex("UsuarioCreacionId");
 
                     b.ToTable("Pedidos");
                 });
@@ -186,7 +195,8 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     b.Property<string>("Medida")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<int>("PedidoID")
                         .HasColumnType("int");
@@ -205,11 +215,11 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
             modelBuilder.Entity("TotalHRInsight.DAL.Permiso", b =>
                 {
-                    b.Property<int>("idPermisos")
+                    b.Property<int>("IdPermisos")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("idPermisos"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdPermisos"));
 
                     b.Property<int>("CantidadDias")
                         .HasColumnType("int");
@@ -217,26 +227,25 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                     b.Property<bool>("Estado")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateOnly>("FechaFin")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("FechaFin")
+                        .HasColumnType("datetime(6)");
 
-                    b.Property<DateOnly>("FechaInicio")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("FechaInicio")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int?>("PlanillaIdPlanilla")
                         .HasColumnType("int");
 
                     b.Property<string>("TipoPermiso")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("UsuarioCreacionId")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("UsuarioCrecionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("idPermisos");
+                    b.HasKey("IdPermisos");
 
                     b.HasIndex("PlanillaIdPlanilla");
 
@@ -253,11 +262,11 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdPlanilla"));
 
-                    b.Property<DateOnly>("FechaFin")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("FechaFin")
+                        .HasColumnType("datetime(6)");
 
-                    b.Property<DateOnly>("FechaInicio")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("FechaInicio")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("IdAsistencia")
                         .HasColumnType("int");
@@ -265,14 +274,12 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                     b.Property<int>("IdPermiso")
                         .HasColumnType("int");
 
-                    b.Property<float>("MontoTotal")
-                        .HasColumnType("float");
+                    b.Property<decimal>("MontoTotal")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("UsuarioCreacionId")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
-
-                    b.Property<int>("UsuarioCrecionId")
-                        .HasColumnType("int");
 
                     b.HasKey("IdPlanilla");
 
@@ -294,17 +301,19 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
 
-                    b.Property<DateOnly>("FechaVencimiento")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("FechaVencimiento")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("NombreProducto")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
-                    b.Property<float>("PrecioUnitario")
-                        .HasColumnType("float");
+                    b.Property<decimal>("PrecioUnitario")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<float>("Unidad")
                         .HasColumnType("float");
@@ -322,9 +331,16 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdSucursal"));
 
+                    b.Property<double>("Latitud")
+                        .HasColumnType("double");
+
+                    b.Property<double>("Longitud")
+                        .HasColumnType("double");
+
                     b.Property<string>("NombreSucursal")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("UbicacionSucursal")
                         .IsRequired()
@@ -343,7 +359,9 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     b.HasOne("TotalHRInsight.DAL.ApplicationUser", "UsuarioCreacion")
                         .WithMany()
-                        .HasForeignKey("UsuarioCreacionId");
+                        .HasForeignKey("UsuarioCreacionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("UsuarioCreacion");
                 });
@@ -358,7 +376,7 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     b.HasOne("TotalHRInsight.DAL.ApplicationUser", "UsuarioCreacion")
                         .WithMany()
-                        .HasForeignKey("UsuarioCrecionId")
+                        .HasForeignKey("UsuarioCreacionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -394,7 +412,9 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     b.HasOne("TotalHRInsight.DAL.ApplicationUser", "UsuarioCreacion")
                         .WithMany()
-                        .HasForeignKey("UsuarioCreacionId");
+                        .HasForeignKey("UsuarioCreacionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("UsuarioCreacion");
                 });
@@ -403,7 +423,9 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                 {
                     b.HasOne("TotalHRInsight.DAL.ApplicationUser", "UsuarioCreacion")
                         .WithMany()
-                        .HasForeignKey("UsuarioCreacionId");
+                        .HasForeignKey("UsuarioCreacionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("UsuarioCreacion");
                 });

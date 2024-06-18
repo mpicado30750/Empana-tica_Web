@@ -34,14 +34,14 @@ namespace TotalHRInsight.DAL.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
             migrationBuilder.InsertData(
-                   table: "AspNetRoles",
-                   columns: new[] { "Id", "Name", "NormalizedName" },
-                   values: new object[,]
-                   {
+                    table: "AspNetRoles",
+                    columns: new[] { "Id", "Name", "NormalizedName" },
+                    values: new object[,]
+                    {
                         { "S", "Supervisor", "Supervisor" },
                         { "A", "Administrador", "Administrador" },
                         { "U", "Usuario", "Usuario" }
-                   });
+                    });
 
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
@@ -55,10 +55,10 @@ namespace TotalHRInsight.DAL.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     SegundoApellido = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    FechaNacimiento = table.Column<DateOnly>(type: "date", nullable: false),
+                    FechaNacimiento = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     FechaRegistro = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    NumeroTelefono = table.Column<float>(type: "float", nullable: false),
-                    Salario = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    NumeroTelefono = table.Column<int>(type: "int", nullable: false),
+                    Salario = table.Column<float>(type: "float(18,4)", nullable: false),
                     Estado = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),

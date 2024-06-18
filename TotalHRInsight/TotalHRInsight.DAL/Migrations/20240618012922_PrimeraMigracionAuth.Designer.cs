@@ -12,7 +12,7 @@ using TotalHRInsight.DAL;
 namespace TotalHRInsight.DAL.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20240613174918_PrimeraMigracionAuth")]
+    [Migration("20240618012922_PrimeraMigracionAuth")]
     partial class PrimeraMigracionAuth
     {
         /// <inheritdoc />
@@ -179,8 +179,8 @@ namespace TotalHRInsight.DAL.Migrations
                     b.Property<bool>("Estado")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateOnly>("FechaNacimiento")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("FechaNacimiento")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("FechaRegistro")
                         .HasColumnType("datetime(6)");
@@ -204,8 +204,8 @@ namespace TotalHRInsight.DAL.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
-                    b.Property<float>("NumeroTelefono")
-                        .HasColumnType("float");
+                    b.Property<int>("NumeroTelefono")
+                        .HasColumnType("int");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("longtext");
@@ -221,8 +221,8 @@ namespace TotalHRInsight.DAL.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<decimal>("Salario")
-                        .HasColumnType("decimal(18,4)");
+                    b.Property<float>("Salario")
+                        .HasColumnType("float(18,4)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");

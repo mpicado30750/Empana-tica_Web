@@ -81,7 +81,7 @@ namespace TotalHRInsight.Areas.Identity.Pages.Account
 
             [Required(ErrorMessage = "La fecha de nacimiento es requerida")]
             [DataType(DataType.Date)]
-            public DateOnly FechaNacimiento { get; set; } // Cambiado para coincidir con la clase ApplicationUser
+            public DateTime FechaNacimiento { get; set; } // Cambiado para coincidir con la clase ApplicationUser
 
             [Required]
             [DataType(DataType.Date)]

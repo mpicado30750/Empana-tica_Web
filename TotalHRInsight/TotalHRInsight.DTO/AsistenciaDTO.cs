@@ -9,11 +9,18 @@ namespace TotalHRInsight.DTO
 {
 	public class AsistenciaDTO
 	{
+
 		public DateTime FechaEntrada { get; set; }
 
 		public DateTime FechaSalida { get; set; }
 
-		public int UsuarioCrecionId { get; set; }
+		public float Longitud { get; set; }
+
+		public float Latitud { get; set; }
+
+		public string Ubicacion { get; set; }
+
+		public string UsuarioCreacionId { get; set; }
 
 	}
 }

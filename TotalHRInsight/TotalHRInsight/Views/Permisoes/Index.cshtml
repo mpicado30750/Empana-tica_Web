@@ -29,7 +29,7 @@
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UsuarioCrecionId)
+                @Html.DisplayNameFor(model => model.UsuarioCreacionId)
             </th>
             <th></th>
         </tr>
@@ -53,12 +53,12 @@
                 @Html.DisplayFor(modelItem => item.Estado)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UsuarioCrecionId)
+                    @Html.DisplayFor(modelItem => item.UsuarioCreacionId)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.idPermisos">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.idPermisos">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.idPermisos">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.IdPermisos">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.IdPermisos">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdPermisos">Delete</a>
             </td>
         </tr>
 }

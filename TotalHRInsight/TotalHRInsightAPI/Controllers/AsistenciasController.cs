@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TotalHRInsight.DAL;
+using TotalHRInsight.DTO;
 
 namespace TotalHRInsightAPI.Controllers
 {
@@ -75,13 +76,22 @@ namespace TotalHRInsightAPI.Controllers
         // POST: api/Asistencias
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Asistencia>> PostAsistencia(Asistencia asistencia)
+        public async Task<ActionResult<AsistenciaDTO>> PostAsistencia(AsistenciaDTO asistenciaDTO)
         {
-            _context.Asistencias.Add(asistencia);
+			var asistencia = new Asistencia
+			{
+				FechaEntrada = asistenciaDTO.FechaEntrada,
+				FechaSalida = asistenciaDTO.FechaSalida,
+				Longitud = asistenciaDTO.Longitud,
+				Latitud = asistenciaDTO.Latitud,
+				Ubicacion = asistenciaDTO.Ubicacion,
+				UsuarioCreacionId = asistenciaDTO.UsuarioCreacionId
+			};
+			_context.Asistencias.Add(asistencia);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAsistencia", new { id = asistencia.idAsistencia }, asistencia);
-        }
+			return Ok(new { success = true, message = "User logged out successfully." });
+		}
 
         // DELETE: api/Asistencias/5
         [HttpDelete("{id}")]

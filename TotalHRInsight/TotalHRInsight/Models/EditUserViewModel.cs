@@ -28,11 +28,10 @@ namespace TotalHRInsight.Models
         public float Salario { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        public DateOnly FechaNacimiento { get; set; }
+        public DateTime FechaNacimiento { get; set; }
 
         [Required]
-        public float NumeroTelefono { get; set; }
+        public int NumeroTelefono { get; set; }
 
         [Required]
         [EmailAddress]

@@ -1,46 +1,41 @@
-﻿using Microsoft.AspNetCore.Antiforgery;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TotalHRInsight.DAL
 {
-    [Table("AspNetUsers")]
-    public class ApplicationUser:IdentityUser
-    {
-        [Required]
-        [MaxLength(100)]
-        public string Nombre { get; set; }
+	[Table("AspNetUsers")]
+	public class ApplicationUser : IdentityUser
+	{
+		[Required(ErrorMessage = "El nombre es obligatorio")]
+		[MaxLength(100, ErrorMessage = "El nombre no puede exceder los 100 caracteres")]
+		public string Nombre { get; set; }
 
-        [Required]
-        [MaxLength(100)]
-        public string PrimerApellido { get; set; }
+		[Required(ErrorMessage = "El primer apellido es obligatorio")]
+		[MaxLength(100, ErrorMessage = "El primer apellido no puede exceder los 100 caracteres")]
+		public string PrimerApellido { get; set; }
 
-        [Required]
-        [MaxLength(100)]
-        public string SegundoApellido { get; set; }
+		[Required(ErrorMessage = "El segundo apellido es obligatorio")]
+		[MaxLength(100, ErrorMessage = "El segundo apellido no puede exceder los 100 caracteres")]
+		public string SegundoApellido { get; set; }
 
-        [Required]
-        public DateOnly FechaNacimiento { get; set; }
+		[Required(ErrorMessage = "La fecha de nacimiento es obligatoria")]
+		public DateTime FechaNacimiento { get; set; }
 
-        [Required]
-        public DateTime FechaRegistro { get; set; }
+		[Required(ErrorMessage = "La fecha de registro es obligatoria")]
+		public DateTime FechaRegistro { get; set; }
 
-        public float NumeroTelefono { get; set; }
+		[Phone(ErrorMessage = "El número de teléfono no es válido")]
+		public int NumeroTelefono { get; set; }
 
-        [Required]
-        [Column(TypeName = "decimal(18,4)")]
-        public float Salario { get; set; }
+		[Required(ErrorMessage = "El salario es obligatorio")]
+		[Column(TypeName = "float(18,4)")]
+		public float Salario { get; set; }
 
-        [Required]
-        [DefaultValue(true)]
-        public bool Estado {  get; set; }
-    }
+		[Required]
+		[DefaultValue(true)]
+		public bool Estado { get; set; }
+	}
 }
