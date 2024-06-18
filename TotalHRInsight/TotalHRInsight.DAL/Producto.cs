@@ -15,21 +15,21 @@ namespace TotalHRInsight.DAL
         [Key]
         public int IdProducto { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es requerido")]
         public string NombreProducto { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es requerido")]
         public string Descripcion { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es requerido")]
         public int CantidadDisponible { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Este campo es requerido")]
         public float Unidad { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es requerido")]
         public DateOnly FechaVencimiento { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Este campo es requerido")]
         public float PrecioUnitario { get; set; }
 
         public ICollection<PedidosProductos> PedidosProductos { get; set; } = new List<PedidosProductos>();

@@ -14,10 +14,10 @@ namespace TotalHRInsight.DAL
         [Key]
         public int IdSucursal { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es requerido")]
         public string NombreSucursal { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Este campo es requerido")]
         public string UbicacionSucursal { get; set; }
     }
 }
