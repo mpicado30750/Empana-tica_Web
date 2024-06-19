@@ -12,22 +12,18 @@ namespace TotalHRInsight.DAL
     public class Asistencia
     {
         [Key]
-        public int idAsistencia { get; set; }
+        public int IdAsistencia { get; set; }
 
-        [Required(ErrorMessage ="Se debe de ingresar una fecha y hora válida")]
+        
         public DateTime FechaEntrada { get; set; }
 
-        [Required(ErrorMessage = "Se debe de ingresar una fecha y hora válida")]
+        
         public DateTime FechaSalida { get; set; }
 
-        [Required(ErrorMessage = "Este campo es requerido")]
-        public double Longitud {  get; set; }
-
-        [Required(ErrorMessage = "Este campo es requerido")]
-        public double Latitud { get; set; }
-
-        [Required(ErrorMessage = "Este campo es requerido")]
-        public string Ubicacion { get; set; }
+        
+        public string UbicacionEntrada { get; set; }
+        
+        public string UbicacionSalida { get; set; }
 
         [Required(ErrorMessage = "Este campo es requerido")]
 		[ForeignKey("UsuarioCreacion")]

@@ -7,18 +7,12 @@ using System.Threading.Tasks;
 
 namespace TotalHRInsight.DTO
 {
-	public class AsistenciaDTO
+	public class AsistenciaEntradaDTO
 	{
 
 		public DateTime FechaEntrada { get; set; }
 
-		public DateTime FechaSalida { get; set; }
-
-		public float Longitud { get; set; }
-
-		public float Latitud { get; set; }
-
-		public string Ubicacion { get; set; }
+		public string UbicacionEntrada { get; set; }
 
 		public string UsuarioCreacionId { get; set; }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TotalHRInsight.DAL;
@@ -15,10 +16,12 @@ namespace TotalHRInsightAPI.Controllers
     public class AsistenciasController : ControllerBase
     {
         private readonly TotalHRInsightDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AsistenciasController(TotalHRInsightDbContext context)
+        public AsistenciasController(TotalHRInsightDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: api/Asistencias
@@ -47,7 +50,7 @@ namespace TotalHRInsightAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsistencia(int id, Asistencia asistencia)
         {
-            if (id != asistencia.idAsistencia)
+            if (id != asistencia.IdAsistencia)
             {
                 return BadRequest();
             }
@@ -73,25 +76,80 @@ namespace TotalHRInsightAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Asistencias
+        // PUT: api/AsistenciasInicio/
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<AsistenciaDTO>> PostAsistencia(AsistenciaDTO asistenciaDTO)
+        [HttpPut("AsistenciasFinal")]
+        public async Task<IActionResult> PutAsistenciasFinal(AsistenciaSalidaDTO asistenciaDTO)
         {
-			var asistencia = new Asistencia
-			{
-				FechaEntrada = asistenciaDTO.FechaEntrada,
-				FechaSalida = asistenciaDTO.FechaSalida,
-				Longitud = asistenciaDTO.Longitud,
-				Latitud = asistenciaDTO.Latitud,
-				Ubicacion = asistenciaDTO.Ubicacion,
-				UsuarioCreacionId = asistenciaDTO.UsuarioCreacionId
-			};
-			_context.Asistencias.Add(asistencia);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var asistencia = await _context.Asistencias.FindAsync(asistenciaDTO.IdAsistencia);
+                if (asistencia == null)
+                {
+                    return NotFound(new { success = false, message = "Asistencia no encontrada." });
+                }
 
-			return Ok(new { success = true, message = "User logged out successfully." });
-		}
+                asistencia.FechaSalida = asistenciaDTO.FechaSalida;
+                asistencia.UbicacionSalida = asistenciaDTO.UbicacionSalida;
+
+                _context.Entry(asistencia).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                return Ok(new { success = true, message = "Fecha de salida actualizada con éxito." });
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = new
+                {
+                    success = false,
+                    message = "Ocurrió un error al actualizar la fecha de salida.",
+                    error = ex.Message,
+                    stackTrace = ex.StackTrace
+                };
+                Console.WriteLine($"Error: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                return StatusCode(500, errorMessage);
+            }
+        }
+
+        // POST: api/AsistenciasInicio
+        [HttpPost("AsistenciasInicio")]
+        public async Task<ActionResult<AsistenciaEntradaDTO>> PostAsistenciasInicio(AsistenciaEntradaDTO asistenciaDTO)
+        {
+            try
+            {
+                // Verificar si el usuario existe
+                var usuario = await _userManager.FindByIdAsync(asistenciaDTO.UsuarioCreacionId);
+                if (usuario == null)
+                {
+                    return BadRequest(new { success = false, message = "El usuario especificado no existe." });
+                }
+
+                var asistencia = new Asistencia
+                {
+                    FechaEntrada = asistenciaDTO.FechaEntrada,
+                    UbicacionEntrada = asistenciaDTO.UbicacionEntrada,
+                    UsuarioCreacionId = asistenciaDTO.UsuarioCreacionId
+                };
+                _context.Asistencias.Add(asistencia);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { success = true, message = "Asistencia creada con éxito.", id = asistencia.  IdAsistencia });
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = new
+                {
+                    success = false,
+                    message = "Ocurrió un error al crear la asistencia.",
+                    error = ex.Message,
+                    stackTrace = ex.StackTrace
+                };
+                Console.WriteLine($"Error: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                return StatusCode(500, errorMessage);
+            }
+        }
+
+
 
         // DELETE: api/Asistencias/5
         [HttpDelete("{id}")]
@@ -111,7 +169,7 @@ namespace TotalHRInsightAPI.Controllers
 
         private bool AsistenciaExists(int id)
         {
-            return _context.Asistencias.Any(e => e.idAsistencia == id);
+            return _context.Asistencias.Any(e => e.IdAsistencia == id);
         }
     }
 }
