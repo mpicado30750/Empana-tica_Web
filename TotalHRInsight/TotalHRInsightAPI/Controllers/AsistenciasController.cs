@@ -128,19 +128,32 @@ namespace TotalHRInsightAPI.Controllers
                 {
                     FechaEntrada = asistenciaDTO.FechaEntrada,
                     UbicacionEntrada = asistenciaDTO.UbicacionEntrada,
+                    UbicacionSalida = asistenciaDTO.UbicacionEntrada,
                     UsuarioCreacionId = asistenciaDTO.UsuarioCreacionId
                 };
                 _context.Asistencias.Add(asistencia);
                 await _context.SaveChangesAsync();
 
-                return Ok(new { success = true, message = "Asistencia creada con éxito.", id = asistencia.  IdAsistencia });
+                return Ok(new { success = true, message = "Asistencia creada con éxito.", id = asistencia.IdAsistencia });
+            }
+            catch (DbUpdateException dbEx)
+            {
+                var errorMessage = new
+                {
+                    success = false,
+                    message = "Ocurrió un error al crear la asistencia.",
+                    error = dbEx.InnerException?.Message ?? dbEx.Message,
+                    stackTrace = dbEx.StackTrace
+                };
+                Console.WriteLine($"Error: {errorMessage.error}\nStackTrace: {errorMessage.stackTrace}");
+                return StatusCode(500, errorMessage);
             }
             catch (Exception ex)
             {
                 var errorMessage = new
                 {
                     success = false,
-                    message = "Ocurrió un error al crear la asistencia.",
+                    message = "Ocurrió un error inesperado al crear la asistencia.",
                     error = ex.Message,
                     stackTrace = ex.StackTrace
                 };
@@ -148,8 +161,6 @@ namespace TotalHRInsightAPI.Controllers
                 return StatusCode(500, errorMessage);
             }
         }
-
-
 
         // DELETE: api/Asistencias/5
         [HttpDelete("{id}")]
