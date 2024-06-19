@@ -24,7 +24,7 @@ namespace TotalHRInsight.DAL
 		public int CantidadDisponible { get; set; }
 
 		[Required(ErrorMessage = "La unidad es obligatoria")]
-		public float Unidad { get; set; }
+		public string Unidad { get; set; }
 
 		[Required(ErrorMessage = "La fecha de vencimiento es obligatoria")]
 		public DateTime FechaVencimiento { get; set; }
