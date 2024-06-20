@@ -17,10 +17,6 @@ namespace TotalHRInsight.DAL
 		[Required(ErrorMessage = "La fecha de fin es obligatoria")]
 		public DateTime FechaFin { get; set; }
 
-		[Required(ErrorMessage = "El tipo de permiso es obligatorio")]
-		[MaxLength(100, ErrorMessage = "El tipo de permiso no puede exceder los 100 caracteres")]
-		public string TipoPermiso { get; set; }
-
 		[Required(ErrorMessage = "La cantidad de días es obligatoria")]
 		[Range(1, int.MaxValue, ErrorMessage = "La cantidad de días debe ser mayor a cero")]
 		public int CantidadDias { get; set; }
@@ -28,10 +24,22 @@ namespace TotalHRInsight.DAL
 		[Required(ErrorMessage = "El estado es obligatorio")]
 		public bool Estado { get; set; }
 
+		[Required(ErrorMessage = "El ID de la incidencia es obligatorio")]
+		public int IdIncidencia { get; set; }
+
 		[Required(ErrorMessage = "El ID del usuario de creación es obligatorio")]
 		public string UsuarioCreacionId { get; set; }
 
+		[Required(ErrorMessage = "El ID del usuario asignacion es obligatorio")]
+		public string UsuarioAsignacionId { get; set; }
+
+		[ForeignKey("IdIncidencia")]
+		public Incidencia? Incidencia { get; set; }
+
 		[ForeignKey("UsuarioCreacionId")]
 		public ApplicationUser? UsuarioCreacion { get; set; }
+
+		[ForeignKey("UsuarioAsignacionId")]
+		public ApplicationUser? UsuarioAsignacion { get; set; }
 	}
 }

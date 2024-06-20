@@ -9,22 +9,23 @@ using TotalHRInsight.DAL;
 
 namespace TotalHRInsight.Controllers
 {
-    public class PermisoesController : Controller
+    public class PermisosController : Controller
     {
         private readonly TotalHRInsightDbContext _context;
 
-        public PermisoesController(TotalHRInsightDbContext context)
+        public PermisosController(TotalHRInsightDbContext context)
         {
             _context = context;
         }
 
-        // GET: Permisoes
+        // GET: Permisos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Permisos.ToListAsync());
+            var totalHRInsightDbContext = _context.Permisos.Include(p => p.Incidencia).Include(p => p.UsuarioAsignacion).Include(p => p.UsuarioCreacion);
+            return View(await totalHRInsightDbContext.ToListAsync());
         }
 
-        // GET: Permisoes/Details/5
+        // GET: Permisos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,6 +34,9 @@ namespace TotalHRInsight.Controllers
             }
 
             var permiso = await _context.Permisos
+                .Include(p => p.Incidencia)
+                .Include(p => p.UsuarioAsignacion)
+                .Include(p => p.UsuarioCreacion)
                 .FirstOrDefaultAsync(m => m.IdPermisos == id);
             if (permiso == null)
             {
@@ -42,18 +46,21 @@ namespace TotalHRInsight.Controllers
             return View(permiso);
         }
 
-        // GET: Permisoes/Create
+        // GET: Permisos/Create
         public IActionResult Create()
         {
+            ViewData["IdIncidencia"] = new SelectList(_context.Incidencias, "IdIncidencia", "NombreIncidencia");
+            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
             return View();
         }
 
-        // POST: Permisoes/Create
+        // POST: Permisos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("idPermisos,FechaInicio,FechaFin,TipoPermiso,CantidadDias,Estado,UsuarioCrecionId")] Permiso permiso)
+        public async Task<IActionResult> Create([Bind("IdPermisos,FechaInicio,FechaFin,CantidadDias,Estado,IdIncidencia,UsuarioCreacionId,UsuarioAsignacionId")] Permiso permiso)
         {
             if (ModelState.IsValid)
             {
@@ -61,10 +68,13 @@ namespace TotalHRInsight.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdIncidencia"] = new SelectList(_context.Incidencias, "IdIncidencia", "NombreIncidencia", permiso.IdIncidencia);
+            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", permiso.UsuarioAsignacionId);
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", permiso.UsuarioCreacionId);
             return View(permiso);
         }
 
-        // GET: Permisoes/Edit/5
+        // GET: Permisos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,15 +87,18 @@ namespace TotalHRInsight.Controllers
             {
                 return NotFound();
             }
+            ViewData["IdIncidencia"] = new SelectList(_context.Incidencias, "IdIncidencia", "NombreIncidencia", permiso.IdIncidencia);
+            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", permiso.UsuarioAsignacionId);
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", permiso.UsuarioCreacionId);
             return View(permiso);
         }
 
-        // POST: Permisoes/Edit/5
+        // POST: Permisos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("idPermisos,FechaInicio,FechaFin,TipoPermiso,CantidadDias,Estado,UsuarioCrecionId")] Permiso permiso)
+        public async Task<IActionResult> Edit(int id, [Bind("IdPermisos,FechaInicio,FechaFin,CantidadDias,Estado,IdIncidencia,UsuarioCreacionId,UsuarioAsignacionId")] Permiso permiso)
         {
             if (id != permiso.IdPermisos)
             {
@@ -112,10 +125,13 @@ namespace TotalHRInsight.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdIncidencia"] = new SelectList(_context.Incidencias, "IdIncidencia", "NombreIncidencia", permiso.IdIncidencia);
+            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", permiso.UsuarioAsignacionId);
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", permiso.UsuarioCreacionId);
             return View(permiso);
         }
 
-        // GET: Permisoes/Delete/5
+        // GET: Permisos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,6 +140,9 @@ namespace TotalHRInsight.Controllers
             }
 
             var permiso = await _context.Permisos
+                .Include(p => p.Incidencia)
+                .Include(p => p.UsuarioAsignacion)
+                .Include(p => p.UsuarioCreacion)
                 .FirstOrDefaultAsync(m => m.IdPermisos == id);
             if (permiso == null)
             {
@@ -133,7 +152,7 @@ namespace TotalHRInsight.Controllers
             return View(permiso);
         }
 
-        // POST: Permisoes/Delete/5
+        // POST: Permisos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

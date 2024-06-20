@@ -20,16 +20,19 @@
                 @Html.DisplayNameFor(model => model.FechaFin)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TipoPermiso)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.CantidadDias)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UsuarioCreacionId)
+                @Html.DisplayNameFor(model => model.Incidencia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuarioCreacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuarioAsignacion)
             </th>
             <th></th>
         </tr>
@@ -44,21 +47,24 @@
                 @Html.DisplayFor(modelItem => item.FechaFin)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TipoPermiso)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.CantidadDias)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Estado)
             </td>
             <td>
-                    @Html.DisplayFor(modelItem => item.UsuarioCreacionId)
+                @Html.DisplayFor(modelItem => item.Incidencia.NombreIncidencia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsuarioCreacion.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsuarioAsignacion.Id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdPermisos">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.IdPermisos">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.IdPermisos">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.IdPermisos">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdPermisos">Delete</a>
             </td>
         </tr>
 }
