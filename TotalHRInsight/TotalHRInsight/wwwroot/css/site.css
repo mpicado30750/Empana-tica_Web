@@ -1,22 +1,126 @@
+/* General styling for html and body */
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #FAFCFD;
+    color: #1F2D2B;
+}
+
+/* Focus states for various elements */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: #be2324;
+}
+
+.navbar-brand,
+.navbar-nav .nav-link {
+    color: #1F2D2B !important;
+}
+
+.navbar-nav .nav-item {
+    margin-right: 10px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #E29E3D !important;
+}
+
+/* Sidebar styling */
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    background-color: #040404;
+    padding-top: 56px;
+    width: 200px;
+    transition: all 0.3s;
+    padding: 20px;
+}
+
+    .sidebar .nav-link {
+        color: #FFFFFF !important;
+    }
+
+        .sidebar .nav-link:hover {
+            color: #f3e572 !important;
+        }
+
+.sidebar-heading {
+    padding: 10px 15px;
+    text-align: center;
+    font-size: 1.2em;
+    background-color: #be2324;
+    color: #FFFFFF;
+}
+
+/* Main content styling */
+.main-content {
+    margin-left: 200px;
+    padding: 20px;
+}
+
+/* Container styling */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* Footer styling to match the navbar */
+.footer {
+    background-color: #be2324; /* Same background color as the navbar */
+    color: #1F2D2B; /* Same text color as the navbar */
+    margin-right: 100px; /* Match the margin to sidebar width */
+    clear: both;
+}
+
+    .footer a {
+        color: #1F2D2B; /* Ensure links in the footer match the navbar link color */
+        text-decoration: none;
+    }
+
+        .footer a:hover {
+            color: #E29E3D; /* Same hover color as the navbar links */
+        }
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 0;
+    }
+
+        .sidebar .nav-link {
+            padding: 10px;
+        }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .footer {
+        margin-right: 0;
+    }
 }
