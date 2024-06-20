@@ -15,17 +15,16 @@
             }
             else if (userRole == "Supervisor")
             {
-                <p>¡Bienvenido, estimado Supervisor! Aquí puedes gestionar tus citas y registros de pacientes.</p>
+                <p>¡Bienvenido, estimado Supervisor!.</p>
             }
             else
             {
-                <p>¡Bienvenido a nuestro sitio, estimado cliente! Consulta aquí los registros de salud de tus mascotas y tus próximas citas.</p>
+                <p>¡Bienvenido a nuestro sitio, estimado cliente!.</p>
             }
         }
         else
         {
             <p>Por favor, inicia sesión para acceder a tu cuenta.</p>
-            <a class="btn btn-secondary" id="register" asp-area="Identity" asp-page="/Account/RegisterLogin">Registrarse</a>
             <a class="btn btn-primary" id="login" asp-area="Identity" asp-page="/Account/Login">Iniciar sesión</a>
         }
 

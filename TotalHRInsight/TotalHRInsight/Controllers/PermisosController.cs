@@ -50,8 +50,12 @@ namespace TotalHRInsight.Controllers
         public IActionResult Create()
         {
             ViewData["IdIncidencia"] = new SelectList(_context.Incidencias, "IdIncidencia", "NombreIncidencia");
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
+            var usuarios = _context.Set<ApplicationUser>().Select(u => new {
+                u.Id,
+                NombreCompleto = u.Nombre + " " + u.PrimerApellido
+            }).ToList();
+
+            ViewData["UsuarioAsignacionId"] = new SelectList(usuarios, "Id", "NombreCompleto");
             return View();
         }
 
@@ -69,8 +73,13 @@ namespace TotalHRInsight.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdIncidencia"] = new SelectList(_context.Incidencias, "IdIncidencia", "NombreIncidencia", permiso.IdIncidencia);
+            var usuarios = _context.Set<ApplicationUser>().Select(u => new {
+                u.Id,
+                NombreCompleto = u.Nombre + " " + u.PrimerApellido
+            }).ToList();
+
+            ViewData["UsuarioAsignacionId"] = new SelectList(usuarios, "Id", "NombreCompleto");
             ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", permiso.UsuarioAsignacionId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", permiso.UsuarioCreacionId);
             return View(permiso);
         }
 
