@@ -1,14 +1,13 @@
 ﻿@model TotalHRInsight.DAL.Sucursal
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles sucursal";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Detalles Sucursal</h1>
 
 <div>
-    <h4>Sucursal</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -26,6 +25,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdSucursal">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.IdSucursal">Editar</a> |
+    <a asp-action="Index">Regresar</a>
 </div>

@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<TotalHRInsight.DAL.Sucursal>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Indice Sucursal";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Sucursales</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Crear nuevo registro</a>
 </p>
 <table class="table">
     <thead>
@@ -32,9 +32,10 @@
                 @Html.DisplayFor(modelItem => item.UbicacionSucursal)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdSucursal">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdSucursal">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdSucursal">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.IdSucursal">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.IdSucursal">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdSucursal">Eliminar</a> |
+                <a asp-action="" asp-route-id="@item.IdSucursal">Descargar</a>
             </td>
         </tr>
 }

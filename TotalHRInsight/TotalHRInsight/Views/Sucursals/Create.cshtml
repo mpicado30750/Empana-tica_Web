@@ -1,13 +1,11 @@
 ﻿@model TotalHRInsight.DAL.Sucursal
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Sucursal";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
-
-<h4>Sucursal</h4>
+<h1>Añadir Sucursal</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -23,15 +21,16 @@
                 <input asp-for="UbicacionSucursal" class="form-control" />
                 <span asp-validation-for="UbicacionSucursal" class="text-danger"></span>
             </div>
+            <br/>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Añadir" class="btn btn-danger" />
             </div>
         </form>
     </div>
 </div>
-
+<br/>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Regresar</a>
 </div>
 
 @section Scripts {
