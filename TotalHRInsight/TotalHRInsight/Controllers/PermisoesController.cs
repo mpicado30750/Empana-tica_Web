@@ -9,23 +9,23 @@ using TotalHRInsight.DAL;
 
 namespace TotalHRInsight.Controllers
 {
-    public class PermisosController : Controller
+    public class PermisoesController : Controller
     {
         private readonly TotalHRInsightDbContext _context;
 
-        public PermisosController(TotalHRInsightDbContext context)
+        public PermisoesController(TotalHRInsightDbContext context)
         {
             _context = context;
         }
 
-        // GET: Permisos
+        // GET: Permisoes
         public async Task<IActionResult> Index()
         {
             var totalHRInsightDbContext = _context.Permisos.Include(p => p.Incidencia).Include(p => p.UsuarioAsignacion).Include(p => p.UsuarioCreacion);
             return View(await totalHRInsightDbContext.ToListAsync());
         }
 
-        // GET: Permisos/Details/5
+        // GET: Permisoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,20 +46,16 @@ namespace TotalHRInsight.Controllers
             return View(permiso);
         }
 
-        // GET: Permisos/Create
+        // GET: Permisoes/Create
         public IActionResult Create()
         {
             ViewData["IdIncidencia"] = new SelectList(_context.Incidencias, "IdIncidencia", "NombreIncidencia");
-            var usuarios = _context.Set<ApplicationUser>().Select(u => new {
-                u.Id,
-                NombreCompleto = u.Nombre + " " + u.PrimerApellido
-            }).ToList();
-
-            ViewData["UsuarioAsignacionId"] = new SelectList(usuarios, "Id", "NombreCompleto");
+            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
             return View();
         }
 
-        // POST: Permisos/Create
+        // POST: Permisoes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -73,17 +69,12 @@ namespace TotalHRInsight.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdIncidencia"] = new SelectList(_context.Incidencias, "IdIncidencia", "NombreIncidencia", permiso.IdIncidencia);
-            var usuarios = _context.Set<ApplicationUser>().Select(u => new {
-                u.Id,
-                NombreCompleto = u.Nombre + " " + u.PrimerApellido
-            }).ToList();
-
-            ViewData["UsuarioAsignacionId"] = new SelectList(usuarios, "Id", "NombreCompleto");
             ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", permiso.UsuarioAsignacionId);
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", permiso.UsuarioCreacionId);
             return View(permiso);
         }
 
-        // GET: Permisos/Edit/5
+        // GET: Permisoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -102,7 +93,7 @@ namespace TotalHRInsight.Controllers
             return View(permiso);
         }
 
-        // POST: Permisos/Edit/5
+        // POST: Permisoes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -140,7 +131,7 @@ namespace TotalHRInsight.Controllers
             return View(permiso);
         }
 
-        // GET: Permisos/Delete/5
+        // GET: Permisoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -161,7 +152,7 @@ namespace TotalHRInsight.Controllers
             return View(permiso);
         }
 
-        // POST: Permisos/Delete/5
+        // POST: Permisoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

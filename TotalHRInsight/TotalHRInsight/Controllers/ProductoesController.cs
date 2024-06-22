@@ -9,22 +9,22 @@ using TotalHRInsight.DAL;
 
 namespace TotalHRInsight.Controllers
 {
-    public class ProductosController : Controller
+    public class ProductoesController : Controller
     {
         private readonly TotalHRInsightDbContext _context;
 
-        public ProductosController(TotalHRInsightDbContext context)
+        public ProductoesController(TotalHRInsightDbContext context)
         {
             _context = context;
         }
 
-        // GET: Productos
+        // GET: Productoes
         public async Task<IActionResult> Index()
         {
             return View(await _context.Productos.ToListAsync());
         }
 
-        // GET: Productos/Details/5
+        // GET: Productoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -42,13 +42,13 @@ namespace TotalHRInsight.Controllers
             return View(producto);
         }
 
-        // GET: Productos/Create
+        // GET: Productoes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Productos/Create
+        // POST: Productoes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -64,7 +64,7 @@ namespace TotalHRInsight.Controllers
             return View(producto);
         }
 
-        // GET: Productos/Edit/5
+        // GET: Productoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,7 +80,7 @@ namespace TotalHRInsight.Controllers
             return View(producto);
         }
 
-        // POST: Productos/Edit/5
+        // POST: Productoes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -115,7 +115,7 @@ namespace TotalHRInsight.Controllers
             return View(producto);
         }
 
-        // GET: Productos/Delete/5
+        // GET: Productoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,7 +133,7 @@ namespace TotalHRInsight.Controllers
             return View(producto);
         }
 
-        // POST: Productos/Delete/5
+        // POST: Productoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
