@@ -1,60 +1,97 @@
-﻿@model IEnumerable<TotalHRInsight.DAL.Asistencia>
+﻿@model IEnumerable<TotalHRInsight.Models.AsistenciaModel>
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+@* <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+	<a asp-action="Create">Create New</a>
 </p>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaEntrada)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaSalida)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UbicacionEntrada)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UbicacionSalida)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioCreacion)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaEntrada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaSalida)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UbicacionEntrada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UbicacionSalida)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioCreacion.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdAsistencia">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdAsistencia">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdAsistencia">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.FechaEntrada)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.FechaSalida)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LatitudEntrada)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LongitudEntrada)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LatitudSalida)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LongitudSalida)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.UsuarioCreacion)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.FechaEntrada)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.FechaSalida)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.LatitudEntrada)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.LongitudEntrada)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.LatitudSalida)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.LongitudSalida)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.UsuarioCreacion)
+				</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+					<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+					<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>
+ *@
+<script src="~/lib/leaflet/leaflet.js"></script>
+<script src="~/lib/leaflet/leaflet.min.js"></script>
+
+
+<div id="map" style="width: 800px; height: 600px;"></div>
+
+<script>
+	var map = L.map('map').setView([9.895403, -84.063574], 15);
+
+	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+	}).addTo(map);
+
+	var jsModel = @Html.Raw(Json.Serialize(Model));
+	console.log(jsModel);
+
+	for (i in jsModel) {
+		console.log(jsModel);
+		item = jsModel[i];
+		L.marker([item.latitudEntrada, item.longitudEntrada]).addTo(map)
+			.bindPopup(item.UsuarioCreacion + '<br>' + 'Entrada');
+	}
+</script>

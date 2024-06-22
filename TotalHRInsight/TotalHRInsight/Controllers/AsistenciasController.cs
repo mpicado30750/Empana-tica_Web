@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TotalHRInsight.DAL;
+using TotalHRInsight.Models;
 
 namespace TotalHRInsight.Controllers
 {
@@ -21,9 +23,57 @@ namespace TotalHRInsight.Controllers
         // GET: Asistencias
         public async Task<IActionResult> Index()
         {
-            var totalHRInsightDbContext = _context.Asistencias.Include(a => a.UsuarioCreacion);
-            return View(await totalHRInsightDbContext.ToListAsync());
+            var asistencias = await _context.Asistencias
+                .Include(a => a.UsuarioCreacion)
+                .ToListAsync();
+
+            var viewModel = asistencias.Select(a => new AsistenciaModel
+            {
+                Id = a.IdAsistencia,
+                FechaEntrada = a.FechaEntrada,
+                FechaSalida = a.FechaSalida,
+                LatitudEntrada = ConvertirLatitud(a.UbicacionEntrada),
+                LongitudEntrada = ConvertirLongitud(a.UbicacionEntrada) ?? 0.0, // Manejo de valor null
+                LatitudSalida = ConvertirLatitud(a.UbicacionSalida),
+                LongitudSalida = ConvertirLongitud(a.UbicacionSalida) ?? 0.0, // Manejo de valor null
+                UsuarioCreacionId = a.UsuarioCreacionId,
+                UsuarioCreacion = a.UsuarioCreacion.UserName
+            }).ToList();
+
+            return View(viewModel);
         }
+
+
+
+        private static double ConvertirLatitud(string input)
+        {
+            int startIndex = input.IndexOf("lat:") + 4;
+            int endIndex = input.IndexOf(",", startIndex);
+
+            if (startIndex < 0 || endIndex < 0)
+            {
+                throw new ArgumentException("Formato de cadena no válido para latitud.");
+            }
+
+            string latStr = input.Substring(startIndex, endIndex - startIndex);
+            return double.Parse(latStr, CultureInfo.InvariantCulture);
+        }
+
+        private static double? ConvertirLongitud(string input)
+        {
+            int startIndex = input.IndexOf("lng:") + 4;
+            int endIndex = input.IndexOf(")", startIndex);
+
+            if (startIndex < 0 || endIndex < 0)
+            {
+                return null; // Devuelve null si no se puede encontrar la longitud
+            }
+
+            string lngStr = input.Substring(startIndex, endIndex - startIndex);
+            return double.Parse(lngStr, CultureInfo.InvariantCulture);
+        }
+
+
 
         // GET: Asistencias/Details/5
         public async Task<IActionResult> Details(int? id)
