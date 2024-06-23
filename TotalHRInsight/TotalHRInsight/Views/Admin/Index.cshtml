@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<UserRoleViewModel>
 
 @{
-    ViewData["Title"] = "Índice";
+    ViewData["Title"] = "Índice Usuarios";
 }
 
 <p>
@@ -17,11 +17,11 @@
                 <p class="card-text">Estado: @{
                         if (@viewModel.User.Estado)
                         {
-                            <a>Actvio</a>
+                            <a>Activo</a>
                         }
                         else
                         {
-                            <a>Desactivado</a>
+                            <a>Inactivo</a>
                         }
                     }</p>
                 <p class="card-text">Rol(es): @string.Join(", ", viewModel.Roles)</p>

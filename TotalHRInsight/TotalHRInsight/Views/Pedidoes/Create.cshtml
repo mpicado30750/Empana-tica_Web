@@ -1,13 +1,12 @@
 ﻿@model TotalHRInsight.DAL.Pedido
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Pedidos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Crear Pedidos</h1>
 
-<h4>Pedido</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -36,15 +35,16 @@
                 <input asp-for="MontoTotal" class="form-control" />
                 <span asp-validation-for="MontoTotal" class="text-danger"></span>
             </div>
+            <br/>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-danger" />
             </div>
         </form>
     </div>
 </div>
-
+<br/>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Regresar</a>
 </div>
 
 @section Scripts {
