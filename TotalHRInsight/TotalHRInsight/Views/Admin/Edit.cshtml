@@ -1,7 +1,7 @@
 ﻿@model EditUserViewModel
 
 @{
-    ViewData["Title"] = "Edit User Role";
+    ViewData["Title"] = "Editar Role de Usuario";
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -68,7 +68,7 @@
         <select asp-for="SelectedRoleId" asp-items="@ViewBag.Roles" class="form-control"></select>
         <span asp-validation-for="SelectedRoleId" class="text-danger"></span>
     </div>
-
-    <button type="submit" class="btn btn-primary">Update Role</button>
-    <a href="/Admin/Index" class="btn btn-secondary">Volver a Usuarios</a>
+    <br />
+    <button type="submit" class="btn btn-danger">Actualizar Role</button>
+    <a href="/Admin/Index" class="btn btn-secondary">Regresar</a>
 </form>
