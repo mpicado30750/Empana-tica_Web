@@ -23,7 +23,8 @@ namespace TotalHRInsight.Controllers
         // GET: Asistencias
         public async Task<IActionResult> Index()
         {
-            var asistencias = await _context.Asistencias
+			
+			var asistencias = await _context.Asistencias
                 .Include(a => a.UsuarioCreacion)
                 .ToListAsync();
 
@@ -37,8 +38,11 @@ namespace TotalHRInsight.Controllers
                 LatitudSalida = ConvertirLatitud(a.UbicacionSalida),
                 LongitudSalida = ConvertirLongitud(a.UbicacionSalida) ?? 0.0, // Manejo de valor null
                 UsuarioCreacionId = a.UsuarioCreacionId,
-                UsuarioCreacion = a.UsuarioCreacion.UserName
-            }).ToList();
+                UsuarioCreacion = a.UsuarioCreacion.UserName,
+                Nombre = a.UsuarioCreacion.Nombre,
+                PrimerApellido = a.UsuarioCreacion.PrimerApellido,
+                SegundoApellido = a.UsuarioCreacion.SegundoApellido
+			}).ToList();
 
             return View(viewModel);
         }
@@ -94,8 +98,8 @@ namespace TotalHRInsight.Controllers
             return View(asistencia);
         }
 
-        // GET: Asistencias/Create
-        public IActionResult Create()
+		// GET: Asistencias/Create
+		public IActionResult Create()
         {
             ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
             return View();

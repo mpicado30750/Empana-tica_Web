@@ -13,5 +13,8 @@ namespace TotalHRInsight.Models
         public double? LongitudSalida { get; set; }
         public string UsuarioCreacionId { get; set; }
         public string UsuarioCreacion { get; set; }
-    }
+		public string Nombre { get; set; }
+		public string PrimerApellido { get; set; }
+		public string SegundoApellido { get; set; }
+	}
 }
