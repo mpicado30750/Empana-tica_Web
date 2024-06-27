@@ -89,20 +89,20 @@ body {
 
 /* Footer styling to match the navbar */
 .footer {
-    background-color: #be2324; /* Same background color as the navbar */
-    color: #1F2D2B; /* Same text color as the navbar */
-    margin-right: 100px; /* Match the margin to sidebar width */
+    color: #ffffff;
+    margin-right: 100px; /* Align margin with the sidebar width */
     clear: both;
 }
 
     .footer a {
-        color: #1F2D2B; /* Ensure links in the footer match the navbar link color */
+        color: #ffffff; /* Match link color with the navbar links */
         text-decoration: none;
     }
 
         .footer a:hover {
-            color: #E29E3D; /* Same hover color as the navbar links */
+            color: #E29E3D; /* Match hover color with the navbar links */
         }
+
 
 @media (max-width: 768px) {
     .sidebar {
@@ -119,9 +119,4 @@ body {
     .main-content {
         margin-left: 0;
     }
-
-    .footer {
-        margin-right: 0;
-    }
-
 }

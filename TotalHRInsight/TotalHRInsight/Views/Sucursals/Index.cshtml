@@ -8,7 +8,9 @@
 <h1>Sucursales</h1>
 
 <p>
-    <a asp-action="Create">Crear nuevo registro</a>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Crear nuevo registro
+    </a>
 </p>
 <table class="table">
     <thead>
@@ -32,10 +34,21 @@
                 @Html.DisplayFor(modelItem => item.UbicacionSucursal)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdSucursal">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.IdSucursal">Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdSucursal">Eliminar</a> |
-                <a asp-action="" asp-route-id="@item.IdSucursal">Descargar</a>
+                <a asp-action="Edit" asp-route-id="@item.IdSucursal" class="btn btn-sm btn-warning">
+                    <i class="bi bi-pencil-square"></i> Editar
+                </a>
+                |
+                <a asp-action="Details" asp-route-id="@item.IdSucursal" class="btn btn-sm btn-info">
+                    <i class="bi bi-info-circle"></i> Detalles
+                </a>
+                |
+                <a asp-action="Delete" asp-route-id="@item.IdSucursal" class="btn btn-sm btn-danger">
+                    <i class="bi bi-trash"></i> Eliminar
+                </a>
+                |
+                <a asp-action="Download" asp-route-id="@item.IdSucursal" class="btn btn-sm btn-success">
+                    <i class="bi bi-download"></i> Descargar
+                </a>
             </td>
         </tr>
 }

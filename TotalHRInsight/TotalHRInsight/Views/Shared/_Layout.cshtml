@@ -4,12 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TotalHRInsight</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/TotalHRInsight.styles.css" asp-append-version="true" />
-	<link href="~/lib/leaflet/leaflet.css" rel="stylesheet" />
-	<link href="~/lib/leaflet/leaflet.min.css" rel="stylesheet" />
+    <style>
+        /* Estilos personalizados */
+        .footer-text {
+            font-size: 0.9rem; /* Tamaño de fuente más pequeño para TotalHRInsight */
+        }
+    </style>
 </head>
 <body>
     <div class="d-flex">
@@ -17,11 +19,10 @@
             <h3 class="sidebar-heading">
                 <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
                     <span style="color: #FFFFFF; font-weight: bold; margin-right: 10px;">TotalHRInsight</span>
-                    <img src="~/images/Empana-tica_Logo.jpg" class="img-fluid" alt="Empana-tica_Logo" style="max-height: 30px;">
+                    <img src="~/images/Empana-tica_Logo.jpg" class="img-fluid" alt="Empana-tica Logo" style="max-height: 30px;">
                 </a>
             </h3>
             <ul class="nav flex-column">
-
                 <li class="nav-item">
                     <a class="nav-link text-light" asp-area="" asp-controller="Asistencias" asp-action="Index">Asistencia</a>
                 </li>
@@ -49,6 +50,18 @@
                 <li class="nav-item">
                     <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="Index">Usuarios</a>
                 </li>
+
+                <!-- Footer dentro del sidebar -->
+                <li class="nav-item mt-auto">
+                    <hr class="bg-light" />
+                    <span>
+                          &copy; 2024
+                    </span>
+                    <span>
+                        <a class="nav-link text-muted footer-text" asp-area="" asp-controller="Home" asp-action="FirstPage">TotalHRInsight</a>
+                        <a class="nav-link text-muted footer-text" asp-area="" asp-controller="Home" asp-action="Privacy">Sobre Nosotros</a>
+                    </span>
+                </li>
             </ul>
         </nav>
 
@@ -60,7 +73,7 @@
 
                         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                             <ul class="navbar-nav flex-grow-1">
-                                <!-- Additional nav items can go here -->
+                                <!-- Info Adicional -->
                             </ul>
                             <partial name="_LoginPartial" />
                         </div>
@@ -75,16 +88,8 @@
         </div>
     </div>
 
-    <footer class="footer border-top py-3 mt-4">
-        <div class="container">
-            <span style="font-weight: bold;">&copy; 2024 - <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TotalHRInsight</a> - </span>
-            <a asp-area="" asp-controller="Home" asp-action="InfoEmpanatica" class="footer-text">Sobre Nosotros</a>
-        </div>
-    </footer>
-
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
