@@ -6,71 +6,51 @@
     <title>@ViewData["Title"] - TotalHRInsight</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <style>
-        /* Estilos personalizados */
-        .footer-text {
-            font-size: 0.9rem; /* Tamaño de fuente más pequeño para TotalHRInsight */
-        }
-    </style>
 </head>
 <body>
     <div class="d-flex">
-        <nav class="sidebar bg-dark text-light p-3">
-            <h3 class="sidebar-heading">
-                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
-                    <span style="color: #FFFFFF; font-weight: bold; margin-right: 10px;">TotalHRInsight</span>
-                    <img src="~/images/Empana-tica_Logo.jpg" class="img-fluid" alt="Empana-tica Logo" style="max-height: 30px;">
-                </a>
-            </h3>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link text-light" asp-area="" asp-controller="Asistencias" asp-action="Index">Asistencia</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" asp-area="" asp-controller="Incidencias" asp-action="Index">Incidencia</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" asp-area="" asp-controller="Productoes" asp-action="Index">Inventario</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" asp-area="" asp-controller="Planillas" asp-action="Index">Planilla</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" asp-area="" asp-controller="Permisoes" asp-action="Index">Permiso</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" asp-area="" asp-controller="Pedidoes" asp-action="Index">Pedidos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" asp-area="" asp-controller="PedidosProductos" asp-action="Index">PedidosProductos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" asp-area="" asp-controller="Sucursals" asp-action="Index">Sucursales</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="Index">Usuarios</a>
-                </li>
-
-                <!-- Footer dentro del sidebar -->
-                <li class="nav-item mt-auto">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <nav class="sidebar bg-dark text-light d-flex flex-column p-3" style="min-height: 100vh;" aria-label="Sidebar">
+                <h3 class="sidebar-heading">
+                    <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                        <span style="color: #FFFFFF; font-weight: bold; margin-right: 10px;">TotalHRInsight</span>
+                        <img src="~/images/Empana-tica_Logo.jpg" class="img-fluid" alt="Empana-tica Logo" style="max-height: 30px;">
+                    </a>
+                </h3>
+                <ul class="nav flex-column mb-auto">
+                    @foreach (var link in new [] {
+                        new { Area = "", Controller = "Asistencias", Action = "Index", Text = "Asistencia" },
+                        new { Area = "", Controller = "Incidencias", Action = "Index", Text = "Incidencia" },
+                        new { Area = "", Controller = "Productoes", Action = "Index", Text = "Inventario" },
+                        new { Area = "", Controller = "Planillas", Action = "Index", Text = "Planilla" },
+                        new { Area = "", Controller = "Permisoes", Action = "Index", Text = "Permiso" },
+                        new { Area = "", Controller = "Pedidoes", Action = "Index", Text = "Pedidos" },
+                        new { Area = "", Controller = "PedidosProductos", Action = "Index", Text = "PedidosProductos" },
+                        new { Area = "", Controller = "Sucursals", Action = "Index", Text = "Sucursales" },
+                        new { Area = "", Controller = "Admin", Action = "Index", Text = "Usuarios" }
+                    })
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="@link.Area" asp-controller="@link.Controller" asp-action="@link.Action">@link.Text</a>
+                        </li>
+                    }
+                </ul>
+                <div class="mt-auto">
                     <hr class="bg-light" />
+                    <span>&copy; 2024</span>
                     <span>
-                          &copy; 2024
-                    </span>
-                    <span>
-                        <a class="nav-link text-muted footer-text" asp-area="" asp-controller="Home" asp-action="FirstPage">TotalHRInsight</a>
+                        <a class="nav-link text-muted footer-text" asp-area="" asp-controller="Home" asp-action="Index">TotalHRInsight</a>
                         <a class="nav-link text-muted footer-text" asp-area="" asp-controller="Home" asp-action="Privacy">Sobre Nosotros</a>
                     </span>
-                </li>
-            </ul>
-        </nav>
-
+                </div>
+            </nav>
+        }
         <div class="main-content flex-grow-1">
             <header>
                 <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
                     <div class="container-fluid">
-                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TotalHRInsight</a>
-
+                        <span class="navbar-brand">TotalHRInsight</span>
                         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                             <ul class="navbar-nav flex-grow-1">
                                 <!-- Info Adicional -->

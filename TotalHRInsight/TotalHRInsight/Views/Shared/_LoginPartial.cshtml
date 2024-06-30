@@ -35,8 +35,8 @@
             var roles = UserManager.GetRolesAsync(user).Result;
             if (roles != null && roles.Count > 0)
             {
-                // Assuming a user has only one role, return the first one.
-                return $"{roles.First()} {user.Nombre} {user.PrimerApellido}";
+                // Assuming a user has only one role, return the first one in the desired format.
+                return $"{roles.First()}, {user.Nombre} {user.PrimerApellido}";
             }
         }
         return "Error ";

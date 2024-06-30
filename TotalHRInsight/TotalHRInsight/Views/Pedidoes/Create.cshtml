@@ -1,12 +1,13 @@
 ﻿@model TotalHRInsight.DAL.Pedido
 
 @{
-    ViewData["Title"] = "Crear Pedidos";
+    ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Crear Pedidos</h1>
+<h1>Create</h1>
 
+<h4>Pedido</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,7 +20,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="UsuarioCreacionId" class="control-label"></label>
-                <select asp-for="UsuarioCreacionId" class ="form-control" asp-items="ViewBag.UsuarioCrecionId"></select>
+                <select asp-for="UsuarioCreacionId" class ="form-control" asp-items="ViewBag.UsuarioCreacionId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="IdSucursal" class="control-label"></label>
@@ -35,16 +36,15 @@
                 <input asp-for="MontoTotal" class="form-control" />
                 <span asp-validation-for="MontoTotal" class="text-danger"></span>
             </div>
-            <br/>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-danger" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-<br/>
+
 <div>
-    <a asp-action="Index">Regresar</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

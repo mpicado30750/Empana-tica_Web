@@ -1,33 +1,17 @@
 ﻿@{
-    ViewData["Title"] = "Página Principal";
-    bool isLoggedIn = User.Identity.IsAuthenticated;
-    string userRole = isLoggedIn ? User.IsInRole("Administrador") ? "Administrador" : "Supervisor" : "Usuario";
+    ViewData["Title"] = "Index";
 }
 
-<div class="container">
-    <div class="login-box">
-        <h1 class="display-2">Bienvenido, @userRole!</h1>
-        @if (isLoggedIn)
-        {
-            if (userRole == "Administrador")
-            {
-                <p>Bienvenido al panel de administración donde puedes gestionar todos los aspectos de la aplicación.</p>
-            }
-            else if (userRole == "Supervisor")
-            {
-                <p>¡Bienvenido, estimado Supervisor!.</p>
-            }
-            else
-            {
-                <p>¡Bienvenido a nuestro sitio, estimado cliente!.</p>
-            }
-        }
-        else
-        {
-            <p>Por favor, inicia sesión para acceder a tu cuenta.</p>
-            <a class="btn btn-danger" id="login" asp-area="Identity" asp-page="/Account/Login">Iniciar sesión</a>
-        }
-
+<div class="container-fluid bg-light p-5 text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="display-4">Bienvenido a TotalHRInsight</h1>
+            <p class="lead">TotalHRInsight es un sistema administrativo para la empresa <span style="color: #B42D29;">Empana-tica</span>.</p>
+            <hr class="my-4">
+            <p>En esta plataforma podrás gestionar diversos aspectos relacionados con recursos humanos, inventario, sucursales, planillas, permisos, asistencias, pedidos y más.</p>
+            <div class="text-center">
+                <img src="~/images/Empana-tica_Logo.jpg" class="img-fluid mx-auto d-block" style="max-width: 50%;" alt="Logo de Empana-tica">
+            </div>
+        </div>
     </div>
 </div>
-
