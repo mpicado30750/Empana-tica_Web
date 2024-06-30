@@ -49,7 +49,7 @@ namespace TotalHRInsight.Controllers
         public IActionResult Create()
         {
             ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre");
             return View();
         }
 
@@ -67,7 +67,7 @@ namespace TotalHRInsight.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", pedido.IdSucursal);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", pedido.UsuarioCreacionId);
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", pedido.UsuarioCreacionId);
             return View(pedido);
         }
 
@@ -85,7 +85,7 @@ namespace TotalHRInsight.Controllers
                 return NotFound();
             }
             ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", pedido.IdSucursal);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", pedido.UsuarioCreacionId);
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", pedido.UsuarioCreacionId);
             return View(pedido);
         }
 
@@ -122,7 +122,7 @@ namespace TotalHRInsight.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", pedido.IdSucursal);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", pedido.UsuarioCreacionId);
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", pedido.UsuarioCreacionId);
             return View(pedido);
         }
 
