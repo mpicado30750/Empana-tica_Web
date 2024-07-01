@@ -18,11 +18,6 @@ namespace TotalHRInsight.Controllers
             return View();
         }
 
-        public IActionResult FirstPage()
-        {
-            return View();
-        }
-
         public IActionResult Privacy()
         {
             return View();
