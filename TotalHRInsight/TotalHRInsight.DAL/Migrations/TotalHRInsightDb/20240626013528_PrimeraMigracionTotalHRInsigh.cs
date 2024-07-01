@@ -171,7 +171,9 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                     FechaInicio = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     FechaFin = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     CantidadDias = table.Column<int>(type: "int", nullable: false),
-                    Estado = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Estado = table.Column<bool>(type: "tinyint(0)", nullable: false),
+                    Comentario = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     IdIncidencia = table.Column<int>(type: "int", nullable: false),
                     UsuarioCreacionId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),

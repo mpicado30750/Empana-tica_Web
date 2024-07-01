@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,24 +23,28 @@ namespace TotalHRInsight.DAL
 		public int CantidadDias { get; set; }
 
 		[Required(ErrorMessage = "El estado es obligatorio")]
-		public bool Estado { get; set; }
+        [DefaultValue(false)]
+        public bool Estado { get; set; }
 
-		[Required(ErrorMessage = "El ID de la incidencia es obligatorio")]
-		public int IdIncidencia { get; set; }
+        [DefaultValue("")]
+        public string Comentario { get; set; }
+
+        [Required(ErrorMessage = "El ID de la incidencia es obligatorio")]
+        [ForeignKey("Incidencia")]
+        public int IdIncidencia { get; set; }
 
 		[Required(ErrorMessage = "El ID del usuario de creación es obligatorio")]
-		public string UsuarioCreacionId { get; set; }
+        [ForeignKey("UsuarioCreacion")]
+        public string UsuarioCreacionId { get; set; }
 
 		[Required(ErrorMessage = "El ID del usuario asignacion es obligatorio")]
-		public string UsuarioAsignacionId { get; set; }
+        [ForeignKey("UsuarioAsignacion")]
+        public string UsuarioAsignacionId { get; set; }
 
-		[ForeignKey("IdIncidencia")]
 		public Incidencia? Incidencia { get; set; }
 
-		[ForeignKey("UsuarioCreacionId")]
 		public ApplicationUser? UsuarioCreacion { get; set; }
 
-		[ForeignKey("UsuarioAsignacionId")]
 		public ApplicationUser? UsuarioAsignacion { get; set; }
 	}
 }

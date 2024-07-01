@@ -9,14 +9,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Security.Claims;
 using TotalHRInsight.DAL;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;  // Asegúrate de que el namespace es correcto
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var port = builder.Configuration["PORT"];
 
 //set listening urls
-builder.WebHost.UseUrls($"http://*:{port}");
+//builder.WebHost.UseUrls($"http://*:{port}");
 
 // Connection string
 var connectionString = builder.Configuration.GetConnectionString("ConnTHRIDB") ?? throw new InvalidOperationException("Connection string 'ConnTHRIDB' not found.");
