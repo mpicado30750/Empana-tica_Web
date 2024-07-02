@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<TotalHRInsight.DAL.Permiso>
 
 @{
-    ViewData["Title"] = "Indice Permisos";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Permisos</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Crear nuevo registro</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -24,6 +24,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comentario)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Incidencia)
@@ -53,6 +56,9 @@
                 @Html.DisplayFor(modelItem => item.Estado)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Comentario)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Incidencia.NombreIncidencia)
             </td>
             <td>
@@ -62,10 +68,9 @@
                 @Html.DisplayFor(modelItem => item.UsuarioAsignacion.Id)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdPermisos">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.IdPermisos">Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdPermisos">Eliminar</a> |
-                <a asp-action="" asp-route-id="@item.IdPermisos">Descargar</a>
+                    <a asp-action="Edit" asp-route-IdPermisos="@item.IdPermisos">Edit</a> |
+                    <a asp-action="Details" asp-route-IdPermisos="@item.IdPermisos">Details</a> |
+                    <a asp-action="Delete" asp-route-IdPermisos="@item.IdPermisos">Delete</a>
             </td>
         </tr>
 }

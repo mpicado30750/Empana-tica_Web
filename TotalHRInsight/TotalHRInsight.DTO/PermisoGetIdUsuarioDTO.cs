@@ -12,6 +12,7 @@ namespace TotalHRInsight.DTO
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
         public string Comentario { get; set; }
+        public int IdIncidencia { get; set; }
         public int CantidadDias { get; set; }
         public bool Estado { get; set; }
         public string UsuarioCreacionId { get; set; }

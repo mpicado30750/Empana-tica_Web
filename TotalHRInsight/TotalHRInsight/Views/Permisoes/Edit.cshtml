@@ -1,13 +1,13 @@
 ﻿@model TotalHRInsight.DAL.Permiso
 
 @{
-    ViewData["Title"] = "Editar Permisos";
+    ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Editar Permisos</h1>
+<h1>Edit</h1>
 
-
+<h4>Permiso</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -35,6 +35,11 @@
                 </label>
             </div>
             <div class="form-group">
+                <label asp-for="Comentario" class="control-label"></label>
+                <input asp-for="Comentario" class="form-control" />
+                <span asp-validation-for="Comentario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="IdIncidencia" class="control-label"></label>
                 <select asp-for="IdIncidencia" class="form-control" asp-items="ViewBag.IdIncidencia"></select>
                 <span asp-validation-for="IdIncidencia" class="text-danger"></span>
@@ -49,16 +54,15 @@
                 <select asp-for="UsuarioAsignacionId" class="form-control" asp-items="ViewBag.UsuarioAsignacionId"></select>
                 <span asp-validation-for="UsuarioAsignacionId" class="text-danger"></span>
             </div>
-            <br />
             <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-danger" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-<br />
+
 <div>
-    <a asp-action="Index">Regresar</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

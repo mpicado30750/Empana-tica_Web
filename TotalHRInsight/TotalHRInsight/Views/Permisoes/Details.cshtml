@@ -1,13 +1,14 @@
 ﻿@model TotalHRInsight.DAL.Permiso
 
 @{
-    ViewData["Title"] = "Detalles Permisos";
+    ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Detalles Permisos</h1>
+<h1>Details</h1>
 
 <div>
+    <h4>Permiso</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -35,6 +36,12 @@
             @Html.DisplayFor(model => model.Estado)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Comentario)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Comentario)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Incidencia)
         </dt>
         <dd class = "col-sm-10">
@@ -55,6 +62,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdPermisos">Editar</a> |
-    <a asp-action="Index">Regresar</a>
+    <a asp-action="Edit" asp-route-id="@Model?.IdPermisos">Edit</a> |
+    <a asp-action="Index">Back to List</a>
 </div>

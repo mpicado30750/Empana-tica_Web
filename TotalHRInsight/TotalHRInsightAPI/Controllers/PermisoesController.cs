@@ -33,6 +33,7 @@ namespace TotalHRInsightAPI.Controllers
                                             FechaInicio = p.FechaInicio,
                                             FechaFin = p.FechaFin,
                                             Estado = p.Estado,
+                                            IdIncidencia = p.IdIncidencia,
                                             Comentario = p.Comentario,
                                             UsuarioCreacionId = p.UsuarioCreacionId
                                         })
@@ -58,6 +59,7 @@ namespace TotalHRInsightAPI.Controllers
                 FechaFin = permisoDto.FechaFin,
                 Comentario = permisoDto.Comentario,
                 CantidadDias = permisoDto.CantidadDias,
+                IdIncidencia = permisoDto.IdIncidencia,
                 Estado = permisoDto.Estado,
                 UsuarioCreacionId = permisoDto.UsuarioCreacionId,
                 UsuarioAsignacionId = permisoDto.UsuarioAsignacionId
@@ -66,7 +68,7 @@ namespace TotalHRInsightAPI.Controllers
             _context.Permisos.Add(permiso);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPermiso", new { id = permiso.IdPermisos }, permiso);
+            return Ok(permiso);
         }
 
 

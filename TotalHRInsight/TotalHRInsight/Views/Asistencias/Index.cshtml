@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<TotalHRInsight.Models.AsistenciaModel>
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
-@* <div class="container-fluid"> *@
-    @* <div class="row"> *@
+<div class="container-fluid">
+    <div class="row">
         <div class="col-md-5" style="height: 600px; overflow-y: scroll;">
             <div class="input-group mb-3">
                 <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre">
@@ -34,28 +34,17 @@
                 }
             </div>
         </div>
-            <div id="map" style="width:  100%; height: 600px;"></div>
-    @* </div> *@
-@* </div> *@
+        <div class="col-md-7">
+            <div id="mapaUbicacion" style="width: 100%; height: 600px;"></div>
+        </div>
+    </div>
+</div>
 
 <script src="~/lib/leaflet/leaflet.js"></script>
 <script src="~/lib/leaflet/leaflet.min.js"></script>
+
 <script>
-    var map = L.map('map').setView([9.895403, -84.063574], 15);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-    var jsModel = @Html.Raw(Json.Serialize(Model));
-    console.log(jsModel);
-    for (i in jsModel) {
-        ClipboardItem = jsModel[i]
-        L.marker([item.latitudEntrada, item.longitudEntrada]).addTo(map)
-            .bindPopup(item.nombre + ' ' + item.primerApellido)
-            .openPopup();
-    }
-</script>
-@* <script>
-    var map = L.map('map').setView([9.895403, -84.063574], 15);
+    var map = L.map('mapaUbicacion').setView([9.895403, -84.063574], 15);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -162,4 +151,4 @@
             console.error("Error en filterCards: " + error);
         }
     }
-</script> *@
+</script>
