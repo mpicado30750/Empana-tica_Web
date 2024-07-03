@@ -26,9 +26,9 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Permisoes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? IdPermisos)
         {
-            if (id == null)
+            if (IdPermisos == null)
             {
                 return NotFound();
             }
@@ -37,7 +37,7 @@ namespace TotalHRInsight.Controllers
                 .Include(p => p.Incidencia)
                 .Include(p => p.UsuarioAsignacion)
                 .Include(p => p.UsuarioCreacion)
-                .FirstOrDefaultAsync(m => m.IdPermisos == id);
+                .FirstOrDefaultAsync(m => m.IdPermisos == IdPermisos);
             if (permiso == null)
             {
                 return NotFound();
@@ -50,8 +50,8 @@ namespace TotalHRInsight.Controllers
         public IActionResult Create()
         {
             ViewData["IdIncidencia"] = new SelectList(_context.Incidencias, "IdIncidencia", "NombreIncidencia");
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre");
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre");
+            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
             return View();
         }
 
@@ -60,7 +60,7 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdPermisos,FechaInicio,FechaFin,CantidadDias,Estado,IdIncidencia,UsuarioCreacionId,UsuarioAsignacionId")] Permiso permiso)
+        public async Task<IActionResult> Create( Permiso permiso)
         {
             if (ModelState.IsValid)
             {
@@ -69,27 +69,27 @@ namespace TotalHRInsight.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdIncidencia"] = new SelectList(_context.Incidencias, "IdIncidencia", "NombreIncidencia", permiso.IdIncidencia);
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioAsignacionId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioCreacionId);
+            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", permiso.UsuarioAsignacionId);
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", permiso.UsuarioCreacionId);
             return View(permiso);
         }
 
         // GET: Permisoes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? IdPermisos)
         {
-            if (id == null)
+            if (IdPermisos == null)
             {
                 return NotFound();
             }
 
-            var permiso = await _context.Permisos.FindAsync(id);
+            var permiso = await _context.Permisos.FindAsync(IdPermisos);
             if (permiso == null)
             {
                 return NotFound();
             }
             ViewData["IdIncidencia"] = new SelectList(_context.Incidencias, "IdIncidencia", "NombreIncidencia", permiso.IdIncidencia);
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioAsignacionId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioCreacionId);
+            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", permiso.UsuarioAsignacionId);
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", permiso.UsuarioCreacionId);
             return View(permiso);
         }
 
@@ -98,9 +98,9 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdPermisos,FechaInicio,FechaFin,CantidadDias,Estado,IdIncidencia,UsuarioCreacionId,UsuarioAsignacionId")] Permiso permiso)
+        public async Task<IActionResult> Edit(int IdPermisos, Permiso permiso)
         {
-            if (id != permiso.IdPermisos)
+            if (IdPermisos != permiso.IdPermisos)
             {
                 return NotFound();
             }
@@ -126,15 +126,15 @@ namespace TotalHRInsight.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdIncidencia"] = new SelectList(_context.Incidencias, "IdIncidencia", "NombreIncidencia", permiso.IdIncidencia);
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioAsignacionId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioCreacionId);
+            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", permiso.UsuarioAsignacionId);
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", permiso.UsuarioCreacionId);
             return View(permiso);
         }
 
         // GET: Permisoes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? IdPermisos)
         {
-            if (id == null)
+            if (IdPermisos == null)
             {
                 return NotFound();
             }
@@ -143,7 +143,7 @@ namespace TotalHRInsight.Controllers
                 .Include(p => p.Incidencia)
                 .Include(p => p.UsuarioAsignacion)
                 .Include(p => p.UsuarioCreacion)
-                .FirstOrDefaultAsync(m => m.IdPermisos == id);
+                .FirstOrDefaultAsync(m => m.IdPermisos == IdPermisos);
             if (permiso == null)
             {
                 return NotFound();
@@ -155,11 +155,11 @@ namespace TotalHRInsight.Controllers
         // POST: Permisoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int IdPermisos)
         {
-            var permiso = await _context.Permisos.FindAsync(id);
+            var permiso = await _context.Permisos.FindAsync(IdPermisos);
             if (permiso != null)
-            {
+            { 
                 _context.Permisos.Remove(permiso);
             }
 
@@ -167,9 +167,9 @@ namespace TotalHRInsight.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PermisoExists(int id)
+        private bool PermisoExists(int IdPermisos)
         {
-            return _context.Permisos.Any(e => e.IdPermisos == id);
+            return _context.Permisos.Any(e => e.IdPermisos == IdPermisos);
         }
     }
 }
