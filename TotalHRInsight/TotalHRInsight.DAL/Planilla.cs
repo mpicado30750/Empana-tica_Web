@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,18 +11,21 @@ namespace TotalHRInsight.DAL
 	{
 		[Key]
 		public int IdPlanilla { get; set; }
-
-		[Required(ErrorMessage = "La fecha de inicio es obligatoria")]
+        [DisplayName("Fecha de Inicio")]
+        [Required(ErrorMessage = "La fecha de inicio es obligatoria")]
 		public DateTime FechaInicio { get; set; }
 
 		[Required(ErrorMessage = "La fecha de fin es obligatoria")]
-		public DateTime FechaFin { get; set; }
+        [DisplayName("Fecha de Fin")]
+        public DateTime FechaFin { get; set; }
 
 		[Required(ErrorMessage = "El monto total es obligatorio")]
 		[Column(TypeName = "decimal(18,2)")]
-		public decimal MontoTotal { get; set; }
+        [DisplayName("Monto total")]
+        public decimal MontoTotal { get; set; }
+        [DisplayName("Asignado Por")]
 
-		[Required(ErrorMessage = "El ID del usuario de creación es obligatorio")]
+        [Required(ErrorMessage = "El usuario de creación es obligatorio")]
 		public string UsuarioCreacionId { get; set; }
 
 		public int IdAsistencia { get; set; }

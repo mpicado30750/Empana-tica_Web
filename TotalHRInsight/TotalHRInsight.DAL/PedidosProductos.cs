@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -25,7 +26,8 @@ namespace TotalHRInsight.DAL
 
 		[Required(ErrorMessage = "La medida es obligatoria")]
 		[MaxLength(50, ErrorMessage = "La medida no puede exceder los 50 caracteres")]
-		public string Medida { get; set; }
+        [DisplayName("Unidad de Medida")]
+        public string Medida { get; set; }
 
 		public Producto? Producto { get; set; }
 		public Pedido? Pedido { get; set; }
