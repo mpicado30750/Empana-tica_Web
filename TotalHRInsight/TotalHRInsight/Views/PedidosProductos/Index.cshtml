@@ -1,15 +1,16 @@
 ﻿@model IEnumerable<TotalHRInsight.DAL.PedidosProductos>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Indice PedidosProducto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1>
+    Pedidos & Productos
+    <a asp-action="Create" class="btn btn-crear">
+        <i class="bi bi-plus-circle"></i> Crear nuevo registro
+    </a>
+</h1>
 <table class="table">
     <thead>
         <tr>
@@ -44,11 +45,28 @@
                 @Html.DisplayFor(modelItem => item.Pedido.EstadoPedido)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.PedidosProductosID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PedidosProductosID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PedidosProductosID">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.PedidosProductosID" class="btn btn-sm btn-warning">
+                        <i class="bi bi-pencil-square"></i> Editar
+                    </a>
+                    |
+                    <a asp-action="Details" asp-route-id="@item.PedidosProductosID" class="btn btn-sm btn-info">
+                        <i class="bi bi-info-circle"></i> Detalles
+                    </a>
+                    |
+                    <a asp-action="Delete" asp-route-id="@item.PedidosProductosID" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> Eliminar
+                    </a>
+                    |
+                    <a asp-action="Download" asp-route-id="@item.PedidosProductosID" class="btn btn-sm btn-success">
+                        <i class="bi bi-download"></i> Descargar
+                    </a>
+             
+
             </td>
         </tr>
 }
     </tbody>
 </table>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+}
