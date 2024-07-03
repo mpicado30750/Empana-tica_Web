@@ -1,13 +1,11 @@
 ﻿@model TotalHRInsight.DAL.Permiso
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Permiso";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
-
-<h4>Permiso</h4>
+<h1>Añadir Permiso</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -51,14 +49,14 @@
                 <select asp-for="UsuarioAsignacionId" class ="form-control" asp-items="ViewBag.UsuarioAsignacionId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-danger" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Regresar</a>
 </div>
 
 @section Scripts {

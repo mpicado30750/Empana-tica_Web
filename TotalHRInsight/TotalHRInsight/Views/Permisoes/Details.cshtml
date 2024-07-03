@@ -1,14 +1,13 @@
 ﻿@model TotalHRInsight.DAL.Permiso
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles Permisos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Detalles Permisos</h1>
 
 <div>
-    <h4>Permiso</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -62,6 +61,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdPermisos">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.IdPermisos">Editar</a> |
+    <a asp-action="Index">Regresar</a>
 </div>
