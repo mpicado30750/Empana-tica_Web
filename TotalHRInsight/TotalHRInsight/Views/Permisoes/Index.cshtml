@@ -1,78 +1,46 @@
 ﻿@model IEnumerable<TotalHRInsight.DAL.Permiso>
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+	<a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaInicio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaFin)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CantidadDias)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Comentario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Incidencia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioCreacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioAsignacion)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaFin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CantidadDias)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comentario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Incidencia.NombreIncidencia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioCreacion.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioAsignacion.Id)
-            </td>
-            <td>
-                    <a asp-action="Edit" asp-route-IdPermisos="@item.IdPermisos">Edit</a> |
-                    <a asp-action="Details" asp-route-IdPermisos="@item.IdPermisos">Details</a> |
-                    <a asp-action="Delete" asp-route-IdPermisos="@item.IdPermisos">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="container mt-4">
+	<div class="row">
+		@foreach (var item in Model)
+		{
+			<div class="col-md-4 mb-4">
+				<div class="card shadow-sm">
+					<div class="card-header bg-primary text-white">
+						<h5 class="card-title">@Html.DisplayFor(modelItem => item.UsuarioAsignacion.Nombre) @Html.DisplayFor(modelItem => item.UsuarioAsignacion.PrimerApellido) @Html.DisplayFor(modelItem => item.UsuarioAsignacion.SegundoApellido)</h5>
+					</div>
+					<div class="card-body">
+						<p><strong>@Html.DisplayNameFor(model => model.FechaInicio):</strong> @Html.DisplayFor(modelItem => item.FechaInicio)</p>
+						<p><strong>@Html.DisplayNameFor(model => model.FechaFin):</strong> @Html.DisplayFor(modelItem => item.FechaFin)</p>
+						<p><strong>@Html.DisplayNameFor(model => model.CantidadDias):</strong> @Html.DisplayFor(modelItem => item.CantidadDias)</p>
+						<p><strong>@Html.DisplayNameFor(model => model.Estado):</strong> @Html.DisplayFor(modelItem => item.Estado)</p>
+						<p><strong>@Html.DisplayNameFor(model => model.Comentario):</strong> @Html.DisplayFor(modelItem => item.Comentario)</p>
+						<p><strong>@Html.DisplayNameFor(model => model.Incidencia):</strong> @Html.DisplayFor(modelItem => item.Incidencia.NombreIncidencia)</p>
+						<p><strong>@Html.DisplayNameFor(model => model.UsuarioCreacion):</strong> @Html.DisplayFor(modelItem => item.UsuarioCreacion.Nombre)</p>
+					</div>
+					<div class="card-footer text-center">
+						<a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-IdPermisos="@item.IdPermisos">
+							<i class="bi bi-pencil"></i> Edit
+						</a>
+						<a class="btn btn-sm btn-info" asp-action="Details" asp-route-IdPermisos="@item.IdPermisos">
+							<i class="bi bi-info-circle"></i> Details
+						</a>
+						<a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-IdPermisos="@item.IdPermisos">
+							<i class="bi bi-trash"></i> Delete
+						</a>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>

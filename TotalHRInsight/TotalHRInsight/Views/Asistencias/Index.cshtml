@@ -1,10 +1,39 @@
 ﻿@model IEnumerable<TotalHRInsight.Models.AsistenciaModel>
 @{
     ViewData["Title"] = "Index";
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container-fluid">
+<style>
+    .asistencia-container {
+        padding: 20px;
+    }
+
+    .asistencia-card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+        .asistencia-card .card-body {
+            padding: 20px;
+        }
+
+        .asistencia-card .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .asistencia-card .card-text {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .asistencia-card .text-center .btn {
+            margin: 5px;
+        }
+</style>
+
+<<div class="container-fluid asistencia-container">
     <div class="row">
         <div class="col-md-5" style="height: 600px; overflow-y: scroll;">
             <div class="input-group mb-3">
@@ -21,11 +50,10 @@
                          data-lat-salida="@item.LatitudSalida.ToString().Replace(',', '.')"
                          data-lng-salida="@item.LongitudSalida.ToString().Replace(',', '.')">
                         <div class="card-body">
-                            <h5 class="card-title">Asistencia @item.Id</h5>
+                            <h5 class="card-title">@item.Nombre @item.PrimerApellido @item.SegundoApellido</h5>
                             <p class="card-text">
-                                <strong>Nombre:</strong> <span id="nombre-@item.Id">@item.Nombre</span> <br />
-                                <strong>Fecha Entrada:</strong> <span id="fecha-entrada-@item.Id" class="fecha-entrada">@item.FechaEntrada.ToString("yyyy-MM-dd")</span> <br />
-                                <strong>Fecha Salida:</strong> <span id="fecha-salida-@item.Id" class="fecha-salida">@item.FechaSalida.ToString("yyyy-MM-dd")</span> <br />
+                                <strong>Fecha Entrada:</strong> <span id="fecha-entrada-@item.Id" class="fecha-entrada">@item.FechaEntrada</span> <br />
+                                <strong>Fecha Salida:</strong> <span id="fecha-salida-@item.Id" class="fecha-salida">@item.FechaSalida</span> <br />
                                 <strong>Primer Apellido:</strong> <span id="primer-apellido-@item.Id">@item.PrimerApellido</span> <br />
                                 <strong>Segundo Apellido:</strong> <span id="segundo-apellido-@item.Id">@item.SegundoApellido</span> <br />
                             </p>
@@ -35,7 +63,7 @@
             </div>
         </div>
         <div class="col-md-7">
-            <div id="mapaUbicacion" style="width: 100%; height: 600px;"></div>
+            <div id="map" style="width: 100%; height: 600px;"></div>
         </div>
     </div>
 </div>
@@ -44,7 +72,7 @@
 <script src="~/lib/leaflet/leaflet.min.js"></script>
 
 <script>
-    var map = L.map('mapaUbicacion').setView([9.895403, -84.063574], 15);
+    var map = L.map('map').setView([9.895403, -84.063574], 15);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
