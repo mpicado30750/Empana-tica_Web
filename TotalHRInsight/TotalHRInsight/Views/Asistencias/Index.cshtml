@@ -21,7 +21,7 @@
                          data-lat-salida="@item.LatitudSalida.ToString().Replace(',', '.')"
                          data-lng-salida="@item.LongitudSalida.ToString().Replace(',', '.')">
                         <div class="card-body">
-                            <h5 class="card-title">@item.Nombre @item.PrimerApellido @item.SegundoApellido</h5>
+                            <h5 class="card-title" id="nombre-@item.Id">@item.Nombre @item.PrimerApellido @item.SegundoApellido</h5>
                             <p class="card-text">
                                 <strong>Fecha Entrada:</strong> <span id="fecha-entrada-@item.Id" class="fecha-entrada">@item.FechaEntrada</span> <br />
                                 <strong>Fecha Salida:</strong> <span id="fecha-salida-@item.Id" class="fecha-salida">@item.FechaSalida</span> <br />
