@@ -85,9 +85,9 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdProducto,NombreProducto,Descripcion,CantidadDisponible,Unidad,FechaVencimiento,PrecioUnitario")] Producto producto)
+        public async Task<IActionResult> Edit(int IdProducto, Producto producto)
         {
-            if (id != producto.IdProducto)
+            if (IdProducto != producto.IdProducto)
             {
                 return NotFound();
             }
@@ -136,9 +136,9 @@ namespace TotalHRInsight.Controllers
         // POST: Productoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int IdProducto)
         {
-            var producto = await _context.Productos.FindAsync(id);
+            var producto = await _context.Productos.FindAsync(IdProducto);
             if (producto != null)
             {
                 _context.Productos.Remove(producto);

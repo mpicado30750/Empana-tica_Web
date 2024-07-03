@@ -72,14 +72,14 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Pedidoes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? IdPedido)
         {
-            if (id == null)
+            if (IdPedido == null)
             {
                 return NotFound();
             }
 
-            var pedido = await _context.Pedidos.FindAsync(id);
+            var pedido = await _context.Pedidos.FindAsync(IdPedido);
             if (pedido == null)
             {
                 return NotFound();
@@ -94,9 +94,9 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdPedido,FechaPedido,UsuarioCreacionId,IdSucursal,EstadoPedido,MontoTotal")] Pedido pedido)
+        public async Task<IActionResult> Edit(int IdPedido, Pedido pedido)
         {
-            if (id != pedido.IdPedido)
+            if (IdPedido != pedido.IdPedido)
             {
                 return NotFound();
             }
@@ -127,9 +127,9 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Pedidoes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? IdPedido)
         {
-            if (id == null)
+            if (IdPedido == null)
             {
                 return NotFound();
             }
@@ -137,7 +137,7 @@ namespace TotalHRInsight.Controllers
             var pedido = await _context.Pedidos
                 .Include(p => p.Sucursal)
                 .Include(p => p.UsuarioCreacion)
-                .FirstOrDefaultAsync(m => m.IdPedido == id);
+                .FirstOrDefaultAsync(m => m.IdPedido == IdPedido);
             if (pedido == null)
             {
                 return NotFound();
@@ -149,9 +149,9 @@ namespace TotalHRInsight.Controllers
         // POST: Pedidoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int IdPedido)
         {
-            var pedido = await _context.Pedidos.FindAsync(id);
+            var pedido = await _context.Pedidos.FindAsync(IdPedido);
             if (pedido != null)
             {
                 _context.Pedidos.Remove(pedido);

@@ -49,10 +49,10 @@
                 @Html.DisplayFor(modelItem => item.Sucursal.NombreSucursal)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UsuarioCreacion.Id)
+                @Html.DisplayFor(modelItem => item.UsuarioCreacion.Nombre)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdPedido" class="btn btn-sm btn-warning">
+                    <a asp-action="Edit" asp-route-IdPedido="@item.IdPedido" class="btn btn-sm btn-warning">
                 <i class="bi bi-pencil-square"></i> Editar
                 </a>
                 |
@@ -60,7 +60,7 @@
                 <i class="bi bi-info-circle"></i> Detalles
                 </a>
                 |
-                <a asp-action="Delete" asp-route-id="@item.IdPedido" class="btn btn-sm btn-danger">
+                    <a asp-action="Delete" asp-route-IdPedido="@item.IdPedido" class="btn btn-sm btn-danger">
                 <i class="bi bi-trash"></i> Eliminar
                 </a>
                 |
