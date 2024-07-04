@@ -11,13 +11,15 @@ namespace TotalHRInsight.DAL
 	{
 		[Key]
 		public int IdPermisos { get; set; }
+
         [DisplayName("Fecha de Inicio")]
         [Required(ErrorMessage = "La fecha de inicio es obligatoria")]
 		public DateTime FechaInicio { get; set; }
-        [DisplayName("Fecha de Fin")]
 
+        [DisplayName("Fecha de Fin")]
         [Required(ErrorMessage = "La fecha de fin es obligatoria")]
 		public DateTime FechaFin { get; set; }
+
         [DisplayName("Dias de Permiso")]
         [Required(ErrorMessage = "La cantidad de días es obligatoria")]
 		[Range(1, int.MaxValue, ErrorMessage = "La cantidad de días debe ser mayor a cero")]
@@ -35,6 +37,7 @@ namespace TotalHRInsight.DAL
         [Required(ErrorMessage = "El tipo de permiso es obligatorio")]
         [ForeignKey("TipoPermiso")]
         public int IdTipoPermiso { get; set; }
+
         [DisplayName("Aprobado Por")]
         [Required(ErrorMessage = "El ID del usuario de creación es obligatorio")]
         [ForeignKey("UsuarioCreacion")]

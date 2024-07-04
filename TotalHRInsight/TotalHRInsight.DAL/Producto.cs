@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TotalHRInsight.DAL
 {
-	[Table("Productos")]
+	[Table("Producto")]
 	public class Producto
 	{
 		[Key]
@@ -22,10 +22,6 @@ namespace TotalHRInsight.DAL
 		[MaxLength(500, ErrorMessage = "La descripción no puede exceder los 500 caracteres")]
 		public string Descripcion { get; set; }
 
-        [DisplayName("Cantidad Disponible")]
-        [Required(ErrorMessage = "La cantidad disponible es obligatoria")]
-		[Range(0, int.MaxValue, ErrorMessage = "La cantidad disponible no puede ser negativa")]
-		public int CantidadDisponible { get; set; }
 
         [DisplayName("Unidad de Medida")]
         [Required(ErrorMessage = "La unidad es obligatoria")]
@@ -39,9 +35,11 @@ namespace TotalHRInsight.DAL
 		[Column(TypeName = "decimal(18,2)")]
         [DisplayName("Precio Unitario")]
         public double PrecioUnitario { get; set; }
-        public Medida? Medidas { get; set; }
-        public ICollection<PedidosProductos> PedidosProductos { get; set; } = new List<PedidosProductos>();
-        
 
+        public Medida? Medidas { get; set; }
+
+        public ICollection<PedidosProductos> PedidosProductos { get; set; } = new List<PedidosProductos>();
+
+        public ICollection<Inventario> Inventario { get; set; } = new List<Inventario>();
     }
 }

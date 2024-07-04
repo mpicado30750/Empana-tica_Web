@@ -21,7 +21,7 @@ namespace TotalHRInsight.Controllers
         // GET: Permisoes
         public async Task<IActionResult> Index()
         {
-            var totalHRInsightDbContext = _context.Permisos.Include(p => p.Incidencia).Include(p => p.UsuarioAsignacion).Include(p => p.UsuarioCreacion);
+            var totalHRInsightDbContext = _context.Permisos.Include(p => p.TipoPermisos).Include(p => p.UsuarioAsignacion).Include(p => p.UsuarioCreacion);
             return View(await totalHRInsightDbContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace TotalHRInsight.Controllers
             }
 
             var permiso = await _context.Permisos
-                .Include(p => p.Incidencia)
+                .Include(p => p.TipoPermisos)
                 .Include(p => p.UsuarioAsignacion)
                 .Include(p => p.UsuarioCreacion)
                 .FirstOrDefaultAsync(m => m.IdPermisos == IdPermisos);
@@ -49,7 +49,7 @@ namespace TotalHRInsight.Controllers
         // GET: Permisoes/Create
         public IActionResult Create()
         {
-            ViewData["IdIncidencia"] = new SelectList(_context.Incidencias, "IdIncidencia", "NombreIncidencia");
+            ViewData["IdTipoPermiso"] = new SelectList(_context.TipoPermisos, "IdTipoPermiso", "NombrePermiso");
             ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre");
             ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre");
             return View();
@@ -68,7 +68,7 @@ namespace TotalHRInsight.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdIncidencia"] = new SelectList(_context.Incidencias, "IdIncidencia", "NombreIncidencia", permiso.IdIncidencia);
+            ViewData["IdTipoPermiso"] = new SelectList(_context.TipoPermisos, "IdTipoPermiso", "NombrePermiso", permiso.IdTipoPermiso);
             ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioAsignacionId);
             ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioCreacionId);
             return View(permiso);
@@ -87,7 +87,7 @@ namespace TotalHRInsight.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdIncidencia"] = new SelectList(_context.Incidencias, "IdIncidencia", "NombreIncidencia", permiso.IdIncidencia);
+            ViewData["IdTipoPermiso"] = new SelectList(_context.TipoPermisos, "IdTipoPermiso", "NombrePermiso", permiso.IdTipoPermiso);
             ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioAsignacionId);
             ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioCreacionId);
             return View(permiso);
@@ -125,7 +125,7 @@ namespace TotalHRInsight.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdIncidencia"] = new SelectList(_context.Incidencias, "IdIncidencia", "NombreIncidencia", permiso.IdIncidencia);
+            ViewData["IdTipoPermiso"] = new SelectList(_context.TipoPermisos, "IdTipoPermiso", "NombrePermiso", permiso.IdTipoPermiso);
             ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioAsignacionId);
             ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioCreacionId);
             return View(permiso);
@@ -140,7 +140,7 @@ namespace TotalHRInsight.Controllers
             }
 
             var permiso = await _context.Permisos
-                .Include(p => p.Incidencia)
+                .Include(p => p.TipoPermisos)
                 .Include(p => p.UsuarioAsignacion)
                 .Include(p => p.UsuarioCreacion)
                 .FirstOrDefaultAsync(m => m.IdPermisos == IdPermisos);

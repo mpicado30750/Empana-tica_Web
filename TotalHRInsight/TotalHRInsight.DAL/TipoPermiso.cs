@@ -13,7 +13,7 @@ namespace TotalHRInsight.DAL
 	public class TipoPermiso
 	{
 		[Key]
-		public int IdIncidencia { get; set; }
+		public int IdTipoPermiso { get; set; }
 
 		[Required(ErrorMessage ="El campo es requerido")]
         [DisplayName("Tipo de Permiso")]

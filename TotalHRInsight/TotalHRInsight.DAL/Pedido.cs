@@ -16,7 +16,7 @@ namespace TotalHRInsight.DAL
         [DisplayName("Fecha de Pedido")]
         public DateTime FechaPedido { get; set; }
         [DisplayName("Fecha de Entrega")]
-        public DateTime? FechaEntrega { get; set; }
+        public DateTime FechaEntrega { get; set; }
 
         [DisplayName("Asignado Por")]
         [Required(ErrorMessage = "El usuario de creación es obligatorio")]
@@ -40,10 +40,12 @@ namespace TotalHRInsight.DAL
 		public double MontoTotal { get; set; }
 
 		public Sucursal? Sucursal { get; set; }
+
         public Estado? Estado { get; set; }
 
         [DisplayName("Asignado Por")]
         public ApplicationUser? UsuarioCreacion { get; set; }
+
 		public ICollection<PedidosProductos> PedidosProductos { get; set; } = new List<PedidosProductos>();
 	}
 }

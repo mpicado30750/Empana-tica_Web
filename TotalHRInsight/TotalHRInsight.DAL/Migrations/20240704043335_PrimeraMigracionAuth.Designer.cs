@@ -12,7 +12,7 @@ using TotalHRInsight.DAL;
 namespace TotalHRInsight.DAL.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20240618012922_PrimeraMigracionAuth")]
+    [Migration("20240704043335_PrimeraMigracionAuth")]
     partial class PrimeraMigracionAuth
     {
         /// <inheritdoc />
@@ -239,6 +239,9 @@ namespace TotalHRInsight.DAL.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
+                    b.Property<int>("idSucursal")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -248,7 +251,37 @@ namespace TotalHRInsight.DAL.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
+                    b.HasIndex("idSucursal");
+
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("TotalHRInsight.DAL.Sucursal", b =>
+                {
+                    b.Property<int>("IdSucursal")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdSucursal"));
+
+                    b.Property<double>("Latitud")
+                        .HasColumnType("double");
+
+                    b.Property<double>("Longitud")
+                        .HasColumnType("double");
+
+                    b.Property<string>("NombreSucursal")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("UbicacionSucursal")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("IdSucursal");
+
+                    b.ToTable("Sucursales");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -300,6 +333,17 @@ namespace TotalHRInsight.DAL.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TotalHRInsight.DAL.ApplicationUser", b =>
+                {
+                    b.HasOne("TotalHRInsight.DAL.Sucursal", "Sucursal")
+                        .WithMany()
+                        .HasForeignKey("idSucursal")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sucursal");
                 });
 #pragma warning restore 612, 618
         }

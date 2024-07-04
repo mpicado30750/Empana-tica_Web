@@ -24,6 +24,7 @@ namespace TotalHRInsight.DAL
         public string UbicacionEntrada { get; set; }
         [DisplayName("Ubicación de Salida")]
         public string UbicacionSalida { get; set; }
+
         [DisplayName("Asignado Por")]
         [Required(ErrorMessage = "Este campo es requerido")]
 		[ForeignKey("UsuarioCreacion")]

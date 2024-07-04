@@ -33,15 +33,60 @@ namespace TotalHRInsight.DAL.Migrations
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.InsertData(
-                    table: "AspNetRoles",
-                    columns: new[] { "Id", "Name", "NormalizedName" },
-                    values: new object[,]
-                    {
-                        { "S", "Supervisor", "Supervisor" },
-                        { "A", "Administrador", "Administrador" },
-                        { "U", "Usuario", "Usuario" }
-                    });
+                            table: "AspNetRoles",
+                               columns: new[] { "Id", "Name", "NormalizedName" },
+                               values: new object[,]
+                            {
+                                { "S", "Supervisor", "Supervisor" },
+                                { "A", "Administrador", "Administrador" },
+                                { "U", "Usuario", "Usuario" }
+                            });
+
+            migrationBuilder.CreateTable(
+                name: "Sucursales",
+                columns: table => new
+                {
+                    IdSucursal = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    NombreSucursal = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UbicacionSucursal = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Longitud = table.Column<double>(type: "double", nullable: false),
+                    Latitud = table.Column<double>(type: "double", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sucursales", x => x.IdSucursal);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    RoleId = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ClaimType = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ClaimValue = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
@@ -60,6 +105,7 @@ namespace TotalHRInsight.DAL.Migrations
                     NumeroTelefono = table.Column<int>(type: "int", nullable: false),
                     Salario = table.Column<float>(type: "float(18,4)", nullable: false),
                     Estado = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    idSucursal = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
@@ -86,30 +132,11 @@ namespace TotalHRInsight.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ClaimType = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ClaimValue = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
+                        name: "FK_AspNetUsers_Sucursales_idSucursal",
+                        column: x => x.idSucursal,
+                        principalTable: "Sucursales",
+                        principalColumn: "IdSucursal",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -248,6 +275,11 @@ namespace TotalHRInsight.DAL.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_idSucursal",
+                table: "AspNetUsers",
+                column: "idSucursal");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -277,6 +309,9 @@ namespace TotalHRInsight.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Sucursales");
         }
     }
 }

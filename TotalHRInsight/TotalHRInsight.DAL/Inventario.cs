@@ -19,6 +19,7 @@ namespace TotalHRInsight.DAL
         [DisplayName("Creado Por")]
         public string UsuarioCreacionid { get; set; }
         public ApplicationUser? UsuarioCreacion { get; set; }
+
         [ForeignKey("UsuarioModificacion")]
         [Required(ErrorMessage = "El usuario modificación es obligatorio")]
         [DisplayName("Modificado Por")]
@@ -31,20 +32,24 @@ namespace TotalHRInsight.DAL
 
         [Required(ErrorMessage = "La fecha de modificación del registro es obligatoria")]
         [DisplayName("Fecha de Modificación")]
-        public DateTime? FechaModificacion { get; set; }
+        public DateTime FechaModificacion { get; set; }
+
+        [DisplayName("Cantidad Disponible")]
+        [Required(ErrorMessage = "La cantidad disponible es obligatoria")]
+        [Range(0, int.MaxValue, ErrorMessage = "La cantidad disponible no puede ser negativa")]
+        public int CantidadDisponible { get; set; }
 
         [DisplayName("Sucursal")]
         [Required(ErrorMessage = "El nombre de la sucursal es obligatorio")]
         [ForeignKey("Sucursal")]
-        public string SucursalId { get; set; }
+        public int SucursalId { get; set; }
         public Sucursal? Sucursal { get; set; }
 
         [DisplayName("Producto")]
         [Required(ErrorMessage = "El nombre del producto es obligatorio")]
         [ForeignKey("Producto")]
-        public string ProductoId { get; set; }
+        public int ProductoId { get; set; }
         public Producto? Producto { get; set; }
-
 
     }
 }

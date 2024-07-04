@@ -37,5 +37,21 @@ namespace TotalHRInsight.DAL
 		[Required]
 		[DefaultValue(true)]
 		public bool Estado { get; set; }
-	}
+
+        [Required(ErrorMessage = "Este campo es requerido")]
+        [ForeignKey("Sucursal")]
+        public int idSucursal { get; set; }
+
+        public Sucursal? Sucursal { get; set; }
+    }
+
+	//migrationBuilder.InsertData(
+	//				table: "AspNetRoles",
+ //                   columns: new[] { "Id", "Name", "NormalizedName" },
+ //                   values: new object[,]
+	//				{
+	//					{ "S", "Supervisor", "Supervisor" },
+	//					{ "A", "Administrador", "Administrador" },
+	//					{ "U", "Usuario", "Usuario" }
+	//				});
 }

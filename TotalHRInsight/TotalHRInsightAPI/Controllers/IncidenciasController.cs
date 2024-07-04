@@ -21,10 +21,10 @@ namespace TotalHRInsightAPI.Controllers
         }
 
         // GET: api/Incidencias
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Incidencia>>> GetIncidencias()
-        {
-            return await _context.Incidencias.ToListAsync();
-        }
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Incidencia>>> GetIncidencias()
+        //{
+        //    return await _context.Incidencias.ToListAsync();
+        //}
     }
 }
