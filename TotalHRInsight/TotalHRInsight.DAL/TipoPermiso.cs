@@ -9,15 +9,15 @@ using System.ComponentModel;
 
 namespace TotalHRInsight.DAL
 {
-	[Table("Incidencias")]
-	public class Incidencia
+	[Table("TiposPermisos")]
+	public class TipoPermiso
 	{
 		[Key]
 		public int IdIncidencia { get; set; }
 
 		[Required(ErrorMessage ="El campo es requerido")]
-        [DisplayName("Tipo de Incidencia")]
-        public string NombreIncidencia { get; set; }
+        [DisplayName("Tipo de Permiso")]
+        public string NombrePermiso { get; set; }
 
 		public ICollection<Permiso> Permiso { get; set; } = new List<Permiso>();
 

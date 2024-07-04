@@ -22,18 +22,19 @@ namespace TotalHRInsight.DAL
         [Required(ErrorMessage = "La cantidad de días es obligatoria")]
 		[Range(1, int.MaxValue, ErrorMessage = "La cantidad de días debe ser mayor a cero")]
 		public int CantidadDias { get; set; }
-        [DisplayName("Estado del Permiso")]
-        [Required(ErrorMessage = "El estado es obligatorio")]
-        [DefaultValue(false)]
-        public bool Estado { get; set; }
-
+        
         [DefaultValue("")]
         [DisplayName("Comentarios")]
+        [Required(ErrorMessage = "Los comentarios son requeridos")]
         public string Comentario { get; set; }
 
-        [Required(ErrorMessage = "El ID de la incidencia es obligatorio")]
-        [ForeignKey("Incidencia")]
-        public int IdIncidencia { get; set; }
+        [DefaultValue("")]
+        [DisplayName("Motivo de Solicitud")]
+        public string MotivoAdmin { get; set; }
+
+        [Required(ErrorMessage = "El tipo de permiso es obligatorio")]
+        [ForeignKey("TipoPermiso")]
+        public int IdTipoPermiso { get; set; }
         [DisplayName("Aprobado Por")]
         [Required(ErrorMessage = "El ID del usuario de creación es obligatorio")]
         [ForeignKey("UsuarioCreacion")]
@@ -44,10 +45,15 @@ namespace TotalHRInsight.DAL
         [ForeignKey("UsuarioAsignacion")]
         public string UsuarioAsignacionId { get; set; }
 
-		public Incidencia? Incidencia { get; set; }
+        [Required(ErrorMessage = "El Estado de solicitud es obligatorio")]
+        [ForeignKey("Estado")]
+        public int IdEstado { get; set; }
+
+        public TipoPermiso? TipoPermisos { get; set; }
 
 		public ApplicationUser? UsuarioCreacion { get; set; }
 
 		public ApplicationUser? UsuarioAsignacion { get; set; }
-	}
+        public Estado? Estado { get; set; }
+    }
 }

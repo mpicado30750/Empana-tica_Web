@@ -39,7 +39,9 @@ namespace TotalHRInsight.DAL
 		[Column(TypeName = "decimal(18,2)")]
         [DisplayName("Precio Unitario")]
         public double PrecioUnitario { get; set; }
+        public Medida? Medidas { get; set; }
+        public ICollection<PedidosProductos> PedidosProductos { get; set; } = new List<PedidosProductos>();
+        
 
-		public ICollection<PedidosProductos> PedidosProductos { get; set; } = new List<PedidosProductos>();
-	}
+    }
 }

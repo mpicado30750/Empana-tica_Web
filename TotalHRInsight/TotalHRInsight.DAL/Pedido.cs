@@ -15,6 +15,8 @@ namespace TotalHRInsight.DAL
 		[Required(ErrorMessage = "La fecha del pedido es obligatoria")]
         [DisplayName("Fecha de Pedido")]
         public DateTime FechaPedido { get; set; }
+        [DisplayName("Fecha de Entrega")]
+        public DateTime? FechaEntrega { get; set; }
 
         [DisplayName("Asignado Por")]
         [Required(ErrorMessage = "El usuario de creación es obligatorio")]
@@ -26,17 +28,22 @@ namespace TotalHRInsight.DAL
 		[ForeignKey("Sucursal")]
 		public int IdSucursal { get; set; }
 
-        [DisplayName("Estado del Pedido")]
-        [Required(ErrorMessage = "El estado del pedido es obligatorio")]
-		[MaxLength(50, ErrorMessage = "El estado del pedido no puede exceder los 50 caracteres")]
-		public string EstadoPedido { get; set; }
+        [DisplayName("Estado Solicitud")]
+        [Required(ErrorMessage = "El estado de solicitud es requerido")]
+        [ForeignKey("Estado")]
+        public int IdEstado { get; set; }
+
+
         [DisplayName("Monto total")]
         [Required(ErrorMessage = "El monto total es obligatorio")]
 		[Column(TypeName = "double(18,2)")]
 		public double MontoTotal { get; set; }
 
 		public Sucursal? Sucursal { get; set; }
-		public ApplicationUser? UsuarioCreacion { get; set; }
+        public Estado? Estado { get; set; }
+
+        [DisplayName("Asignado Por")]
+        public ApplicationUser? UsuarioCreacion { get; set; }
 		public ICollection<PedidosProductos> PedidosProductos { get; set; } = new List<PedidosProductos>();
 	}
 }

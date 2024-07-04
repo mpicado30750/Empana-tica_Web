@@ -24,19 +24,16 @@ namespace TotalHRInsight.DAL
         [DisplayName("Monto total")]
         public decimal MontoTotal { get; set; }
         [DisplayName("Asignado Por")]
-
         [Required(ErrorMessage = "El usuario de creación es obligatorio")]
 		public string UsuarioCreacionId { get; set; }
-
-		public int IdAsistencia { get; set; }
-
-		public int IdPermiso { get; set; }
-
 		[ForeignKey("UsuarioCreacionId")]
 		public ApplicationUser? UsuarioCreacion { get; set; }
 
-		public ICollection<Asistencia> Asistencias { get; set; } = new List<Asistencia>();
+        [DisplayName("Asignado a")]
+        [Required(ErrorMessage = "El usuario de asignacion es obligatorio")]
+        [ForeignKey("UsuarioAsignacion")]
+        public string UsuarioAsignacionId{ get; set; }
+        public ApplicationUser? UsuarioAsignacion { get; set; }
 
-		public ICollection<Permiso> Permisos { get; set; } = new List<Permiso>();
-	}
+    }
 }
