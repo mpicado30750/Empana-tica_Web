@@ -45,5 +45,7 @@ namespace TotalHRInsight.Models
         public string ConfirmPassword { get; set; }
 
         public string IdRol {  get; set; }
-    }
+
+		public int idSucursal { get; set; }
+	}
 }

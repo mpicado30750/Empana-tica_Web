@@ -19,22 +19,24 @@ namespace TotalHRInsight.Controllers
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly TotalHRInsightDbContext _context;
 
-        public AdminController(AuthDbContext authDbContext, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, IUserStore<ApplicationUser> userStore)
+        public AdminController(TotalHRInsightDbContext context, AuthDbContext authDbContext, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, IUserStore<ApplicationUser> userStore)
         {
             _authDbContext = authDbContext;
             _roleManager = roleManager;
             _userStore = userStore;
             _emailStore = (IUserEmailStore<ApplicationUser>)_userStore;
             _userManager = userManager;
+            _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
             var userRoleViewModelList = new List<UserRoleViewModel>();
-            var users = await _userManager.Users.ToListAsync();
+            var users = await _userManager.Users.Include(u => u.Sucursal).ToListAsync();
 
-            foreach (var user in users)
+			foreach (var user in users)
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
                 var userRoleViewModel = new UserRoleViewModel
@@ -52,7 +54,8 @@ namespace TotalHRInsight.Controllers
         {
             var listaRol = _roleManager.Roles;
             ViewData["Roles"] = new SelectList(listaRol, "Id", "Name");
-            return View();
+			ViewData["Sucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
+			return View();
         }
 
         [HttpPost]
@@ -71,18 +74,20 @@ namespace TotalHRInsight.Controllers
                 user.FechaNacimiento = usuarioModel.FechaNacimiento;
                 user.FechaRegistro = DateTime.Now;
                 user.NumeroTelefono = usuarioModel.NumeroTelefono;
+                user.idSucursal = usuarioModel.idSucursal;
                 user.Estado = true;
                 var result = await _userManager.CreateAsync(user, usuarioModel.Password);
                 if (result.Succeeded)
                 { 
                     string normalizeRoleName = _roleManager.Roles.FirstOrDefault(r => r.Id == usuarioModel.IdRol).NormalizedName;
                     var resultRole = await _userManager.AddToRoleAsync(user, normalizeRoleName);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Admin");
                 }
             }
             var listaRol = _roleManager.Roles;
             ViewData["Roles"] = new SelectList(listaRol, "Id", "Name");
-            return View(usuarioModel);
+			ViewData["Sucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
+			return View(usuarioModel);
         }
 
         // GET: Admin/Edit/5
@@ -103,6 +108,7 @@ namespace TotalHRInsight.Controllers
             var roles = await _roleManager.Roles.ToListAsync();
             var listaRol = _roleManager.Roles;
             ViewData["Roles"] = new SelectList(listaRol, "Id", "Name");
+            ViewData["Sucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", user.idSucursal);
             var model = new EditUserViewModel
             {
                 Id = user.Id,
@@ -113,6 +119,7 @@ namespace TotalHRInsight.Controllers
                 FechaNacimiento = user.FechaNacimiento,
                 NumeroTelefono = user.NumeroTelefono,
                 Email = user.Email,
+                //idSucursal = user.FirstOrDefault(r => userRoles.Contains(r.Name))?.Id,
                 SelectedRoleId = roles.FirstOrDefault(r => userRoles.Contains(r.Name))?.Id
         };
 

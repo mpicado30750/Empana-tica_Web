@@ -12,6 +12,8 @@ namespace TotalHRInsight.Models
         [Display(Name = "Role")]
         public string SelectedRoleId { get; set; }  // This will hold the selected role ID from the dropdown
 
+        public int idSucursal { get; set; }
+
         [Required]
         [MaxLength(100)]
         public string Nombre { get; set; }
