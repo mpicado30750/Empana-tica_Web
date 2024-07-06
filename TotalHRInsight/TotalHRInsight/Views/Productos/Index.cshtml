@@ -20,13 +20,13 @@
                 @Html.DisplayNameFor(model => model.Descripcion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Unidad)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.FechaVencimiento)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PrecioUnitario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Medidas)
             </th>
             <th></th>
         </tr>
@@ -41,13 +41,13 @@
                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Unidad)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.FechaVencimiento)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PrecioUnitario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Medidas.NombreMedida)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdProducto">Edit</a> |

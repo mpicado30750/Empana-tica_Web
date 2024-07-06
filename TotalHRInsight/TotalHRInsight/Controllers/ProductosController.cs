@@ -21,7 +21,8 @@ namespace TotalHRInsight.Controllers
         // GET: Productos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Productos.ToListAsync());
+            var totalHRInsightDbContext = _context.Productos.Include(p => p.Medidas);
+            return View(await totalHRInsightDbContext.ToListAsync());
         }
 
         // GET: Productos/Details/5
@@ -33,6 +34,7 @@ namespace TotalHRInsight.Controllers
             }
 
             var producto = await _context.Productos
+                .Include(p => p.Medidas)
                 .FirstOrDefaultAsync(m => m.IdProducto == id);
             if (producto == null)
             {
@@ -45,6 +47,7 @@ namespace TotalHRInsight.Controllers
         // GET: Productos/Create
         public IActionResult Create()
         {
+            ViewData["MedidasId"] = new SelectList(_context.Medidas, "IdMedida", "NombreMedida");
             return View();
         }
 
@@ -53,19 +56,34 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdProducto,NombreProducto,Descripcion,Unidad,FechaVencimiento,PrecioUnitario")] Producto producto)
+        public async Task<IActionResult> Create( Producto producto)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(producto);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(producto);
-        }
+			if (ModelState.IsValid)
+			{
+				string nombreProductoNormalizado = producto.NombreProducto.Trim().ToLower().Replace(" ", "");
 
-        // GET: Productos/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+				bool productoExiste = _context.Productos
+					.Any(p => p.NombreProducto.Trim().ToLower().Replace(" ", "") == nombreProductoNormalizado);
+
+				if (productoExiste)
+				{
+					ModelState.AddModelError("NombreProducto", "El producto ya existe en la base de datos.");
+				}
+				else
+				{
+					_context.Add(producto);
+					await _context.SaveChangesAsync();
+					return RedirectToAction(nameof(Index));
+				}
+			}
+
+			ViewData["MedidasId"] = new SelectList(_context.Medidas, "IdMedida", "NombreMedida", producto.MedidasId);
+			return View(producto);
+
+		}
+
+		// GET: Productos/Edit/5
+		public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -77,6 +95,7 @@ namespace TotalHRInsight.Controllers
             {
                 return NotFound();
             }
+            ViewData["MedidasId"] = new SelectList(_context.Medidas, "IdMedida", "NombreMedida", producto.MedidasId);
             return View(producto);
         }
 
@@ -85,7 +104,7 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdProducto,NombreProducto,Descripcion,Unidad,FechaVencimiento,PrecioUnitario")] Producto producto)
+        public async Task<IActionResult> Edit(int id, [Bind("IdProducto,NombreProducto,Descripcion,FechaVencimiento,PrecioUnitario,MedidasId")] Producto producto)
         {
             if (id != producto.IdProducto)
             {
@@ -112,6 +131,7 @@ namespace TotalHRInsight.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["MedidasId"] = new SelectList(_context.Medidas, "IdMedida", "NombreMedida", producto.MedidasId);
             return View(producto);
         }
 
@@ -124,6 +144,7 @@ namespace TotalHRInsight.Controllers
             }
 
             var producto = await _context.Productos
+                .Include(p => p.Medidas)
                 .FirstOrDefaultAsync(m => m.IdProducto == id);
             if (producto == null)
             {
@@ -138,15 +159,14 @@ namespace TotalHRInsight.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var producto = await _context.Productos.FindAsync(id);
-            if (producto != null)
-            {
-                _context.Productos.Remove(producto);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+			var producto = await _context.Productos.FindAsync(id);
+			if (producto != null)
+			{
+				_context.Productos.Remove(producto);
+				await _context.SaveChangesAsync();
+			}
+			return RedirectToAction(nameof(Index));
+		}
 
         private bool ProductoExists(int id)
         {

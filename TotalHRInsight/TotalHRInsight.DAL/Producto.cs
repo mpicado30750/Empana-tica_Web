@@ -22,11 +22,6 @@ namespace TotalHRInsight.DAL
 		[MaxLength(500, ErrorMessage = "La descripción no puede exceder los 500 caracteres")]
 		public string Descripcion { get; set; }
 
-
-        [DisplayName("Unidad de Medida")]
-        [Required(ErrorMessage = "La unidad es obligatoria")]
-		public string Unidad { get; set; }
-
         [DisplayName("Fecha de Vencimiento")]
         [Required(ErrorMessage = "La fecha de vencimiento es obligatoria")]
 		public DateTime FechaVencimiento { get; set; }
@@ -35,6 +30,11 @@ namespace TotalHRInsight.DAL
 		[Column(TypeName = "decimal(18,2)")]
         [DisplayName("Precio Unitario")]
         public double PrecioUnitario { get; set; }
+
+		[DisplayName("Unidad de Medida")]
+		[Required(ErrorMessage = "La unidad es obligatoria")]
+		[ForeignKey("Medidas")]
+		public int MedidasId { get; set; }
 
         public Medida? Medidas { get; set; }
 
