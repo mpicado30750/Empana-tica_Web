@@ -9,9 +9,12 @@
     <a asp-action="Create" class="btn btn-crear">
         <i class="bi bi-plus-circle"></i> Crear nuevo registro
     </a>
+    <a asp-action="ExportToExcel" class="btn btn-sm btn-success">
+        <i class="bi bi-download"></i> Descargar datos
+    </a>
 </h1>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -43,10 +46,6 @@
                 |
                 <a asp-action="Delete" asp-route-id="@item.IdSucursal" class="btn btn-sm btn-danger">
                     <i class="bi bi-trash"></i> Eliminar
-                </a>
-                |
-                <a asp-action="Download" asp-route-id="@item.IdSucursal" class="btn btn-sm btn-success">
-                    <i class="bi bi-download"></i> Descargar
                 </a>
             </td>
         </tr>
