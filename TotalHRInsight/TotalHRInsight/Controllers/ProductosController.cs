@@ -197,7 +197,6 @@ namespace TotalHRInsight.Controllers
                     worksheet.Cell(i + 2, 1).Value = productos[i].IdProducto;
                     worksheet.Cell(i + 2, 2).Value = productos[i].NombreProducto;
                     worksheet.Cell(i + 2, 3).Value = productos[i].Descripcion;
-                    worksheet.Cell(i + 2, 4).Value = productos[i].Unidad;
                     worksheet.Cell(i + 2, 5).Value = productos[i].FechaVencimiento.ToString("yyyy-MM-dd");
                     worksheet.Cell(i + 2, 6).Value = productos[i].PrecioUnitario;
                 }

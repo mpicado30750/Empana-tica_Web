@@ -7,25 +7,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TotalHRInsight.DAL;
-
+ 
 namespace TotalHRInsight.Controllers
 {
 	public class PedidosController : Controller
 	{
 		private readonly TotalHRInsightDbContext _context;
-
+ 
 		public PedidosController(TotalHRInsightDbContext context)
 		{
 			_context = context;
 		}
-
+ 
 		// GET: Pedidos
 		public async Task<IActionResult> Index()
 		{
 			var totalHRInsightDbContext = _context.Pedidos.Include(p => p.Estado).Include(p => p.Sucursal).Include(p => p.UsuarioCreacion);
 			return View(await totalHRInsightDbContext.ToListAsync());
 		}
-
+ 
 		// GET: Pedidos/Details/5
 		public async Task<IActionResult> Details(int? id)
 		{
@@ -33,7 +33,7 @@ namespace TotalHRInsight.Controllers
 			{
 				return NotFound();
 			}
-
+ 
 			var pedido = await _context.Pedidos
 				.Include(p => p.Estado)
 				.Include(p => p.Sucursal)
@@ -43,39 +43,10 @@ namespace TotalHRInsight.Controllers
 			{
 				return NotFound();
 			}
-
+ 
 			return View(pedido);
 		}
-
-<<<<<<< HEAD
-        // GET: Pedidos/Create
-        public IActionResult Create()
-        {
-            ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud");
-            ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre");
-            return View();
-        }
-
-        // POST: Pedidos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdPedido,FechaPedido,FechaEntrega,UsuarioCreacionId,IdSucursal,IdEstado,MontoTotal")] Pedido pedido)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(pedido);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud", pedido.IdEstado);
-            ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", pedido.IdSucursal);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", pedido.UsuarioCreacionId);
-            return View(pedido);
-        }
-=======
+ 
 		// GET: Pedidos/Create
 		public IActionResult Create()
 		{
@@ -84,7 +55,7 @@ namespace TotalHRInsight.Controllers
 			ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
 			return View();
 		}
-
+ 
 		// POST: Pedidos/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
@@ -95,8 +66,7 @@ namespace TotalHRInsight.Controllers
 				// Verificar si ya existe un pedido con el mismo IdPedido
 				bool pedidoExiste = _context.Pedidos
 					.Any(p => p.IdPedido == pedido.IdPedido);
->>>>>>> 9a133fceb3257b6274523b9272502f5600b5d9eb
-
+ 
 				if (pedidoExiste)
 				{
 					ModelState.AddModelError("IdPedido", "El pedido ya existe en la base de datos.");
@@ -113,19 +83,7 @@ namespace TotalHRInsight.Controllers
 			ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", pedido.UsuarioCreacionId);
 			return View(pedido);
 		}
-
-<<<<<<< HEAD
-            var pedido = await _context.Pedidos.FindAsync(id);
-            if (pedido == null)
-            {
-                return NotFound();
-            }
-            ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud", pedido.IdEstado);
-            ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", pedido.IdSucursal);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", pedido.UsuarioCreacionId);
-            return View(pedido);
-        }
-=======
+ 
 		// GET: Pedidos/Edit/5
 		public async Task<IActionResult> Edit(int? id)
 		{
@@ -133,8 +91,7 @@ namespace TotalHRInsight.Controllers
 			{
 				return NotFound();
 			}
->>>>>>> 9a133fceb3257b6274523b9272502f5600b5d9eb
-
+ 
 			var pedido = await _context.Pedidos.FindAsync(id);
 			if (pedido == null)
 			{
@@ -145,34 +102,7 @@ namespace TotalHRInsight.Controllers
 			ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", pedido.UsuarioCreacionId);
 			return View(pedido);
 		}
-
-<<<<<<< HEAD
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(pedido);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PedidoExists(pedido.IdPedido))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud", pedido.IdEstado);
-            ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", pedido.IdSucursal);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", pedido.UsuarioCreacionId);
-            return View(pedido);
-        }
-=======
+ 
 		// POST: Pedidos/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
@@ -182,8 +112,7 @@ namespace TotalHRInsight.Controllers
 			{
 				return NotFound();
 			}
->>>>>>> 9a133fceb3257b6274523b9272502f5600b5d9eb
-
+ 
 			if (ModelState.IsValid)
 			{
 				try
@@ -209,7 +138,7 @@ namespace TotalHRInsight.Controllers
 			ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", pedido.UsuarioCreacionId);
 			return View(pedido);
 		}
-
+ 
 		// GET: Pedidos/Delete/5
 		public async Task<IActionResult> Delete(int? id)
 		{
@@ -217,7 +146,7 @@ namespace TotalHRInsight.Controllers
 			{
 				return NotFound();
 			}
-
+ 
 			var pedido = await _context.Pedidos
 				.Include(p => p.Estado)
 				.Include(p => p.Sucursal)
@@ -227,10 +156,10 @@ namespace TotalHRInsight.Controllers
 			{
 				return NotFound();
 			}
-
+ 
 			return View(pedido);
 		}
-
+ 
 		// POST: Pedidos/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
@@ -244,12 +173,12 @@ namespace TotalHRInsight.Controllers
 			}
 			return RedirectToAction(nameof(Index));
 		}
-
-<<<<<<< HEAD
-        private bool PedidoExists(int id)
-        {
-            return _context.Pedidos.Any(e => e.IdPedido == id);
-        }
+ 
+		private bool PedidoExists(int id)
+		{
+			return _context.Pedidos.Any(e => e.IdPedido == id);
+		}
+       
 
         public async Task<IActionResult> ExportToExcel()
         {
@@ -282,7 +211,7 @@ namespace TotalHRInsight.Controllers
                 titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 titleCell.Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4"); // Color de fondo azul de Excel
                 titleCell.Style.Font.FontColor = XLColor.White;
-               
+
 
                 // Cabeceras de la tabla
                 var headerRow = worksheet.Row(5);
@@ -297,7 +226,7 @@ namespace TotalHRInsight.Controllers
                 headerRow.Style.Font.FontSize = 12;
                 headerRow.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 headerRow.Style.Font.FontColor = XLColor.White;
-        
+
 
                 // Datos
                 int rowIdx = 6;
@@ -312,7 +241,7 @@ namespace TotalHRInsight.Controllers
                     dataRow.Cell(6).Value = pedido.Estado.EstadoSolicitud;
                     dataRow.Cell(7).Value = pedido.MontoTotal;
                     dataRow.Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                    dataRow.Style.Border.BottomBorderColor = XLColor.Black;
+                  //  dataRow.Style.Border.BottomBorderColor = XLColor.Black;
                     rowIdx++;
                 }
 
@@ -336,14 +265,5 @@ namespace TotalHRInsight.Controllers
             }
         }
 
-
-
     }
-=======
-		private bool PedidoExists(int id)
-		{
-			return _context.Pedidos.Any(e => e.IdPedido == id);
-		}
-	}
->>>>>>> 9a133fceb3257b6274523b9272502f5600b5d9eb
 }
