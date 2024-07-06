@@ -1,25 +1,35 @@
 ﻿@model TotalHRInsight.DAL.Medida
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles Medida";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Medida</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NombreMedida)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NombreMedida)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdMedida">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<h1 class="text-center">Detalles Medidas</h1>
+<hr />
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.NombreMedida)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.NombreMedida)
+                        </dd>
+                    </dl>
+                    <div class="d-grid gap-2">
+                        <a asp-action="Edit" asp-route-id="@Model?.IdMedida" class="btn btn-warning">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left-circle"></i> Regresar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
