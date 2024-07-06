@@ -234,13 +234,13 @@ namespace TotalHRInsight.Controllers
                 {
                     var dataRow = worksheet.Row(rowIdx);
                     dataRow.Cell(1).Value = pedido.IdPedido;
-                    dataRow.Cell(2).Value = pedido.FechaPedido.ToString("yyyy-MM-dd");
-                    dataRow.Cell(3).Value = pedido.FechaEntrega.ToString("yyyy-MM-dd");
+                    dataRow.Cell(2).Value = pedido.FechaPedido.ToString("dd-MM-yyyy");
+                    dataRow.Cell(3).Value = pedido.FechaEntrega.ToString("dd-MM-yyyy");
                     dataRow.Cell(4).Value = pedido.UsuarioCreacion.Nombre; // Ajusta según la propiedad correcta
                     dataRow.Cell(5).Value = pedido.Sucursal.NombreSucursal;
                     dataRow.Cell(6).Value = pedido.Estado.EstadoSolicitud;
                     dataRow.Cell(7).Value = pedido.MontoTotal;
-                    dataRow.Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                   // dataRow.Style.Border.BottomBorder = XLBorderStyleValues.Thin;
                   //  dataRow.Style.Border.BottomBorderColor = XLColor.Black;
                     rowIdx++;
                 }

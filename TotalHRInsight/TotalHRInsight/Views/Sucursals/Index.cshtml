@@ -1,57 +1,46 @@
 ﻿@model IEnumerable<TotalHRInsight.DAL.Sucursal>
 
 @{
-    ViewData["Title"] = "Indice Sucursal";
+    ViewData["Title"] = "Lista de Sucursales";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Sucursales 
-    <a asp-action="Create" class="btn btn-crear">
+<h1>Lista de Sucursales</h1>
+<hr />
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.NombreSucursal)</h5>
+                    <p class="card-text">@Html.DisplayFor(modelItem => item.UbicacionSucursal)</p>
+                    <div class="text-end">
+                        <a asp-action="Edit" asp-route-id="@item.IdSucursal" class="btn btn-warning">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.IdSucursal" class="btn btn-info">
+                            <i class="bi bi-info-circle"></i> Detalles
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.IdSucursal" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="mt-4">
+    <a asp-action="Create" class="btn btn-danger">
         <i class="bi bi-plus-circle"></i> Crear nuevo registro
     </a>
-    <a asp-action="ExportToExcel" class="btn btn-sm btn-success">
+    <a asp-action="ExportToExcel" class="btn btn-success">
         <i class="bi bi-download"></i> Descargar datos
     </a>
-</h1>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreSucursal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UbicacionSucursal)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreSucursal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UbicacionSucursal)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdSucursal" class="btn btn-sm btn-warning">
-                    <i class="bi bi-pencil-square"></i> Editar
-                </a>
-                |
-                <a asp-action="Details" asp-route-id="@item.IdSucursal" class="btn btn-sm btn-info">
-                    <i class="bi bi-info-circle"></i> Detalles
-                </a>
-                |
-                <a asp-action="Delete" asp-route-id="@item.IdSucursal" class="btn btn-sm btn-danger">
-                    <i class="bi bi-trash"></i> Eliminar
-                </a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+</div>
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
