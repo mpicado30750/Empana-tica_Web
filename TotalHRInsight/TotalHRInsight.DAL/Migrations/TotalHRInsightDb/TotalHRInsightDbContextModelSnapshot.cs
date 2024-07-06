@@ -394,7 +394,7 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                     b.Property<DateTime>("FechaVencimiento")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("MedidasIdMedida")
+                    b.Property<int>("MedidasId")
                         .HasColumnType("int");
 
                     b.Property<string>("NombreProducto")
@@ -411,7 +411,7 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     b.HasKey("IdProducto");
 
-                    b.HasIndex("MedidasIdMedida");
+                    b.HasIndex("MedidasId");
 
                     b.ToTable("Producto");
                 });
@@ -620,7 +620,9 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                 {
                     b.HasOne("TotalHRInsight.DAL.Medida", "Medidas")
                         .WithMany("Productos")
-                        .HasForeignKey("MedidasIdMedida");
+                        .HasForeignKey("MedidasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Medidas");
                 });

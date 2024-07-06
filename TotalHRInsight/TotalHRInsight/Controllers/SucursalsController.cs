@@ -9,148 +9,168 @@ using TotalHRInsight.DAL;
 
 namespace TotalHRInsight.Controllers
 {
-    public class SucursalsController : Controller
-    {
-        private readonly TotalHRInsightDbContext _context;
+	public class SucursalsController : Controller
+	{
+		private readonly TotalHRInsightDbContext _context;
 
-        public SucursalsController(TotalHRInsightDbContext context)
-        {
-            _context = context;
-        }
+		public SucursalsController(TotalHRInsightDbContext context)
+		{
+			_context = context;
+		}
 
-        // GET: Sucursals
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Sucursales.ToListAsync());
-        }
+		// GET: Sucursals
+		public async Task<IActionResult> Index()
+		{
+			return View(await _context.Sucursales.ToListAsync());
+		}
 
-        // GET: Sucursals/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+		// GET: Sucursals/Details/5
+		public async Task<IActionResult> Details(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
 
-            var sucursal = await _context.Sucursales
-                .FirstOrDefaultAsync(m => m.IdSucursal == id);
-            if (sucursal == null)
-            {
-                return NotFound();
-            }
+			var sucursal = await _context.Sucursales
+				.FirstOrDefaultAsync(m => m.IdSucursal == id);
+			if (sucursal == null)
+			{
+				return NotFound();
+			}
 
-            return View(sucursal);
-        }
+			return View(sucursal);
+		}
 
-        // GET: Sucursals/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+		// GET: Sucursals/Create
+		public IActionResult Create()
+		{
+			return View();
+		}
 
-        // POST: Sucursals/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdSucursal,NombreSucursal,UbicacionSucursal")] Sucursal sucursal)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(sucursal);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(sucursal);
-        }
+		// POST: Sucursals/Create
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Create([Bind("IdSucursal,NombreSucursal,UbicacionSucursal")] Sucursal sucursal)
+		{
+			if (ModelState.IsValid)
+			{
+				string nombreSucursalNormalizado = sucursal.NombreSucursal.Trim().ToLower().Replace(" ", "");
 
-        // GET: Sucursals/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+				bool sucursalExiste = _context.Sucursales
+					.Any(s => s.NombreSucursal.Trim().ToLower().Replace(" ", "") == nombreSucursalNormalizado);
 
-            var sucursal = await _context.Sucursales.FindAsync(id);
-            if (sucursal == null)
-            {
-                return NotFound();
-            }
-            return View(sucursal);
-        }
+				if (sucursalExiste)
+				{
+					ModelState.AddModelError("NombreSucursal", "Ya existe una sucursal con este nombre.");
+				}
+				else
+				{
+					_context.Add(sucursal);
+					await _context.SaveChangesAsync();
+					return RedirectToAction(nameof(Index));
+				}
+			}
+			return View(sucursal);
+		}
 
-        // POST: Sucursals/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int IdSucursal, Sucursal sucursal)
-        {
-            if (IdSucursal != sucursal.IdSucursal)
-            {
-                return NotFound();
-            }
+		// GET: Sucursals/Edit/5
+		public async Task<IActionResult> Edit(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(sucursal);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SucursalExists(sucursal.IdSucursal))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(sucursal);
-        }
+			var sucursal = await _context.Sucursales.FindAsync(id);
+			if (sucursal == null)
+			{
+				return NotFound();
+			}
+			return View(sucursal);
+		}
 
-        // GET: Sucursals/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+		// POST: Sucursals/Edit/5
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Edit(int id, [Bind("IdSucursal,NombreSucursal,UbicacionSucursal")] Sucursal sucursal)
+		{
+			if (id != sucursal.IdSucursal)
+			{
+				return NotFound();
+			}
 
-            var sucursal = await _context.Sucursales
-                .FirstOrDefaultAsync(m => m.IdSucursal == id);
-            if (sucursal == null)
-            {
-                return NotFound();
-            }
+			if (ModelState.IsValid)
+			{
+				string nombreSucursalNormalizado = sucursal.NombreSucursal.Trim().ToLower().Replace(" ", "");
 
-            return View(sucursal);
-        }
+				bool sucursalExiste = _context.Sucursales
+					.Any(s => s.NombreSucursal.Trim().ToLower().Replace(" ", "") == nombreSucursalNormalizado && s.IdSucursal != sucursal.IdSucursal);
 
-        // POST: Sucursals/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var sucursal = await _context.Sucursales.FindAsync(id);
-            if (sucursal != null)
-            {
-                _context.Sucursales.Remove(sucursal);
-            }
+				if (sucursalExiste)
+				{
+					ModelState.AddModelError("NombreSucursal", "Ya existe otra sucursal con este nombre.");
+				}
+				else
+				{
+					try
+					{
+						_context.Update(sucursal);
+						await _context.SaveChangesAsync();
+					}
+					catch (DbUpdateConcurrencyException)
+					{
+						if (!SucursalExists(sucursal.IdSucursal))
+						{
+							return NotFound();
+						}
+						else
+						{
+							throw;
+						}
+					}
+					return RedirectToAction(nameof(Index));
+				}
+			}
+			return View(sucursal);
+		}
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+		// GET: Sucursals/Delete/5
+		public async Task<IActionResult> Delete(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
 
-        private bool SucursalExists(int id)
-        {
-            return _context.Sucursales.Any(e => e.IdSucursal == id);
-        }
-    }
+			var sucursal = await _context.Sucursales
+				.FirstOrDefaultAsync(m => m.IdSucursal == id);
+			if (sucursal == null)
+			{
+				return NotFound();
+			}
+
+			return View(sucursal);
+		}
+
+		// POST: Sucursals/Delete/5
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> DeleteConfirmed(int id)
+		{
+			var sucursal = await _context.Sucursales.FindAsync(id);
+			if (sucursal != null)
+			{
+				_context.Sucursales.Remove(sucursal);
+				await _context.SaveChangesAsync();
+			}
+
+			return RedirectToAction(nameof(Index));
+		}
+
+		private bool SucursalExists(int id)
+		{
+			return _context.Sucursales.Any(e => e.IdSucursal == id);
+		}
+	}
 }
