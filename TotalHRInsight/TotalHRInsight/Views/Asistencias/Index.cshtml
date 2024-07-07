@@ -1,153 +1,270 @@
 ﻿@model IEnumerable<TotalHRInsight.Models.AsistenciaModel>
+
 @{
-    ViewData["Title"] = "Index";
+
+    ViewData["Title"] = "Geolocalización";
+
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
 <div class="container-fluid asistencia-container">
+
     <div class="row">
+        <div class="mt-4">
+            <a asp-action="Create" class="btn btn-danger">
+                <i class="bi bi-plus-circle"></i> Crear nuevo registro
+            </a>
+            <a asp-action="ExportToExcel" class="btn btn-success">
+                <i class="bi bi-download"></i> Descargar datos
+            </a>
+        </div>
+        <br />
+        <br />
+        <br />
         <div class="col-md-5" style="height: 600px; overflow-y: scroll;">
+
             <div class="input-group mb-3">
+
                 <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre">
+
                 <input type="date" id="dateInput" class="form-control">
-                <button class="btn btn-primary" type="button" onclick="filterCards()">Buscar</button>
+
+                <button class="btn btn-danger" type="button" onclick="filterCards()">Buscar</button>
+
             </div>
+
             <div id="cardContainer">
+
                 @foreach (var item in Model)
+
                 {
+
                     <div class="card mb-4 asistencia-card" id="card-@item.Id"
                          data-lat-entrada="@item.LatitudEntrada.ToString().Replace(',', '.')"
                          data-lng-entrada="@item.LongitudEntrada.ToString().Replace(',', '.')"
                          data-lat-salida="@item.LatitudSalida.ToString().Replace(',', '.')"
                          data-lng-salida="@item.LongitudSalida.ToString().Replace(',', '.')">
+
                         <div class="card-body">
+
                             <h5 class="card-title" id="nombre-@item.Id">@item.Nombre @item.PrimerApellido @item.SegundoApellido</h5>
+
                             <p class="card-text">
+
                                 <strong>Fecha Entrada:</strong> <span id="fecha-entrada-@item.Id" class="fecha-entrada">@item.FechaEntrada</span> <br />
+
                                 <strong>Fecha Salida:</strong> <span id="fecha-salida-@item.Id" class="fecha-salida">@item.FechaSalida</span> <br />
+
                                 <strong>Primer Apellido:</strong> <span id="primer-apellido-@item.Id">@item.PrimerApellido</span> <br />
+
                                 <strong>Segundo Apellido:</strong> <span id="segundo-apellido-@item.Id">@item.SegundoApellido</span> <br />
+
                             </p>
+                            
                         </div>
+
                     </div>
+
                 }
+
             </div>
+
         </div>
+
         <div class="col-md-7">
+
             <div id="map" style="width: 100%; height: 600px;"></div>
+
         </div>
+
     </div>
+
 </div>
 
 <script src="~/lib/leaflet/leaflet.js"></script>
+
 <script src="~/lib/leaflet/leaflet.min.js"></script>
 
 <script>
+
     var map = L.map('map').setView([9.895403, -84.063574], 15);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+
     }).addTo(map);
 
     var Rojo = L.icon({
+
         iconUrl: '/Images/Rojo.png',
+
         iconSize: [25, 45],
+
         iconAnchor: [15, 45],
+
         popupAnchor: [-3, -46],
+
     });
 
     var Verde = L.icon({
+
         iconUrl: '/Images/Verde.png',
+
         iconSize: [25, 45],
+
         iconAnchor: [15, 45],
+
         popupAnchor: [-3, -46],
+
     });
 
     var markers = [];
 
     var jsModel = @Html.Raw(Json.Serialize(Model));
+
     updateMarkers(jsModel);
 
     function updateMarkers(data) {
+
         markers.forEach(marker => {
+
             map.removeLayer(marker);
+
         });
+
         markers = [];
 
         for (var i in data) {
+
             var item = data[i];
 
             try {
+
                 var entradaLat = parseFloat(item.latitudEntrada);
+
                 var entradaLng = parseFloat(item.longitudEntrada);
+
                 var salidaLat = parseFloat(item.latitudSalida);
+
                 var salidaLng = parseFloat(item.longitudSalida);
 
                 if (isNaN(entradaLat) || isNaN(entradaLng) || isNaN(salidaLat) || isNaN(salidaLng)) {
+
                     console.error("Latitud o longitud no válida para el elemento con ID " + item.id);
+
                     continue;
+
                 }
 
                 var entradaMarker = L.marker([entradaLat, entradaLng], { icon: Verde })
+
                     .bindPopup(item.nombre + ' ' + item.primerApellido + ' ' + item.segundoApellido + '<br>' + item.fechaEntrada + '<br>' + 'Entrada');
+
                 markers.push(entradaMarker);
+
                 entradaMarker.addTo(map);
 
                 var salidaMarker = L.marker([salidaLat, salidaLng], { icon: Rojo })
+
                     .bindPopup(item.nombre + ' ' + item.primerApellido + ' ' + item.segundoApellido + '<br>' + item.fechaSalida + '<br>' + 'Salida');
+
                 markers.push(salidaMarker);
+
                 salidaMarker.addTo(map);
+
             } catch (error) {
+
                 console.error("Error al procesar el marcador para el elemento con ID " + item.id + ": " + error);
+
             }
+
         }
+
     }
 
     function filterCards() {
+
         try {
+
             var searchInput = document.getElementById('searchInput').value.toLowerCase();
+
             var dateInput = document.getElementById('dateInput').value;
+
             var cards = document.getElementsByClassName('asistencia-card');
+
             var filteredData = [];
 
             for (var i = 0; i < cards.length; i++) {
+
                 var card = cards[i];
+
                 var cardId = card.id.split('-')[1];
+
                 var nombre = document.getElementById(`nombre-${cardId}`).textContent.toLowerCase();
+
                 var fechaEntrada = document.getElementById(`fecha-entrada-${cardId}`).textContent.trim();
+
                 var isVisible = true;
 
                 if (searchInput && !nombre.includes(searchInput)) {
+
                     isVisible = false;
+
                 }
 
                 if (dateInput) {
+
                     var inputDate = new Date(dateInput).toISOString().split('T')[0];
+
                     if (fechaEntrada !== inputDate) {
+
                         isVisible = false;
+
                     }
+
                 }
 
                 card.style.display = isVisible ? "block" : "none";
 
                 if (isVisible) {
+
                     filteredData.push({
+
                         latitudEntrada: card.getAttribute('data-lat-entrada'),
+
                         longitudEntrada: card.getAttribute('data-lng-entrada'),
+
                         latitudSalida: card.getAttribute('data-lat-salida'),
+
                         longitudSalida: card.getAttribute('data-lng-salida'),
+
                         nombre: nombre,
+
                         primerApellido: document.getElementById(`primer-apellido-${cardId}`).textContent.trim(),
+
                         segundoApellido: document.getElementById(`segundo-apellido-${cardId}`).textContent.trim(),
+
                         fechaEntrada: fechaEntrada,
+
                         fechaSalida: document.getElementById(`fecha-salida-${cardId}`).textContent.trim()
+
                     });
+
                 }
+
             }
 
             updateMarkers(filteredData);
+
         } catch (error) {
+
             console.error("Error en filterCards: " + error);
+
         }
+
     }
+
 </script>
+
