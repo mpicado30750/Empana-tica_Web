@@ -5,57 +5,46 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Lista de Productos</h1>
+<hr />
 
-<p>
-    <a asp-action="Create">Create New</a>
-    <a asp-action="ExportToExcel">Export to Excel</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreProducto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaVencimiento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PrecioUnitario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Medidas)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreProducto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaVencimiento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrecioUnitario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Medidas.NombreMedida)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdProducto">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdProducto">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdProducto">Delete</a>
-            </td>
-        </tr>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.NombreProducto)</h5>
+                    <p class="card-text">@Html.DisplayNameFor(m => m.Descripcion): <class ="card-text">@Html.DisplayFor(modelItem => item.Descripcion)</p>
+                    <p class="card-text">@Html.DisplayNameFor(m => m.FechaVencimiento): <class ="card-text">@Html.DisplayFor(modelItem => item.FechaVencimiento)</p>
+                    <p class="card-text">@Html.DisplayNameFor(m => m.PrecioUnitario): <class ="card-text">@Html.DisplayFor(modelItem => item.PrecioUnitario)</p>
+                    <p class="card-text">@Html.DisplayNameFor(m => m.Medidas): <class ="card-text">@Html.DisplayFor(modelItem => item.Medidas.NombreMedida)</p>
+                    <div class="text-end">
+                        <a asp-action="Edit" asp-route-id="@item.IdProducto" class="btn btn-warning">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.IdProducto" class="btn btn-info">
+                            <i class="bi bi-info-circle"></i> Detalles
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.IdProducto" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="mt-4">
+    <a asp-action="Create" class="btn btn-danger">
+        <i class="bi bi-plus-circle"></i> Crear nuevo registro
+    </a>
+    <a asp-action="ExportToExcel" class="btn btn-success">
+        <i class="bi bi-download"></i> Descargar datos
+    </a>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
 }
-    </tbody>
-</table>

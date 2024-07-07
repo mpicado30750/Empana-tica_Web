@@ -50,10 +50,10 @@ namespace TotalHRInsight.Controllers
 		// GET: Pedidos/Create
 		public IActionResult Create()
 		{
-			ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud");
+            ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud");
 			ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
-			ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
-			return View();
+			ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre");
+            return View();
 		}
  
 		// POST: Pedidos/Create
@@ -99,7 +99,7 @@ namespace TotalHRInsight.Controllers
 			}
 			ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud", pedido.IdEstado);
 			ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", pedido.IdSucursal);
-			ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", pedido.UsuarioCreacionId);
+			ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", pedido.UsuarioCreacionId);
 			return View(pedido);
 		}
  

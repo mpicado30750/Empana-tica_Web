@@ -5,68 +5,49 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Inventario</h1>
+<hr />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioCreacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioModificacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaCreacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaModificacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CantidadDisponible)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sucursal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Producto)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioCreacion.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioModificacion.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaCreacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaModificacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CantidadDisponible)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sucursal.NombreSucursal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Producto.Descripcion)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdInventario">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdInventario">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdInventario">Delete</a>
-            </td>
-        </tr>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.IdInventario)</h5>
+                    <p class="card-text">@Html.DisplayNameFor(m => m.FechaCreacion): <class ="card-text">@Html.DisplayFor(modelItem => item.FechaCreacion)</p>
+                    <p class="card-text">@Html.DisplayNameFor(m => m.FechaModificacion): <class ="card-text">@Html.DisplayFor(modelItem => item.FechaModificacion)</p>
+                    <p class="card-text">@Html.DisplayNameFor(m => m.Producto.NombreProducto): <class ="card-text">@Html.DisplayFor(modelItem => item.Producto.NombreProducto)</p>
+                    <p class="card-text">@Html.DisplayNameFor(m => m.Sucursal.NombreSucursal): <class ="card-text">@Html.DisplayFor(modelItem => item.Sucursal.NombreSucursal)</p>
+                    <p class="card-text">@Html.DisplayNameFor(m => m.CantidadDisponible): <class ="card-text">@Html.DisplayFor(modelItem => item.CantidadDisponible)</p>
+                    <p class="card-text">@Html.DisplayNameFor(m => m.UsuarioCreacion): <class ="card-text">@Html.DisplayFor(modelItem => item.UsuarioCreacion.Nombre)</p>
+                    <p class="card-text">@Html.DisplayNameFor(m => m.UsuarioModificacion): <class ="card-text">@Html.DisplayFor(modelItem => item.UsuarioModificacion.Nombre)</p>
+                    <div class="text-end">
+                        <a asp-action="Edit" asp-route-id="@item.IdInventario" class="btn btn-warning">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.IdInventario" class="btn btn-info">
+                            <i class="bi bi-info-circle"></i> Detalles
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.IdInventario" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="mt-4">
+    <a asp-action="Create" class="btn btn-danger">
+        <i class="bi bi-plus-circle"></i> Crear nuevo registro
+    </a>
+    <a asp-action="ExportToExcel" class="btn btn-success">
+        <i class="bi bi-download"></i> Descargar datos
+    </a>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
 }
-    </tbody>
-</table>

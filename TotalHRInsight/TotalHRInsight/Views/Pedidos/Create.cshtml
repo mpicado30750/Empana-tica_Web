@@ -5,52 +5,64 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
-
-<h4>Pedido</h4>
+<h1 class="text-center">Añadir Pedido</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FechaPedido" class="control-label"></label>
-                <input asp-for="FechaPedido" class="form-control" />
-                <span asp-validation-for="FechaPedido" class="text-danger"></span>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <div class="form-group mb-3">
+                            <label asp-for="FechaPedido" class="form-label"></label>
+                            <input asp-for="FechaPedido" class="form-control" />
+                            <span asp-validation-for="FechaPedido" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="FechaEntrega" class="form-label"></label>
+                            <input asp-for="FechaEntrega" class="form-control" />
+                            <span asp-validation-for="FechaEntrega" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="UsuarioCreacion.Nombre" class="form-label"></label>
+                            <select asp-for="UsuarioCreacion.Nombre" class="form-control" asp-items="ViewBag.UsuarioCreacionId"></select>
+                            <span asp-validation-for="UsuarioCreacion" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="Sucursal.NombreSucursal" class="form-label"></label>
+                            <select asp-for="Sucursal.NombreSucursal" class="form-control" asp-items="ViewBag.IdSucursal"><</select>
+                            <span asp-validation-for="Sucursal.NombreSucursal" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="IdEstado" class="form-label"></label>
+                            <select asp-for="IdEstado" class="form-control" asp-items="ViewBag.IdEstado"><</select>
+                            <span asp-validation-for="IdEstado" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="MontoTotal" class="form-label"></label>
+                            <input asp-for="MontoTotal" class="form-control"/>
+                            <span asp-validation-for="MontoTotal" class="text-danger"></span>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger btn-block">
+                                <i class="bi bi-plus-circle"></i> Añadir
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="FechaEntrega" class="control-label"></label>
-                <input asp-for="FechaEntrega" class="form-control" />
-                <span asp-validation-for="FechaEntrega" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UsuarioCreacionId" class="control-label"></label>
-                <select asp-for="UsuarioCreacionId" class ="form-control" asp-items="ViewBag.UsuarioCreacionId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdSucursal" class="control-label"></label>
-                <select asp-for="IdSucursal" class ="form-control" asp-items="ViewBag.IdSucursal"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdEstado" class="control-label"></label>
-                <select asp-for="IdEstado" class ="form-control" asp-items="ViewBag.IdEstado"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="MontoTotal" class="control-label"></label>
-                <input asp-for="MontoTotal" class="form-control" />
-                <span asp-validation-for="MontoTotal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-danger" />
-            </div>
-        </form>
+        </div>
+    </div>
+    <div class="text-center mt-3">
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left-circle"></i> Regresar
+        </a>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Regresar</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

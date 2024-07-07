@@ -50,10 +50,10 @@ namespace TotalHRInsight.Controllers
         // GET: Inventarios/Create
         public IActionResult Create()
         {
-            ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "Descripcion");
+            ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "NombreProducto");
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
-            ViewData["UsuarioCreacionid"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
-            ViewData["UsuarioModificacionid"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
+            ViewData["UsuarioCreacionid"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre");
+            ViewData["UsuarioModificacionid"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre");
             return View();
         }
 
@@ -90,10 +90,10 @@ namespace TotalHRInsight.Controllers
             {
                 return NotFound();
             }
-            ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "Descripcion", inventario.ProductoId);
+            ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "NombreProducto", inventario.ProductoId);
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", inventario.SucursalId);
-            ViewData["UsuarioCreacionid"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", inventario.UsuarioCreacionid);
-            ViewData["UsuarioModificacionid"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", inventario.UsuarioModificacionid);
+            ViewData["UsuarioCreacionid"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", inventario.UsuarioCreacionid);
+            ViewData["UsuarioModificacionid"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", inventario.UsuarioModificacionid);
             return View(inventario);
         }
 

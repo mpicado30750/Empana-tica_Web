@@ -1,81 +1,49 @@
 ﻿@model IEnumerable<TotalHRInsight.DAL.Pedido>
 
 @{
-    ViewData["Title"] = "Indice Pedidos";
+    ViewData["Title"] = "Lista de Pedidos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<h1>Lista de Pedidos</h1>
+<hr />
 
-<h1>
-    Pedidos
-    <a asp-action="Create" class="btn btn-crear">
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.IdPedido)</h5>
+                    <p class="card-text">@Html.DisplayNameFor(m => m.UsuarioCreacion): <class="card-text">@Html.DisplayFor(modelItem => item.UsuarioCreacion.Nombre)</p>
+                    <p class="card-text">@Html.DisplayNameFor(m => m.Sucursal): <class="card-text">@Html.DisplayFor(modelItem => item.Sucursal.NombreSucursal)</p>
+                    <p class="card-text">@Html.DisplayNameFor(m => m.FechaPedido): <class ="card-text">@Html.DisplayFor(modelItem => item.FechaPedido)</p>
+                    <p class="card-text">@Html.DisplayFor(modelItem => item.Estado.EstadoSolicitud)</p>
+                    <div class="text-end">
+                        <a asp-action="Edit" asp-route-id="@item.IdPedido" class="btn btn-warning">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.IdPedido" class="btn btn-info">
+                            <i class="bi bi-info-circle"></i> Detalles
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.IdPedido" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="mt-4">
+    <a asp-action="Create" class="btn btn-danger">
         <i class="bi bi-plus-circle"></i> Crear nuevo registro
     </a>
-    <a asp-action="ExportToExcel" class="btn btn-sm btn-success">
+    <a asp-action="ExportToExcel" class="btn btn-success">
         <i class="bi bi-download"></i> Descargar datos
     </a>
-</h1>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaPedido)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaEntrega)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MontoTotal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sucursal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioCreacion)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaPedido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaEntrega)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MontoTotal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sucursal.NombreSucursal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado.EstadoSolicitud)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioCreacion.Id)
-            </td>
-            <td>
-                    <a asp-action="Edit" asp-route-id="@item.IdPedido" class="btn btn-sm btn-warning">
-                        <i class="bi bi-pencil-square"></i> Editar
-                    </a>
-                    |
-                    <a asp-action="Details" asp-route-id="@item.IdPedido" class="btn btn-sm btn-info">
-                        <i class="bi bi-info-circle"></i> Detalles
-                    </a>
-                    |
-                    <a asp-action="Delete" asp-route-id="@item.IdPedido" class="btn btn-sm btn-danger">
-                        <i class="bi bi-trash"></i> Eliminar
-                    </a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+</div>
+
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
 }
