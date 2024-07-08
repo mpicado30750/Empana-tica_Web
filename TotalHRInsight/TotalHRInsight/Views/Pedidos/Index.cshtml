@@ -14,10 +14,10 @@
             <div class="card h-100">
                 <div class="card-body">
                     <h5 class="card-title">@Html.DisplayFor(modelItem => item.IdPedido)</h5>
-                    <p class="card-text">@Html.DisplayNameFor(m => m.UsuarioCreacion): <class="card-text">@Html.DisplayFor(modelItem => item.UsuarioCreacion.Nombre)</p>
-                    <p class="card-text">@Html.DisplayNameFor(m => m.Sucursal): <class="card-text">@Html.DisplayFor(modelItem => item.Sucursal.NombreSucursal)</p>
-                    <p class="card-text">@Html.DisplayNameFor(m => m.FechaPedido): <class ="card-text">@Html.DisplayFor(modelItem => item.FechaPedido)</p>
-                    <p class="card-text">@Html.DisplayFor(modelItem => item.Estado.EstadoSolicitud)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.UsuarioCreacion):</strong> @Html.DisplayFor(modelItem => item.UsuarioCreacion.Nombre)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.Sucursal):</strong> @Html.DisplayFor(modelItem => item.Sucursal.NombreSucursal)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.FechaPedido):</strong> @Html.DisplayFor(modelItem => item.FechaPedido)</p>
+                    <p class="card-text"><strong>Estado:</strong> @Html.DisplayFor(modelItem => item.Estado.EstadoSolicitud)</p>
                     <div class="text-end">
                         <a asp-action="Edit" asp-route-id="@item.IdPedido" class="btn btn-warning">
                             <i class="bi bi-pencil-square"></i> Editar
@@ -34,6 +34,8 @@
         </div>
     }
 </div>
+
+
 
 <div class="mt-4">
     <a asp-action="Create" class="btn btn-danger">
