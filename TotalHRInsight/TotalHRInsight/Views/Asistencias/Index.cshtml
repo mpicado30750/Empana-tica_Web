@@ -2,7 +2,7 @@
 
 @{
 
-    ViewData["Title"] = "Geolocalización";
+    ViewData["Title"] = "Lista de Asistencias";
 
     Layout = "~/Views/Shared/_Layout.cshtml";
 
@@ -13,7 +13,10 @@
     <div class="row">
         <div class="mt-4">
             <a asp-action="Create" class="btn btn-danger">
-                <i class="bi bi-plus-circle"></i> Crear nuevo registro
+                <i class="bi bi-plus-circle"></i> Crear registro manual
+            </a>
+            <a asp-action="ExportToExcel" class="btn btn-success">
+                <i class="bi bi-download"></i> Descargar datos
             </a>
             <a asp-action="ExportToExcel" class="btn btn-success">
                 <i class="bi bi-download"></i> Descargar datos

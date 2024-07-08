@@ -14,14 +14,14 @@
         <div class="col">
             <div class="card h-100">
                 <div class="card-body">
-                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.IdInventario)</h5>
-                    <p class="card-text">@Html.DisplayNameFor(modelItem => item.FechaCreacion): @Html.DisplayFor(modelItem => item.FechaCreacion)</p>
-                    <p class="card-text">@Html.DisplayNameFor(modelItem => item.FechaModificacion): @Html.DisplayFor(modelItem => item.FechaModificacion)</p>
-                    <p class="card-text">@Html.DisplayNameFor(modelItem => item.Producto.NombreProducto): @Html.DisplayFor(modelItem => item.Producto.NombreProducto)</p>
-                    <p class="card-text">@Html.DisplayNameFor(modelItem => item.Sucursal.NombreSucursal): @Html.DisplayFor(modelItem => item.Sucursal.NombreSucursal)</p>
-                    <p class="card-text">@Html.DisplayNameFor(modelItem => item.CantidadDisponible): @Html.DisplayFor(modelItem => item.CantidadDisponible)</p>
-                    <p class="card-text">Creado por: @Html.DisplayFor(modelItem => item.UsuarioCreacion.Nombre) @Html.DisplayFor(modelItem => item.UsuarioCreacion.PrimerApellido)</p>
-                    <p class="card-text">Modificado por: @Html.DisplayFor(modelItem => item.UsuarioModificacion.Nombre) @Html.DisplayFor(modelItem => item.UsuarioModificacion.PrimerApellido)</p>
+                    <h5 class="card-title"><strong>@Html.DisplayFor(modelItem => item.IdInventario)</strong></h5>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.FechaCreacion):</strong> @Html.DisplayFor(modelItem => item.FechaCreacion)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.FechaModificacion):</strong> @Html.DisplayFor(modelItem => item.FechaModificacion)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.Producto.NombreProducto):</strong> @Html.DisplayFor(modelItem => item.Producto.NombreProducto)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.Sucursal.NombreSucursal):</strong> @Html.DisplayFor(modelItem => item.Sucursal.NombreSucursal)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.CantidadDisponible):</strong> @Html.DisplayFor(modelItem => item.CantidadDisponible)</p>
+                    <p class="card-text"><strong>Creado por:</strong> @Html.DisplayFor(modelItem => item.UsuarioCreacion.Nombre) @Html.DisplayFor(modelItem => item.UsuarioCreacion.PrimerApellido)</p>
+                    <p class="card-text"><strong>Modificado por:</strong> @Html.DisplayFor(modelItem => item.UsuarioModificacion.Nombre) @Html.DisplayFor(modelItem => item.UsuarioModificacion.PrimerApellido)</p>
                     <div class="text-end">
                         <a asp-action="Edit" asp-route-id="@item.IdInventario" class="btn btn-warning">
                             <i class="bi bi-pencil-square"></i> Editar
@@ -38,6 +38,7 @@
         </div>
     }
 </div>
+
 
 <div class="mt-4">
     <a asp-action="Create" class="btn btn-danger">
