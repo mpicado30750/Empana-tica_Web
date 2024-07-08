@@ -4,58 +4,68 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>Details</h1>
-
-<div>
-    <h4>Inventario</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UsuarioCreacion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UsuarioCreacion.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UsuarioModificacion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UsuarioModificacion.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaCreacion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaCreacion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaModificacion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaModificacion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CantidadDisponible)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CantidadDisponible)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sucursal)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sucursal.NombreSucursal)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Producto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Producto.Descripcion)
-        </dd>
-    </dl>
+<h1 class="text-center">Detalles Inventario</h1>
+<hr />
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.UsuarioCreacionid)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.UsuarioCreacion.Nombre)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.UsuarioModificacionid)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.UsuarioModificacion.Nombre)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.FechaCreacion)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.FechaCreacion)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.FechaModificacion)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.FechaModificacion)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.CantidadDisponible)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.CantidadDisponible)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.Sucursal.NombreSucursal)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.Sucursal.NombreSucursal)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.ProductoId)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.Producto.NombreProducto)
+                        </dd>
+                    </dl>
+                    <div class="d-grid gap-2">
+                        <a asp-action="Edit" asp-route-id="@Model?.IdInventario" class="btn btn-warning">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left-circle"></i> Regresar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdInventario">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+

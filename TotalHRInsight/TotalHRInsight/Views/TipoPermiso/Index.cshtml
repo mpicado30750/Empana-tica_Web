@@ -5,32 +5,42 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Lista de Tipos de Permisos</h1>
+<hr />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NombrePermiso)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombrePermiso)
-            </td>
-            <td>
-                    <a asp-action="Edit" asp-route-IdTipoPermiso="@item.IdTipoPermiso">Edit</a> |
-                    <a asp-action="Details" asp-route-IdTipoPermiso="@item.IdTipoPermiso">Details</a> |
-                    <a asp-action="Delete" asp-route-IdTipoPermiso="@item.IdTipoPermiso">Delete</a>
-            </td>
-        </tr>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.NombrePermiso)</h5>
+                    <div class="text-end">
+                        <a asp-action="Edit" asp-route-id="@item.IdTipoPermiso" class="btn btn-warning">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.IdTipoPermiso" class="btn btn-info">
+                            <i class="bi bi-info-circle"></i> Detalles
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.IdTipoPermiso" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="mt-4">
+    <a asp-action="Create" class="btn btn-danger">
+        <i class="bi bi-plus-circle"></i> Crear nuevo registro
+    </a>
+    <a asp-action="ExportToExcel" class="btn btn-success">
+        <i class="bi bi-download"></i> Descargar datos
+    </a>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
 }
-    </tbody>
-</table>

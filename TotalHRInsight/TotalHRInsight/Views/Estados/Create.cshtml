@@ -1,32 +1,40 @@
 ﻿@model TotalHRInsight.DAL.Estado
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Estado";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
-
-<h4>Estado</h4>
+<h1 class="text-center">Añadir Estado</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="EstadoSolicitud" class="control-label"></label>
-                <input asp-for="EstadoSolicitud" class="form-control" />
-                <span asp-validation-for="EstadoSolicitud" class="text-danger"></span>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <div class="form-group mb-3">
+                            <label asp-for="EstadoSolicitud" class="form-label"></label>
+                            <input asp-for="EstadoSolicitud" class="form-control" />
+                            <span asp-validation-for="EstadoSolicitud" class="text-danger"></span>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger btn-block">
+                                <i class="bi bi-plus-circle"></i> Añadir
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="text-center mt-3">
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="bi bi-arrow-left-circle"></i> Regresar
+    </a>
+</div>
 </div>
 
 @section Scripts {

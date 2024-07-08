@@ -25,15 +25,15 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: TipoPermiso/Details/5
-        public async Task<IActionResult> Details(int? IdTipoPermiso)
+        public async Task<IActionResult> Details(int? id)
         {
-            if (IdTipoPermiso == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
             var tipoPermiso = await _context.TipoPermisos
-                .FirstOrDefaultAsync(m => m.IdTipoPermiso == IdTipoPermiso);
+                .FirstOrDefaultAsync(m => m.IdTipoPermiso == id);
             if (tipoPermiso == null)
             {
                 return NotFound();
@@ -65,14 +65,14 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: TipoPermiso/Edit/5
-        public async Task<IActionResult> Edit(int? IdTipoPermiso)
+        public async Task<IActionResult> Edit(int? id)
         {
-            if (IdTipoPermiso == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var tipoPermiso = await _context.TipoPermisos.FindAsync(IdTipoPermiso);
+            var tipoPermiso = await _context.TipoPermisos.FindAsync(id);
             if (tipoPermiso == null)
             {
                 return NotFound();
@@ -85,9 +85,9 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int IdTipoPermiso, TipoPermiso tipoPermiso)
+        public async Task<IActionResult> Edit(int id, TipoPermiso tipoPermiso)
         {
-            if (IdTipoPermiso != tipoPermiso.IdTipoPermiso)
+            if (id != tipoPermiso.IdTipoPermiso)
             {
                 return NotFound();
             }
@@ -116,15 +116,15 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: TipoPermiso/Delete/5
-        public async Task<IActionResult> Delete(int? IdTipoPermiso)
+        public async Task<IActionResult> Delete(int? id)
         {
-            if (IdTipoPermiso == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
             var tipoPermiso = await _context.TipoPermisos
-                .FirstOrDefaultAsync(m => m.IdTipoPermiso == IdTipoPermiso);
+                .FirstOrDefaultAsync(m => m.IdTipoPermiso == id);
             if (tipoPermiso == null)
             {
                 return NotFound();
@@ -136,9 +136,9 @@ namespace TotalHRInsight.Controllers
         // POST: TipoPermiso/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int IdTipoPermiso)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tipoPermiso = await _context.TipoPermisos.FindAsync(IdTipoPermiso);
+            var tipoPermiso = await _context.TipoPermisos.FindAsync(id);
             if (tipoPermiso != null)
             {
                 _context.TipoPermisos.Remove(tipoPermiso);

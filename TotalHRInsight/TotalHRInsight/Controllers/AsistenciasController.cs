@@ -46,9 +46,8 @@ namespace TotalHRInsight.Controllers
 
             return View(viewModel);
         }
-
-
-
+ 
+       
         private static double ConvertirLatitud(string input)
         {
             int startIndex = input.IndexOf("lat:") + 4;
