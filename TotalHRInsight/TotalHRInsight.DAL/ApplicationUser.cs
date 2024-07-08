@@ -43,6 +43,11 @@ namespace TotalHRInsight.DAL
         public int idSucursal { get; set; }
 
         public Sucursal? Sucursal { get; set; }
+
+        public static implicit operator ApplicationUser(string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 	//migrationBuilder.InsertData(

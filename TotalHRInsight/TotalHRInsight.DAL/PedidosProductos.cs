@@ -24,11 +24,6 @@ namespace TotalHRInsight.DAL
 		[Range(0.01, double.MaxValue, ErrorMessage = "La cantidad debe ser mayor a cero")]
 		public float Cantidad { get; set; }
 
-		[Required(ErrorMessage = "La medida es obligatoria")]
-		[MaxLength(50, ErrorMessage = "La medida no puede exceder los 50 caracteres")]
-        [DisplayName("Unidad de Medida")]
-        public string Medida { get; set; }
-
 		public Producto? Producto { get; set; }
 		public Pedido? Pedido { get; set; }
 	}

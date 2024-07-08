@@ -360,8 +360,6 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                     ProductosID = table.Column<int>(type: "int", nullable: false),
                     PedidoID = table.Column<int>(type: "int", nullable: false),
                     Cantidad = table.Column<float>(type: "float", nullable: false),
-                    Medida = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {

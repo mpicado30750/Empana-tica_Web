@@ -1,56 +1,273 @@
-﻿@model TotalHRInsight.DAL.Pedido
+﻿@model TotalHRInsight.Models.Pedidos.CrearPedido
 
 @{
     ViewData["Title"] = "Create";
+    var productos = ViewData["Inventario"] as IEnumerable<TotalHRInsight.DAL.Inventario>;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
-
-<h4>Pedido</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+    <div class="col-md-12">
+        <form asp-action="Create" id="formCreatePedido">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="FechaPedido" class="control-label"></label>
-                <input asp-for="FechaPedido" class="form-control" />
-                <span asp-validation-for="FechaPedido" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="FechaEntrega" class="control-label"></label>
-                <input asp-for="FechaEntrega" class="form-control" />
+                <input asp-for="FechaEntrega" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" required />
                 <span asp-validation-for="FechaEntrega" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="UsuarioCreacionId" class="control-label"></label>
-                <select asp-for="UsuarioCreacionId" class ="form-control" asp-items="ViewBag.UsuarioCreacionId"></select>
-            </div>
+
             <div class="form-group">
                 <label asp-for="IdSucursal" class="control-label"></label>
-                <select asp-for="IdSucursal" class ="form-control" asp-items="ViewBag.IdSucursal"></select>
+                <select asp-for="IdSucursal" class="form-control" asp-items="ViewBag.IdSucursal" required></select>
             </div>
+
             <div class="form-group">
-                <label asp-for="IdEstado" class="control-label"></label>
-                <select asp-for="IdEstado" class ="form-control" asp-items="ViewBag.IdEstado"></select>
+                <label asp-for="MontoTotal" for="MontoTotal" class="control-label">Monto Total</label>
+                <input asp-for="MontoTotal" type="number" id="MontoTotal" name="MontoTotal" class="form-control" readonly />
             </div>
+
+            <input type="hidden" id="ProductosJson" name="ProductosJson" />
+
             <div class="form-group">
-                <label asp-for="MontoTotal" class="control-label"></label>
-                <input asp-for="MontoTotal" class="form-control" />
-                <span asp-validation-for="MontoTotal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Crear Pedido" class="btn btn-primary" id="btnCrearPedido" />
             </div>
         </form>
+
+        <h2>Productos Disponibles</h2>
+        <div class="form-group">
+            <input type="text" id="buscarProducto" class="form-control" placeholder="Buscar producto...">
+        </div>
+        <table class="table" id="tablaProductos">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre Producto</th>
+                    <th>Producto Disponible</th>
+                    <th>Cantidad</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (productos != null)
+                {
+                    foreach (var producto in productos)
+                    {
+                        <tr>
+                            <td>@producto.IdInventario</td>
+                            <td>@producto.Producto.NombreProducto</td>
+                            <td class="cantidad-disponible">@producto.CantidadDisponible</td>
+                            <td>
+                                <input type="number" id="cantidad_@producto.IdInventario" name="cantidad" class="form-control cantidad-input"
+                                       min="1" max="@producto.CantidadDisponible" value="1" />
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary btnAgregarProducto"
+                                        data-id="@producto.IdInventario"
+                                        data-nombre="@producto.Producto.NombreProducto"
+                                        data-precio="@producto.Producto.PrecioUnitario">
+                                    Agregar
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        <h3>Productos Seleccionados</h3>
+        <table id="tablaProductosSeleccionados" class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            var listaProductos = [];
+
+            // Código existente
+            $(".cantidad-input").on('input', function () {
+                var max = parseInt($(this).attr('max'));
+                var value = parseInt($(this).val());
+                if (value > max) {
+                    $(this).val(max);
+                } else if (value < 1 || isNaN(value)) {
+                    $(this).val(1);
+                }
+            });
+
+            // Nuevo código: Búsqueda de productos
+            $("#buscarProducto").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#tablaProductos tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            // Código existente modificado
+            $(".btnAgregarProducto").click(function () {
+                var id = $(this).data("id");
+                var nombre = $(this).data("nombre");
+                var precio = parseFloat($(this).data("precio"));
+                var cantidad = parseInt($("#cantidad_" + id).val());
+                var disponible = parseInt($(this).closest('tr').find('.cantidad-disponible').text());
+
+                if (isNaN(cantidad) || cantidad <= 0) {
+                    alert("Por favor, ingrese una cantidad válida mayor a 0.");
+                    return;
+                }
+
+                if (cantidad > disponible) {
+                    alert("La cantidad solicitada excede el stock disponible.");
+                    return;
+                }
+
+                var productoExistente = listaProductos.find(p => p.IdProducto == id);
+                if (productoExistente) {
+                    if (productoExistente.CantidadSeleccionada + cantidad > disponible) {
+                        alert("La cantidad total excede el stock disponible.");
+                        return;
+                    }
+                    productoExistente.CantidadSeleccionada += cantidad;
+                } else {
+                    listaProductos.push({
+                        IdProducto: id,
+                        NombreProducto: nombre,
+                        PrecioUnitario: precio,
+                        CantidadSeleccionada: cantidad
+                    });
+                }
+
+                var nuevaDisponible = disponible - cantidad;
+                $(this).closest('tr').find('.cantidad-disponible').text(nuevaDisponible);
+                $("#cantidad_" + id).attr('max', nuevaDisponible);
+                if (nuevaDisponible === 0) {
+                    $(this).prop('disabled', true);
+                }
+
+                $("#cantidad_" + id).val(1);
+                actualizarTablaProductosSeleccionados();
+            });
+
+            // Código existente modificado
+            function actualizarTablaProductosSeleccionados() {
+                var tabla = $("#tablaProductosSeleccionados").find("tbody");
+                tabla.empty();
+                var total = 0;
+
+                listaProductos.forEach(function (producto, index) {
+                    var subtotal = producto.PrecioUnitario * producto.CantidadSeleccionada;
+                    total += subtotal;
+                    var fila = "<tr>" +
+                        "<td>" + producto.IdProducto + "</td>" +
+                        "<td>" + producto.NombreProducto + "</td>" +
+                        "<td>$" + producto.PrecioUnitario.toFixed(2) + "</td>" +
+                        "<td>" + producto.CantidadSeleccionada + "</td>" +
+                        "<td>$" + subtotal.toFixed(2) + "</td>" +
+                        "<td><button type='button' class='btn btn-danger btnEliminarProducto' data-index='" + index + "'>Eliminar</button></td>" +
+                        "</tr>";
+                    tabla.append(fila);
+                });
+
+                $("#MontoTotal").val(total.toFixed(2));
+                $("#ProductosJson").val(JSON.stringify(listaProductos));
+
+                // Si la lista está vacía, muestra un mensaje
+                if (listaProductos.length === 0) {
+                    tabla.append("<tr><td colspan='6'>No hay productos seleccionados</td></tr>");
+                }
+
+                $(".btnEliminarProducto").click(function () {
+                    var index = $(this).data("index");
+                    var producto = listaProductos[index];
+                    var filaInventario = $("tr:has(button[data-id='" + producto.IdProducto + "'])");
+                    var cantidadDisponibleActual = parseInt(filaInventario.find('.cantidad-disponible').text());
+                    var nuevaCantidadDisponible = cantidadDisponibleActual + producto.CantidadSeleccionada;
+
+                    filaInventario.find('.cantidad-disponible').text(nuevaCantidadDisponible);
+                    filaInventario.find('.cantidad-input').attr('max', nuevaCantidadDisponible);
+                    filaInventario.find('.btnAgregarProducto').prop('disabled', false);
+
+                    listaProductos.splice(index, 1);
+                    actualizarTablaProductosSeleccionados();
+                });
+            }
+
+            // Nuevo código: Manejo del envío del formulario
+            $("#formCreatePedido").submit(function (e) {
+                e.preventDefault();
+
+                if (listaProductos.length === 0) {
+                    alert("Por favor, agregue al menos un producto al pedido.");
+                    return false;
+                }
+
+                if (!$("#FechaEntrega").val()) {
+                    alert("Por favor, seleccione una fecha de entrega.");
+                    return false;
+                }
+
+                if (!$("#IdSucursal").val()) {
+                    alert("Por favor, seleccione una sucursal.");
+                    return false;
+                }
+
+                $("#btnCrearPedido").prop('disabled', true).val('Procesando...');
+
+                var formData = new FormData(this);
+                formData.append("ProductosJson", JSON.stringify(listaProductos));
+
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (result) {
+                        alert('Pedido guardado con éxito');
+                        window.location.href = '/Pedidos/Index';
+                    },
+                    error: function (error) {
+                        alert('Error al guardar el pedido: ' + error.responseText);
+                        // Restaurar las cantidades en la vista
+                        restaurarCantidades();
+                        // Volver a habilitar el botón de submit
+                        $("#btnCrearPedido").prop('disabled', false).val('Crear Pedido');
+                    }
+                });
+            });
+
+            // Nueva función: Restaurar cantidades
+            function restaurarCantidades() {
+                listaProductos.forEach(function (producto) {
+                    var filaInventario = $("tr:has(button[data-id='" + producto.IdProducto + "'])");
+                    var cantidadDisponibleActual = parseInt(filaInventario.find('.cantidad-disponible').text());
+                    var nuevaCantidadDisponible = cantidadDisponibleActual + producto.CantidadSeleccionada;
+
+                    filaInventario.find('.cantidad-disponible').text(nuevaCantidadDisponible);
+                    filaInventario.find('.cantidad-input').attr('max', nuevaCantidadDisponible);
+                    filaInventario.find('.btnAgregarProducto').prop('disabled', false);
+                });
+
+                // Limpiar la lista de productos seleccionados
+                listaProductos = [];
+                actualizarTablaProductosSeleccionados();
+            }
+        });
+    </script>
 }

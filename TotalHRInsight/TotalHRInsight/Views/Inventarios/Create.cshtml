@@ -14,24 +14,6 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="UsuarioCreacionid" class="control-label"></label>
-                <select asp-for="UsuarioCreacionid" class ="form-control" asp-items="ViewBag.UsuarioCreacionid"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="UsuarioModificacionid" class="control-label"></label>
-                <select asp-for="UsuarioModificacionid" class ="form-control" asp-items="ViewBag.UsuarioModificacionid"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaCreacion" class="control-label"></label>
-                <input asp-for="FechaCreacion" class="form-control" />
-                <span asp-validation-for="FechaCreacion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaModificacion" class="control-label"></label>
-                <input asp-for="FechaModificacion" class="form-control" />
-                <span asp-validation-for="FechaModificacion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="CantidadDisponible" class="control-label"></label>
                 <input asp-for="CantidadDisponible" class="form-control" />
                 <span asp-validation-for="CantidadDisponible" class="text-danger"></span>

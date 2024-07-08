@@ -1,30 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.InkML;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using TotalHRInsight.DAL;
- 
+using TotalHRInsight.Models;
+using TotalHRInsight.Models.Pedidos;
+
 namespace TotalHRInsight.Controllers
 {
 	public class PedidosController : Controller
 	{
 		private readonly TotalHRInsightDbContext _context;
- 
-		public PedidosController(TotalHRInsightDbContext context)
+        private readonly TotalHRInsightDbContext _context2;
+
+        public PedidosController(TotalHRInsightDbContext context, TotalHRInsightDbContext context2)
 		{
 			_context = context;
-		}
+            _context2 = context2;
+        }
  
 		// GET: Pedidos
 		public async Task<IActionResult> Index()
 		{
-			var totalHRInsightDbContext = _context.Pedidos.Include(p => p.Estado).Include(p => p.Sucursal).Include(p => p.UsuarioCreacion);
-			return View(await totalHRInsightDbContext.ToListAsync());
-		}
+            var pedidos = await _context.Pedidos.Include(p => p.Estado)
+                                        .Include(p => p.Sucursal)
+                                        .Include(p => p.UsuarioCreacion)
+                                        .ToListAsync();
+
+            return View(pedidos);
+        }
  
 		// GET: Pedidos/Details/5
 		public async Task<IActionResult> Details(int? id)
@@ -48,44 +60,115 @@ namespace TotalHRInsight.Controllers
 		}
  
 		// GET: Pedidos/Create
-		public IActionResult Create()
-		{
-			ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud");
-			ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
-			ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
-			return View();
-		}
- 
-		// POST: Pedidos/Create
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("IdPedido,FechaPedido,FechaEntrega,UsuarioCreacionId,IdSucursal,IdEstado,MontoTotal")] Pedido pedido)
-		{
-			if (ModelState.IsValid)
-			{
-				// Verificar si ya existe un pedido con el mismo IdPedido
-				bool pedidoExiste = _context.Pedidos
-					.Any(p => p.IdPedido == pedido.IdPedido);
- 
-				if (pedidoExiste)
-				{
-					ModelState.AddModelError("IdPedido", "El pedido ya existe en la base de datos.");
-				}
-				else
-				{
-					_context.Add(pedido);
-					await _context.SaveChangesAsync();
-					return RedirectToAction(nameof(Index));
-				}
-			}
-			ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud", pedido.IdEstado);
-			ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", pedido.IdSucursal);
-			ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", pedido.UsuarioCreacionId);
-			return View(pedido);
-		}
- 
-		// GET: Pedidos/Edit/5
-		public async Task<IActionResult> Edit(int? id)
+		public async Task<IActionResult> CreateAsync()
+        {
+            ViewData["Inventario"] = await _context2.Inventario.Include(i => i.Producto).Include(i => i.Sucursal).Include(i => i.UsuarioCreacion).Include(i => i.UsuarioModificacion).ToListAsync(); ;
+            ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud");
+            ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre");
+            return View();
+        }
+
+        // POST: Pedidos/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(CrearPedido pedido, string ProductosJson)
+        {
+            var estadoPendiente = await _context.Estados.FirstOrDefaultAsync(e => e.EstadoSolicitud == "En Progreso");
+            if (ModelState.IsValid)
+            {
+
+                try
+                {
+                    var productosArray = JArray.Parse(ProductosJson);
+                    var productos = new List<ListaProducto>();
+
+                    foreach (var item in productosArray)
+                    {
+                        productos.Add(new ListaProducto
+                        {
+                            IdProducto = item["IdProducto"].Value<int>(),
+                            NombreProducto = item["NombreProducto"].Value<string>(),
+                            PrecioUnitario = item["PrecioUnitario"].Value<double>(),
+                            CantidadSelecciona = item["CantidadSeleccionada"].Value<int>()
+                        });
+                    }
+
+                    var nuevoPedido = new Pedido
+                    {
+                        FechaEntrega = pedido.FechaEntrega,
+                        FechaPedido = DateTime.Now,
+                        UsuarioCreacionId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                        IdSucursal = pedido.IdSucursal,
+                        IdEstado = estadoPendiente.IdEstado,
+                        MontoTotal = pedido.MontoTotal
+                    };
+                   
+                    // Agregar el pedido a la base de datos
+                    _context.Pedidos.Add(nuevoPedido);
+                    await _context.SaveChangesAsync();
+
+                    var nuevoPedidoId = nuevoPedido.IdPedido;
+
+                    // Agregar los productos al pedido
+                    foreach (var producto in productos)
+                    {
+                        var detallePedido = new PedidosProductos
+                        {
+                            ProductosID = producto.IdProducto,
+                            PedidoID = nuevoPedidoId,
+                            Cantidad =producto.CantidadSelecciona,
+
+                        };
+                        _context.PedidosProductos.Add(detallePedido);
+                    }
+
+                    await _context.SaveChangesAsync();
+
+                    return Ok(new { message = "Pedido creado exitosamente" });
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception
+                    return StatusCode(500, "Ocurrió un error al crear el pedido: " + ex.Message);
+                }
+            }
+
+            // Si llegamos aquí, algo falló, volvemos a cargar los datos necesarios para la vista
+            ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", pedido.IdSucursal);
+            var errores = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+            return BadRequest(string.Join(", ", errores));
+        }
+
+        [HttpPost]
+        public IActionResult ActualizarCantidad(int idProducto, int cantidad, bool esAgregar)
+        {
+            try
+            {
+                var inventario = _context.Inventario.Find(idProducto);
+                if (inventario != null)
+                {
+                    if (esAgregar)
+                    {
+                        inventario.CantidadDisponible -= cantidad;
+                    }
+                    else
+                    {
+                        inventario.CantidadDisponible += cantidad;
+                    }
+                    _context.SaveChanges();
+                    return Ok();
+                }
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        // GET: Pedidos/Edit/5
+        public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
 			{
@@ -140,9 +223,9 @@ namespace TotalHRInsight.Controllers
 		}
  
 		// GET: Pedidos/Delete/5
-		public async Task<IActionResult> Delete(int? id)
+		public async Task<IActionResult> Delete(int? IdPedido)
 		{
-			if (id == null)
+			if (IdPedido == null)
 			{
 				return NotFound();
 			}
@@ -151,7 +234,7 @@ namespace TotalHRInsight.Controllers
 				.Include(p => p.Estado)
 				.Include(p => p.Sucursal)
 				.Include(p => p.UsuarioCreacion)
-				.FirstOrDefaultAsync(m => m.IdPedido == id);
+				.FirstOrDefaultAsync(m => m.IdPedido == IdPedido);
 			if (pedido == null)
 			{
 				return NotFound();
@@ -163,9 +246,9 @@ namespace TotalHRInsight.Controllers
 		// POST: Pedidos/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteConfirmed(int id)
+		public async Task<IActionResult> DeleteConfirmed(int IdPedido)
 		{
-			var pedido = await _context.Pedidos.FindAsync(id);
+			var pedido = await _context.Pedidos.FindAsync(IdPedido);
 			if (pedido != null)
 			{
 				_context.Pedidos.Remove(pedido);

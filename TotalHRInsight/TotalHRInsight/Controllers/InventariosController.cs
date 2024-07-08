@@ -2,21 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TotalHRInsight.DAL;
+using TotalHRInsight.Models.Inventario;
 
 namespace TotalHRInsight.Controllers
 {
     public class InventariosController : Controller
     {
         private readonly TotalHRInsightDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public InventariosController(TotalHRInsightDbContext context)
+        public InventariosController(TotalHRInsightDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Inventarios
         public async Task<IActionResult> Index()
@@ -52,8 +58,6 @@ namespace TotalHRInsight.Controllers
         {
             ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "Descripcion");
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
-            ViewData["UsuarioCreacionid"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
-            ViewData["UsuarioModificacionid"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
             return View();
         }
 
@@ -62,19 +66,29 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdInventario,UsuarioCreacionid,UsuarioModificacionid,FechaCreacion,FechaModificacion,CantidadDisponible,SucursalId,ProductoId")] Inventario inventario)
+        public async Task<IActionResult> Create(CrearInventario datos)
         {
             if (ModelState.IsValid)
             {
+                var user = await GetCurrentUserAsync();
+                var inventario = new Inventario
+                {
+                    UsuarioModificacionid = user.Id,
+                    UsuarioCreacionid = user.Id,
+                    FechaCreacion = DateTime.Now,
+                    FechaModificacion = DateTime.Now,
+                    CantidadDisponible = datos.CantidadDisponible,
+                    SucursalId = datos.SucursalId,
+                    ProductoId = datos.ProductoId
+                };
+
                 _context.Add(inventario);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "Descripcion", inventario.ProductoId);
-            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", inventario.SucursalId);
-            ViewData["UsuarioCreacionid"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", inventario.UsuarioCreacionid);
-            ViewData["UsuarioModificacionid"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", inventario.UsuarioModificacionid);
-            return View(inventario);
+            ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "Descripcion", datos.ProductoId);
+            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", datos.SucursalId);
+            return View(datos);
         }
 
         // GET: Inventarios/Edit/5
