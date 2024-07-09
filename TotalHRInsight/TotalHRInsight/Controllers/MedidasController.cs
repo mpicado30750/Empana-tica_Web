@@ -95,9 +95,9 @@ namespace TotalHRInsight.Controllers
 		// POST: Medidas/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("IdMedida,NombreMedida")] Medida medida)
+		public async Task<IActionResult> Edit(int IdMedida, [Bind("IdMedida,NombreMedida")] Medida medida)
 		{
-			if (id != medida.IdMedida)
+			if (IdMedida != medida.IdMedida)
 			{
 				return NotFound();
 			}
