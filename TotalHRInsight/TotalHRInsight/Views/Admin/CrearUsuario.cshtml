@@ -75,10 +75,17 @@
 				<label asp-for="idSucursal">Sucursal</label>
 				<span asp-validation-for="idSucursal" class="text-danger"></span>
 			</div>
-			<button id="registerSubmit" type="submit" class="btn btn-lg btn-danger">Registrar</button>
-			<a href="/Admin/Index" class="btn btn-secondary">Regresar</a>
+			<button id="registerSubmit" type="submit" class="btn btn-lg btn-danger">
+				<i class="bi bi-plus-circle"></i> Registrar
+				</button>
+			<button href="/Admin/Index" class="btn btn-secondary">
+				<i class="bi bi-arrow-left-circle"></i> Regresar
+			</button>
 		</form>
 	</div>
 </div>
-
-
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}
