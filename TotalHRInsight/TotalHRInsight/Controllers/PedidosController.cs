@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -168,96 +169,147 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Pedidos/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
- 
-			var pedido = await _context.Pedidos.FindAsync(id);
-			if (pedido == null)
-			{
-				return NotFound();
-			}
-			ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud", pedido.IdEstado);
-			ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", pedido.IdSucursal);
-			ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", pedido.UsuarioCreacionId);
-			return View(pedido);
-		}
- 
-		// POST: Pedidos/Edit/5
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("IdPedido,FechaPedido,FechaEntrega,UsuarioCreacionId,IdSucursal,IdEstado,MontoTotal")] Pedido pedido)
-		{
-			if (id != pedido.IdPedido)
-			{
-				return NotFound();
-			}
- 
-			if (ModelState.IsValid)
-			{
-				try
-				{
-					_context.Update(pedido);
-					await _context.SaveChangesAsync();
-				}
-				catch (DbUpdateConcurrencyException)
-				{
-					if (!PedidoExists(pedido.IdPedido))
-					{
-						return NotFound();
-					}
-					else
-					{
-						throw;
-					}
-				}
-				return RedirectToAction(nameof(Index));
-			}
-			ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud", pedido.IdEstado);
-			ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", pedido.IdSucursal);
-			ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", pedido.UsuarioCreacionId);
-			return View(pedido);
-		}
- 
-		// GET: Pedidos/Delete/5
-		public async Task<IActionResult> Delete(int? IdPedido)
-		{
-			if (IdPedido == null)
-			{
-				return NotFound();
-			}
- 
-			var pedido = await _context.Pedidos
-				.Include(p => p.Estado)
-				.Include(p => p.Sucursal)
-				.Include(p => p.UsuarioCreacion)
-				.FirstOrDefaultAsync(m => m.IdPedido == IdPedido);
-			if (pedido == null)
-			{
-				return NotFound();
-			}
- 
-			return View(pedido);
-		}
- 
-		// POST: Pedidos/Delete/5
-		[HttpPost, ActionName("Delete")]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteConfirmed(int IdPedido)
-		{
-			var pedido = await _context.Pedidos.FindAsync(IdPedido);
-			if (pedido != null)
-			{
-				_context.Pedidos.Remove(pedido);
-				await _context.SaveChangesAsync();
-			}
-			return RedirectToAction(nameof(Index));
-		}
- 
-		private bool PedidoExists(int id)
+        public async Task<IActionResult> Edit(int? IdPedido)
+        {
+            if (IdPedido == null)
+            {
+                return NotFound();
+            }
+
+            var pedido = await _context.Pedidos
+                .Include(p => p.UsuarioCreacion)
+                .Include(p => p.Sucursal)
+                .Include(p => p.Estado)
+                .Include(p => p.PedidosProductos)
+                    .ThenInclude(pp => pp.Producto)
+                .FirstOrDefaultAsync(m => m.IdPedido == IdPedido);
+
+            if (pedido == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud", pedido.IdEstado);
+            return View(pedido);
+        }
+
+        // POST: Pedidos/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int IdPedido, [Bind("IdPedido,FechaEntrega,IdEstado")] Pedido pedidoActualizado)
+        {
+            if (IdPedido != pedidoActualizado.IdPedido)
+            {
+                return NotFound();
+            }
+            ModelState.Remove("UsuarioCreacionId");
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Obtener el pedido original de la base de datos
+                    var pedidoOriginal = await _context.Pedidos
+                        .Include(p => p.UsuarioCreacion)
+                        .Include(p => p.Sucursal)
+                        .Include(p => p.Estado)
+                        .FirstOrDefaultAsync(p => p.IdPedido == IdPedido);
+
+                    if (pedidoOriginal == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Actualizar solo los campos permitidos
+                    pedidoOriginal.FechaEntrega = pedidoActualizado.FechaEntrega;
+                    pedidoOriginal.IdEstado = pedidoActualizado.IdEstado;
+
+                    // Marcar solo el pedido como modificado
+                    _context.Entry(pedidoOriginal).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PedidoExists(pedidoActualizado.IdPedido))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Si llegamos aquí, algo falló, volvemos a cargar los datos necesarios
+            var pedido = await _context.Pedidos
+                .Include(p => p.UsuarioCreacion)
+                .Include(p => p.Sucursal)
+                .Include(p => p.Estado)
+                .Include(p => p.PedidosProductos)
+                    .ThenInclude(pp => pp.Producto)
+                .FirstOrDefaultAsync(p => p.IdPedido == IdPedido);
+
+            ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud", pedido.IdEstado);
+            return View(pedido);
+        }
+
+        // GET: Pedidos/Delete/5
+        public async Task<IActionResult> Delete(int? IdPedido)
+        {
+            if (IdPedido == null)
+            {
+                return NotFound();
+            }
+
+            var pedido = await _context.Pedidos
+                .Include(p => p.Estado)
+                .Include(p => p.Sucursal)
+                .Include(p => p.UsuarioCreacion)
+                .Include(p => p.PedidosProductos)
+                    .ThenInclude(pp => pp.Producto)
+                .FirstOrDefaultAsync(p => p.IdPedido == IdPedido);
+
+            if (pedido == null)
+            {
+                return NotFound();
+            }
+
+            var pedidoViewModel = new PedidoViewModel
+            {
+                Pedido = pedido,
+                PedidosProductos = (List<PedidosProductos>)pedido.PedidosProductos
+            };
+
+            return View(pedidoViewModel);
+        }
+
+        // POST: Pedidos/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int IdPedido)
+        {
+            var pedido = await _context.Pedidos
+                .Include(p => p.PedidosProductos)
+                .FirstOrDefaultAsync(p => p.IdPedido == IdPedido);
+
+            if (pedido != null)
+            {
+                // Eliminar todos los PedidosProductos asociados
+                _context.PedidosProductos.RemoveRange(pedido.PedidosProductos);
+
+                // Eliminar el pedido
+                _context.Pedidos.Remove(pedido);
+
+                // Guardar los cambios en la base de datos
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool PedidoExists(int id)
 		{
 			return _context.Pedidos.Any(e => e.IdPedido == id);
 		}
@@ -323,6 +375,8 @@ namespace TotalHRInsight.Controllers
                     dataRow.Cell(5).Value = pedido.Sucursal.NombreSucursal;
                     dataRow.Cell(6).Value = pedido.Estado.EstadoSolicitud;
                     dataRow.Cell(7).Value = pedido.MontoTotal;
+                    dataRow.Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                  //  dataRow.Style.Border.BottomBorderColor = XLColor.Black;
                     rowIdx++;
                 }
 
