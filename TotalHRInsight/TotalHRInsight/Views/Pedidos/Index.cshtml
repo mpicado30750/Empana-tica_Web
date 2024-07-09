@@ -10,15 +10,31 @@
 <div class="row row-cols-1 row-cols-md-3 g-4">
     @foreach (var item in Model)
     {
-        <div class="col">
-            <div class="card h-100">
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="card-title mb-0">Pedido #@item.IdPedido</h5>
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.IdPedido)</h5>
-                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.UsuarioCreacion):</strong> @Html.DisplayFor(modelItem => item.UsuarioCreacion.Nombre)</p>
-                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.Sucursal):</strong> @Html.DisplayFor(modelItem => item.Sucursal.NombreSucursal)</p>
-                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.FechaPedido):</strong> @Html.DisplayFor(modelItem => item.FechaPedido)</p>
-                    <p class="card-text"><strong>Estado:</strong> @Html.DisplayFor(modelItem => item.Estado.EstadoSolicitud)</p>
-                    <div class="text-end">
+                    <div class="mb-3">
+                        <h6 class="text-muted">Información de Pedido</h6>
+                        <p class="mb-0"><strong>Nombre:</strong> @item.UsuarioCreacion.Nombre @item.UsuarioCreacion.PrimerApellido @item.UsuarioCreacion.SegundoApellido</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-muted">Detalles del Pedido</h6>
+                        <p class="mb-0"><strong>Sucursal:</strong> @item.Sucursal.NombreSucursal</p>
+                        <p class="mb-0"><strong>Fecha de Pedido:</strong> @item.FechaPedido.ToString("dd/MM/yyyy")</p>
+                        <p class="mb-0"><strong>Fecha de Entrega:</strong> @item.FechaEntrega.ToString("dd/MM/yyyy")</p>
+                        <p class="mb-0">
+                            <strong>Estado:</strong>
+                            <span class="badge @(item.Estado.EstadoSolicitud == "Completado" ? "bg-success" : "bg-warning")">
+                                @item.Estado.EstadoSolicitud
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <div class="d-flex justify-content-between">
                         <a asp-action="Edit" asp-route-IdPedido="@item.IdPedido" class="btn btn-warning">
                             <i class="bi bi-pencil-square"></i> Editar
                         </a>
