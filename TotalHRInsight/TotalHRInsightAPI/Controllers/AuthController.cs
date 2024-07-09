@@ -23,17 +23,29 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("logout")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Logout()
+    //[ValidateAntiForgeryToken]
+    public async Task<IActionResult> LogoutSpecificUser(string userId)
     {
-        if (!User.Identity.IsAuthenticated)
-        {
-            return BadRequest(new { success = false, message = "El usuario no está autenticado." });
-        }
         try
         {
-            await _signInManager.SignOutAsync();
-            return Ok(new { success = true, message = "Usuario desconectado exitosamente." });
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest(new { success = false, message = "Se requiere el ID del usuario." });
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound(new { success = false, message = "Usuario no encontrado." });
+            }
+
+            // Invalida todos los tokens de autenticación para este usuario
+            await _userManager.UpdateSecurityStampAsync(user);
+
+            // Opcionalmente, si estás usando tokens de renovación, puedes revocarlos aquí
+            // await _userManager.RevokeRefreshTokensAsync(user);
+
+            return Ok(new { success = true, message = "La sesión del usuario ha sido cerrada exitosamente." });
         }
         catch (System.Exception ex)
         {

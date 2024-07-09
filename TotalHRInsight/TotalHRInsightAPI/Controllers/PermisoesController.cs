@@ -21,6 +21,7 @@ namespace TotalHRInsightAPI.Controllers
             _context = context;
         }
 
+        // GET: api/Permisoes/5
         //// GET: api/Permisoes/{usuarioCreacionId}
         [HttpGet("{usuarioCreacionId}")]
         public async Task<ActionResult<IEnumerable<PermisoGetIdUsuarioDTO>>> GetPermisos(string usuarioCreacionId)
@@ -47,30 +48,47 @@ namespace TotalHRInsightAPI.Controllers
             return Ok(permisos);
         }
 
-        // POST: api/Permisoes
+
+        // PUT: api/Permisoes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Permiso>> PostPermiso(PermisoPostUsuarioDTO permisoDto)
+        public async Task<IActionResult> PostPermiso(PermisoPostUsuarioDTO permisoDto)
         {
-            // Mapea los datos del DTO al modelo Permiso
-            var permiso = new Permiso
+            try
             {
-                FechaInicio = permisoDto.FechaInicio,
-                FechaFin = permisoDto.FechaFin,
-                Comentario = permisoDto.Comentario,
-                CantidadDias = permisoDto.CantidadDias,
-                IdTipoPermiso = permisoDto.IdTipoPermiso,
-                IdEstado = permisoDto.IdEstado,
-                UsuarioCreacionId = permisoDto.UsuarioCreacionId,
-                UsuarioAsignacionId = permisoDto.UsuarioAsignacionId
-            };
+                var estadoPendiente = await _context.Estados.FirstOrDefaultAsync(e => e.EstadoSolicitud == "En Progreso");
+                if (estadoPendiente == null)
+                {
+                    return NotFound("No se encontró el estado 'En Progreso'");
+                }
 
-            _context.Permisos.Add(permiso);
-            await _context.SaveChangesAsync();
+                var permiso = new Permiso
+                {
+                    FechaInicio = permisoDto.FechaInicio,
+                    FechaFin = permisoDto.FechaFin,
+                    Comentario = permisoDto.Comentario,
+                    CantidadDias = permisoDto.CantidadDias,
+                    IdTipoPermiso = permisoDto.IdTipoPermiso,
+                    IdEstado = estadoPendiente.IdEstado,
+                    MotivoAdmin = " ",
+                    UsuarioCreacionId = permisoDto.UsuarioCreacionId,
+                    UsuarioAsignacionId = permisoDto.UsuarioAsignacionId
+                };
 
-            return Ok(permiso);
+                _context.Permisos.Add(permiso);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { success = true, message = "Se creó correctamente" });
+            }
+            catch (DbUpdateException ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.InnerException?.Message ?? ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false,  message = ex.Message });
+            }
         }
-
 
         private bool PermisoExists(int id)
         {

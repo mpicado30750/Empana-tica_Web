@@ -14,7 +14,6 @@ namespace TotalHRInsight.DTO
         public string Comentario { get; set; }
         public int CantidadDias { get; set; }
         public int IdTipoPermiso { get; set; }
-        public int IdEstado { get; set; }
         public string UsuarioCreacionId { get; set; }
         public string UsuarioAsignacionId { get; set; }
     }

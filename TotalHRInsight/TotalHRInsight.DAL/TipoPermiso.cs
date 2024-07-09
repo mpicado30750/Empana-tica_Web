@@ -19,7 +19,5 @@ namespace TotalHRInsight.DAL
         [DisplayName("Tipo de Permiso")]
         public string NombrePermiso { get; set; }
 
-		public ICollection<Permiso> Permiso { get; set; } = new List<Permiso>();
-
 	}
 }
