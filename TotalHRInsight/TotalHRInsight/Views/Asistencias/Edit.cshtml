@@ -1,55 +1,72 @@
 ﻿@model TotalHRInsight.DAL.Asistencia
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Asistencia";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
-
-<h4>Asistencia</h4>
+<h1 class="text-center">Editar Asistencia</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdAsistencia" />
-            <div class="form-group">
-                <label asp-for="FechaEntrada" class="control-label"></label>
-                <input asp-for="FechaEntrada" class="form-control" />
-                <span asp-validation-for="FechaEntrada" class="text-danger"></span>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="IdAsistencia" />
+
+                        <div class="form-group mb-3">
+                            <label asp-for="FechaEntrada" class="form-label"></label>
+                            <input asp-for="FechaEntrada" class="form-control" />
+                            <span asp-validation-for="FechaEntrada" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="FechaSalida" class="form-label"></label>
+                            <input asp-for="FechaSalida" class="form-control" />
+                            <span asp-validation-for="FechaSalida" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="UbicacionEntrada" class="form-label"></label>
+                            <input asp-for="UbicacionEntrada" class="form-control" />
+                            <span asp-validation-for="UbicacionEntrada" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="UbicacionSalida" class="form-label"></label>
+                            <input asp-for="UbicacionSalida" class="form-control" />
+                            <span asp-validation-for="UbicacionSalida" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="UsuarioCreacionId" class="form-label"></label>
+                            <select asp-for="UsuarioCreacionId" class="form-control" asp-items="ViewBag.UsuarioCreacionId"></select>
+                            <span asp-validation-for="UsuarioCreacionId" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 mb-3">
+                            <button type="submit" class="btn btn-danger btn-block">
+                                <i class="bi bi-save"></i> Guardar
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="text-center">
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left-circle"></i> Regresar
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="FechaSalida" class="control-label"></label>
-                <input asp-for="FechaSalida" class="form-control" />
-                <span asp-validation-for="FechaSalida" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UbicacionEntrada" class="control-label"></label>
-                <input asp-for="UbicacionEntrada" class="form-control" />
-                <span asp-validation-for="UbicacionEntrada" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UbicacionSalida" class="control-label"></label>
-                <input asp-for="UbicacionSalida" class="form-control" />
-                <span asp-validation-for="UbicacionSalida" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UsuarioCreacionId" class="control-label"></label>
-                <select asp-for="UsuarioCreacionId" class="form-control" asp-items="ViewBag.UsuarioCreacionId"></select>
-                <span asp-validation-for="UsuarioCreacionId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
