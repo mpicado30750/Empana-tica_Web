@@ -19,13 +19,13 @@
                     <p class="card-text"><strong>@Html.DisplayNameFor(m => m.FechaPedido):</strong> @Html.DisplayFor(modelItem => item.FechaPedido)</p>
                     <p class="card-text"><strong>Estado:</strong> @Html.DisplayFor(modelItem => item.Estado.EstadoSolicitud)</p>
                     <div class="text-end">
-                        <a asp-action="Edit" asp-route-id="@item.IdPedido" class="btn btn-warning">
+                        <a asp-action="Edit" asp-route-IdPedido="@item.IdPedido" class="btn btn-warning">
                             <i class="bi bi-pencil-square"></i> Editar
                         </a>
-                        <a asp-action="Details" asp-route-id="@item.IdPedido" class="btn btn-info">
+                        <a asp-action="Details" asp-route-IdPedido="@item.IdPedido" class="btn btn-info">
                             <i class="bi bi-info-circle"></i> Detalles
                         </a>
-                        <a asp-action="Delete" asp-route-id="@item.IdPedido" class="btn btn-danger">
+                        <a asp-action="Delete" asp-route-IdPedido="@item.IdPedido" class="btn btn-danger">
                             <i class="bi bi-trash"></i> Eliminar
                         </a>
                     </div>
