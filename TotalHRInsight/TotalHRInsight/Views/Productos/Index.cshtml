@@ -25,10 +25,10 @@
             <div class="card h-100">
                 <div class="card-body">
                     <h5 class="card-title">@Html.DisplayFor(modelItem => item.NombreProducto)</h5>
-                    <p class="card-text">@Html.DisplayNameFor(m => m.Descripcion): <class ="card-text">@Html.DisplayFor(modelItem => item.Descripcion)</p>
-                    <p class="card-text">@Html.DisplayNameFor(m => m.FechaVencimiento): <class ="card-text">@Html.DisplayFor(modelItem => item.FechaVencimiento)</p>
-                    <p class="card-text">@Html.DisplayNameFor(m => m.PrecioUnitario): <class ="card-text">@Html.DisplayFor(modelItem => item.PrecioUnitario)</p>
-                    <p class="card-text">@Html.DisplayNameFor(m => m.Medidas): <class ="card-text">@Html.DisplayFor(modelItem => item.Medidas.NombreMedida)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.Descripcion):</strong>  <class ="card-text">@Html.DisplayFor(modelItem => item.Descripcion)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.FechaVencimiento):</strong> <class ="card-text">@Html.DisplayFor(modelItem => item.FechaVencimiento)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.PrecioUnitario):</strong>   <class ="card-text">@Html.DisplayFor(modelItem => item.PrecioUnitario)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.Medidas):</strong>   <class ="card-text">@Html.DisplayFor(modelItem => item.Medidas.NombreMedida)</p>
                     <div class="text-end">
                         <a asp-action="Edit" asp-route-id="@item.IdProducto" class="btn btn-warning">
                             <i class="bi bi-pencil-square"></i> Editar
