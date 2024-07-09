@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">@viewModel.User.Nombre</h5>
-                <p class="card-text">Estado: @{
+                <p class="card-text"><strong>Estado:</strong> @{
                         if (@viewModel.User.Estado)
                         {
                             <a>Activo</a>
@@ -24,7 +24,7 @@
                             <a>Inactivo</a>
                         }
                     }</p>
-                <p class="card-text">Rol(es): @string.Join(", ", viewModel.Roles)</p>
+                <p class="card-text"><strong>Rol(es):</strong> @string.Join(", ", viewModel.Roles)</p>
                 <div class="card-actions">
                     <a href="@Url.Action("Edit", new { id = viewModel.User.Id })" class="btn btn-secondary">Editar</a>
                     @if (viewModel.User.Estado)
