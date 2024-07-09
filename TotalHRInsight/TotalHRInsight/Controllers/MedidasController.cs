@@ -25,15 +25,15 @@ namespace TotalHRInsight.Controllers
 		}
 
 		// GET: Medidas/Details/5
-		public async Task<IActionResult> Details(int? id)
+		public async Task<IActionResult> Details(int? IdMedida)
 		{
-			if (id == null)
+			if (IdMedida == null)
 			{
 				return NotFound();
 			}
 
 			var medida = await _context.Medidas
-				.FirstOrDefaultAsync(m => m.IdMedida == id);
+				.FirstOrDefaultAsync(m => m.IdMedida == IdMedida);
 			if (medida == null)
 			{
 				return NotFound();
@@ -77,14 +77,14 @@ namespace TotalHRInsight.Controllers
 		}
 
 		// GET: Medidas/Edit/5
-		public async Task<IActionResult> Edit(int? id)
+		public async Task<IActionResult> Edit(int? IdMedida)
 		{
-			if (id == null)
+			if (IdMedida == null)
 			{
 				return NotFound();
 			}
 
-			var medida = await _context.Medidas.FindAsync(id);
+			var medida = await _context.Medidas.FindAsync(IdMedida);
 			if (medida == null)
 			{
 				return NotFound();
@@ -126,15 +126,15 @@ namespace TotalHRInsight.Controllers
 		}
 
 		// GET: Medidas/Delete/5
-		public async Task<IActionResult> Delete(int? id)
+		public async Task<IActionResult> Delete(int? IdMedida)
 		{
-			if (id == null)
+			if (IdMedida == null)
 			{
 				return NotFound();
 			}
 
 			var medida = await _context.Medidas
-				.FirstOrDefaultAsync(m => m.IdMedida == id);
+				.FirstOrDefaultAsync(m => m.IdMedida == IdMedida);
 			if (medida == null)
 			{
 				return NotFound();
@@ -146,9 +146,9 @@ namespace TotalHRInsight.Controllers
 		// POST: Medidas/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteConfirmed(int id)
+		public async Task<IActionResult> DeleteConfirmed(int IdMedida)
 		{
-			var medida = await _context.Medidas.FindAsync(id);
+			var medida = await _context.Medidas.FindAsync(IdMedida);
 			if (medida != null)
 			{
 				_context.Medidas.Remove(medida);
@@ -157,9 +157,9 @@ namespace TotalHRInsight.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
-		private bool MedidaExists(int id)
+		private bool MedidaExists(int IdMedida)
 		{
-			return _context.Medidas.Any(e => e.IdMedida == id);
+			return _context.Medidas.Any(e => e.IdMedida == IdMedida);
 		}
 	}
 }

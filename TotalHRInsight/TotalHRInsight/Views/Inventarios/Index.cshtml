@@ -23,13 +23,13 @@
                     <p class="card-text"><strong>Creado por:</strong> @Html.DisplayFor(modelItem => item.UsuarioCreacion.Nombre) @Html.DisplayFor(modelItem => item.UsuarioCreacion.PrimerApellido)</p>
                     <p class="card-text"><strong>Modificado por:</strong> @Html.DisplayFor(modelItem => item.UsuarioModificacion.Nombre) @Html.DisplayFor(modelItem => item.UsuarioModificacion.PrimerApellido)</p>
                     <div class="text-end">
-                        <a asp-action="Edit" asp-route-id="@item.IdInventario" class="btn btn-warning">
+                        <a asp-action="Edit" asp-route-IdInventario="@item.IdInventario" class="btn btn-warning">
                             <i class="bi bi-pencil-square"></i> Editar
                         </a>
-                        <a asp-action="Details" asp-route-id="@item.IdInventario" class="btn btn-info">
+                        <a asp-action="Details" asp-route-IdInventario="@item.IdInventario" class="btn btn-info">
                             <i class="bi bi-info-circle"></i> Detalles
                         </a>
-                        <a asp-action="Delete" asp-route-id="@item.IdInventario" class="btn btn-danger">
+                        <a asp-action="Delete" asp-route-IdInventario="@item.IdInventario" class="btn btn-danger">
                             <i class="bi bi-trash"></i> Eliminar
                         </a>
                     </div>

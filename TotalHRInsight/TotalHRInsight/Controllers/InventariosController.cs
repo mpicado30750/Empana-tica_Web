@@ -31,9 +31,9 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Inventarios/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? IdInventario)
         {
-            if (id == null)
+            if (IdInventario == null)
             {
                 return NotFound();
             }
@@ -43,7 +43,7 @@ namespace TotalHRInsight.Controllers
                 .Include(i => i.Sucursal)
                 .Include(i => i.UsuarioCreacion)
                 .Include(i => i.UsuarioModificacion)
-                .FirstOrDefaultAsync(m => m.IdInventario == id);
+                .FirstOrDefaultAsync(m => m.IdInventario == IdInventario);
             if (inventario == null)
             {
                 return NotFound();
@@ -101,14 +101,14 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Inventarios/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? IdInventario)
         {
-            if (id == null)
+            if (IdInventario == null)
             {
                 return NotFound();
             }
 
-            var inventario = await _context.Inventario.FindAsync(id);
+            var inventario = await _context.Inventario.FindAsync(IdInventario);
             if (inventario == null)
             {
                 return NotFound();
@@ -135,9 +135,9 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdInventario,UsuarioCreacionid,UsuarioModificacionid,FechaCreacion,FechaModificacion,CantidadDisponible,SucursalId,ProductoId")] Inventario inventario)
+        public async Task<IActionResult> Edit(int IdInventario, [Bind("IdInventario,UsuarioCreacionid,UsuarioModificacionid,FechaCreacion,FechaModificacion,CantidadDisponible,SucursalId,ProductoId")] Inventario inventario)
         {
-            if (id != inventario.IdInventario)
+            if (IdInventario != inventario.IdInventario)
             {
                 return NotFound();
             }
@@ -180,9 +180,9 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Inventarios/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? IdInventario)
         {
-            if (id == null)
+            if (IdInventario == null)
             {
                 return NotFound();
             }
@@ -192,7 +192,7 @@ namespace TotalHRInsight.Controllers
                 .Include(i => i.Sucursal)
                 .Include(i => i.UsuarioCreacion)
                 .Include(i => i.UsuarioModificacion)
-                .FirstOrDefaultAsync(m => m.IdInventario == id);
+                .FirstOrDefaultAsync(m => m.IdInventario == IdInventario);
             if (inventario == null)
             {
                 return NotFound();
@@ -204,9 +204,9 @@ namespace TotalHRInsight.Controllers
         // POST: Inventarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int IdInventario)
         {
-            var inventario = await _context.Inventario.FindAsync(id);
+            var inventario = await _context.Inventario.FindAsync(IdInventario);
             if (inventario != null)
             {
                 _context.Inventario.Remove(inventario);
@@ -216,9 +216,9 @@ namespace TotalHRInsight.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool InventarioExists(int id)
+        private bool InventarioExists(int IdInventario)
         {
-            return _context.Inventario.Any(e => e.IdInventario == id);
+            return _context.Inventario.Any(e => e.IdInventario == IdInventario);
         }
         // GET: Inventarios/ExportToExcel
         public async Task<IActionResult> ExportToExcel()

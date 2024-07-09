@@ -27,16 +27,16 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Productos/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? IdProducto)
         {
-            if (id == null)
+            if (IdProducto == null)
             {
                 return NotFound();
             }
 
             var producto = await _context.Productos
                 .Include(p => p.Medidas)
-                .FirstOrDefaultAsync(m => m.IdProducto == id);
+                .FirstOrDefaultAsync(m => m.IdProducto == IdProducto);
             if (producto == null)
             {
                 return NotFound();
@@ -84,14 +84,14 @@ namespace TotalHRInsight.Controllers
 		}
 
 		// GET: Productos/Edit/5
-		public async Task<IActionResult> Edit(int? id)
+		public async Task<IActionResult> Edit(int? IdProducto)
         {
-            if (id == null)
+            if (IdProducto == null)
             {
                 return NotFound();
             }
 
-            var producto = await _context.Productos.FindAsync(id);
+            var producto = await _context.Productos.FindAsync(IdProducto);
             if (producto == null)
             {
                 return NotFound();
@@ -105,9 +105,9 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdProducto,NombreProducto,Descripcion,FechaVencimiento,PrecioUnitario,MedidasId")] Producto producto)
+        public async Task<IActionResult> Edit(int IdProducto, [Bind("IdProducto,NombreProducto,Descripcion,FechaVencimiento,PrecioUnitario,MedidasId")] Producto producto)
         {
-            if (id != producto.IdProducto)
+            if (IdProducto != producto.IdProducto)
             {
                 return NotFound();
             }
@@ -119,7 +119,7 @@ namespace TotalHRInsight.Controllers
                     _context.Update(producto);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException ex)
                 {
                     if (!ProductoExists(producto.IdProducto))
                     {
@@ -127,6 +127,7 @@ namespace TotalHRInsight.Controllers
                     }
                     else
                     {
+                        Console.WriteLine(ex.InnerException?.Message);
                         throw;
                     }
                 }
@@ -137,16 +138,16 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Productos/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? IdProducto)
         {
-            if (id == null)
+            if (IdProducto == null)
             {
                 return NotFound();
             }
 
             var producto = await _context.Productos
                 .Include(p => p.Medidas)
-                .FirstOrDefaultAsync(m => m.IdProducto == id);
+                .FirstOrDefaultAsync(m => m.IdProducto == IdProducto);
             if (producto == null)
             {
                 return NotFound();
@@ -158,9 +159,9 @@ namespace TotalHRInsight.Controllers
         // POST: Productos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int IdProducto)
         {
-			var producto = await _context.Productos.FindAsync(id);
+			var producto = await _context.Productos.FindAsync(IdProducto);
 			if (producto != null)
 			{
 				_context.Productos.Remove(producto);
@@ -169,9 +170,9 @@ namespace TotalHRInsight.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
-        private bool ProductoExists(int id)
+        private bool ProductoExists(int IdProducto)
         {
-            return _context.Productos.Any(e => e.IdProducto == id);
+            return _context.Productos.Any(e => e.IdProducto == IdProducto);
         }
 
         //Exportar a Excel 

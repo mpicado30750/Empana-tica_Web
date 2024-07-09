@@ -30,13 +30,13 @@
                     <p class="card-text"><strong>@Html.DisplayNameFor(m => m.PrecioUnitario):</strong>   <class ="card-text">@Html.DisplayFor(modelItem => item.PrecioUnitario)</p>
                     <p class="card-text"><strong>@Html.DisplayNameFor(m => m.Medidas):</strong>   <class ="card-text">@Html.DisplayFor(modelItem => item.Medidas.NombreMedida)</p>
                     <div class="text-end">
-                        <a asp-action="Edit" asp-route-id="@item.IdProducto" class="btn btn-warning">
+                        <a asp-action="Edit" asp-route-IdProducto="@item.IdProducto" class="btn btn-warning">
                             <i class="bi bi-pencil-square"></i> Editar
                         </a>
-                        <a asp-action="Details" asp-route-id="@item.IdProducto" class="btn btn-info">
+                        <a asp-action="Details" asp-route-IdProducto="@item.IdProducto" class="btn btn-info">
                             <i class="bi bi-info-circle"></i> Detalles
                         </a>
-                        <a asp-action="Delete" asp-route-id="@item.IdProducto" class="btn btn-danger">
+                        <a asp-action="Delete" asp-route-IdProducto="@item.IdProducto" class="btn btn-danger">
                             <i class="bi bi-trash"></i> Eliminar
                         </a>
                     </div>
