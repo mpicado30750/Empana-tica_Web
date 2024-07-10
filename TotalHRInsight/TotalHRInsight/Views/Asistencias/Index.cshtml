@@ -42,9 +42,9 @@
                             </h5>
                             <p class="card-text">
                                 <strong>Fecha Entrada:</strong>
-                                <span id="fecha-entrada-@item.Id" class="fecha-entrada">@item.FechaEntrada.ToString("dd/MM/yyyy")</span><br />
+                                <span id="fecha-entrada-@item.Id" class="fecha-entrada">@item.FechaEntrada.ToString("dd/MM/yyyy HH:mm")</span><br />
                                 <strong>Fecha Salida:</strong>
-                                <span id="fecha-salida-@item.Id" class="fecha-salida">@item.FechaSalida.ToString("dd/MM/yyyy")</span><br />
+                                <span id="fecha-salida-@item.Id" class="fecha-salida">@item.FechaSalida.ToString("dd/MM/yyyy HH:mm")</span><br />
                             </p>
                             <div class="text-center">
                                 <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">

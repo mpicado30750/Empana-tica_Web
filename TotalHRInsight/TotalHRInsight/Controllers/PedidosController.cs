@@ -375,8 +375,7 @@ namespace TotalHRInsight.Controllers
                     dataRow.Cell(5).Value = pedido.Sucursal.NombreSucursal;
                     dataRow.Cell(6).Value = pedido.Estado.EstadoSolicitud;
                     dataRow.Cell(7).Value = pedido.MontoTotal;
-                    dataRow.Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                  //  dataRow.Style.Border.BottomBorderColor = XLColor.Black;
+                 
                     rowIdx++;
                 }
 
