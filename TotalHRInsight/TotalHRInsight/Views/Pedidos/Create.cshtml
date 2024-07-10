@@ -8,6 +8,13 @@
 
 <div class="row">
     <div class="col-md-12">
+        <h1 class="text-center">Crear Pedido</h1>
+        <hr />
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
         <form asp-action="Create" id="formCreatePedido">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -29,7 +36,7 @@
             <input type="hidden" id="ProductosJson" name="ProductosJson" />
 
             <div class="form-group">
-                <input type="submit" value="Crear Pedido" class="btn btn-primary" id="btnCrearPedido" />
+            <input type="submit" value="Crear Pedido" class="btn btn-danger" id="btnCrearPedido" />
             </div>
         </form>
 
@@ -61,7 +68,7 @@
                                        min="1" max="@producto.CantidadDisponible" value="1" />
                             </td>
                             <td>
-                                <button type="button" class="btn btn-primary btnAgregarProducto"
+                            <button type="button" class="btn btn-danger btnAgregarProducto"
                                         data-id="@producto.ProductoId"
                                         data-nombre="@producto.Producto.NombreProducto"
                                         data-precio="@producto.Producto.PrecioUnitario">
@@ -89,6 +96,9 @@
             <tbody>
             </tbody>
         </table>
+                        </div>
+                    </div>
+                </div>
     </div>
 </div>
 
@@ -176,9 +186,9 @@
                     var fila = "<tr>" +
                         "<td>" + producto.IdProducto + "</td>" +
                         "<td>" + producto.NombreProducto + "</td>" +
-                        "<td>$" + producto.PrecioUnitario.toFixed(2) + "</td>" +
+                        "<td>₡" + producto.PrecioUnitario.toFixed(2) + "</td>" +
                         "<td>" + producto.CantidadSeleccionada + "</td>" +
-                        "<td>$" + subtotal.toFixed(2) + "</td>" +
+                        "<td>₡" + subtotal.toFixed(2) + "</td>" +
                         "<td><button type='button' class='btn btn-danger btnEliminarProducto' data-index='" + index + "'>Eliminar</button></td>" +
                         "</tr>";
                     tabla.append(fila);
