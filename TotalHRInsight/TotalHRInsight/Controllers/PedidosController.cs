@@ -40,9 +40,9 @@ namespace TotalHRInsight.Controllers
         }
  
 		// GET: Pedidos/Details/5
-		public async Task<IActionResult> Details(int? id)
+		public async Task<IActionResult> Details(int? IdPedido)
 		{
-			if (id == null)
+			if (IdPedido == null)
 			{
 				return NotFound();
 			}
@@ -51,7 +51,7 @@ namespace TotalHRInsight.Controllers
 				.Include(p => p.Estado)
 				.Include(p => p.Sucursal)
 				.Include(p => p.UsuarioCreacion)
-				.FirstOrDefaultAsync(m => m.IdPedido == id);
+				.FirstOrDefaultAsync(m => m.IdPedido == IdPedido);
 			if (pedido == null)
 			{
 				return NotFound();
@@ -309,9 +309,9 @@ namespace TotalHRInsight.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PedidoExists(int id)
+        private bool PedidoExists(int IdPedido)
 		{
-			return _context.Pedidos.Any(e => e.IdPedido == id);
+			return _context.Pedidos.Any(e => e.IdPedido == IdPedido);
 		}
        
 
