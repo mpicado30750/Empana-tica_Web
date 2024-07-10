@@ -107,7 +107,7 @@ namespace TotalHRInsight.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int IdProducto, [Bind("IdProducto,NombreProducto,Descripcion,FechaVencimiento,PrecioUnitario,MedidasId")] Producto producto)
         {
-            if (IdProducto != producto.IdProducto)
+            if (IdProducto != producto.IdProducto) 
             {
                 return NotFound();
             }

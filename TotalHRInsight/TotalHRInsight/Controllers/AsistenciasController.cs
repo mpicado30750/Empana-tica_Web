@@ -213,9 +213,9 @@ namespace TotalHRInsight.Controllers
         // POST: Asistencias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int IdAsistencia)
         {
-            var asistencia = await _context.Asistencias.FindAsync(id);
+            var asistencia = await _context.Asistencias.FindAsync(IdAsistencia);
             if (asistencia != null)
             {
                 _context.Asistencias.Remove(asistencia);
