@@ -50,6 +50,7 @@ namespace TotalHRInsight.Controllers
         public IActionResult Create()
         {
             ViewData["IdTipoPermiso"] = new SelectList(_context.TipoPermisos, "IdTipoPermiso", "NombrePermiso");
+            ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud");
             ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre");
             ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre");
             return View();
@@ -69,6 +70,7 @@ namespace TotalHRInsight.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdTipoPermiso"] = new SelectList(_context.TipoPermisos, "IdTipoPermiso", "NombrePermiso", permiso.IdTipoPermiso);
+            ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud");
             ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioAsignacionId);
             ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioCreacionId);
             return View(permiso);
@@ -88,6 +90,7 @@ namespace TotalHRInsight.Controllers
                 return NotFound();
             }
             ViewData["IdTipoPermiso"] = new SelectList(_context.TipoPermisos, "IdTipoPermiso", "NombrePermiso", permiso.IdTipoPermiso);
+            ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud");
             ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioAsignacionId);
             ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioCreacionId);
             return View(permiso);
@@ -126,6 +129,7 @@ namespace TotalHRInsight.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdTipoPermiso"] = new SelectList(_context.TipoPermisos, "IdTipoPermiso", "NombrePermiso", permiso.IdTipoPermiso);
+            ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud");
             ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioAsignacionId);
             ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioCreacionId);
             return View(permiso);
