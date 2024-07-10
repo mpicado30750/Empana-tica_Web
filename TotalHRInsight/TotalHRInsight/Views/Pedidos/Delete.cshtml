@@ -1,46 +1,56 @@
 ﻿@model TotalHRInsight.Models.Pedidos.PedidoViewModel
 
-<h1>Delete Pedido</h1>
+<h1 class="text-center">Eliminar Pedido</h1>
+<hr />
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div>
+                        <h4>Pedido</h4>
+                        <hr />
+                        <dl class="row">
+                            <dt class="col-sm-2">ID</dt>
+                            <dd class="col-sm-10">@Model.Pedido.IdPedido</dd>
 
-<div>
-    <h4>Pedido</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">ID</dt>
-        <dd class="col-sm-10">@Model.Pedido.IdPedido</dd>
+                            <dt class="col-sm-2">Estado</dt>
+                            <dd class="col-sm-10">@Model.Pedido.Estado.EstadoSolicitud</dd>
 
-        <dt class="col-sm-2">Estado</dt>
-        <dd class="col-sm-10">@Model.Pedido.Estado.EstadoSolicitud</dd>
+                            <dt class="col-sm-2">Sucursal</dt>
+                            <dd class="col-sm-10">@Model.Pedido.Sucursal.NombreSucursal</dd>
 
-        <dt class="col-sm-2">Sucursal</dt>
-        <dd class="col-sm-10">@Model.Pedido.Sucursal.NombreSucursal</dd>
+                            <dt class="col-sm-2">Usuario Creación</dt>
+                            <dd class="col-sm-10">@Model.Pedido.UsuarioCreacion.Nombre</dd>
+                        </dl>
 
-        <dt class="col-sm-2">Usuario Creación</dt>
-        <dd class="col-sm-10">@Model.Pedido.UsuarioCreacion.Nombre</dd>
-    </dl>
+                        <h4>Productos</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var pp in Model.PedidosProductos)
+                                {
+                                    <tr>
+                                        <td>@pp.Producto.NombreProducto</td>
+                                        <td>@pp.Cantidad</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
 
-    <h4>Productos</h4>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Producto</th>
-                <th>Cantidad</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var pp in Model.PedidosProductos)
-            {
-                <tr>
-                    <td>@pp.Producto.NombreProducto</td>
-                    <td>@pp.Cantidad</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
 
-<form asp-action="Delete" method="post">
-    <input type="hidden" name="IdPedido" value="@Model.Pedido.IdPedido" />
-    <button type="submit" class="btn btn-danger">Delete</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-</form>
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" name="IdPedido" value="@Model.Pedido.IdPedido" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
