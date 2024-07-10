@@ -17,13 +17,13 @@
                     <h5 class="card-title">@Html.DisplayFor(modelItem => item.NombreSucursal)</h5>
                     <p class="card-text"><strong>@Html.DisplayNameFor(m => m.UbicacionSucursal):</strong> <class ="card-text">@Html.DisplayFor(modelItem => item.UbicacionSucursal)</p>
                     <div class="text-end">
-                        <a asp-action="Edit" asp-route-id="@item.IdSucursal" class="btn btn-warning">
+                        <a asp-action="Edit" asp-route-IdSucursal="@item.IdSucursal" class="btn btn-warning">
                             <i class="bi bi-pencil-square"></i> Editar
                         </a>
-                        <a asp-action="Details" asp-route-id="@item.IdSucursal" class="btn btn-info">
+                        <a asp-action="Details" asp-route-IdSucursal="@item.IdSucursal" class="btn btn-info">
                             <i class="bi bi-info-circle"></i> Detalles
                         </a>
-                        <a asp-action="Delete" asp-route-id="@item.IdSucursal" class="btn btn-danger">
+                        <a asp-action="Delete" asp-route-IdSucursal="@item.IdSucursal" class="btn btn-danger">
                             <i class="bi bi-trash"></i> Eliminar
                         </a>
                     </div>

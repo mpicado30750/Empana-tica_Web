@@ -25,15 +25,15 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Estados/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? IdEstado)
         {
-            if (id == null)
+            if (IdEstado == null)
             {
                 return NotFound();
             }
 
             var estado = await _context.Estados
-                .FirstOrDefaultAsync(m => m.IdEstado == id);
+                .FirstOrDefaultAsync(m => m.IdEstado == IdEstado);
             if (estado == null)
             {
                 return NotFound();
@@ -65,14 +65,14 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Estados/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? IdEstado)
         {
-            if (id == null)
+            if (IdEstado == null)
             {
                 return NotFound();
             }
 
-            var estado = await _context.Estados.FindAsync(id);
+            var estado = await _context.Estados.FindAsync(IdEstado);
             if (estado == null)
             {
                 return NotFound();
@@ -85,9 +85,9 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdEstado,EstadoSolicitud")] Estado estado)
+        public async Task<IActionResult> Edit(int IdEstado, [Bind("IdEstado,EstadoSolicitud")] Estado estado)
         {
-            if (id != estado.IdEstado)
+            if (IdEstado != estado.IdEstado)
             {
                 return NotFound();
             }
@@ -116,15 +116,15 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Estados/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? IdEstado)
         {
-            if (id == null)
+            if (IdEstado == null)
             {
                 return NotFound();
             }
 
             var estado = await _context.Estados
-                .FirstOrDefaultAsync(m => m.IdEstado == id);
+                .FirstOrDefaultAsync(m => m.IdEstado == IdEstado);
             if (estado == null)
             {
                 return NotFound();
@@ -136,9 +136,9 @@ namespace TotalHRInsight.Controllers
         // POST: Estados/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int IdEstado)
         {
-            var estado = await _context.Estados.FindAsync(id);
+            var estado = await _context.Estados.FindAsync(IdEstado);
             if (estado != null)
             {
                 _context.Estados.Remove(estado);
@@ -148,9 +148,9 @@ namespace TotalHRInsight.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EstadoExists(int id)
+        private bool EstadoExists(int IdEstado)
         {
-            return _context.Estados.Any(e => e.IdEstado == id);
+            return _context.Estados.Any(e => e.IdEstado == IdEstado);
         }
     }
 }

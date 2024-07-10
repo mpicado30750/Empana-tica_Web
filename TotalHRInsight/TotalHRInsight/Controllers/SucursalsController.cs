@@ -25,15 +25,15 @@ namespace TotalHRInsight.Controllers
 		}
 
 		// GET: Sucursals/Details/5
-		public async Task<IActionResult> Details(int? id)
+		public async Task<IActionResult> Details(int? IdSucursal)
 		{
-			if (id == null)
+			if (IdSucursal == null)
 			{
 				return NotFound();
 			}
 
 			var sucursal = await _context.Sucursales
-				.FirstOrDefaultAsync(m => m.IdSucursal == id);
+				.FirstOrDefaultAsync(m => m.IdSucursal == IdSucursal);
 			if (sucursal == null)
 			{
 				return NotFound();
@@ -75,14 +75,14 @@ namespace TotalHRInsight.Controllers
 		}
 
 		// GET: Sucursals/Edit/5
-		public async Task<IActionResult> Edit(int? id)
+		public async Task<IActionResult> Edit(int? IdSucursal)
 		{
-			if (id == null)
+			if (IdSucursal == null)
 			{
 				return NotFound();
 			}
 
-			var sucursal = await _context.Sucursales.FindAsync(id);
+			var sucursal = await _context.Sucursales.FindAsync(IdSucursal);
 			if (sucursal == null)
 			{
 				return NotFound();
@@ -93,9 +93,9 @@ namespace TotalHRInsight.Controllers
 		// POST: Sucursals/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("IdSucursal,NombreSucursal,UbicacionSucursal")] Sucursal sucursal)
+		public async Task<IActionResult> Edit(int IdSucursal, [Bind("IdSucursal,NombreSucursal,UbicacionSucursal")] Sucursal sucursal)
 		{
-			if (id != sucursal.IdSucursal)
+			if (IdSucursal != sucursal.IdSucursal)
 			{
 				return NotFound();
 			}
@@ -136,15 +136,15 @@ namespace TotalHRInsight.Controllers
 		}
 
 		// GET: Sucursals/Delete/5
-		public async Task<IActionResult> Delete(int? id)
+		public async Task<IActionResult> Delete(int? IdSucursal)
 		{
-			if (id == null)
+			if (IdSucursal == null)
 			{
 				return NotFound();
 			}
 
 			var sucursal = await _context.Sucursales
-				.FirstOrDefaultAsync(m => m.IdSucursal == id);
+				.FirstOrDefaultAsync(m => m.IdSucursal == IdSucursal);
 			if (sucursal == null)
 			{
 				return NotFound();
@@ -156,9 +156,9 @@ namespace TotalHRInsight.Controllers
 		// POST: Sucursals/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteConfirmed(int id)
+		public async Task<IActionResult> DeleteConfirmed(int IdSucursal)
 		{
-			var sucursal = await _context.Sucursales.FindAsync(id);
+			var sucursal = await _context.Sucursales.FindAsync(IdSucursal);
 			if (sucursal != null)
 			{
 				_context.Sucursales.Remove(sucursal);
@@ -168,9 +168,9 @@ namespace TotalHRInsight.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
-		private bool SucursalExists(int id)
+		private bool SucursalExists(int IdSucursal)
 		{
-			return _context.Sucursales.Any(e => e.IdSucursal == id);
+			return _context.Sucursales.Any(e => e.IdSucursal == IdSucursal);
 		}
 	}
 }
