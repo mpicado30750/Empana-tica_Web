@@ -54,13 +54,13 @@
                             @Html.DisplayNameFor(model => model.UsuarioCreacion)
                         </dt>
                         <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UsuarioCreacion.Id)
+                            @Html.DisplayFor(model => model.UsuarioCreacion.Nombre)
                         </dd>
                         <dt class="col-sm-4">
                             @Html.DisplayNameFor(model => model.UsuarioAsignacion)
                         </dt>
                         <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UsuarioAsignacion.Id)
+                            @Html.DisplayFor(model => model.UsuarioAsignacion.Nombre)
                         </dd>
                         <dt class="col-sm-4">
                             @Html.DisplayNameFor(model => model.Estado)
@@ -71,7 +71,7 @@
 
                     </dl>
                     <div class="d-grid gap-2">
-                        <a asp-action="Edit" asp-route-IdSucursal="@Model?.IdPermisos" class="btn btn-warning">
+                        <a asp-action="Edit" asp-route-IdPermisos="@Model.IdPermisos" class="btn btn-warning">
                             <i class="bi bi-pencil-square"></i> Editar
                         </a>
                         <a asp-action="Index" class="btn btn-secondary">
