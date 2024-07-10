@@ -74,9 +74,9 @@
                 @Html.DisplayFor(modelItem => item.Estado.EstadoSolicitud)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdPermisos">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdPermisos">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdPermisos">Delete</a>
+                    <a asp-action="Edit" asp-route-IdPermisos="@item.IdPermisos">Edit</a> |
+                    <a asp-action="Details" asp-route-IdPermisos="@item.IdPermisos">Details</a> |
+                    <a asp-action="Delete" asp-route-IdPermisos="@item.IdPermisos">Delete</a>
             </td>
         </tr>
 }
