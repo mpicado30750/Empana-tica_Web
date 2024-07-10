@@ -1,13 +1,14 @@
 ﻿@model TotalHRInsight.DAL.Permiso
 
 @{
-    ViewData["Title"] = "Detalles Permisos";
+    ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Detalles Permisos</h1>
+<h1>Details</h1>
 
 <div>
+    <h4>Permiso</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -29,22 +30,22 @@
             @Html.DisplayFor(model => model.CantidadDias)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Comentario)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Comentario)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TipoPermisos)
+            @Html.DisplayNameFor(model => model.MotivoAdmin)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TipoPermisos.NombrePermiso)
+            @Html.DisplayFor(model => model.MotivoAdmin)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdTipoPermiso)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdTipoPermiso)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.UsuarioCreacion)
@@ -58,9 +59,15 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.UsuarioAsignacion.Id)
         </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Estado.EstadoSolicitud)
+        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-IdPermisos="@Model?.IdPermisos">Editar</a> |
-    <a asp-action="Index">Regresar</a>
+    <a asp-action="Edit" asp-route-id="@Model?.IdPermisos">Edit</a> |
+    <a asp-action="Index">Back to List</a>
 </div>

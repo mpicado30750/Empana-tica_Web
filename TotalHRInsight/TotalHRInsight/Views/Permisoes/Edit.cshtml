@@ -1,12 +1,13 @@
 ﻿@model TotalHRInsight.DAL.Permiso
 
 @{
-    ViewData["Title"] = "Editar Permiso";
+    ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Editar Permisos</h1>
+<h1>Edit</h1>
 
+<h4>Permiso</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -28,19 +29,19 @@
                 <input asp-for="CantidadDias" class="form-control" />
                 <span asp-validation-for="CantidadDias" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
-                </label>
-            </div>
             <div class="form-group">
                 <label asp-for="Comentario" class="control-label"></label>
                 <input asp-for="Comentario" class="form-control" />
                 <span asp-validation-for="Comentario" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="MotivoAdmin" class="control-label"></label>
+                <input asp-for="MotivoAdmin" class="form-control" />
+                <span asp-validation-for="MotivoAdmin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="IdTipoPermiso" class="control-label"></label>
-                <select asp-for="IdTipoPermiso" class="form-control" asp-items="ViewBag.IdTipoPermiso"></select>
+                <input asp-for="IdTipoPermiso" class="form-control" />
                 <span asp-validation-for="IdTipoPermiso" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -54,14 +55,23 @@
                 <span asp-validation-for="UsuarioAsignacionId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-danger" />
+                <label asp-for="IdTipoPermiso" class="control-label"></label>
+                <select asp-for="IdTipoPermiso" class="form-control" asp-items="ViewBag.IdTipoPermiso"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdEstado" class="control-label"></label>
+                <select asp-for="IdEstado" class="form-control" asp-items="ViewBag.IdEstado"></select>
+                <span asp-validation-for="IdEstado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Regresar</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
