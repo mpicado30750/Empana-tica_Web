@@ -309,9 +309,9 @@ namespace TotalHRInsight.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PedidoExists(int id)
+        private bool PedidoExists(int IdPedido)
 		{
-			return _context.Pedidos.Any(e => e.IdPedido == id);
+			return _context.Pedidos.Any(e => e.IdPedido == IdPedido);
 		}
        
 
