@@ -104,21 +104,27 @@ namespace TotalHRInsight.Controllers
             {
                 return NotFound();
             }
+
+            var editarInventario = new EditarInventario
+            {
+                IdInventario = inventario.IdInventario,
+                ProductoId = inventario.ProductoId,
+                SucursalId = inventario.SucursalId,
+                CantidadDisponible = inventario.CantidadDisponible
+            };
+
             ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "Descripcion", inventario.ProductoId);
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", inventario.SucursalId);
-            ViewData["UsuarioCreacionid"] = new SelectList(_context.Set<ApplicationUser>(),"Id","Nombre",inventario.UsuarioCreacionid);
-            ViewData["UsuarioModificacionid"] = new SelectList(_context.Set<ApplicationUser>(),"Id", "Nombre", inventario.UsuarioModificacionid);
-            return View(inventario);
+
+            return View(editarInventario);
         }
 
         // POST: Inventarios/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int IdInventario, Inventario inventario)
+        public async Task<IActionResult> Edit(int IdInventario, EditarInventario editarInventario)
         {
-            if (IdInventario != inventario.IdInventario)
+            if (IdInventario != editarInventario.IdInventario)
             {
                 return NotFound();
             }
@@ -127,12 +133,26 @@ namespace TotalHRInsight.Controllers
             {
                 try
                 {
+                    var inventario = await _context.Inventario.FindAsync(IdInventario);
+                    if (inventario == null)
+                    {
+                        return NotFound();
+                    }
+
+                    var user = await GetCurrentUserAsync();
+
+                    inventario.ProductoId = editarInventario.ProductoId;
+                    inventario.SucursalId = editarInventario.SucursalId;
+                    inventario.CantidadDisponible = editarInventario.CantidadDisponible;
+                    inventario.UsuarioModificacionid = user.Id;
+                    inventario.FechaModificacion = DateTime.Now;
+
                     _context.Update(inventario);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!InventarioExists(inventario.IdInventario))
+                    if (!InventarioExists(editarInventario.IdInventario))
                     {
                         return NotFound();
                     }
@@ -143,11 +163,11 @@ namespace TotalHRInsight.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "Descripcion", inventario.ProductoId);
-            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", inventario.SucursalId);
-            ViewData["UsuarioCreacionid"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", inventario.UsuarioCreacionid);
-            ViewData["UsuarioModificacionid"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "NombreCompleto", inventario.UsuarioModificacionid);
-            return View(inventario);
+
+            ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "Descripcion", editarInventario.ProductoId);
+            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", editarInventario.SucursalId);
+
+            return View(editarInventario);
         }
 
         // GET: Inventarios/Delete/5
