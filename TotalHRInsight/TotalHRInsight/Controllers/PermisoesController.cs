@@ -21,7 +21,11 @@ namespace TotalHRInsight.Controllers
         // GET: Permisoes
         public async Task<IActionResult> Index()
         {
-            var totalHRInsightDbContext = _context.Permisos.Include(p => p.TipoPermisos).Include(p => p.UsuarioAsignacion).Include(p => p.UsuarioCreacion);
+            var totalHRInsightDbContext = _context.Permisos
+                .Include(p => p.TipoPermisos)
+                .Include(p => p.UsuarioAsignacion)
+                .Include(p => p.UsuarioCreacion)
+                .Include(p => p.Estado);
             return View(await totalHRInsightDbContext.ToListAsync());
         }
 

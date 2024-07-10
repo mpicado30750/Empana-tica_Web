@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<TotalHRInsight.DAL.Permiso>
-
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,77 +7,32 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaInicio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaFin)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CantidadDias)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Comentario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MotivoAdmin)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdTipoPermiso)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioCreacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioAsignacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaFin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CantidadDias)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comentario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MotivoAdmin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdTipoPermiso)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioCreacion.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioAsignacion.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado.EstadoSolicitud)
-            </td>
-            <td>
-                    <a asp-action="Edit" asp-route-IdPermisos="@item.IdPermisos">Edit</a> |
-                    <a asp-action="Details" asp-route-IdPermisos="@item.IdPermisos">Details</a> |
-                    <a asp-action="Delete" asp-route-IdPermisos="@item.IdPermisos">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Solicitud de Permiso</h5>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.FechaInicio):</strong> @Html.DisplayFor(modelItem => item.FechaInicio)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.FechaFin):</strong> @Html.DisplayFor(modelItem => item.FechaFin)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.CantidadDias):</strong> @Html.DisplayFor(modelItem => item.CantidadDias)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.Comentario):</strong> @Html.DisplayFor(modelItem => item.Comentario)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.MotivoAdmin):</strong> @Html.DisplayFor(modelItem => item.MotivoAdmin)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.TipoPermisos):</strong> @Html.DisplayFor(modelItem => item.TipoPermisos.NombrePermiso)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.UsuarioCreacion):</strong> @Html.DisplayFor(modelItem => item.UsuarioCreacion.Nombre)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.UsuarioAsignacion):</strong> @Html.DisplayFor(modelItem => item.UsuarioAsignacion.Nombre)</p>
+                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.Estado):</strong> @Html.DisplayFor(modelItem => item.Estado.EstadoSolicitud)</p>
+                    <div class="mt-3">
+                        <a asp-action="Edit" asp-route-IdPermisos="@item.IdPermisos" class="btn btn-sm btn-primary">Edit</a>
+                        <a asp-action="Details" asp-route-IdPermisos="@item.IdPermisos" class="btn btn-sm btn-info">Details</a>
+                        <a asp-action="Delete" asp-route-IdPermisos="@item.IdPermisos" class="btn btn-sm btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
