@@ -5,38 +5,48 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
 
-<h4>Inventario</h4>
+<h1 class="text-center">Añadir Regisdtro a Inventario</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="CantidadDisponible" class="control-label"></label>
-                <input asp-for="CantidadDisponible" class="form-control" />
-                <span asp-validation-for="CantidadDisponible" class="text-danger"></span>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <div class="form-group mb-3">
+                            <label asp-for="CantidadDisponible" class="control-label"></label>
+                            <input asp-for="CantidadDisponible" class="form-control" />
+                            <span asp-validation-for="CantidadDisponible" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="SucursalId" class="control-label"></label>
+                            <select asp-for="SucursalId" class="form-control" asp-items="ViewBag.SucursalId"></select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="ProductoId" class="control-label"></label>
+                            <select asp-for="ProductoId" class="form-control" asp-items="ViewBag.ProductoId"></select>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger btn-block">
+                                <i class="bi bi-plus-circle"></i> Añadir
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="SucursalId" class="control-label"></label>
-                <select asp-for="SucursalId" class ="form-control" asp-items="ViewBag.SucursalId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProductoId" class="control-label"></label>
-                <select asp-for="ProductoId" class ="form-control" asp-items="ViewBag.ProductoId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+    </div>
+    <div class="text-center mt-3">
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left-circle"></i> Regresar
+        </a>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
