@@ -1,65 +1,51 @@
-﻿@model TotalHRInsight.DAL.Pedido
+﻿@model TotalHRInsight.Models.Pedidos.PedidoViewModel
 
-@{
-    ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h1 class="text-center">Detalles Pedidos</h1>
+<h1 class="text-center">Eliminar Pedido</h1>
 <hr />
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <dl class="row">
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.FechaPedido)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.FechaPedido)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.FechaEntrega)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.FechaEntrega)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.MontoTotal)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.MontoTotal)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.Sucursal)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.Sucursal.NombreSucursal)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.Estado)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.Estado.EstadoSolicitud)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.UsuarioCreacion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UsuarioCreacion.Nombre)
-                        </dd>
-                    </dl>
-                    <div class="d-grid gap-2">
-                        <a asp-action="Edit" asp-route-id="@Model?.IdPedido" class="btn btn-warning">
-                            <i class="bi bi-pencil-square"></i> Editar
-                        </a>
-                        <a asp-action="Index" class="btn btn-secondary">
-                            <i class="bi bi-arrow-left-circle"></i> Regresar
-                        </a>
+                    <div>
+                        <h4>Pedido</h4>
+                        <hr />
+                        <dl class="row">
+                            <dt class="col-sm-2">ID</dt>
+                            <dd class="col-sm-10">@Model.Pedido.IdPedido</dd>
+
+                            <dt class="col-sm-2">Estado</dt>
+                            <dd class="col-sm-10">@Model.Pedido.Estado.EstadoSolicitud</dd>
+
+                            <dt class="col-sm-2">Sucursal</dt>
+                            <dd class="col-sm-10">@Model.Pedido.Sucursal.NombreSucursal</dd>
+
+                            <dt class="col-sm-2">Usuario Creación</dt>
+                            <dd class="col-sm-10">@Model.Pedido.UsuarioCreacion.Nombre</dd>
+                        </dl>
+
+                        <h4>Productos</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var pp in Model.PedidosProductos)
+                                {
+                                    <tr>
+                                        <td>@pp.Producto.NombreProducto</td>
+                                        <td>@pp.Cantidad</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
+
+                        <a asp-action="Index" class="btn btn-secondary">Regresar</a>
                 </div>
             </div>
         </div>
     </div>
-</div>

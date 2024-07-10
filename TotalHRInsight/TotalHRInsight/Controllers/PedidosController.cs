@@ -42,23 +42,33 @@ namespace TotalHRInsight.Controllers
 		// GET: Pedidos/Details/5
 		public async Task<IActionResult> Details(int? IdPedido)
 		{
-			if (IdPedido == null)
-			{
-				return NotFound();
-			}
- 
-			var pedido = await _context.Pedidos
-				.Include(p => p.Estado)
-				.Include(p => p.Sucursal)
-				.Include(p => p.UsuarioCreacion)
-				.FirstOrDefaultAsync(m => m.IdPedido == IdPedido);
-			if (pedido == null)
-			{
-				return NotFound();
-			}
- 
-			return View(pedido);
-		}
+
+            if (IdPedido == null)
+            {
+                return NotFound();
+            }
+
+            var pedido = await _context.Pedidos
+                .Include(p => p.Estado)
+                .Include(p => p.Sucursal)
+                .Include(p => p.UsuarioCreacion)
+                .Include(p => p.PedidosProductos)
+                    .ThenInclude(pp => pp.Producto)
+                .FirstOrDefaultAsync(p => p.IdPedido == IdPedido);
+
+            if (pedido == null)
+            {
+                return NotFound();
+            }
+
+            var pedidoViewModel = new PedidoViewModel
+            {
+                Pedido = pedido,
+                PedidosProductos = (List<PedidosProductos>)pedido.PedidosProductos
+            };
+
+            return View(pedidoViewModel);
+        }
  
 		// GET: Pedidos/Create
 		public async Task<IActionResult> CreateAsync()
@@ -70,75 +80,102 @@ namespace TotalHRInsight.Controllers
             return View();
         }
 
-        // POST: Pedidos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CrearPedido pedido, string ProductosJson)
         {
-            var estadoPendiente = await _context.Estados.FirstOrDefaultAsync(e => e.EstadoSolicitud == "En Progreso");
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-
-                try
-                {
-                    var productosArray = JArray.Parse(ProductosJson);
-                    var productos = new List<ListaProducto>(); 
-
-                    foreach (var item in productosArray)
-                    {
-                        productos.Add(new ListaProducto
-                        {
-                            IdProducto = item["IdProducto"].Value<int>(),
-                            NombreProducto = item["NombreProducto"].Value<string>(),
-                            PrecioUnitario = item["PrecioUnitario"].Value<double>(),
-                            CantidadSelecciona = item["CantidadSeleccionada"].Value<int>()
-                        });
-                    }
-
-                    var nuevoPedido = new Pedido
-                    {
-                        FechaEntrega = pedido.FechaEntrega,
-                        FechaPedido = DateTime.Now,
-                        UsuarioCreacionId = User.FindFirstValue(ClaimTypes.NameIdentifier),
-                        IdSucursal = pedido.IdSucursal,
-                        IdEstado = estadoPendiente.IdEstado,
-                        MontoTotal = pedido.MontoTotal
-                    };
-                   
-                    // Agregar el pedido a la base de datos
-                    _context.Pedidos.Add(nuevoPedido);
-                    await _context.SaveChangesAsync();
-
-                    var nuevoPedidoId = nuevoPedido.IdPedido;
-
-                    // Agregar los productos al pedido
-                    foreach (var producto in productos)
-                    {
-                        var detallePedido = new PedidosProductos
-                        {
-                            ProductosID = producto.IdProducto,
-                            PedidoID = nuevoPedidoId,
-                            Cantidad =producto.CantidadSelecciona,
-
-                        };
-                        _context.PedidosProductos.Add(detallePedido);
-                    }
-
-                    await _context.SaveChangesAsync();
-
-                    return Ok(new { message = "Pedido creado exitosamente" });
-                }
-                catch (Exception ex)
-                {
-                    // Log the exception
-                    return StatusCode(500, "Ocurrió un error al crear el pedido: " + ex.Message);
-                }
+                var errores = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+                return BadRequest(string.Join(", ", errores));
             }
 
-            // Si llegamos aquí, algo falló, volvemos a cargar los datos necesarios para la vista
-            ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", pedido.IdSucursal);
-            var errores = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
-            return BadRequest(string.Join(", ", errores));
+            var estadoPendiente = await _context.Estados.FirstOrDefaultAsync(e => e.EstadoSolicitud == "En Progreso");
+
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                var productosArray = JArray.Parse(ProductosJson);
+                var productos = productosArray.Select(item => new ListaProducto
+                {
+                    IdProducto = item["IdProducto"].Value<int>(),
+                    NombreProducto = item["NombreProducto"].Value<string>(),
+                    PrecioUnitario = item["PrecioUnitario"].Value<double>(),
+                    CantidadSelecciona = item["CantidadSeleccionada"].Value<int>()
+                }).ToList();
+
+                var nuevoPedido = new Pedido
+                {
+                    FechaEntrega = pedido.FechaEntrega,
+                    FechaPedido = DateTime.Now,
+                    UsuarioCreacionId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                    IdSucursal = pedido.IdSucursal,
+                    IdEstado = estadoPendiente.IdEstado,
+                    MontoTotal = pedido.MontoTotal
+                };
+
+                _context.Pedidos.Add(nuevoPedido);
+                await _context.SaveChangesAsync();
+
+                bool errorEnProductos = false;
+                string mensajeError = "";
+
+                foreach (var producto in productos)
+                {
+                    if (!await _context.Productos.AnyAsync(p => p.IdProducto == producto.IdProducto))
+                    {
+                        errorEnProductos = true;
+                        mensajeError = $"El producto con ID {producto.IdProducto} no existe.";
+                        break;
+                    }
+
+                    var detallePedido = new PedidosProductos
+                    {
+                        ProductosID = producto.IdProducto,
+                        PedidoID = nuevoPedido.IdPedido,
+                        Cantidad = producto.CantidadSelecciona,
+                    };
+                    _context.PedidosProductos.Add(detallePedido);
+                }
+
+                if (errorEnProductos)
+                {
+                    // Eliminar el pedido si hubo un error con los productos
+                    _context.Pedidos.Remove(nuevoPedido);
+                    await _context.SaveChangesAsync();
+                    await transaction.RollbackAsync();
+                    return BadRequest(mensajeError);
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return Ok(new { message = "Pedido creado exitosamente" });
+            }
+            catch (DbUpdateException ex)
+            {
+                await transaction.RollbackAsync();
+                var errorMessage = ObtenerMensajeDeError(ex);
+                return StatusCode(500, $"Error al guardar en la base de datos: {errorMessage}");
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return StatusCode(500, $"Error al crear el pedido: {ex.Message}");
+            }
+        }
+
+        private string ObtenerMensajeDeError(Exception ex)
+        {
+            var mensaje = ex.Message;
+            var innerException = ex.InnerException;
+            var depth = 0;
+            while (innerException != null && depth < 5)
+            {
+                mensaje += $" Inner exception: {innerException.Message}";
+                innerException = innerException.InnerException;
+                depth++;
+            }
+            return mensaje;
         }
 
         [HttpPost]
