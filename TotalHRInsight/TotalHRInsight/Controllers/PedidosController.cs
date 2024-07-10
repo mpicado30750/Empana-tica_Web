@@ -82,7 +82,7 @@ namespace TotalHRInsight.Controllers
                 try
                 {
                     var productosArray = JArray.Parse(ProductosJson);
-                    var productos = new List<ListaProducto>();
+                    var productos = new List<ListaProducto>(); 
 
                     foreach (var item in productosArray)
                     {
