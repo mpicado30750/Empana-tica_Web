@@ -228,6 +228,7 @@ namespace TotalHRInsight.Controllers
 
             ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud", pedido.IdEstado);
             return View(pedido);
+
         }
 
         // POST: Pedidos/Edit/5
