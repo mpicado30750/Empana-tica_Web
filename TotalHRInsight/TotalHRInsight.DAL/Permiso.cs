@@ -35,7 +35,7 @@ namespace TotalHRInsight.DAL
         public string MotivoAdmin { get; set; }
 
         [Required(ErrorMessage = "El tipo de permiso es obligatorio")]
-        [ForeignKey("TipoPermiso")]
+        [ForeignKey("TipoPermisos")]
         public int IdTipoPermiso { get; set; }
 
         [DisplayName("Aprobado Por")]

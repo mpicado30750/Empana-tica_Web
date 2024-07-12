@@ -12,15 +12,15 @@ using TotalHRInsight.DAL;
 namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 {
     [DbContext(typeof(TotalHRInsightDbContext))]
-    [Migration("20240706015651_PrimeraMirgacionAuth")]
-    partial class PrimeraMirgacionAuth
+    [Migration("20240712183111_PrimeraMigracion")]
+    partial class PrimeraMigracion
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "8.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -272,11 +272,6 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                     b.Property<float>("Cantidad")
                         .HasColumnType("float");
 
-                    b.Property<string>("Medida")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
                     b.Property<int>("PedidoID")
                         .HasColumnType("int");
 
@@ -323,9 +318,6 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("TipoPermisosIdTipoPermiso")
-                        .HasColumnType("int");
-
                     b.Property<string>("UsuarioAsignacionId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
@@ -338,7 +330,7 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     b.HasIndex("IdEstado");
 
-                    b.HasIndex("TipoPermisosIdTipoPermiso");
+                    b.HasIndex("IdTipoPermiso");
 
                     b.HasIndex("UsuarioAsignacionId");
 
@@ -407,10 +399,6 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     b.Property<decimal>("PrecioUnitario")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Unidad")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.HasKey("IdProducto");
 
@@ -576,8 +564,10 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .IsRequired();
 
                     b.HasOne("TotalHRInsight.DAL.TipoPermiso", "TipoPermisos")
-                        .WithMany("Permiso")
-                        .HasForeignKey("TipoPermisosIdTipoPermiso");
+                        .WithMany()
+                        .HasForeignKey("IdTipoPermiso")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TotalHRInsight.DAL.ApplicationUser", "UsuarioAsignacion")
                         .WithMany()
@@ -645,11 +635,6 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                     b.Navigation("Inventario");
 
                     b.Navigation("PedidosProductos");
-                });
-
-            modelBuilder.Entity("TotalHRInsight.DAL.TipoPermiso", b =>
-                {
-                    b.Navigation("Permiso");
                 });
 #pragma warning restore 612, 618
         }
