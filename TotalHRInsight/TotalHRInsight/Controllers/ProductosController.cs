@@ -39,7 +39,7 @@ namespace TotalHRInsight.Controllers
 				.Include(p => p.Categorias)
 				.Include(p => p.Medidas)
 			.Include(p => p.Proveedor)
-				.FirstOrDefaultAsync(m => m.IdProducto == id);
+				.FirstOrDefaultAsync(m => m.IdProducto == IdProducto);
 			if (producto == null)
             {
                 return NotFound();
@@ -159,7 +159,7 @@ namespace TotalHRInsight.Controllers
 				.Include(p => p.Categorias)
 				.Include(p => p.Medidas)
 				.Include(p => p.Proveedor)
-				.FirstOrDefaultAsync(m => m.IdProducto == id);
+				.FirstOrDefaultAsync(m => m.IdProducto == IdProducto);
 			if (producto == null)
             {
                 return NotFound();
