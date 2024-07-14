@@ -105,7 +105,7 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int IdProducto, [Bind("IdProducto,NombreProducto,Descripcion,FechaVencimiento,PrecioUnitario,MedidasId")] Producto producto)
+        public async Task<IActionResult> Edit(int IdProducto, [Bind("IdProducto,NombreProducto,Categoria,FechaVencimiento,PrecioUnitario,MedidasId")] Producto producto)
         {
             if (IdProducto != producto.IdProducto) 
             {
@@ -187,7 +187,7 @@ namespace TotalHRInsight.Controllers
                 // Cabeceras
                 worksheet.Cell(1, 1).Value = "IdProducto";
                 worksheet.Cell(1, 2).Value = "NombreProducto";
-                worksheet.Cell(1, 3).Value = "Descripcion";
+                worksheet.Cell(1, 2).Value = "NombreCategoria";
                 worksheet.Cell(1, 4).Value = "Unidad";
                 worksheet.Cell(1, 5).Value = "FechaVencimiento";
                 worksheet.Cell(1, 6).Value = "PrecioUnitario";
@@ -197,8 +197,8 @@ namespace TotalHRInsight.Controllers
                 {
                     worksheet.Cell(i + 2, 1).Value = productos[i].IdProducto;
                     worksheet.Cell(i + 2, 2).Value = productos[i].NombreProducto;
-                    worksheet.Cell(i + 2, 3).Value = productos[i].Descripcion;
-                    worksheet.Cell(i + 2, 5).Value = productos[i].FechaVencimiento.ToString("yyyy-MM-dd");
+                    worksheet.Cell(i + 2, 2).Value = productos[i].CategoriaId;
+                    worksheet.Cell(i + 2, 5).Value = productos[i].FechaVencimiento.ToString("dd-MM-yyyy");
                     worksheet.Cell(i + 2, 6).Value = productos[i].PrecioUnitario;
                 }
 

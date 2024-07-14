@@ -17,11 +17,6 @@ namespace TotalHRInsight.DAL
 		[MaxLength(100, ErrorMessage = "El nombre del producto no puede exceder los 100 caracteres")]
 		public string NombreProducto { get; set; }
 
-        [DisplayName("Descripción")]
-        [Required(ErrorMessage = "La descripción es obligatoria")]
-		[MaxLength(500, ErrorMessage = "La descripción no puede exceder los 500 caracteres")]
-		public string Descripcion { get; set; }
-
         [DisplayName("Fecha de Vencimiento")]
         [Required(ErrorMessage = "La fecha de vencimiento es obligatoria")]
 		public DateTime FechaVencimiento { get; set; }
@@ -36,10 +31,22 @@ namespace TotalHRInsight.DAL
 		[ForeignKey("Medidas")]
 		public int MedidasId { get; set; }
 
+        [DisplayName("Categoría")]
+        [Required(ErrorMessage = "La categoria es obligatoria")]
+        [ForeignKey("Categoria")]
+        public int CategoriaId { get; set; }
+
+        [DisplayName("Proveedor")]
+        [Required(ErrorMessage = "El proveedor es obligatorio")]
+        [ForeignKey("Proveedor")]
+        public int ProveedorId { get; set; }
         public Medida? Medidas { get; set; }
+        public Categoria? Categorias { get; set; }
+        public Proveedor? Proveedor { get; set; }
 
         public ICollection<PedidosProductos> PedidosProductos { get; set; } = new List<PedidosProductos>();
 
         public ICollection<Inventario> Inventario { get; set; } = new List<Inventario>();
+
     }
 }

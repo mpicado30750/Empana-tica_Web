@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
 </p>
 
 <div class="row">
@@ -17,19 +17,19 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Solicitud de Permiso</h5>
-                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.FechaInicio):</strong> @Html.DisplayFor(modelItem => item.FechaInicio)</p>
-                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.FechaFin):</strong> @Html.DisplayFor(modelItem => item.FechaFin)</p>
-                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.CantidadDias):</strong> @Html.DisplayFor(modelItem => item.CantidadDias)</p>
-                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.Comentario):</strong> @Html.DisplayFor(modelItem => item.Comentario)</p>
-                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.MotivoAdmin):</strong> @Html.DisplayFor(modelItem => item.MotivoAdmin)</p>
-                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.TipoPermisos):</strong> @Html.DisplayFor(modelItem => item.TipoPermisos.NombrePermiso)</p>
-                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.UsuarioCreacion):</strong> @Html.DisplayFor(modelItem => item.UsuarioCreacion.Nombre)</p>
-                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.UsuarioAsignacion):</strong> @Html.DisplayFor(modelItem => item.UsuarioAsignacion.Nombre)</p>
-                    <p class="card-text"><strong>@Html.DisplayNameFor(m => m.Estado):</strong> @Html.DisplayFor(modelItem => item.Estado.EstadoSolicitud)</p>
+                    <p class="card-text"><strong>Fecha de Inicio:</strong> @Html.DisplayFor(modelItem => item.FechaInicio)</p>
+                    <p class="card-text"><strong>Fecha de Fin:</strong> @Html.DisplayFor(modelItem => item.FechaFin)</p>
+                    <p class="card-text"><strong>Cantidad de Días:</strong> @Html.DisplayFor(modelItem => item.CantidadDias)</p>
+                    <p class="card-text"><strong>Comentario:</strong> @Html.DisplayFor(modelItem => item.Comentario)</p>
+                    <p class="card-text"><strong>Motivo Admin:</strong> @Html.DisplayFor(modelItem => item.MotivoAdmin)</p>
+                    <p class="card-text"><strong>Tipo de Permiso:</strong> @Html.DisplayFor(modelItem => item.TipoPermisos.NombrePermiso)</p>
+                    <p class="card-text"><strong>Usuario de Creación:</strong> @Html.DisplayFor(modelItem => item.UsuarioCreacion.Nombre)</p>
+                    <p class="card-text"><strong>Usuario de Asignación:</strong> @Html.DisplayFor(modelItem => item.UsuarioAsignacion.Nombre)</p>
+                    <p class="card-text"><strong>Estado:</strong> @Html.DisplayFor(modelItem => item.Estado.EstadoSolicitud)</p>
                     <div class="mt-3">
-                        <a asp-action="Edit" asp-route-IdPermisos="@item.IdPermisos" class="btn btn-sm btn-primary">Edit</a>
-                        <a asp-action="Details" asp-route-IdPermisos="@item.IdPermisos" class="btn btn-sm btn-info">Details</a>
-                        <a asp-action="Delete" asp-route-IdPermisos="@item.IdPermisos" class="btn btn-sm btn-danger">Delete</a>
+                        <a asp-action="Edit" asp-route-IdPermisos="@item.IdPermisos" class="btn btn-sm btn-primary">Editar</a>
+                        <a asp-action="Details" asp-route-IdPermisos="@item.IdPermisos" class="btn btn-sm btn-info">Detalles</a>
+                        <a asp-action="Delete" asp-route-IdPermisos="@item.IdPermisos" class="btn btn-sm btn-danger">Eliminar</a>
                     </div>
                 </div>
             </div>

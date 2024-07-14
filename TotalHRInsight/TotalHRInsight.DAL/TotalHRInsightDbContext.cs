@@ -26,5 +26,7 @@ namespace TotalHRInsight.DAL
         public virtual DbSet<Estado> Estados { get; set; }
         public virtual DbSet<Medida> Medidas { get; set; }
         public virtual DbSet<Inventario> Inventario { get; set; }
+        public virtual DbSet<Proveedor> Proveedor { get; set; }
+        public virtual DbSet<Categoria> Categoria { get; set; }
     }
 }
