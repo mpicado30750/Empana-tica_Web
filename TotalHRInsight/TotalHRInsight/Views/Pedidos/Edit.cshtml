@@ -75,8 +75,8 @@
                                         <tr>
                                             <td>@item.Producto.NombreProducto</td>
                                             <td>@item.Cantidad</td>
-                                            <td>@item.Producto.PrecioUnitario.ToString("C")</td>
-                                            <td>@((item.Cantidad * item.Producto.PrecioUnitario).ToString("C"))</td>
+                                            <td>@item.Producto.PrecioUnitario.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                            <td>@((item.Cantidad * item.Producto.PrecioUnitario).ToString("C", new System.Globalization.CultureInfo("es-CR")))</td>
                                         </tr>
                                     }
                                 </tbody>

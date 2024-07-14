@@ -28,13 +28,15 @@ namespace TotalHRInsightAPI.Controllers
         {
             var permisos = await _context.Permisos
                                         .Where(p => p.UsuarioCreacionId == usuarioCreacionId)
+                                        .Include(p => p.TipoPermisos)
+                                        .Include(p => p.Estado)
                                         .Select(p => new PermisoGetIdUsuarioDTO
                                         {
                                             IdPermisos = p.IdPermisos,
                                             FechaInicio = p.FechaInicio,
                                             FechaFin = p.FechaFin,
-                                            IdEstado = p.IdEstado,
-                                            IdIncidencia = p.IdTipoPermiso,
+                                            TipoPermiso = p.TipoPermisos.NombrePermiso,
+                                            Estado = p.Estado.EstadoSolicitud,
                                             Comentario = p.Comentario,
                                             UsuarioCreacionId = p.UsuarioCreacionId
                                         })
@@ -86,7 +88,7 @@ namespace TotalHRInsightAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { success = false,  message = ex.Message });
+                return StatusCode(500, new { success = false, message = ex.Message });
             }
         }
 

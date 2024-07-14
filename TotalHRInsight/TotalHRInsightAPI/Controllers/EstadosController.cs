@@ -11,20 +11,21 @@ namespace TotalHRInsightAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class IncidenciasController : ControllerBase
+    public class EstadosController : ControllerBase
     {
         private readonly TotalHRInsightDbContext _context;
 
-        public IncidenciasController(TotalHRInsightDbContext context)
+        public EstadosController(TotalHRInsightDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Incidencias
+        // GET: api/Estados
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TipoPermiso>>> GetIncidencias()
+        public async Task<ActionResult<IEnumerable<Estado>>> GetEstados()
         {
-            return await _context.TipoPermisos.ToListAsync();
+            return await _context.Estados.ToListAsync();
         }
+
     }
 }

@@ -21,7 +21,7 @@
                             <dd class="col-sm-10">@Model.Pedido.Sucursal.NombreSucursal</dd>
 
                             <dt class="col-sm-2">Usuario Creación</dt>
-                            <dd class="col-sm-10">@Model.Pedido.UsuarioCreacion.Nombre</dd>
+                            <dd class="col-sm-10">@Model.Pedido.UsuarioCreacion.Nombre @Model.Pedido.UsuarioCreacion.PrimerApellido @Model.Pedido.UsuarioCreacion.SegundoApellido</dd>
                         </dl>
 
                         <h4>Productos</h4>
@@ -47,8 +47,8 @@
 
                     <form asp-action="Delete" method="post">
                         <input type="hidden" name="IdPedido" value="@Model.Pedido.IdPedido" />
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <a asp-action="Index" class="btn btn-secondary">Regresar</a>
                     </form>
                 </div>
             </div>
