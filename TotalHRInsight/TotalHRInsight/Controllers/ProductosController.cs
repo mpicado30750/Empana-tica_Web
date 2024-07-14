@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -22,8 +23,8 @@ namespace TotalHRInsight.Controllers
         // GET: Productos
         public async Task<IActionResult> Index()
         {
-            var totalHRInsightDbContext = _context.Productos.Include(p => p.Medidas);
-            return View(await totalHRInsightDbContext.ToListAsync());
+			var totalHRInsightDbContext = _context.Productos.Include(p => p.Categorias).Include(p => p.Medidas).Include(p => p.Proveedor);
+			return View(await totalHRInsightDbContext.ToListAsync());
         }
 
         // GET: Productos/Details/5
@@ -34,10 +35,12 @@ namespace TotalHRInsight.Controllers
                 return NotFound();
             }
 
-            var producto = await _context.Productos
-                .Include(p => p.Medidas)
-                .FirstOrDefaultAsync(m => m.IdProducto == IdProducto);
-            if (producto == null)
+			var producto = await _context.Productos
+				.Include(p => p.Categorias)
+				.Include(p => p.Medidas)
+			.Include(p => p.Proveedor)
+				.FirstOrDefaultAsync(m => m.IdProducto == id);
+			if (producto == null)
             {
                 return NotFound();
             }
@@ -48,8 +51,10 @@ namespace TotalHRInsight.Controllers
         // GET: Productos/Create
         public IActionResult Create()
         {
-            ViewData["MedidasId"] = new SelectList(_context.Medidas, "IdMedida", "NombreMedida");
-            return View();
+			ViewData["CategoriaId"] = new SelectList(_context.Categoria, "IdCategoria", "Descripcion");
+			ViewData["MedidasId"] = new SelectList(_context.Medidas, "IdMedida", "NombreMedida");
+			ViewData["ProveedorId"] = new SelectList(_context.Proveedor, "IdProveedor", "Descripcion");
+			return View();
         }
 
         // POST: Productos/Create
@@ -78,7 +83,9 @@ namespace TotalHRInsight.Controllers
 				}
 			}
 
+			ViewData["CategoriaId"] = new SelectList(_context.Categoria, "IdCategoria", "Descripcion", producto.CategoriaId);
 			ViewData["MedidasId"] = new SelectList(_context.Medidas, "IdMedida", "NombreMedida", producto.MedidasId);
+			ViewData["ProveedorId"] = new SelectList(_context.Proveedor, "IdProveedor", "Descripcion", producto.ProveedorId);
 			return View(producto);
 
 		}
@@ -96,8 +103,10 @@ namespace TotalHRInsight.Controllers
             {
                 return NotFound();
             }
-            ViewData["MedidasId"] = new SelectList(_context.Medidas, "IdMedida", "NombreMedida", producto.MedidasId);
-            return View(producto);
+			ViewData["CategoriaId"] = new SelectList(_context.Categoria, "IdCategoria", "Descripcion", producto.CategoriaId);
+			ViewData["MedidasId"] = new SelectList(_context.Medidas, "IdMedida", "NombreMedida", producto.MedidasId);
+			ViewData["ProveedorId"] = new SelectList(_context.Proveedor, "IdProveedor", "Descripcion", producto.ProveedorId);
+			return View(producto);
         }
 
         // POST: Productos/Edit/5
@@ -105,50 +114,53 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int IdProducto, [Bind("IdProducto,NombreProducto,Categoria,FechaVencimiento,PrecioUnitario,MedidasId")] Producto producto)
-        {
-            if (IdProducto != producto.IdProducto) 
-            {
-                return NotFound();
-            }
+		public async Task<IActionResult> Edit(int id, [Bind("IdProducto,NombreProducto,FechaVencimiento,PrecioUnitario,MedidasId,CategoriaId,ProveedorId")] Producto producto)
+		{
+			if (id != producto.IdProducto)
+			{
+				return NotFound();
+			}
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(producto);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException ex)
-                {
-                    if (!ProductoExists(producto.IdProducto))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        Console.WriteLine(ex.InnerException?.Message);
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["MedidasId"] = new SelectList(_context.Medidas, "IdMedida", "NombreMedida", producto.MedidasId);
-            return View(producto);
-        }
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					_context.Update(producto);
+					await _context.SaveChangesAsync();
+				}
+				catch (DbUpdateConcurrencyException)
+				{
+					if (!ProductoExists(producto.IdProducto))
+					{
+						return NotFound();
+					}
+					else
+					{
+						throw;
+					}
+				}
+				return RedirectToAction(nameof(Index));
+			}
+			ViewData["CategoriaId"] = new SelectList(_context.Categoria, "IdCategoria", "Descripcion", producto.CategoriaId);
+			ViewData["MedidasId"] = new SelectList(_context.Medidas, "IdMedida", "NombreMedida", producto.MedidasId);
+			ViewData["ProveedorId"] = new SelectList(_context.Proveedor, "IdProveedor", "Descripcion", producto.ProveedorId);
+			return View(producto);
+		}
 
-        // GET: Productos/Delete/5
-        public async Task<IActionResult> Delete(int? IdProducto)
+		// GET: Productos/Delete/5
+		public async Task<IActionResult> Delete(int? IdProducto)
         {
             if (IdProducto == null)
             {
                 return NotFound();
             }
 
-            var producto = await _context.Productos
-                .Include(p => p.Medidas)
-                .FirstOrDefaultAsync(m => m.IdProducto == IdProducto);
-            if (producto == null)
+			var producto = await _context.Productos
+				.Include(p => p.Categorias)
+				.Include(p => p.Medidas)
+				.Include(p => p.Proveedor)
+				.FirstOrDefaultAsync(m => m.IdProducto == id);
+			if (producto == null)
             {
                 return NotFound();
             }
