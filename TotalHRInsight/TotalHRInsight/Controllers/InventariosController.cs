@@ -57,7 +57,7 @@ namespace TotalHRInsight.Controllers
         // GET: Inventarios/Create
         public IActionResult Create()
         {
-            ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "Descripcion");
+            ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "NombreProducto");
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
             return View();
         }
@@ -87,7 +87,7 @@ namespace TotalHRInsight.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "Descripcion", datos.ProductoId);
+            ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "NombreProducto", datos.ProductoId);
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", datos.SucursalId);
             return View(datos);
         }
@@ -114,7 +114,7 @@ namespace TotalHRInsight.Controllers
                 CantidadDisponible = inventario.CantidadDisponible
             };
 
-            ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "Descripcion", inventario.ProductoId);
+            ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "NombreProducto", inventario.ProductoId);
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", inventario.SucursalId);
 
             return View(editarInventario);
@@ -165,7 +165,7 @@ namespace TotalHRInsight.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "Descripcion", editarInventario.ProductoId);
+            ViewData["ProductoId"] = new SelectList(_context.Productos, "IdProducto", "NombreProducto", editarInventario.ProductoId);
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", editarInventario.SucursalId);
 
             return View(editarInventario);

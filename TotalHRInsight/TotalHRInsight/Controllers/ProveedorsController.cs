@@ -53,7 +53,7 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdProveedor,NombreProveedor,Descripcion,Email,Telefono,MetodoPago")] Proveedor proveedor)
+        public async Task<IActionResult> Create( Proveedor proveedor)
         {
             if (ModelState.IsValid)
             {

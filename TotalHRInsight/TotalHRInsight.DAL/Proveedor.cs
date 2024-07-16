@@ -35,7 +35,8 @@ namespace TotalHRInsight.DAL
 
         [DisplayName("Método de Pago")]
         [Required(ErrorMessage = "El método de pago es requerido")]
-        public string MetodoPago { get; set; }
+        [DefaultValue(" ")]
+        public string ? MetodoPago { get; set; }
 
         public ICollection<Producto> Producto { get; set; } = new List<Producto>();
     }

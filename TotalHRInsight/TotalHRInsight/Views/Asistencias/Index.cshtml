@@ -8,10 +8,10 @@
 <div class="container-fluid asistencia-container">
     <div class="row">
         <div class="mt-4">
-            <a asp-action="Create" class="btn btn-danger">
+            <a asp-action="Create" class="btn btn-danger" onclick="showLoader()">
                 <i class="bi bi-plus-circle"></i> Crear registro manual
             </a>
-            <a asp-action="ExportToExcel" class="btn btn-success">
+            <a asp-action="ExportToExcel" class="btn btn-success" onclick="showLoader()">
                 <i class="bi bi-download"></i> Descargar datos
             </a>
         </div>
@@ -62,9 +62,11 @@
     </div>
 </div>
 
+@Html.Partial("_LoaderModal")
+
 <script src="~/lib/leaflet/leaflet.js"></script>
 <script src="~/lib/leaflet/leaflet.min.js"></script>
-
+<script src="~/js/loader.js"></script>
 <script>
     var map = L.map('map').setView([9.895403, -84.063574], 15);
 

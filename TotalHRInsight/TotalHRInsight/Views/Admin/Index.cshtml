@@ -2,101 +2,68 @@
 
 @{
     ViewData["Title"] = "Índice Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p>
-    <a asp-action="CrearUsuario" class="btn btn-warning">Crear Nuevo Usuario</a>
-</p>
-
-<div class="card-container">
+<div class="d-flex justify-content-between align-items-center my-4">
+    <h1 class="mb-0">Índice Usuarios</h1>
+    <div>
+        <a asp-action="CrearUsuario" class="btn btn-warning me-2" onclick="showLoader()">
+            <i class="bi bi-plus-circle"></i> Crear Nuevo Usuario
+        </a>
+    </div>
+</div>
+<hr />
+<div class="row row-cols-1 row-cols-md-3 g-4">
     @foreach (var viewModel in Model)
     {
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">@viewModel.User.Nombre</h5>
-                <p class="card-text"><strong>Estado:</strong> @{
-                        if (@viewModel.User.Estado)
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="card-title mb-0">@viewModel.User.Nombre @viewModel.User.PrimerApellido @viewModel.User.SegundoApellido</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="text-muted">Estado:</h6>
+                        <p class="mb-0">
+                            <span class="badge @(viewModel.User.Estado ? "bg-success" : "bg-danger")">
+                                @(viewModel.User.Estado ? "Activo" : "Inactivo")
+                            </span>
+                        </p>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-muted">Rol(es):</h6>
+                        <p class="mb-0">@string.Join(", ", viewModel.Roles)</p>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <div class="d-flex justify-content-between">
+                        <a href="@Url.Action("Edit", new { id = viewModel.User.Id })" class="btn btn-secondary" onclick="showLoader()">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        @if (viewModel.User.Estado)
                         {
-                            <a>Activo</a>
+                            <a href="@Url.Action("Delete", new { id = viewModel.User.Id })" class="btn btn-danger" onclick="showLoader()">
+                                <i class="bi bi-trash"></i> Eliminar
+                            </a>
                         }
                         else
                         {
-                            <a>Inactivo</a>
+                            <a href="@Url.Action("Activar", new { id = viewModel.User.Id })" class="btn btn-success" onclick="showLoader()">
+                                <i class="bi bi-check-circle"></i> Activar
+                            </a>
                         }
-                    }</p>
-                <p class="card-text"><strong>Rol(es):</strong> @string.Join(", ", viewModel.Roles)</p>
-                <div class="card-actions">
-                    <a href="@Url.Action("Edit", new { id = viewModel.User.Id })" class="btn btn-secondary">Editar</a>
-                    @if (viewModel.User.Estado)
-                    {
-                        <a href="@Url.Action("Delete", new { id = viewModel.User.Id })" class="btn btn-danger">Eliminar</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("Activar", new { id = viewModel.User.Id })" class="btn btn-success">Activar</a>
-                    }
+                    </div>
                 </div>
             </div>
         </div>
     }
 </div>
 
-<style>
-    .card-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        margin-top: 20px;
-    }
+<!-- Incluir la vista parcial del loader modal -->
+@Html.Partial("_LoaderModal")
 
-    .card {
-        width: calc(33.333% - 20px);
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        margin-bottom: 20px;
-        background-color: #f8f9fa;
-    }
-
-    .card-img-top {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-    }
-
-    .card-body {
-        padding: 15px;
-    }
-
-    .card-title {
-        font-size: 1.25rem;
-        color: #333;
-    }
-
-    .card-text {
-        color: #666;
-        margin-bottom: 10px;
-    }
-
-    .card-actions > a {
-        margin-right: 10px;
-    }
-
-    .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-    }
-
-    .btn-secondary {
-        background-color: #6c757d;
-        border-color: #6c757d;
-    }
-
-    .btn-danger {
-        background-color: #dc3545;
-        border-color: #dc3545;
-    }
-
-    .btn-success {
-        background-color: #28a745;
-        border-color: #28a745;
-    }
-</style>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script src="~/js/loader.js"></script>
+}

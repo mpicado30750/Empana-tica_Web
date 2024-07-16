@@ -6,6 +6,14 @@
 }
 
 <h1>Inventario</h1>
+<div class="mt-4">
+    <a asp-action="Create" class="btn btn-danger" onclick="showLoader()">
+        <i class="bi bi-plus-circle"></i> Crear nuevo registro
+    </a>
+    <a asp-action="ExportToExcel" class="btn btn-success" onclick="showLoader()">
+        <i class="bi bi-download"></i> Descargar datos
+    </a>
+</div>
 <hr />
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -19,17 +27,16 @@
                     <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.FechaModificacion):</strong> @Html.DisplayFor(modelItem => item.FechaModificacion)</p>
                     <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.Producto.NombreProducto):</strong> @Html.DisplayFor(modelItem => item.Producto.NombreProducto)</p>
                     <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.Sucursal.NombreSucursal):</strong> @Html.DisplayFor(modelItem => item.Sucursal.NombreSucursal)</p>
-                    <p class="card-text"><strong>@Html.DisplayNameFor(modelItem => item.CantidadDisponible):</strong> @Html.DisplayFor(modelItem => item.CantidadDisponible)</p>
                     <p class="card-text"><strong>Creado por:</strong> @Html.DisplayFor(modelItem => item.UsuarioCreacion.Nombre) @Html.DisplayFor(modelItem => item.UsuarioCreacion.PrimerApellido)</p>
                     <p class="card-text"><strong>Modificado por:</strong> @Html.DisplayFor(modelItem => item.UsuarioModificacion.Nombre) @Html.DisplayFor(modelItem => item.UsuarioModificacion.PrimerApellido)</p>
                     <div class="text-end">
-                        <a asp-action="Edit" asp-route-IdInventario="@item.IdInventario" class="btn btn-warning">
+                        <a asp-action="Edit" asp-route-IdInventario="@item.IdInventario" class="btn btn-warning" onclick="showLoader()">
                             <i class="bi bi-pencil-square"></i> Editar
                         </a>
-                        <a asp-action="Details" asp-route-IdInventario="@item.IdInventario" class="btn btn-info">
+                        <a asp-action="Details" asp-route-IdInventario="@item.IdInventario" class="btn btn-info" onclick="showLoader()">
                             <i class="bi bi-info-circle"></i> Detalles
                         </a>
-                        <a asp-action="Delete" asp-route-IdInventario="@item.IdInventario" class="btn btn-danger">
+                        <a asp-action="Delete" asp-route-IdInventario="@item.IdInventario" class="btn btn-danger" onclick="showLoader()">
                             <i class="bi bi-trash"></i> Eliminar
                         </a>
                     </div>
@@ -39,16 +46,10 @@
     }
 </div>
 
-
-<div class="mt-4">
-    <a asp-action="Create" class="btn btn-danger">
-        <i class="bi bi-plus-circle"></i> Crear nuevo registro
-    </a>
-    <a asp-action="ExportToExcel" class="btn btn-success">
-        <i class="bi bi-download"></i> Descargar datos
-    </a>
-</div>
+<!-- Incluir la vista parcial del loader modal -->
+@Html.Partial("_LoaderModal")
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script src="~/js/loader.js"></script>
 }

@@ -156,6 +156,7 @@ namespace TotalHRInsight.Controllers
             user.FechaNacimiento = model.FechaNacimiento;
             user.NumeroTelefono = model.NumeroTelefono;
             user.Email = model.Email;
+            user.UserName = model.Email;
 
             if (!string.IsNullOrEmpty(model.Password) && model.Password == model.ConfirmPassword)
             {

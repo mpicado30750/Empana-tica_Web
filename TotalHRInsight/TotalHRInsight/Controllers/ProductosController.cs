@@ -53,7 +53,7 @@ namespace TotalHRInsight.Controllers
         {
 			ViewData["CategoriaId"] = new SelectList(_context.Categoria, "IdCategoria", "Descripcion");
 			ViewData["MedidasId"] = new SelectList(_context.Medidas, "IdMedida", "NombreMedida");
-			ViewData["ProveedorId"] = new SelectList(_context.Proveedor, "IdProveedor", "Descripcion");
+			ViewData["ProveedorId"] = new SelectList(_context.Proveedor, "IdProveedor", "NombreProveedor");
 			return View();
         }
 
@@ -85,7 +85,7 @@ namespace TotalHRInsight.Controllers
 
 			ViewData["CategoriaId"] = new SelectList(_context.Categoria, "IdCategoria", "Descripcion", producto.CategoriaId);
 			ViewData["MedidasId"] = new SelectList(_context.Medidas, "IdMedida", "NombreMedida", producto.MedidasId);
-			ViewData["ProveedorId"] = new SelectList(_context.Proveedor, "IdProveedor", "Descripcion", producto.ProveedorId);
+			ViewData["ProveedorId"] = new SelectList(_context.Proveedor, "IdProveedor", "NombreProveedor", producto.ProveedorId);
 			return View(producto);
 
 		}
@@ -105,7 +105,7 @@ namespace TotalHRInsight.Controllers
             }
 			ViewData["CategoriaId"] = new SelectList(_context.Categoria, "IdCategoria", "Descripcion", producto.CategoriaId);
 			ViewData["MedidasId"] = new SelectList(_context.Medidas, "IdMedida", "NombreMedida", producto.MedidasId);
-			ViewData["ProveedorId"] = new SelectList(_context.Proveedor, "IdProveedor", "Descripcion", producto.ProveedorId);
+			ViewData["ProveedorId"] = new SelectList(_context.Proveedor, "IdProveedor", "NombreProveedor", producto.ProveedorId);
 			return View(producto);
         }
 
@@ -143,7 +143,7 @@ namespace TotalHRInsight.Controllers
 			}
 			ViewData["CategoriaId"] = new SelectList(_context.Categoria, "IdCategoria", "Descripcion", producto.CategoriaId);
 			ViewData["MedidasId"] = new SelectList(_context.Medidas, "IdMedida", "NombreMedida", producto.MedidasId);
-			ViewData["ProveedorId"] = new SelectList(_context.Proveedor, "IdProveedor", "Descripcion", producto.ProveedorId);
+			ViewData["ProveedorId"] = new SelectList(_context.Proveedor, "IdProveedor", "NombreProveedor", producto.ProveedorId);
 			return View(producto);
 		}
 
