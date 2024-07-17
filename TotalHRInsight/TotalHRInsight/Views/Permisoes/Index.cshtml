@@ -1,15 +1,25 @@
 ﻿@model IEnumerable<TotalHRInsight.DAL.Permiso>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Permisos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="d-flex justify-content-between align-items-center my-4">
+<<<<<<< HEAD
     <h1 class="mb-0">Index</h1>
     <div>
         <a asp-action="Create" class="btn btn-warning me-2" onclick="showLoader()">
             <i class="bi bi-plus-circle"></i> Crear Nuevo
+=======
+    <h1 class="mb-0">Lista de Permisos</h1>
+    <div>
+        <a asp-action="Create" class="btn btn-danger me-2" onclick="showLoader()">
+            <i class="bi bi-plus-circle"></i> Crear nuevo registro
+        </a>
+        <a asp-action="ExportToExcel" class="btn btn-success" onclick="showLoader()">
+            <i class="bi bi-download"></i> Descargar datos
+>>>>>>> e940724aab8f2f603d6b02b94a25cd2533faf301
         </a>
     </div>
 </div>
@@ -19,6 +29,7 @@
     {
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card h-100 shadow-sm">
+<<<<<<< HEAD
                 <div class="card-header bg-secondary text-white">
                     <h5 class="card-title mb-0">Solicitud de Permiso</h5>
                 </div>
@@ -42,6 +53,42 @@
                             <i class="bi bi-info-circle"></i> Detalles
                         </a>
                         <a asp-action="Delete" asp-route-IdPermisos="@item.IdPermisos" class="btn btn-danger btn-sm" onclick="showLoader()">
+=======
+                <div class="card-header bg-danger text-white">
+                    <h5 class="card-title mb-0">Permiso #@item.IdPermisos</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="text-muted">Solicitud de Permiso</h6>
+                        <p class="mb-0"><strong>Nombre:</strong> @item.UsuarioCreacion.Nombre @item.UsuarioCreacion.PrimerApellido @item.UsuarioCreacion.SegundoApellido</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-muted">Detalles del Permiso</h6>
+                        <p class="card-text"><strong>Fecha de Inicio:</strong> @Html.DisplayFor(modelItem => item.FechaInicio)</p>
+                        <p class="card-text"><strong>Fecha de Fin:</strong> @Html.DisplayFor(modelItem => item.FechaFin)</p>
+                        <p class="card-text"><strong>Cantidad de Días:</strong> @Html.DisplayFor(modelItem => item.CantidadDias)</p>
+                        <p class="card-text"><strong>Comentario:</strong> @Html.DisplayFor(modelItem => item.Comentario)</p>
+                        <p class="card-text"><strong>Motivo Admin:</strong> @Html.DisplayFor(modelItem => item.MotivoAdmin)</p>
+                        <p class="card-text"><strong>Tipo de Permiso:</strong> @Html.DisplayFor(modelItem => item.TipoPermisos.NombrePermiso)</p>
+                        <p class="card-text"><strong>Usuario de Creación:</strong> @Html.DisplayFor(modelItem => item.UsuarioCreacion.Nombre)</p>
+                        <p class="card-text"><strong>Usuario de Asignación:</strong> @Html.DisplayFor(modelItem => item.UsuarioAsignacion.Nombre)</p>
+                        <p class="card-text"><strong>Estado:</strong> <span class="badge @(item.Estado.EstadoSolicitud == "Completado" ? "bg-success" : "bg-warning")">
+                                @item.Estado.EstadoSolicitud
+                            </span>
+                            
+                        </p>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Edit" asp-route-IdPermisos="@item.IdPermisos" class="btn btn-warning" onclick="showLoader()">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a asp-action="Details" asp-route-IdPermisos="@item.IdPermisos" class="btn btn-info" onclick="showLoader()">
+                            <i class="bi bi-info-circle"></i> Detalles
+                        </a>
+                        <a asp-action="Delete" asp-route-IdPermisos="@item.IdPermisos" class="btn btn-danger" onclick="showLoader()">
+>>>>>>> e940724aab8f2f603d6b02b94a25cd2533faf301
                             <i class="bi bi-trash"></i> Eliminar
                         </a>
                     </div>
