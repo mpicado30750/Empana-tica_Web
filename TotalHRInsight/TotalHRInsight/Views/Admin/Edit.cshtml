@@ -7,12 +7,15 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
-            <div class="card shadow-sm">
+            <div class="text-center mb-3">
+                <i class="bi bi-person-circle" style="font-size: 5rem; color: #6c757d;"></i>
+            </div>
+            <div class="card shadow-lg">
                 <div class="card-header text-center text-white bg-secondary">
                     <h1 class="my-2">Editar Usuario</h1>
                 </div>
                 <div class="card-body">
-                    <hr />
+                    <hr class="my-4"> <!-- Added margin top and bottom -->
                     <form asp-action="Edit" method="post">
                         <input type="hidden" asp-for="Id" />
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
@@ -71,7 +74,8 @@
                             <label asp-for="Email">Email</label>
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-4">
+                            <!-- Increased margin bottom -->
                             <label asp-for="SelectedRoleId" class="form-label">Rol</label>
                             <select asp-for="SelectedRoleId" asp-items="@ViewBag.Roles" class="form-select"></select>
                             <span asp-validation-for="SelectedRoleId" class="text-danger"></span>
@@ -81,12 +85,13 @@
                             <select asp-for="idSucursal" asp-items="@ViewBag.Sucursal" class="form-select"></select>
                             <span asp-validation-for="idSucursal" class="text-danger"></span>
                         </div>
+                        <hr class="my-4"> <!-- Added margin top and bottom -->
                         <div class="d-flex justify-content-between mt-4">
-                            <a href="/Admin/Index" class="btn btn-secondary me-4" style="flex: 1;">
+                            <a href="/Admin/Index" class="btn btn-secondary me-2" style="flex: 1;">
                                 <i class="bi bi-arrow-left-circle"></i> Regresar
                             </a>
-                            <button id="registerSubmit" type="submit" class="btn btn-danger me-2" style="flex: 1;">
-                                <i class="bi bi-plus-circle"></i> Registrar
+                            <button type="submit" class="btn btn-danger ms-2" style="flex: 1;">
+                                <i class="bi bi-check-circle"></i> Actualizar
                             </button>
                         </div>
                     </form>
