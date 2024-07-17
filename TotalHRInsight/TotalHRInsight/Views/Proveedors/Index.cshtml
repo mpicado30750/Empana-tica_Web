@@ -5,56 +5,63 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="d-flex justify-content-between align-items-center my-4">
+    <h1 class="mb-0">Index</h1>
+    <div>
+        <a asp-action="Create" class="btn btn-warning me-2" onclick="showLoader()">
+            <i class="bi bi-plus-circle"></i> Crear Nuevo
+        </a>
+    </div>
+</div>
+<hr />
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="card-title mb-0">@item.NombreProveedor</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="text-muted">Descripción:</h6>
+                        <p class="mb-0">@item.Descripcion</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-muted">Correo Electrónico:</h6>
+                        <p class="mb-0">@item.Email</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-muted">Teléfono:</h6>
+                        <p class="mb-0">@item.Telefono</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-muted">Método de Pago:</h6>
+                        <p class="mb-0">@item.MetodoPago</p>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Edit" asp-route-id="@item.IdProveedor" class="btn btn-secondary" onclick="showLoader()">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.IdProveedor" class="btn btn-info" onclick="showLoader()">
+                            <i class="bi bi-info-circle"></i> Detalles
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.IdProveedor" class="btn btn-danger" onclick="showLoader()">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreProveedor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MetodoPago)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreProveedor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MetodoPago)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdProveedor">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdProveedor">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdProveedor">Delete</a>
-            </td>
-        </tr>
+<!-- Incluir la vista parcial del loader modal -->
+@Html.Partial("_LoaderModal")
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script src="~/js/loader.js"></script>
 }
-    </tbody>
-</table>

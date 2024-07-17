@@ -129,7 +129,7 @@ namespace TotalHRInsight.Controllers
         // POST: Admin/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(EditUserViewModel model)
+        public async Task<IActionResult> Edit(EditUserViewModel model) 
         {
             // Remove the validation for Password and ConfirmPassword if they are empty
             if (string.IsNullOrEmpty(model.Password))
