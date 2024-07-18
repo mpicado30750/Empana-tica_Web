@@ -104,6 +104,8 @@ public class AuthController : ControllerBase
                 nombreUser = user.Nombre,
                 apellidoUser = user.PrimerApellido,
                 success = true,
+                user.idSucursal,
+                sucursal = user.Sucursal.NombreSucursal,                
                 message = "Autenticación exitosa."
             });
         }
