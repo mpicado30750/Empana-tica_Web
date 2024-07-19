@@ -1,0 +1,60 @@
+﻿@model IEnumerable<TotalHRInsight.DAL.Salario>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SalarioBruto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalarioExtra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalarioNeto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuarioCreacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuarioAsignacion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalarioBruto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalarioExtra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalarioNeto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsuarioCreacion.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsuarioAsignacion.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdSalario">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdSalario">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdSalario">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

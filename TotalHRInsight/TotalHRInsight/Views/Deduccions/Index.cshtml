@@ -1,0 +1,72 @@
+﻿@model IEnumerable<TotalHRInsight.DAL.Deduccion>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaDeduccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreDeduccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MontoDeduccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuarioCreacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuarioAsignacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salario)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaDeduccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreDeduccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MontoDeduccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsuarioCreacion.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsuarioAsignacion.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salario.UsuarioAsignacionId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdDeduccion">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdDeduccion">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdDeduccion">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
