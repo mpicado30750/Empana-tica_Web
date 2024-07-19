@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TotalHRInsight.DAL;
+using TotalHRInsight.DTO.Pedidos;
 
 namespace TotalHRInsightAPI.Controllers
 {
@@ -20,15 +21,8 @@ namespace TotalHRInsightAPI.Controllers
             _context = context;
         }
 
-        // GET: api/Pedidoes
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Pedido>>> GetPedidos()
-        {
-            return await _context.Pedidos.ToListAsync();
-        }
-
         // GET: api/Pedidoes/5
-        [HttpGet("{id}")]
+        [HttpGet("GetPedido/{id}")]
         public async Task<ActionResult<Pedido>> GetPedido(int id)
         {
             var pedido = await _context.Pedidos.FindAsync(id);
@@ -38,38 +32,44 @@ namespace TotalHRInsightAPI.Controllers
                 return NotFound();
             }
 
-            return pedido;
+            return Ok(new
+            {
+                succes = true,
+                pedidos = pedido
+            });
         }
 
-        // PUT: api/Pedidoes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPedido(int id, Pedido pedido)
+        // GET: api/Pedidoes/5
+        [HttpGet("GetListaPedido/{idSucursal}")]
+        public async Task<ActionResult<ListaPedidosDTO>> GetListaPedido(int idSucursal)
         {
-            if (id != pedido.IdPedido)
-            {
-                return BadRequest();
-            }
+            var pedido = await _context.Pedidos
+                .Include(i => i.Sucursal)
+                .Include(i => i.Estado)
+                .Where(s => s.IdSucursal == idSucursal)
+                .ToListAsync();
 
-            _context.Entry(pedido).State = EntityState.Modified;
-
-            try
+            if (pedido == null)
             {
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
+            var listaPedidos = pedido.Select(p => new ListaPedidosDTO
             {
-                if (!PedidoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+                IdPedido = p.IdPedido,
+                FechaPedido = p.FechaPedido,
+                FechaEntrega = p.FechaEntrega,
+                UsuarioCreacionId = p.UsuarioCreacionId,
+                IdEstado = p.IdEstado,
+                IdSucursal = p.IdSucursal, 
+                sucursal = p.Sucursal.NombreSucursal,
+                estado = p.Estado.EstadoSolicitud,
+                MontoTotal = p.MontoTotal
+            }).ToList();
+            return Ok(new
+            {
+                succes = true,
+                pedidos = pedido
+            });
         }
 
         // POST: api/Pedidoes
@@ -83,25 +83,6 @@ namespace TotalHRInsightAPI.Controllers
             return CreatedAtAction("GetPedido", new { id = pedido.IdPedido }, pedido);
         }
 
-        // DELETE: api/Pedidoes/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePedido(int id)
-        {
-            var pedido = await _context.Pedidos.FindAsync(id);
-            if (pedido == null)
-            {
-                return NotFound();
-            }
 
-            _context.Pedidos.Remove(pedido);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool PedidoExists(int id)
-        {
-            return _context.Pedidos.Any(e => e.IdPedido == id);
-        }
     }
 }

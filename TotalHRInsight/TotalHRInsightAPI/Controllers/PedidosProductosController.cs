@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,12 +20,6 @@ namespace TotalHRInsightAPI.Controllers
             _context = context;
         }
 
-        // GET: api/PedidosProductos
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<PedidosProductos>>> GetPedidosProductos()
-        {
-            return await _context.PedidosProductos.ToListAsync();
-        }
 
         // GET: api/PedidosProductos/5
         [HttpGet("{id}")]
@@ -39,37 +33,6 @@ namespace TotalHRInsightAPI.Controllers
             }
 
             return pedidosProductos;
-        }
-
-        // PUT: api/PedidosProductos/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPedidosProductos(int id, PedidosProductos pedidosProductos)
-        {
-            if (id != pedidosProductos.PedidosProductosID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(pedidosProductos).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PedidosProductosExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
 
         // POST: api/PedidosProductos

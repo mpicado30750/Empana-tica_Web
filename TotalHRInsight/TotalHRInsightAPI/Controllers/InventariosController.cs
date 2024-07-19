@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TotalHRInsight.DAL;
+using TotalHRInsight.DTO.Inventario;
 
 namespace TotalHRInsightAPI.Controllers
 {
@@ -28,49 +29,60 @@ namespace TotalHRInsightAPI.Controllers
         }
 
         // GET: api/Inventarios/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Inventario>> GetInventario(int id)
+        [HttpGet("GetInventarioSucursal/{id}")]
+        public async Task<ActionResult<IEnumerable<GetInventarioSucursalDTO>>> GetInventarioSucursal(int id)
         {
-            var inventario = await _context.Inventario.FindAsync(id);
+            var inventarioList = await _context.Inventario
+        .Where(w => w.SucursalId == id)
+        .Include(i => i.Producto)
+        .Include(i => i.Sucursal)
+        .ToListAsync();
+
+            if (inventarioList == null || !inventarioList.Any())
+            {
+                return NotFound();
+            }
+
+            var inventarioDTOList = inventarioList.Select(s => new GetInventarioSucursalDTO
+            {
+                IdInventario = s.IdInventario,
+                FechaVencimientoProducto = s.Producto.FechaVencimiento,
+                CantidadDisponible = s.CantidadDisponible,
+                PrecioProducto = s.Producto.PrecioUnitario,
+                NombreProducto = s.Producto.NombreProducto,
+                DiasParaCaducar = (s.Producto.FechaVencimiento - DateTime.Now).Days
+            }).ToList();
+
+            return Ok(inventarioDTOList);
+        }
+
+        // GET: api/Inventarios/5
+        [HttpGet("GetProductoInventario/{id}")]
+        public async Task<ActionResult<GetInventarioSucursalDTO>> GetProductoInventario(int id)
+        {
+            var inventario = await _context.Inventario
+                .Include(i => i.Producto)
+                .Include(i => i.Sucursal)
+                .FirstOrDefaultAsync(m => m.IdInventario == id);
 
             if (inventario == null)
             {
                 return NotFound();
             }
 
-            return inventario;
+            var inventarioDTO = new GetInventarioSucursalDTO
+            {
+                IdInventario = inventario.IdInventario,
+                FechaVencimientoProducto = inventario.Producto.FechaVencimiento,
+                CantidadDisponible = inventario.CantidadDisponible,
+                PrecioProducto = inventario.Producto.PrecioUnitario,
+                NombreProducto = inventario.Producto.NombreProducto,
+                DiasParaCaducar = (inventario.Producto.FechaVencimiento - DateTime.Now).Days
+            };
+
+            return Ok(inventarioDTO);
         }
 
-        // PUT: api/Inventarios/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutInventario(int id, Inventario inventario)
-        {
-            if (id != inventario.IdInventario)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(inventario).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!InventarioExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
 
         // POST: api/Inventarios
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -99,6 +111,47 @@ namespace TotalHRInsightAPI.Controllers
             return NoContent();
         }
 
+        // PUT: api/Inventarios/ActualizarCantidadDisponible
+        [HttpPut("ActualizarCantidadDisponible")]
+        public async Task<IActionResult> ActualizarCantidadDisponible([FromBody] ActualizarCantidadDTO actualizarCantidadDTO)
+        {
+            // Busca el inventario por ID
+            var inventario = await _context.Inventario.FindAsync(actualizarCantidadDTO.Id);
+
+            // Verifica si el inventario existe
+            if (inventario == null)
+            {
+                return NotFound(new { success = false, message = "Inventario no encontrado" });
+            }
+
+            // Actualiza la cantidad disponible
+            inventario.CantidadDisponible = actualizarCantidadDTO.NuevaCantidad;
+            inventario.FechaModificacion = DateTime.Now;
+            inventario.UsuarioModificacionid = actualizarCantidadDTO.UsuarioModificacionid;
+            // Marca el inventario como modificado
+            _context.Entry(inventario).State = EntityState.Modified;
+
+            // Guarda los cambios en la base de datos
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!InventarioExists(actualizarCantidadDTO.Id))
+                {
+                    return NotFound(new { success = false, message = "Inventario no encontrado" });
+                }
+                else
+                {
+                    return StatusCode(500, new { success = false, message = "Error de concurrencia al actualizar el inventario" });
+                }
+            }
+
+            return Ok(new { success = true, message = "Cantidad disponible actualizada exitosamente" });
+        }
+
+        // Método auxiliar para verificar si un inventario existe
         private bool InventarioExists(int id)
         {
             return _context.Inventario.Any(e => e.IdInventario == id);

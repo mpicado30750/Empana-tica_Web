@@ -73,7 +73,13 @@ namespace TotalHRInsight.Controllers
 		// GET: Pedidos/Create
 		public async Task<IActionResult> CreateAsync()
         {
-            ViewData["Inventario"] = await _context2.Inventario.Include(i => i.Producto).Include(i => i.Sucursal).Include(i => i.UsuarioCreacion).Include(i => i.UsuarioModificacion).ToListAsync(); ;
+            ViewData["Inventario"] = await _context2.Inventario
+                .Include(i => i.Producto)
+                .Include(i => i.Sucursal)
+                .Include(i => i.UsuarioCreacion)
+                .Include(i => i.UsuarioModificacion)
+                .Where(c => c.Sucursal.NombreSucursal == "Centro de Produccion")
+                .ToListAsync();
             ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud");
             ViewData["IdSucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
             ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre");

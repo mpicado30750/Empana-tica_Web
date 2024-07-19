@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using TotalHRInsight.DTO;
 using TotalHRInsight.DAL;
+using Microsoft.EntityFrameworkCore;
 
 [ApiController]
 [Route("[controller]")]
@@ -13,13 +14,15 @@ public class AuthController : ControllerBase
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly TotalHRInsightDbContext _context;
     private readonly IConfiguration _configuration;
 
-    public AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
+    public AuthController(TotalHRInsightDbContext context,UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _configuration = configuration;
+        _context = context;
     }
 
     [HttpPost("logout")]
@@ -95,7 +98,10 @@ public class AuthController : ControllerBase
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
-
+            var nombreSucursal = await _context.Sucursales
+                                           .Where(s => s.IdSucursal == user.idSucursal)
+                                           .Select(s => s.NombreSucursal)
+                                           .FirstOrDefaultAsync();
             return Ok(new
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token),
@@ -105,7 +111,7 @@ public class AuthController : ControllerBase
                 apellidoUser = user.PrimerApellido,
                 success = true,
                 user.idSucursal,
-                sucursal = user.Sucursal.NombreSucursal,                
+                sucursal = nombreSucursal,                
                 message = "Autenticación exitosa."
             });
         }
