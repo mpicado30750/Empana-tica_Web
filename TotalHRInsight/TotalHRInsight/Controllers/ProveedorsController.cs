@@ -25,15 +25,15 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Proveedors/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? IdProveedor)
         {
-            if (id == null)
+            if (IdProveedor == null)
             {
                 return NotFound();
             }
 
             var proveedor = await _context.Proveedor
-                .FirstOrDefaultAsync(m => m.IdProveedor == id);
+                .FirstOrDefaultAsync(m => m.IdProveedor == IdProveedor);
             if (proveedor == null)
             {
                 return NotFound();
@@ -65,14 +65,14 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Proveedors/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? IdProveedor)
         {
-            if (id == null)
+            if (IdProveedor == null)
             {
                 return NotFound();
             }
 
-            var proveedor = await _context.Proveedor.FindAsync(id);
+            var proveedor = await _context.Proveedor.FindAsync(IdProveedor);
             if (proveedor == null)
             {
                 return NotFound();
@@ -85,9 +85,9 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdProveedor,NombreProveedor,Descripcion,Email,Telefono,MetodoPago")] Proveedor proveedor)
+        public async Task<IActionResult> Edit(int IdProveedor, [Bind("IdProveedor,NombreProveedor,Descripcion,Email,Telefono,MetodoPago")] Proveedor proveedor)
         {
-            if (id != proveedor.IdProveedor)
+            if (IdProveedor != proveedor.IdProveedor)
             {
                 return NotFound();
             }
@@ -116,15 +116,15 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Proveedors/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? IdProveedor)
         {
-            if (id == null)
+            if (IdProveedor == null)
             {
                 return NotFound();
             }
 
             var proveedor = await _context.Proveedor
-                .FirstOrDefaultAsync(m => m.IdProveedor == id);
+                .FirstOrDefaultAsync(m => m.IdProveedor == IdProveedor);
             if (proveedor == null)
             {
                 return NotFound();
@@ -136,9 +136,9 @@ namespace TotalHRInsight.Controllers
         // POST: Proveedors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int IdProveedor)
         {
-            var proveedor = await _context.Proveedor.FindAsync(id);
+            var proveedor = await _context.Proveedor.FindAsync(IdProveedor);
             if (proveedor != null)
             {
                 _context.Proveedor.Remove(proveedor);
@@ -148,9 +148,9 @@ namespace TotalHRInsight.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProveedorExists(int id)
+        private bool ProveedorExists(int IdProveedor)
         {
-            return _context.Proveedor.Any(e => e.IdProveedor == id);
+            return _context.Proveedor.Any(e => e.IdProveedor == IdProveedor);
         }
     }
 }
