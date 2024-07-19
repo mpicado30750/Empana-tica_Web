@@ -18,7 +18,7 @@ namespace TotalHRInsight.DAL
         [Required(ErrorMessage = "El usuario creacion es obligatorio")]
         [DisplayName("Creado Por")]
         public string UsuarioCreacionid { get; set; }
-        public ApplicationUser? UsuarioCreacion { get; set; }
+        public ApplicationUser? UsuarioCreacion { get; set; } 
 
         [ForeignKey("UsuarioModificacion")]
         [Required(ErrorMessage = "El usuario modificación es obligatorio")]
