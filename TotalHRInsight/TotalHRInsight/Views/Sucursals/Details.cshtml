@@ -4,12 +4,11 @@
     ViewData["Title"] = "Detalles Sucursal";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1 class="text-center">Detalles Sucursal</h1>
+<h1 class="text-center">Detalles de Producto</h1>
 <hr />
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card shadow-sm">
                 <div class="card-body">
                     <dl class="row">
@@ -26,11 +25,11 @@
                             @Html.DisplayFor(model => model.UbicacionSucursal)
                         </dd>
                     </dl>
-                    <div class="d-grid gap-2">
-                        <a asp-action="Edit" asp-route-IdSucursal="@Model?.IdSucursal" class="btn btn-warning">
+                    <div class="d-flex justify-content-between mt-4">
+                        <a asp-action="Edit" asp-route-IdSucursal="@Model.IdSucursal" class="btn btn-warning ms-2" style="flex: 1;" onclick="showLoader()">
                             <i class="bi bi-pencil-square"></i> Editar
                         </a>
-                        <a asp-action="Index" class="btn btn-secondary">
+                        <a asp-action="Index" class="btn btn-secondary ms-2" style="flex: 1;" onclick="showLoader()">
                             <i class="bi bi-arrow-left-circle"></i> Regresar
                         </a>
                     </div>
@@ -39,3 +38,12 @@
         </div>
     </div>
 </div>
+@Html.Partial("_LoaderModal")
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script src="~/js/loader.js"></script>
+}

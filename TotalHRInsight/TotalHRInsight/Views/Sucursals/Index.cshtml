@@ -5,14 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <div class="d-flex justify-content-between align-items-center my-4">
     <h1 class="mb-0">Lista de Sucursales</h1>
     <div>
-        <a asp-action="Create" class="btn btn-warning me-2" onclick="showLoader()">
-            <i class="bi bi-plus-circle"></i> Crear Nuevo
-        </a>
-        <a asp-action="ExportToExcel" class="btn btn-success" onclick="showLoader()">
-            <i class="bi bi-download"></i> Descargar Datos
+        <a asp-action="Create" class="btn btn-danger me-2" onclick="showLoader()">
+            <i class="bi bi-plus-circle"></i> Crear Nuevo Registro
         </a>
     </div>
 </div>
@@ -22,7 +20,7 @@
     {
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card h-100 shadow-sm">
-                <div class="card-header bg-secondary text-white">
+                <div class="card-header bg-danger text-white">
                     <h5 class="card-title mb-0">@Html.DisplayFor(modelItem => item.NombreSucursal)</h5>
                 </div>
                 <div class="card-body">
@@ -33,7 +31,7 @@
                 </div>
                 <div class="card-footer bg-light">
                     <div class="d-flex justify-content-between">
-                        <a asp-action="Edit" asp-route-IdSucursal="@item.IdSucursal" class="btn btn-secondary" onclick="showLoader()">
+                        <a asp-action="Edit" asp-route-IdSucursal="@item.IdSucursal" class="btn btn-warning" onclick="showLoader()">
                             <i class="bi bi-pencil-square"></i> Editar
                         </a>
                         <a asp-action="Details" asp-route-IdSucursal="@item.IdSucursal" class="btn btn-info" onclick="showLoader()">
