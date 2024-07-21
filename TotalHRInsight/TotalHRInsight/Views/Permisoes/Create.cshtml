@@ -1,12 +1,11 @@
 ﻿@model TotalHRInsight.DAL.Permiso
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Permiso";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<h1 class="text-center">Crear Permiso</h1>
+<h1 class="text-center">Añadir Registro</h1>
 <hr />
 <div class="container">
     <div class="row justify-content-center">
@@ -55,9 +54,12 @@
                         <div class="form-group">
                             <label asp-for="Estado.EstadoSolicitud" class="control-label"></label>
                             <select asp-for="IdEstado" class="form-control" asp-items="ViewBag.IdEstado"></select>
-                        <div class="d-grid gap-2">
-                            <p></p>
-                            <button type="submit" class="btn btn-danger btn-block">
+                            <div class="d-grid gap-2">
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
+                                <i class="bi bi-arrow-left-circle"></i> Regresar
+                            </a>
+                            <button type="submit" class="btn btn-danger ms-2" style="flex: 1;" onclick="showLoader()">
                                 <i class="bi bi-plus-circle"></i> Añadir
                             </button>
                         </div>
@@ -66,15 +68,14 @@
             </div>
         </div>
     </div>
-    <div class="text-center mt-3">
-        <a asp-action="Index" class="btn btn-secondary">
-            <i class="bi bi-arrow-left-circle"></i> Regresar
-        </a>
-    </div>
+
 </div>
+@Html.Partial("_LoaderModal")
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script src="~/js/loader.js"></script>
 }

@@ -4,33 +4,40 @@
     ViewData["Title"] = "Eliminar Estado";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<h1 class="text-center">Eliminar Estado</h1>
+<hr />
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h1 class="text-center mt-4">Eliminar Estado</h1>
-                    <hr />
                     <dl class="row">
                         <dt class="col-sm-4">@Html.DisplayNameFor(model => model.EstadoSolicitud)</dt>
                         <dd class="col-sm-8">@Html.DisplayFor(model => model.EstadoSolicitud)</dd>
                     </dl>
-                    <form asp-action="Delete">
-                        <input type="hidden" asp-for="IdEstado" />
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-danger btn-block">
-                                <i class="bi bi-trash"></i> Eliminar
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" name="IdEstado" value="@Model.IdEstado" />
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
+                                <i class="bi bi-arrow-left-circle"></i> Regresar
+                            </a>
+                            <button type="submit" class="btn btn-danger ms-2" style="flex: 1;" onclick="showLoader()">
+                                <i class="bi bi-plus-circle"></i> Eliminar
                             </button>
                         </div>
                     </form>
-                    <div class="text-center mt-3">
-                        <a asp-action="Index" class="btn btn-secondary">
-                            <i class="bi bi-arrow-left-circle"></i> Regresar
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@Html.Partial("_LoaderModal")
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script src="~/js/loader.js"></script>
+}

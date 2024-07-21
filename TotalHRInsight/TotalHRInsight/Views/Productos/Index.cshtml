@@ -5,11 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <div class="d-flex justify-content-between align-items-center my-4">
     <h1 class="mb-0">Lista de Productos</h1>
     <div>
         <a asp-action="Create" class="btn btn-danger me-2" onclick="showLoader()">
-            <i class="bi bi-plus-circle"></i> Crear nuevo registro
+            <i class="bi bi-plus-circle"></i> Crear Nuevo Registro
         </a>
         <a asp-action="ExportToExcel" class="btn btn-success" onclick="showLoader()">
             <i class="bi bi-download"></i> Descargar datos
@@ -17,23 +18,26 @@
     </div>
 </div>
 <hr />
-
 <div class="row row-cols-1 row-cols-md-3 g-4">
     @foreach (var item in Model)
     {
-        <div class="col">
+        <div class="col-md-6 col-lg-4 mb-4">
             <div class="card h-100 shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="card-title mb-0">@item.NombreProducto</h5>
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.NombreProducto)</h5>
                     <p class="card-text"><strong>Categoria:</strong> @Html.DisplayFor(modelItem => item.CategoriaId)</p>
                     <p class="card-text"><strong>Fecha de Vencimiento:</strong> @Html.DisplayFor(modelItem => item.FechaVencimiento)</p>
                     <p class="card-text"><strong>Precio Unitario:</strong> @Html.DisplayFor(modelItem => item.PrecioUnitario)</p>
                     <p class="card-text"><strong>Medidas:</strong> @Html.DisplayFor(modelItem => item.Medidas.NombreMedida)</p>
-                    <div class="text-end">
-                        <a asp-action="Edit" asp-route-IdProducto="@item.IdProducto" class="btn btn-warning me-2" onclick="showLoader()">
+                </div>
+                <div class="card-footer bg-light">
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Edit" asp-route-IdProducto="@item.IdProducto" class="btn btn-warning" onclick="showLoader()">
                             <i class="bi bi-pencil-square"></i> Editar
                         </a>
-                        <a asp-action="Details" asp-route-IdProducto="@item.IdProducto" class="btn btn-info me-2" onclick="showLoader()">
+                        <a asp-action="Details" asp-route-IdProducto="@item.IdProducto" class="btn btn-info" onclick="showLoader()">
                             <i class="bi bi-info-circle"></i> Detalles
                         </a>
                         <a asp-action="Delete" asp-route-IdProducto="@item.IdProducto" class="btn btn-danger" onclick="showLoader()">
