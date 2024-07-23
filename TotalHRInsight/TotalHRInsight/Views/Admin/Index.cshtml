@@ -8,7 +8,7 @@
 <div class="d-flex justify-content-between align-items-center my-4">
     <h1 class="mb-0">Índice Usuarios</h1>
     <div>
-        <a asp-action="CrearUsuario" class="btn btn-warning me-2" onclick="showLoader()">
+        <a asp-action="CrearUsuario" class="btn btn-danger me-2" onclick="showLoader()">
             <i class="bi bi-plus-circle"></i> Crear Nuevo Usuario
         </a>
     </div>
@@ -19,17 +19,17 @@
     {
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card h-100 shadow-sm">
-                <div class="card-header bg-secondary text-white">
+                <div class="card-header bg-danger text-white">
                     <h5 class="card-title mb-0">@viewModel.User.Nombre @viewModel.User.PrimerApellido @viewModel.User.SegundoApellido</h5>
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
                         <h6 class="text-muted">Estado:</h6>
-                        <p class="mb-0">
+                        
                             <span class="badge @(viewModel.User.Estado ? "bg-success" : "bg-danger")">
                                 @(viewModel.User.Estado ? "Activo" : "Inactivo")
                             </span>
-                        </p>
+                        
                     </div>
                     <div class="mb-3">
                         <h6 class="text-muted">Rol(es):</h6>

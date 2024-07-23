@@ -114,9 +114,9 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("IdProducto,NombreProducto,FechaVencimiento,PrecioUnitario,MedidasId,CategoriaId,ProveedorId")] Producto producto)
+		public async Task<IActionResult> Edit(int IdProducto, [Bind("IdProducto,NombreProducto,FechaVencimiento,PrecioUnitario,MedidasId,CategoriaId,ProveedorId")] Producto producto)
 		{
-			if (id != producto.IdProducto)
+			if (IdProducto != producto.IdProducto)
 			{
 				return NotFound();
 			}

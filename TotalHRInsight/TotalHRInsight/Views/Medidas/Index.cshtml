@@ -9,22 +9,21 @@
     <h1 class="mb-0">Lista de Medidas</h1>
     <div>
         <a asp-action="Create" class="btn btn-danger me-2" onclick="showLoader()">
-            <i class="bi bi-plus-circle"></i> Crear nuevo registro
+            <i class="bi bi-plus-circle"></i> Crear Nuevo Registro
         </a>
     </div>
 </div>
 <hr />
-
 <div class="row row-cols-1 row-cols-md-3 g-4">
     @foreach (var item in Model)
     {
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card h-100 shadow-sm">
-                <div class="card-header bg-secondary text-white">
+                <div class="card-header bg-danger text-white">
                     <h5 class="card-title mb-0">@item.NombreMedida</h5>
                 </div>
-                <div class="card-body">
-                    <div class="text-end">
+                <div class="card-footer bg-light">
+                    <div class="d-flex justify-content-between">
                         <a asp-action="Edit" asp-route-IdMedida="@item.IdMedida" class="btn btn-warning" onclick="showLoader()">
                             <i class="bi bi-pencil-square"></i> Editar
                         </a>

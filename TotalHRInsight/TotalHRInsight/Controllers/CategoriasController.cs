@@ -25,15 +25,15 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Categorias/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? IdCategoria)
         {
-            if (id == null)
+            if (IdCategoria == null)
             {
                 return NotFound();
             }
 
             var categoria = await _context.Categoria
-                .FirstOrDefaultAsync(m => m.IdCategoria == id);
+                .FirstOrDefaultAsync(m => m.IdCategoria == IdCategoria);
             if (categoria == null)
             {
                 return NotFound();
@@ -65,14 +65,14 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Categorias/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? IdCategoria)
         {
-            if (id == null)
+            if (IdCategoria == null)
             {
                 return NotFound();
             }
 
-            var categoria = await _context.Categoria.FindAsync(id);
+            var categoria = await _context.Categoria.FindAsync(IdCategoria);
             if (categoria == null)
             {
                 return NotFound();
@@ -85,9 +85,9 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdCategoria,NombreCategoria,Descripcion")] Categoria categoria)
+        public async Task<IActionResult> Edit(int IdCategoria, [Bind("IdCategoria,NombreCategoria,Descripcion")] Categoria categoria)
         {
-            if (id != categoria.IdCategoria)
+            if (IdCategoria != categoria.IdCategoria)
             {
                 return NotFound();
             }
@@ -116,15 +116,15 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Categorias/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? IdCategoria)
         {
-            if (id == null)
+            if (IdCategoria == null)
             {
                 return NotFound();
             }
 
             var categoria = await _context.Categoria
-                .FirstOrDefaultAsync(m => m.IdCategoria == id);
+                .FirstOrDefaultAsync(m => m.IdCategoria == IdCategoria);
             if (categoria == null)
             {
                 return NotFound();
@@ -136,9 +136,9 @@ namespace TotalHRInsight.Controllers
         // POST: Categorias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int IdCategoria)
         {
-            var categoria = await _context.Categoria.FindAsync(id);
+            var categoria = await _context.Categoria.FindAsync(IdCategoria);
             if (categoria != null)
             {
                 _context.Categoria.Remove(categoria);
@@ -148,9 +148,9 @@ namespace TotalHRInsight.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoriaExists(int id)
+        private bool CategoriaExists(int IdCategoria)
         {
-            return _context.Categoria.Any(e => e.IdCategoria == id);
+            return _context.Categoria.Any(e => e.IdCategoria == IdCategoria);
         }
     }
 }

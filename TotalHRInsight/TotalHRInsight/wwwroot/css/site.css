@@ -80,13 +80,6 @@ body {
     padding: 20px;
 }
 
-/* Container styling */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 10px;
-}
-
 /* Footer styling to match the navbar */
 .footer {
     color: #ffffff;
@@ -103,7 +96,7 @@ body {
             color: #E29E3D; /* Match hover color with the navbar links */
         }
 
-
+/* Botones */
 .btn-crear {
     color: #ffffff; /* color del texto */
     background-color: #be2324; /* color de fondo */
@@ -114,6 +107,17 @@ body {
         background-color: #ad1f20; /* color de fondo en el hover */
         color: #E29E3D; /* color del borde en el hover si es necesario */
     }
+
+.text-bold {
+    font-weight: bold; /* Makes the text bold */
+}
+
+/* Container styling */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+}
 
 @media (max-width: 768px) {
     .sidebar {

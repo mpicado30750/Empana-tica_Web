@@ -28,5 +28,8 @@ namespace TotalHRInsight.DAL
         public virtual DbSet<Inventario> Inventario { get; set; }
         public virtual DbSet<Proveedor> Proveedor { get; set; }
         public virtual DbSet<Categoria> Categoria { get; set; }
-    }
+		public virtual DbSet<TipoDeduccion> TipoDeduccions { get; set; }
+		public virtual DbSet<Deduccion> Deduccions { get; set; }
+		public virtual DbSet<Salario> Salarios { get; set; }
+	}
 }

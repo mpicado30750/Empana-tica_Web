@@ -1,0 +1,67 @@
+﻿@model TotalHRInsight.DAL.Salario
+
+@{
+    ViewData["Title"] = "Detalles de Salario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1 class="text-center">Detalles de Salario</h1>
+<hr />
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.SalarioBruto)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.SalarioBruto)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.SalarioExtra)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.SalarioExtra)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.SalarioNeto)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.SalarioNeto)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.UsuarioCreacion)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.UsuarioCreacion.Id)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.UsuarioAsignacion)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.UsuarioAsignacion.Id)
+                        </dd>
+                    </dl>
+                    <div class="d-flex justify-content-between mt-4">
+                        <a asp-action="Edit" asp-route-IdSalario="@Model.IdSalario" class="btn btn-warning ms-2" style="flex: 1;" onclick="showLoader()">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a asp-action="Index" class="btn btn-secondary ms-2" style="flex: 1;" onclick="showLoader()">
+                            <i class="bi bi-arrow-left-circle"></i> Regresar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("_LoaderModal")
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script src="~/js/loader.js"></script>
+}

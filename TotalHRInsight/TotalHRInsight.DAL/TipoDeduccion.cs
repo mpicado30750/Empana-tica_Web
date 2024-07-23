@@ -16,7 +16,7 @@ namespace TotalHRInsight.DAL
         public int IdTipoDeduccion { get; set; }
 
         [Required(ErrorMessage = "El campo es requerido")]
-        [DisplayName("Tipo de Permiso")]
+        [DisplayName("Tipo de Deduccion")]
         public string NombreDeduccion { get; set; }
 
     }

@@ -1,5 +1,10 @@
 ﻿@model TotalHRInsight.Models.Pedidos.PedidoViewModel
 
+@{
+    ViewData["Title"] = "Detalles Pedido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 <h1 class="text-center">Detalles de Pedido</h1>
 <hr />
 <div class="container">
@@ -43,9 +48,24 @@
                             </tbody>
                         </table>
                     </div>
-
-                        <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+                    <div class="d-flex justify-content-between mt-4">
+                        <a asp-action="Edit" asp-route-IdPedido="@Model.Pedido.IdPedido" class="btn btn-warning ms-2" style="flex: 1;" onclick="showLoader()">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a asp-action="Index" class="btn btn-secondary ms-2" style="flex: 1;" onclick="showLoader()">
+                            <i class="bi bi-arrow-left-circle"></i> Regresar
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    @Html.Partial("_LoaderModal")
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+        <script src="~/js/loader.js"></script>
+    }
