@@ -1,4 +1,4 @@
-﻿@model TotalHRInsight.DAL.Salario
+﻿@model TotalHRInsight.DAL.Planilla
 
 @{
     ViewData["Title"] = "Edit";
@@ -7,27 +7,27 @@
 
 <h1>Edit</h1>
 
-<h4>Salario</h4>
+<h4>Planilla</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdSalario" />
+            <input type="hidden" asp-for="IdPlanilla" />
             <div class="form-group">
-                <label asp-for="SalarioBruto" class="control-label"></label>
-                <input asp-for="SalarioBruto" class="form-control" />
-                <span asp-validation-for="SalarioBruto" class="text-danger"></span>
+                <label asp-for="FechaInicio" class="control-label"></label>
+                <input asp-for="FechaInicio" class="form-control" />
+                <span asp-validation-for="FechaInicio" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SalarioExtra" class="control-label"></label>
-                <input asp-for="SalarioExtra" class="form-control" />
-                <span asp-validation-for="SalarioExtra" class="text-danger"></span>
+                <label asp-for="FechaFin" class="control-label"></label>
+                <input asp-for="FechaFin" class="form-control" />
+                <span asp-validation-for="FechaFin" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SalarioNeto" class="control-label"></label>
-                <input asp-for="SalarioNeto" class="form-control" />
-                <span asp-validation-for="SalarioNeto" class="text-danger"></span>
+                <label asp-for="MontoTotal" class="control-label"></label>
+                <input asp-for="MontoTotal" class="form-control" />
+                <span asp-validation-for="MontoTotal" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="UsuarioCreacionId" class="control-label"></label>

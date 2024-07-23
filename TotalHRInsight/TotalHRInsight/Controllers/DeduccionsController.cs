@@ -19,9 +19,9 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Deduccions
-        public async Task<IActionResult> Index() 
+        public async Task<IActionResult> Index()
         {
-            var totalHRInsightDbContext = _context.Deduccions.Include(d => d.Salario).Include(d => d.UsuarioAsignacion).Include(d => d.UsuarioCreacion);
+            var totalHRInsightDbContext = _context.Deduccions.Include(d => d.Salario).Include(d => d.TipoDeduccion).Include(d => d.UsuarioAsignacion).Include(d => d.UsuarioCreacion);
             return View(await totalHRInsightDbContext.ToListAsync());
         }
 
@@ -35,6 +35,7 @@ namespace TotalHRInsight.Controllers
 
             var deduccion = await _context.Deduccions
                 .Include(d => d.Salario)
+                .Include(d => d.TipoDeduccion)
                 .Include(d => d.UsuarioAsignacion)
                 .Include(d => d.UsuarioCreacion)
                 .FirstOrDefaultAsync(m => m.IdDeduccion == id);
@@ -50,6 +51,7 @@ namespace TotalHRInsight.Controllers
         public IActionResult Create()
         {
             ViewData["SalarioId"] = new SelectList(_context.Salarios, "IdSalario", "UsuarioAsignacionId");
+            ViewData["TipoDeduccionId"] = new SelectList(_context.TipoDeduccions, "IdTipoDeduccion", "NombreDeduccion");
             ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
             ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
             return View();
@@ -60,7 +62,7 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdDeduccion,FechaDeduccion,NombreDeduccion,Descripcion,MontoDeduccion,UsuarioCreacionId,UsuarioAsignacionId,SalarioId")] Deduccion deduccion)
+        public async Task<IActionResult> Create([Bind("IdDeduccion,FechaDeduccion,NombreDeduccion,Descripcion,MontoDeduccion,UsuarioCreacionId,UsuarioAsignacionId,SalarioId,TipoDeduccionId")] Deduccion deduccion)
         {
             if (ModelState.IsValid)
             {
@@ -69,6 +71,7 @@ namespace TotalHRInsight.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["SalarioId"] = new SelectList(_context.Salarios, "IdSalario", "UsuarioAsignacionId", deduccion.SalarioId);
+            ViewData["TipoDeduccionId"] = new SelectList(_context.TipoDeduccions, "IdTipoDeduccion", "NombreDeduccion", deduccion.TipoDeduccionId);
             ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", deduccion.UsuarioAsignacionId);
             ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", deduccion.UsuarioCreacionId);
             return View(deduccion);
@@ -88,6 +91,7 @@ namespace TotalHRInsight.Controllers
                 return NotFound();
             }
             ViewData["SalarioId"] = new SelectList(_context.Salarios, "IdSalario", "UsuarioAsignacionId", deduccion.SalarioId);
+            ViewData["TipoDeduccionId"] = new SelectList(_context.TipoDeduccions, "IdTipoDeduccion", "NombreDeduccion", deduccion.TipoDeduccionId);
             ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", deduccion.UsuarioAsignacionId);
             ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", deduccion.UsuarioCreacionId);
             return View(deduccion);
@@ -98,7 +102,7 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdDeduccion,FechaDeduccion,NombreDeduccion,Descripcion,MontoDeduccion,UsuarioCreacionId,UsuarioAsignacionId,SalarioId")] Deduccion deduccion)
+        public async Task<IActionResult> Edit(int id, [Bind("IdDeduccion,FechaDeduccion,NombreDeduccion,Descripcion,MontoDeduccion,UsuarioCreacionId,UsuarioAsignacionId,SalarioId,TipoDeduccionId")] Deduccion deduccion)
         {
             if (id != deduccion.IdDeduccion)
             {
@@ -126,6 +130,7 @@ namespace TotalHRInsight.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["SalarioId"] = new SelectList(_context.Salarios, "IdSalario", "UsuarioAsignacionId", deduccion.SalarioId);
+            ViewData["TipoDeduccionId"] = new SelectList(_context.TipoDeduccions, "IdTipoDeduccion", "NombreDeduccion", deduccion.TipoDeduccionId);
             ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", deduccion.UsuarioAsignacionId);
             ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", deduccion.UsuarioCreacionId);
             return View(deduccion);
@@ -141,6 +146,7 @@ namespace TotalHRInsight.Controllers
 
             var deduccion = await _context.Deduccions
                 .Include(d => d.Salario)
+                .Include(d => d.TipoDeduccion)
                 .Include(d => d.UsuarioAsignacion)
                 .Include(d => d.UsuarioCreacion)
                 .FirstOrDefaultAsync(m => m.IdDeduccion == id);

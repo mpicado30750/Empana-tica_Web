@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TotalHRInsight.DAL.Salario>
+﻿@model IEnumerable<TotalHRInsight.DAL.Planilla>
 
 @{
     ViewData["Title"] = "Index";
@@ -14,13 +14,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.SalarioBruto)
+                @Html.DisplayNameFor(model => model.FechaInicio)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SalarioExtra)
+                @Html.DisplayNameFor(model => model.FechaFin)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SalarioNeto)
+                @Html.DisplayNameFor(model => model.MontoTotal)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.UsuarioCreacion)
@@ -35,13 +35,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.SalarioBruto)
+                @Html.DisplayFor(modelItem => item.FechaInicio)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SalarioExtra)
+                @Html.DisplayFor(modelItem => item.FechaFin)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SalarioNeto)
+                @Html.DisplayFor(modelItem => item.MontoTotal)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UsuarioCreacion.Id)
@@ -50,9 +50,9 @@
                 @Html.DisplayFor(modelItem => item.UsuarioAsignacion.Id)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdSalario">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdSalario">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdSalario">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.IdPlanilla">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdPlanilla">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdPlanilla">Delete</a>
             </td>
         </tr>
 }

@@ -27,6 +27,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 builder.Services.AddRazorPages();
 
 
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -47,4 +50,15 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 
+//CalcularPlanilla
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+    endpoints.MapControllerRoute(
+        name: "calcularPlanilla",
+        pattern: "Planillas/CalcularPlanilla",
+        defaults: new { controller = "Planillas", action = "CalcularPlanilla" });
+});
 app.Run();
