@@ -34,13 +34,27 @@ namespace TotalHRInsight.Controllers
             var pedidos = await _context.Pedidos.Include(p => p.Estado)
                                         .Include(p => p.Sucursal)
                                         .Include(p => p.UsuarioCreacion)
+                                        .Where(w => w.Sucursal.NombreSucursal != "Centro de Produccion")
                                         .ToListAsync();
 
             return View(pedidos);
         }
- 
-		// GET: Pedidos/Details/5
-		public async Task<IActionResult> Details(int? IdPedido)
+
+        // GET: Pedidos
+        public async Task<IActionResult> Devolucion()
+        {
+            var pedidos = await _context.Pedidos.Include(p => p.Estado)
+                                        .Include(p => p.Sucursal)
+                                        .Include(p => p.UsuarioCreacion)
+                                        .Where(w => w.Sucursal.NombreSucursal == "Centro de Produccion")
+                                        .ToListAsync();
+
+            return View(pedidos);
+        }
+
+
+        // GET: Pedidos/Details/5
+        public async Task<IActionResult> Details(int? IdPedido)
 		{
 
             if (IdPedido == null)
@@ -218,7 +232,6 @@ namespace TotalHRInsight.Controllers
             {
                 return NotFound();
             }
-
             var pedido = await _context.Pedidos
                 .Include(p => p.UsuarioCreacion)
                 .Include(p => p.Sucursal)
@@ -231,10 +244,8 @@ namespace TotalHRInsight.Controllers
             {
                 return NotFound();
             }
-
             ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud", pedido.IdEstado);
             return View(pedido);
-
         }
 
         // POST: Pedidos/Edit/5

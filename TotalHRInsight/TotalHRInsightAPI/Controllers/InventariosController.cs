@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -85,14 +86,98 @@ namespace TotalHRInsightAPI.Controllers
 
 
         // POST: api/Inventarios
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Inventario>> PostInventario(Inventario inventario)
+        public async Task<ActionResult<DevolverProductosDTO>> PostInventario(DevolverProductosDTO inventario)
         {
-            _context.Inventario.Add(inventario);
-            await _context.SaveChangesAsync();
+            if (inventario == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            return CreatedAtAction("GetInventario", new { id = inventario.IdInventario }, inventario);
+            try
+            {
+                //Creacion de pedidos para la devolucion
+                var estadoPendiente = await _context.Estados.FirstOrDefaultAsync(e => e.EstadoSolicitud == "En Progreso");
+                var sucursalID = await _context.Sucursales.FirstOrDefaultAsync(e => e.NombreSucursal == "Centro de Produccion");
+
+                var nuevoPedido = new Pedido
+                {
+                    FechaEntrega = inventario.Fecha,
+                    FechaPedido = DateTime.Now,
+                    UsuarioCreacionId = inventario.idUsuario,
+                    IdSucursal = sucursalID.IdSucursal,
+                    IdEstado = estadoPendiente.IdEstado,
+                    MontoTotal = 0
+                };
+                _context.Pedidos.Add(nuevoPedido);
+                await _context.SaveChangesAsync();
+
+                bool errorEnProductos = false;
+                string mensajeError = "";
+
+                foreach (var producto in inventario.listaProductoDevolvers)
+                {
+                    var productoEncotrado = await _context.Inventario
+                        .FirstOrDefaultAsync(e => e.IdInventario == producto.IdInventario);
+
+                    if (productoEncotrado == null)
+                    {
+                        errorEnProductos = true;
+                        mensajeError = $"El producto con ID {producto.IdInventario} no existe.";
+                        break;
+                    }
+
+                    var detallePedido = new PedidosProductos
+                    {
+                        ProductosID = productoEncotrado.ProductoId,
+                        PedidoID = nuevoPedido.IdPedido,
+                        Cantidad = producto.cantidadDisponible,
+                    };
+                    _context.PedidosProductos.Add(detallePedido);
+                }
+
+                if (errorEnProductos)
+                {
+                    // Eliminar el pedido si hubo un error con los productos
+                    _context.Pedidos.Remove(nuevoPedido);
+                    await _context.SaveChangesAsync();
+                    return BadRequest(mensajeError);
+                }
+
+                //Actualiza los datos en el inventario
+                foreach (var producto in inventario.listaProductoDevolvers)
+                {
+                    var inventarioExistente = await _context.Inventario.FindAsync(producto.IdInventario);
+                    if (inventarioExistente != null)
+                    {
+                        inventarioExistente.FechaModificacion = inventario.Fecha;
+                        inventarioExistente.CantidadDisponible = inventarioExistente.CantidadDisponible - producto.cantidadDisponible;
+                        inventarioExistente.UsuarioModificacionid = inventario.idUsuario;
+                    }
+                    else
+                    {
+                        errorEnProductos = true;
+                        mensajeError = $"El producto con ID {inventarioExistente.IdInventario} no existe.";
+                        break;
+                    }
+                }
+
+                if (errorEnProductos)
+                {
+                    // Eliminar el pedido si hubo un error con los productos
+                    _context.Pedidos.Remove(nuevoPedido);
+                    await _context.SaveChangesAsync();
+                    return BadRequest(mensajeError);
+                }
+
+                await _context.SaveChangesAsync();
+                return Ok(new { message = "Inventario actualizado correctamente." });
+            }
+            catch (Exception ex)
+            {
+                // Manejar excepción
+                return StatusCode(500, new { message = "Error actualizando inventario.", error = ex.Message });
+            }
         }
 
         // DELETE: api/Inventarios/5
