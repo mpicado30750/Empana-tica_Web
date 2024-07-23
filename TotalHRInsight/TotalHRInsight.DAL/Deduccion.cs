@@ -55,7 +55,12 @@ namespace TotalHRInsight.DAL
         public Salario? Salario { get; set; }
 
 
+        [DisplayName("Tipo de Deduccion")]
+        [Required(ErrorMessage = "El tipo de deduccion es obligatorio")]
+        [ForeignKey("TipoDeduccion")]
+        public int TipoDeduccionId { get; set; }
 
 
+        public TipoDeduccion? TipoDeduccion { get; set; }
     }
 }

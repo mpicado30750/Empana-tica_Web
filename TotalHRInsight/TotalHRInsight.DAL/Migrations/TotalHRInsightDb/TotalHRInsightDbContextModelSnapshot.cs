@@ -3,24 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TotalHRInsight.DAL;
 
 #nullable disable
 
-namespace TotalHRInsight.DAL.Migrations
+namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 {
     [DbContext(typeof(TotalHRInsightDbContext))]
-    [Migration("20240714023010_cambio")]
-    partial class cambio
+    partial class TotalHRInsightDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "8.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -166,6 +163,57 @@ namespace TotalHRInsight.DAL.Migrations
                     b.HasKey("IdCategoria");
 
                     b.ToTable("Categoria");
+                });
+
+            modelBuilder.Entity("TotalHRInsight.DAL.Deduccion", b =>
+                {
+                    b.Property<int>("IdDeduccion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdDeduccion"));
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<DateTime>("FechaDeduccion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<double>("MontoDeduccion")
+                        .HasColumnType("double");
+
+                    b.Property<string>("NombreDeduccion")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int>("SalarioId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TipoDeduccionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioAsignacionId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("UsuarioCreacionId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("IdDeduccion");
+
+                    b.HasIndex("SalarioId");
+
+                    b.HasIndex("TipoDeduccionId");
+
+                    b.HasIndex("UsuarioAsignacionId");
+
+                    b.HasIndex("UsuarioCreacionId");
+
+                    b.ToTable("Deduccion");
                 });
 
             modelBuilder.Entity("TotalHRInsight.DAL.Estado", b =>
@@ -341,9 +389,6 @@ namespace TotalHRInsight.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("TipoPermisosIdTipoPermiso")
-                        .HasColumnType("int");
-
                     b.Property<string>("UsuarioAsignacionId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
@@ -356,7 +401,7 @@ namespace TotalHRInsight.DAL.Migrations
 
                     b.HasIndex("IdEstado");
 
-                    b.HasIndex("TipoPermisosIdTipoPermiso");
+                    b.HasIndex("IdTipoPermiso");
 
                     b.HasIndex("UsuarioAsignacionId");
 
@@ -424,11 +469,16 @@ namespace TotalHRInsight.DAL.Migrations
                     b.Property<decimal>("PrecioUnitario")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("ProveedorId")
+                        .HasColumnType("int");
+
                     b.HasKey("IdProducto");
 
                     b.HasIndex("CategoriaId");
 
                     b.HasIndex("MedidasId");
+
+                    b.HasIndex("ProveedorId");
 
                     b.ToTable("Producto");
                 });
@@ -459,18 +509,47 @@ namespace TotalHRInsight.DAL.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int?>("ProductosIdProducto")
-                        .HasColumnType("int");
-
                     b.Property<string>("Telefono")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("IdProveedor");
 
-                    b.HasIndex("ProductosIdProducto");
-
                     b.ToTable("Proveedor");
+                });
+
+            modelBuilder.Entity("TotalHRInsight.DAL.Salario", b =>
+                {
+                    b.Property<int>("IdSalario")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdSalario"));
+
+                    b.Property<double>("SalarioBruto")
+                        .HasColumnType("double");
+
+                    b.Property<double>("SalarioExtra")
+                        .HasColumnType("double");
+
+                    b.Property<double>("SalarioNeto")
+                        .HasColumnType("double");
+
+                    b.Property<string>("UsuarioAsignacionId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("UsuarioCreacionId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("IdSalario");
+
+                    b.HasIndex("UsuarioAsignacionId");
+
+                    b.HasIndex("UsuarioCreacionId");
+
+                    b.ToTable("Salario");
                 });
 
             modelBuilder.Entity("TotalHRInsight.DAL.Sucursal", b =>
@@ -499,6 +578,23 @@ namespace TotalHRInsight.DAL.Migrations
                     b.HasKey("IdSucursal");
 
                     b.ToTable("Sucursales");
+                });
+
+            modelBuilder.Entity("TotalHRInsight.DAL.TipoDeduccion", b =>
+                {
+                    b.Property<int>("IdTipoDeduccion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdTipoDeduccion"));
+
+                    b.Property<string>("NombreDeduccion")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("IdTipoDeduccion");
+
+                    b.ToTable("TipoDeduccion");
                 });
 
             modelBuilder.Entity("TotalHRInsight.DAL.TipoPermiso", b =>
@@ -536,6 +632,41 @@ namespace TotalHRInsight.DAL.Migrations
                         .HasForeignKey("UsuarioCreacionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("UsuarioCreacion");
+                });
+
+            modelBuilder.Entity("TotalHRInsight.DAL.Deduccion", b =>
+                {
+                    b.HasOne("TotalHRInsight.DAL.Salario", "Salario")
+                        .WithMany("Deduccion")
+                        .HasForeignKey("SalarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TotalHRInsight.DAL.TipoDeduccion", "TipoDeduccion")
+                        .WithMany("Deduccion")
+                        .HasForeignKey("TipoDeduccionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TotalHRInsight.DAL.ApplicationUser", "UsuarioAsignacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioAsignacionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TotalHRInsight.DAL.ApplicationUser", "UsuarioCreacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCreacionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Salario");
+
+                    b.Navigation("TipoDeduccion");
+
+                    b.Navigation("UsuarioAsignacion");
 
                     b.Navigation("UsuarioCreacion");
                 });
@@ -631,7 +762,9 @@ namespace TotalHRInsight.DAL.Migrations
 
                     b.HasOne("TotalHRInsight.DAL.TipoPermiso", "TipoPermisos")
                         .WithMany()
-                        .HasForeignKey("TipoPermisosIdTipoPermiso");
+                        .HasForeignKey("IdTipoPermiso")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TotalHRInsight.DAL.ApplicationUser", "UsuarioAsignacion")
                         .WithMany()
@@ -687,18 +820,36 @@ namespace TotalHRInsight.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TotalHRInsight.DAL.Proveedor", "Proveedor")
+                        .WithMany("Producto")
+                        .HasForeignKey("ProveedorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Categorias");
 
                     b.Navigation("Medidas");
+
+                    b.Navigation("Proveedor");
                 });
 
-            modelBuilder.Entity("TotalHRInsight.DAL.Proveedor", b =>
+            modelBuilder.Entity("TotalHRInsight.DAL.Salario", b =>
                 {
-                    b.HasOne("TotalHRInsight.DAL.Producto", "Productos")
-                        .WithMany("Proveedor")
-                        .HasForeignKey("ProductosIdProducto");
+                    b.HasOne("TotalHRInsight.DAL.ApplicationUser", "UsuarioAsignacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioAsignacionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Productos");
+                    b.HasOne("TotalHRInsight.DAL.ApplicationUser", "UsuarioCreacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCreacionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UsuarioAsignacion");
+
+                    b.Navigation("UsuarioCreacion");
                 });
 
             modelBuilder.Entity("TotalHRInsight.DAL.Categoria", b =>
@@ -721,8 +872,21 @@ namespace TotalHRInsight.DAL.Migrations
                     b.Navigation("Inventario");
 
                     b.Navigation("PedidosProductos");
+                });
 
-                    b.Navigation("Proveedor");
+            modelBuilder.Entity("TotalHRInsight.DAL.Proveedor", b =>
+                {
+                    b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("TotalHRInsight.DAL.Salario", b =>
+                {
+                    b.Navigation("Deduccion");
+                });
+
+            modelBuilder.Entity("TotalHRInsight.DAL.TipoDeduccion", b =>
+                {
+                    b.Navigation("Deduccion");
                 });
 #pragma warning restore 612, 618
         }

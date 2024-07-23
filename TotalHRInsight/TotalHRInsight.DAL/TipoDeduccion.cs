@@ -19,5 +19,7 @@ namespace TotalHRInsight.DAL
         [DisplayName("Tipo de Deduccion")]
         public string NombreDeduccion { get; set; }
 
+        public ICollection<Deduccion> Deduccion { get; set; } = new List<Deduccion>();
+
     }
 }
