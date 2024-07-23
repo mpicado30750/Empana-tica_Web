@@ -19,7 +19,7 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Deduccions
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index() 
         {
             var totalHRInsightDbContext = _context.Deduccions.Include(d => d.Salario).Include(d => d.UsuarioAsignacion).Include(d => d.UsuarioCreacion);
             return View(await totalHRInsightDbContext.ToListAsync());
