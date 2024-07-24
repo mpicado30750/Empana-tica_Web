@@ -256,10 +256,9 @@ namespace TotalHRInsight.Controllers
             return View(pedido);
         }
 
-        // POST: Pedidos/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int IdPedido, [Bind("IdPedido,FechaEntrega,IdEstado")] Pedido pedidoActualizado)
+        public async Task<IActionResult> Edit(int IdPedido, [Bind("IdPedido,FechaEntrega,IdEstado")] ActualizarPedido pedidoActualizado)
         {
             if (IdPedido != pedidoActualizado.IdPedido)
             {
@@ -306,6 +305,7 @@ namespace TotalHRInsight.Controllers
                 }
             }
 
+            // Volver a cargar datos en caso de error
             var pedido = await _context.Pedidos
                 .Include(p => p.UsuarioCreacion)
                 .Include(p => p.Sucursal)
@@ -317,6 +317,7 @@ namespace TotalHRInsight.Controllers
             ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud", pedido.IdEstado);
             return View(pedido);
         }
+
 
 
         // GET: Pedidos/Delete/5

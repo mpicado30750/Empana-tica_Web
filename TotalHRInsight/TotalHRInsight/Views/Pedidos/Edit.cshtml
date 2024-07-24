@@ -10,7 +10,7 @@
         <div class="col-md-8">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <form asp-action="Edit">
+                    <form asp-action="Edit" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
                         <input type="hidden" asp-for="IdPedido" />
                         <div class="row">
@@ -82,9 +82,7 @@
                                 </tbody>
                             </table>
                         </div>
-                    </form>
-                    <form asp-action="Edit" method="post">
-                        <input type="hidden" name="IdPedido" value="@Model.IdPedido" />
+
                         <div class="d-flex justify-content-between mt-4">
                             <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
                                 <i class="bi bi-arrow-left-circle"></i> Regresar
