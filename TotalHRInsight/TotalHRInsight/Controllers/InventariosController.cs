@@ -225,6 +225,7 @@ namespace TotalHRInsight.Controllers
             using (var workbook = new XLWorkbook())
             {
                 var worksheet = workbook.Worksheets.Add("Inventarios");
+                worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
 
                 // Agregar imágenes y ajustar tamaño
                 var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
