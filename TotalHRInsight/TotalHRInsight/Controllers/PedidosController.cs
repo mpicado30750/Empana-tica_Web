@@ -23,7 +23,7 @@ namespace TotalHRInsight.Controllers
     {
         private readonly TotalHRInsightDbContext _context;
         private readonly TotalHRInsightDbContext _context2;
-        private readonly IHubContext<NotificationHub> _hubContext; // Agrega esta línea
+        private readonly IHubContext<NotificationHub> _hubContext;
 
         public PedidosController(TotalHRInsightDbContext context, TotalHRInsightDbContext context2, IHubContext<NotificationHub> hubContext)
         {
@@ -176,17 +176,19 @@ namespace TotalHRInsight.Controllers
                 // Enviar notificación
                 await _hubContext.Clients.All.SendAsync("ReceiveNotification", "Nuevo pedido creado");
 
-                return Ok(new { message = "Pedido creado exitosamente" });
+                return StatusCode(200);
             }
             catch (DbUpdateException ex)
             {
                 await transaction.RollbackAsync();
+                // Log exception here
                 var errorMessage = ObtenerMensajeDeError(ex);
                 return StatusCode(500, $"Error al guardar en la base de datos: {errorMessage}");
             }
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
+                // Log exception here
                 return StatusCode(500, $"Error al crear el pedido: {ex.Message}");
             }
         }

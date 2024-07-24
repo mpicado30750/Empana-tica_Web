@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
+using TotalHRInsight.DAL;
 
 namespace TotalHRInsight.Hubs
 {

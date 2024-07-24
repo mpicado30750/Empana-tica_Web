@@ -1,9 +1,10 @@
+// Establecer la conexión de SignalR
 const connection = new signalR.HubConnectionBuilder()
     .withUrl("/notificationHub")
     .build();
 
+// Configuración de toastr
 toastr.options = {
-    "closeButton": true,
     "debug": false,
     "newestOnTop": false,
     "progressBar": true,
@@ -17,14 +18,21 @@ toastr.options = {
     "showEasing": "swing",
     "hideEasing": "linear",
     "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
+    "hideMethod": "fadeOut",
 };
 
-// Escucha el evento de notificación
 connection.on("ReceiveNotification", function (message) {
-    toastr.success(message, 'Notificación');
+    // Asegúrate de que solo se muestre una notificación
+    if (!window.notificationDisplayed) {
+        window.notificationDisplayed = true;
+        setTimeout(() => window.notificationDisplayed = false, 60000);
+
+        // Mostrar la notificación
+        toastr.info(message); 
+    }
 });
 
+// Iniciar la conexión
 connection.start().catch(function (err) {
     console.error('SignalR error: ', err.toString());
 });
