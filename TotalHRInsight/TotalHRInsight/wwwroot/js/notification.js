@@ -20,6 +20,7 @@ toastr.options = {
     "hideMethod": "fadeOut"
 };
 
+// Escucha el evento de notificación
 connection.on("ReceiveNotification", function (message) {
     toastr.success(message, 'Notificación');
 });
