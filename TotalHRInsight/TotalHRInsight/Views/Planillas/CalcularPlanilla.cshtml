@@ -1,0 +1,37 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Calcular Planilla";
+}
+
+<h2>Calcular Planilla</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Salario Base</th>
+            <th>Total Deducciones</th>
+            <th>Días Trabajados</th>
+            <th>Salario Neto</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Nombre</td>
+                <td>@item.SalarioBase</td>
+                <td>@item.TotalDeducciones</td>
+                <td>@item.DiasTrabajados</td>
+                <td>@item.SalarioNeto</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

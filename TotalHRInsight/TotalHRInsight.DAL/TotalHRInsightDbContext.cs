@@ -15,6 +15,7 @@ namespace TotalHRInsight.DAL
             optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
         }
 
+        public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public virtual DbSet<Sucursal> Sucursales { get; set; }
         public virtual DbSet<Planilla> Planillas { get; set; }
         public virtual DbSet<Producto> Productos { get; set; }
