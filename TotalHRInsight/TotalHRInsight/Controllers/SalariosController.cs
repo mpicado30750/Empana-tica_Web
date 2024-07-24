@@ -26,9 +26,9 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Salarios/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? IdSalario)
         {
-            if (id == null)
+            if (IdSalario == null)
             {
                 return NotFound();
             }
@@ -36,7 +36,7 @@ namespace TotalHRInsight.Controllers
             var salario = await _context.Salarios
                 .Include(s => s.UsuarioAsignacion)
                 .Include(s => s.UsuarioCreacion)
-                .FirstOrDefaultAsync(m => m.IdSalario == id);
+                .FirstOrDefaultAsync(m => m.IdSalario == IdSalario);
             if (salario == null)
             {
                 return NotFound();
@@ -48,8 +48,8 @@ namespace TotalHRInsight.Controllers
         // GET: Salarios/Create
         public IActionResult Create()
         {
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
+            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre");
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre");
             return View();
         }
 
@@ -66,26 +66,26 @@ namespace TotalHRInsight.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", salario.UsuarioAsignacionId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", salario.UsuarioCreacionId);
+            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", salario.UsuarioAsignacionId);
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", salario.UsuarioCreacionId);
             return View(salario);
         }
 
         // GET: Salarios/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? IdSalario)
         {
-            if (id == null)
+            if (IdSalario == null)
             {
                 return NotFound();
             }
 
-            var salario = await _context.Salarios.FindAsync(id);
+            var salario = await _context.Salarios.FindAsync(IdSalario);
             if (salario == null)
             {
                 return NotFound();
             }
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", salario.UsuarioAsignacionId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", salario.UsuarioCreacionId);
+            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", salario.UsuarioAsignacionId);
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", salario.UsuarioCreacionId);
             return View(salario);
         }
 
@@ -94,9 +94,9 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdSalario,SalarioBruto,SalarioExtra,SalarioNeto,UsuarioCreacionId,UsuarioAsignacionId")] Salario salario)
+        public async Task<IActionResult> Edit(int IdSalario, [Bind("IdSalario,SalarioBruto,SalarioExtra,SalarioNeto,UsuarioCreacionId,UsuarioAsignacionId")] Salario salario)
         {
-            if (id != salario.IdSalario)
+            if (IdSalario != salario.IdSalario)
             {
                 return NotFound();
             }
@@ -121,15 +121,15 @@ namespace TotalHRInsight.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", salario.UsuarioAsignacionId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", salario.UsuarioCreacionId);
+            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", salario.UsuarioAsignacionId);
+            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", salario.UsuarioCreacionId);
             return View(salario);
         }
 
         // GET: Salarios/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? IdSalario)
         {
-            if (id == null)
+            if (IdSalario == null)
             {
                 return NotFound();
             }
@@ -137,7 +137,7 @@ namespace TotalHRInsight.Controllers
             var salario = await _context.Salarios
                 .Include(s => s.UsuarioAsignacion)
                 .Include(s => s.UsuarioCreacion)
-                .FirstOrDefaultAsync(m => m.IdSalario == id);
+                .FirstOrDefaultAsync(m => m.IdSalario == IdSalario);
             if (salario == null)
             {
                 return NotFound();
@@ -149,9 +149,9 @@ namespace TotalHRInsight.Controllers
         // POST: Salarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int IdSalario)
         {
-            var salario = await _context.Salarios.FindAsync(id);
+            var salario = await _context.Salarios.FindAsync(IdSalario);
             if (salario != null)
             {
                 _context.Salarios.Remove(salario);
@@ -161,9 +161,9 @@ namespace TotalHRInsight.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SalarioExists(int id)
+        private bool SalarioExists(int IdSalario)
         {
-            return _context.Salarios.Any(e => e.IdSalario == id);
+            return _context.Salarios.Any(e => e.IdSalario == IdSalario);
         }
     }
 }

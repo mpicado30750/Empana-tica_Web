@@ -1,55 +1,69 @@
 ﻿@model TotalHRInsight.DAL.Salario
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Salario";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>Edit</h1>
-
-<h4>Salario</h4>
+<h1 class="text-center">Editar Salario</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdSalario" />
-            <div class="form-group">
-                <label asp-for="SalarioBruto" class="control-label"></label>
-                <input asp-for="SalarioBruto" class="form-control" />
-                <span asp-validation-for="SalarioBruto" class="text-danger"></span>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <input type="hidden" asp-for="IdSalario" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="IdSalario" />
+                        <div class="form-group">
+                            <label asp-for="SalarioBruto" class="control-label"></label>
+                            <input asp-for="SalarioBruto" class="form-control" />
+                            <span asp-validation-for="SalarioBruto" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="SalarioExtra" class="control-label"></label>
+                            <input asp-for="SalarioExtra" class="form-control" />
+                            <span asp-validation-for="SalarioExtra" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="SalarioNeto" class="control-label"></label>
+                            <input asp-for="SalarioNeto" class="form-control" />
+                            <span asp-validation-for="SalarioNeto" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UsuarioCreacionId" class="control-label"></label>
+                            <select asp-for="UsuarioCreacionId" class="form-control" asp-items="ViewBag.UsuarioCreacionId"></select>
+                            <span asp-validation-for="UsuarioCreacionId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UsuarioAsignacionId" class="control-label"></label>
+                            <select asp-for="UsuarioAsignacionId" class="form-control" asp-items="ViewBag.UsuarioAsignacionId"></select>
+                            <span asp-validation-for="UsuarioAsignacionId" class="text-danger"></span>
+                        </div>
+                        <form asp-action="Edit" method="post">
+                            <input type="hidden" name="IdSalario" value="@Model.IdSalario" />
+                            <div class="d-flex justify-content-between mt-4">
+                                <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
+                                    <i class="bi bi-arrow-left-circle"></i> Regresar
+                                </a>
+                                <button type="submit" class="btn btn-danger ms-2" style="flex: 1;" onclick="showLoader()">
+                                    <i class="bi bi-plus-circle"></i> Guardar
+                                </button>
+                            </div>
+                        </form>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="SalarioExtra" class="control-label"></label>
-                <input asp-for="SalarioExtra" class="form-control" />
-                <span asp-validation-for="SalarioExtra" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SalarioNeto" class="control-label"></label>
-                <input asp-for="SalarioNeto" class="form-control" />
-                <span asp-validation-for="SalarioNeto" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UsuarioCreacionId" class="control-label"></label>
-                <select asp-for="UsuarioCreacionId" class="form-control" asp-items="ViewBag.UsuarioCreacionId"></select>
-                <span asp-validation-for="UsuarioCreacionId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UsuarioAsignacionId" class="control-label"></label>
-                <select asp-for="UsuarioAsignacionId" class="form-control" asp-items="ViewBag.UsuarioAsignacionId"></select>
-                <span asp-validation-for="UsuarioAsignacionId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@Html.Partial("_LoaderModal")
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script src="~/js/loader.js"></script>
 }
