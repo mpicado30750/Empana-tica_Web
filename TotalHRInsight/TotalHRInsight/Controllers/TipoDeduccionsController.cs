@@ -25,15 +25,15 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: TipoDeduccions/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? IdTipoDeduccion)
         {
-            if (id == null)
+            if (IdTipoDeduccion == null)
             {
                 return NotFound();
             }
 
             var tipoDeduccion = await _context.TipoDeduccions
-                .FirstOrDefaultAsync(m => m.IdTipoDeduccion == id);
+                .FirstOrDefaultAsync(m => m.IdTipoDeduccion == IdTipoDeduccion);
             if (tipoDeduccion == null)
             {
                 return NotFound();
@@ -65,14 +65,14 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: TipoDeduccions/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? IdTipoDeduccion)
         {
-            if (id == null)
+            if (IdTipoDeduccion == null)
             {
                 return NotFound();
             }
 
-            var tipoDeduccion = await _context.TipoDeduccions.FindAsync(id);
+            var tipoDeduccion = await _context.TipoDeduccions.FindAsync(IdTipoDeduccion);
             if (tipoDeduccion == null)
             {
                 return NotFound();
@@ -85,9 +85,9 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTipoDeduccion,NombreDeduccion")] TipoDeduccion tipoDeduccion)
+        public async Task<IActionResult> Edit(int IdTipoDeduccion, [Bind("IdTipoDeduccion,NombreDeduccion")] TipoDeduccion tipoDeduccion)
         {
-            if (id != tipoDeduccion.IdTipoDeduccion)
+            if (IdTipoDeduccion != tipoDeduccion.IdTipoDeduccion)
             {
                 return NotFound();
             }
@@ -116,15 +116,15 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: TipoDeduccions/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? IdTipoDeduccion)
         {
-            if (id == null)
+            if (IdTipoDeduccion == null)
             {
                 return NotFound();
             }
 
             var tipoDeduccion = await _context.TipoDeduccions
-                .FirstOrDefaultAsync(m => m.IdTipoDeduccion == id);
+                .FirstOrDefaultAsync(m => m.IdTipoDeduccion == IdTipoDeduccion);
             if (tipoDeduccion == null)
             {
                 return NotFound();
@@ -136,9 +136,9 @@ namespace TotalHRInsight.Controllers
         // POST: TipoDeduccions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int IdTipoDeduccion)
         {
-            var tipoDeduccion = await _context.TipoDeduccions.FindAsync(id);
+            var tipoDeduccion = await _context.TipoDeduccions.FindAsync(IdTipoDeduccion);
             if (tipoDeduccion != null)
             {
                 _context.TipoDeduccions.Remove(tipoDeduccion);
@@ -148,9 +148,9 @@ namespace TotalHRInsight.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TipoDeduccionExists(int id)
+        private bool TipoDeduccionExists(int IdTipoDeduccion)
         {
-            return _context.TipoDeduccions.Any(e => e.IdTipoDeduccion == id);
+            return _context.TipoDeduccions.Any(e => e.IdTipoDeduccion == IdTipoDeduccion);
         }
     }
 }
