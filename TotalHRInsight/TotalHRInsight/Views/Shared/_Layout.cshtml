@@ -4,8 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TotalHRInsight</title>
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <!-- Notificaciones -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
     <!-- No Borrar -->
     <link href="~/lib/leaflet/leaflet.css" rel="stylesheet" />
     <link href="~/lib/leaflet/leaflet.min.css" rel="stylesheet" />
@@ -77,6 +80,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-light" asp-area="" asp-controller="Salarios" asp-action="Index"><i class="bi bi-wallet-fill"></i> Salarios</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Planillas" asp-action="Index"><i class="bi bi-wallet-fill"></i> Planilla</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -143,6 +149,11 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- Función notificación -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.10/signalr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/js/notification.js"></script>
+    <!-- Función menú collapsable -->
     <script>
         $(document).ready(function () {
             $('.collapse').on('shown.bs.collapse', function () {
