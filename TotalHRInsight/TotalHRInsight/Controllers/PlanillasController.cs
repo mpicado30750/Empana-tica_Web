@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +13,12 @@ namespace TotalHRInsight.Controllers
     public class PlanillasController : Controller
     {
         private readonly TotalHRInsightDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PlanillasController(TotalHRInsightDbContext context)
+        public PlanillasController(TotalHRInsightDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Planillas
@@ -46,10 +49,18 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Planillas/Create
-        public IActionResult Create()
+        [HttpGet]
+        public async Task<IActionResult> Create()
         {
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
+            ViewData["UsuarioAsignacionId"] = new SelectList(
+                _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
+                "Id",
+                "NombreCompleto"
+            ); 
+            
+            var user = await _userManager.GetUserAsync(User);
+            ViewData["CurrentUserId"] = user.Id;
+            ViewData["CurrentUserName"] = $"{user.Nombre} {user.PrimerApellido}";
             return View();
         }
 

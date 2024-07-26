@@ -27,7 +27,7 @@ namespace TotalHRInsight.Models
         public string SegundoApellido { get; set; }
 
         [Required]
-        public float Salario { get; set; }
+        public double Salario { get; set; }
 
         [Required]
         public DateTime FechaNacimiento { get; set; }

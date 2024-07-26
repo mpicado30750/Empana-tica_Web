@@ -12,8 +12,8 @@ using TotalHRInsight.DAL;
 namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 {
     [DbContext(typeof(TotalHRInsightDbContext))]
-    [Migration("20240723043008_Total")]
-    partial class Total
+    [Migration("20240726015552_PrimeraMirgacion")]
+    partial class PrimeraMirgacion
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -85,8 +85,8 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<float>("Salario")
-                        .HasColumnType("float(18,4)");
+                    b.Property<double>("Salario")
+                        .HasColumnType("double");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
@@ -176,24 +176,16 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdDeduccion"));
 
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
-
                     b.Property<DateTime>("FechaDeduccion")
                         .HasColumnType("datetime(6)");
 
                     b.Property<double>("MontoDeduccion")
-                        .HasColumnType("double");
+                        .HasColumnType("double(18,2)");
 
                     b.Property<string>("NombreDeduccion")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
-
-                    b.Property<int>("SalarioId")
-                        .HasColumnType("int");
 
                     b.Property<int>("TipoDeduccionId")
                         .HasColumnType("int");
@@ -207,8 +199,6 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("IdDeduccion");
-
-                    b.HasIndex("SalarioId");
 
                     b.HasIndex("TipoDeduccionId");
 
@@ -343,8 +333,8 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("PedidosProductosID"));
 
-                    b.Property<float>("Cantidad")
-                        .HasColumnType("float");
+                    b.Property<double>("Cantidad")
+                        .HasColumnType("double");
 
                     b.Property<int>("PedidoID")
                         .HasColumnType("int");
@@ -421,14 +411,19 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdPlanilla"));
 
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
                     b.Property<DateTime>("FechaFin")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("FechaInicio")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<decimal>("MontoTotal")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("MontoTotal")
+                        .HasColumnType("double(18,2)");
 
                     b.Property<string>("UsuarioAsignacionId")
                         .IsRequired()
@@ -469,8 +464,8 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<decimal>("PrecioUnitario")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("PrecioUnitario")
+                        .HasColumnType("double(18,2)");
 
                     b.Property<int>("ProveedorId")
                         .HasColumnType("int");
@@ -530,13 +525,13 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdSalario"));
 
                     b.Property<double>("SalarioBruto")
-                        .HasColumnType("double");
+                        .HasColumnType("double(18,2)");
 
                     b.Property<double>("SalarioExtra")
-                        .HasColumnType("double");
+                        .HasColumnType("double(18,2)");
 
                     b.Property<double>("SalarioNeto")
-                        .HasColumnType("double");
+                        .HasColumnType("double(18,2)");
 
                     b.Property<string>("UsuarioAsignacionId")
                         .IsRequired()
@@ -641,12 +636,6 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 
             modelBuilder.Entity("TotalHRInsight.DAL.Deduccion", b =>
                 {
-                    b.HasOne("TotalHRInsight.DAL.Salario", "Salario")
-                        .WithMany("Deduccion")
-                        .HasForeignKey("SalarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TotalHRInsight.DAL.TipoDeduccion", "TipoDeduccion")
                         .WithMany("Deduccion")
                         .HasForeignKey("TipoDeduccionId")
@@ -664,8 +653,6 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .HasForeignKey("UsuarioCreacionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Salario");
 
                     b.Navigation("TipoDeduccion");
 
@@ -880,11 +867,6 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
             modelBuilder.Entity("TotalHRInsight.DAL.Proveedor", b =>
                 {
                     b.Navigation("Producto");
-                });
-
-            modelBuilder.Entity("TotalHRInsight.DAL.Salario", b =>
-                {
-                    b.Navigation("Deduccion");
                 });
 
             modelBuilder.Entity("TotalHRInsight.DAL.TipoDeduccion", b =>

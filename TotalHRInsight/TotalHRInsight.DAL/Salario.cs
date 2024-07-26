@@ -15,10 +15,13 @@ namespace TotalHRInsight.DAL
         [Key]
         public int IdSalario { get; set; }
 
+        [Column(TypeName = "double(18,2)")]
         public double SalarioBruto { get; set; }
 
+        [Column(TypeName = "double(18,2)")]
         public double SalarioExtra { get; set; }
 
+        [Column(TypeName = "double(18,2)")]
         public double SalarioNeto { get; set; }
 
         [DisplayName("Asignado Por")]
@@ -35,6 +38,5 @@ namespace TotalHRInsight.DAL
 
         public ApplicationUser? UsuarioAsignacion { get; set; }
 
-        public ICollection<Deduccion> Deduccion { get; set; } = new List<Deduccion>();
-    }
+       }
 }

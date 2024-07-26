@@ -22,7 +22,7 @@ namespace TotalHRInsight.DAL
 
 		[Required(ErrorMessage = "La cantidad es obligatoria")]
 		[Range(0.01, double.MaxValue, ErrorMessage = "La cantidad debe ser mayor a cero")]
-		public float Cantidad { get; set; }
+		public double Cantidad { get; set; }
 
 		public Producto? Producto { get; set; }
 		public Pedido? Pedido { get; set; }
