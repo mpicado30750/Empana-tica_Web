@@ -455,5 +455,102 @@ namespace TotalHRInsight.Controllers
             }
         }
 
+        public async Task<IActionResult> ExportPedidoToExcel(int IdPedido)
+        {
+            var pedido = await _context.Pedidos
+                .Include(p => p.Estado)
+                .Include(p => p.Sucursal)
+                .Include(p => p.UsuarioCreacion)
+                .Include(p => p.PedidosProductos)
+                    .ThenInclude(pp => pp.Producto)
+                .FirstOrDefaultAsync(p => p.IdPedido == IdPedido);
+
+            if (pedido == null)
+            {
+                return NotFound();
+            }
+
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add($"Pedido_{IdPedido}");
+                worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+
+                // Agregar las imágenes y ajustar tamaño
+                var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
+                var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
+                var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
+                var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
+
+                // Ajustar las celdas para las imágenes
+                worksheet.Row(1).Height = 60;
+                worksheet.Column(1).Width = 12;
+                worksheet.Column(7).Width = 12;
+
+                // Título
+                var titleCell = worksheet.Cell("A2");
+                titleCell.Value = $"Detalles del Pedido #{IdPedido}";
+                titleCell.Style.Font.Bold = true;
+                titleCell.Style.Font.FontSize = 16;
+                titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                titleCell.Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4"); // Color de fondo azul de Excel
+                titleCell.Style.Font.FontColor = XLColor.White;
+                worksheet.Range("A2:G2").Merge();
+
+                // Información del pedido
+                worksheet.Cell("A3").Value = "Fecha Pedido:";
+                worksheet.Cell("B3").Value = pedido.FechaPedido.ToString("yyyy-MM-dd");
+                worksheet.Cell("A4").Value = "Fecha Entrega:";
+                worksheet.Cell("B4").Value = pedido.FechaEntrega.ToString("yyyy-MM-dd");
+                worksheet.Cell("A5").Value = "Usuario Creación:";
+                worksheet.Cell("B5").Value = pedido.UsuarioCreacion.Nombre;
+                worksheet.Cell("A6").Value = "Sucursal:";
+                worksheet.Cell("B6").Value = pedido.Sucursal.NombreSucursal;
+                worksheet.Cell("A7").Value = "Estado:";
+                worksheet.Cell("B7").Value = pedido.Estado.EstadoSolicitud;
+                worksheet.Cell("A8").Value = "Monto Total:";
+                worksheet.Cell("B8").Value = pedido.MontoTotal;
+                worksheet.Cell("B8").Style.NumberFormat.Format = "₡ #,##0.00";
+
+                // Cabeceras de la tabla de productos
+                var headerRow = worksheet.Row(10);
+                headerRow.Cell(1).Value = "IdProducto";
+                headerRow.Cell(2).Value = "NombreProducto";
+                headerRow.Cell(3).Value = "PrecioUnitario";
+                headerRow.Cell(4).Value = "Cantidad";
+                headerRow.Style.Font.Bold = true;
+                headerRow.Style.Font.FontSize = 12;
+                headerRow.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                headerRow.Style.Font.FontColor = XLColor.White;
+                worksheet.Range("A10:D10").Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4");
+
+                // Datos de los productos
+                int rowIdx = 11;
+                foreach (var pedidoProducto in pedido.PedidosProductos)
+                {
+                    var dataRow = worksheet.Row(rowIdx);
+                    dataRow.Cell(1).Value = pedidoProducto.ProductosID;
+                    dataRow.Cell(2).Value = pedidoProducto.Producto.NombreProducto;
+                    dataRow.Cell(3).Value = pedidoProducto.Producto.PrecioUnitario;
+                    dataRow.Cell(3).Style.NumberFormat.Format = "₡ #,##0.00";
+                    dataRow.Cell(4).Value = pedidoProducto.Cantidad;
+                    rowIdx++;
+                }
+
+                // Ajustar el ancho de las columnas después de agregar los datos
+                worksheet.Columns().AdjustToContents();
+
+                // Guardar el archivo Excel en un MemoryStream y devolver como FileResult
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Pedido_{IdPedido}.xlsx");
+                }
+            }
+        }
+
+
+
+
     }
 }

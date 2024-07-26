@@ -20,7 +20,7 @@
         <br />
         <div class="col-md-5" style="height: 600px; overflow-y: scroll;">
             <div class="input-group mb-3">
-                <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre">
+                <input type="text" id="searchInput" class="form-control" placeholder="Nombre">
                 <input type="date" id="startDateInput" class="form-control">
                 <input type="date" id="endDateInput" class="form-control">
                 <button class="btn btn-danger" type="button" onclick="filterCards()">Buscar</button>
@@ -49,6 +49,9 @@
                             <div class="text-center">
                                 <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">
                                     <i class="bi bi-trash"></i> Eliminar
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">
+                                    <i class="bi bi-pencil-square"></i> Editar
                                 </a>
                             </div>
                         </div>
