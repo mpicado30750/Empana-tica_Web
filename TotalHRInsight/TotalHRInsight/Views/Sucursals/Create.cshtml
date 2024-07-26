@@ -1,8 +1,9 @@
-﻿@model TotalHRInsight.DAL.Sucursal
+﻿@model TotalHRInsight.Models.Sucursal.CrearSucursal
 
 @{
     ViewData["Title"] = "Crear Sucursal";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
 <h1 class="text-center">Añadir Sucursal</h1>
@@ -24,7 +25,27 @@
                             <input asp-for="UbicacionSucursal" class="form-control" />
                             <span asp-validation-for="UbicacionSucursal" class="text-danger"></span>
                         </div>
-
+                        <div class="form-group mb-3">
+                            <label class="form-label">Geolocalizacion</label>
+                            <div class="d-flex">
+                                <div class="me-2">
+                                    <label asp-for="Latitud" class="form-label"></label>
+                                    <input asp-for="Latitud" id="lat" class="form-control" placeholder="Latitud" required readonly />
+                                    <span asp-validation-for="Latitud" class="text-danger"></span>
+                                </div>
+                                <div>
+                                    <label asp-for="Longitud" class="form-label"></label>
+                                    <input asp-for="Longitud" id="lng" class="form-control" placeholder="Longitud" required readonly />
+                                    <span asp-validation-for="Longitud" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="form-group mb-3">
+                            <div class="col-md-7">
+                                <div id="map" style="width: 180%; height: 300px;"></div>
+                            </div>
+                        </div>
                         <div class="d-flex justify-content-between mt-4">
                             <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
                                 <i class="bi bi-arrow-left-circle"></i> Regresar
@@ -33,6 +54,7 @@
                                 <i class="bi bi-plus-circle"></i> Añadir
                             </button>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -41,6 +63,31 @@
 
 </div>
 @Html.Partial("_LoaderModal")
+
+
+<script src="~/lib/leaflet/leaflet.js"></script>
+<script src="~/lib/leaflet/leaflet.min.js"></script>
+<script src="~/js/loader.js"></script>
+
+<script>
+    var map = L.map('map').setView([9.895403, -84.063574], 15);
+    var lastMarker = null;
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    map.on('click', onMapClick);
+
+    function onMapClick(e) {
+        if (lastMarker) {
+            map.removeLayer(lastMarker);
+        }
+        lastMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+        document.getElementById('lat').value = e.latlng.lat;
+        document.getElementById('lng').value = e.latlng.lng;
+    }
+
+</script>
 
 @section Scripts {
     @{

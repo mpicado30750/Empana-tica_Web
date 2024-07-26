@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TotalHRInsight.DAL;
+using TotalHRInsight.Models.Sucursal;
 
 namespace TotalHRInsight.Controllers
 {
@@ -24,26 +26,35 @@ namespace TotalHRInsight.Controllers
 			return View(await _context.Sucursales.ToListAsync());
 		}
 
-		// GET: Sucursals/Details/5
-		public async Task<IActionResult> Details(int? IdSucursal)
-		{
-			if (IdSucursal == null)
-			{
-				return NotFound();
-			}
+        // GET: Sucursal/Details/5
+        public async Task<IActionResult> Details(int? IdSucursal)
+        {
+            if (IdSucursal == null)
+            {
+                return NotFound();
+            }
 
-			var sucursal = await _context.Sucursales
-				.FirstOrDefaultAsync(m => m.IdSucursal == IdSucursal);
-			if (sucursal == null)
-			{
-				return NotFound();
-			}
+            var sucursal = await _context.Sucursales
+                .FirstOrDefaultAsync(m => m.IdSucursal == IdSucursal);
+            if (sucursal == null)
+            {
+                return NotFound();
+            }
 
-			return View(sucursal);
-		}
+            var model = new DetailsSucursal
+            {
+                IdSucursal = sucursal.IdSucursal,
+                NombreSucursal = sucursal.NombreSucursal,
+                UbicacionSucursal = sucursal.UbicacionSucursal,
+                Latitud = sucursal.Latitud.ToString(CultureInfo.InvariantCulture),
+                Longitud = sucursal.Longitud.ToString(CultureInfo.InvariantCulture)
+            };
 
-		// GET: Sucursals/Create
-		public IActionResult Create()
+            return View(model);
+        }
+
+        // GET: Sucursals/Create
+        public IActionResult Create()
 		{
 			return View();
 		}
@@ -51,7 +62,7 @@ namespace TotalHRInsight.Controllers
 		// POST: Sucursals/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("IdSucursal,NombreSucursal,UbicacionSucursal")] Sucursal sucursal)
+		public async Task<IActionResult> Create(CrearSucursal sucursal)
 		{
 			if (ModelState.IsValid)
 			{
@@ -66,7 +77,14 @@ namespace TotalHRInsight.Controllers
 				}
 				else
 				{
-					_context.Add(sucursal);
+					Sucursal datos = new Sucursal
+					{
+						NombreSucursal = sucursal.NombreSucursal,
+						UbicacionSucursal = sucursal.UbicacionSucursal,
+						Latitud = double.Parse(sucursal.Latitud, CultureInfo.InvariantCulture),
+						Longitud = double.Parse(sucursal.Longitud, CultureInfo.InvariantCulture)
+					};
+					_context.Add(datos);
 					await _context.SaveChangesAsync();
 					return RedirectToAction(nameof(Index));
 				}
@@ -74,69 +92,78 @@ namespace TotalHRInsight.Controllers
 			return View(sucursal);
 		}
 
-		// GET: Sucursals/Edit/5
-		public async Task<IActionResult> Edit(int? IdSucursal)
-		{
-			if (IdSucursal == null)
-			{
-				return NotFound();
-			}
+        public async Task<IActionResult> Edit(int? IdSucursal)
+        {
+            if (IdSucursal == null)
+            {
+                return NotFound();
+            }
 
-			var sucursal = await _context.Sucursales.FindAsync(IdSucursal);
-			if (sucursal == null)
-			{
-				return NotFound();
-			}
-			return View(sucursal);
-		}
+            var sucursal = await _context.Sucursales.FindAsync(IdSucursal);
+            if (sucursal == null)
+            {
+                return NotFound();
+            }
 
-		// POST: Sucursals/Edit/5
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int IdSucursal, [Bind("IdSucursal,NombreSucursal,UbicacionSucursal")] Sucursal sucursal)
-		{
-			if (IdSucursal != sucursal.IdSucursal)
-			{
-				return NotFound();
-			}
+            var model = new DetailsSucursal
+            {
+                IdSucursal = sucursal.IdSucursal,
+                NombreSucursal = sucursal.NombreSucursal,
+                UbicacionSucursal = sucursal.UbicacionSucursal,
+                Latitud = sucursal.Latitud.ToString(CultureInfo.InvariantCulture),
+                Longitud = sucursal.Longitud.ToString(CultureInfo.InvariantCulture)
+            };
 
-			if (ModelState.IsValid)
-			{
-				string nombreSucursalNormalizado = sucursal.NombreSucursal.Trim().ToLower().Replace(" ", "");
+            return View(model);
+        }
 
-				bool sucursalExiste = _context.Sucursales
-					.Any(s => s.NombreSucursal.Trim().ToLower().Replace(" ", "") == nombreSucursalNormalizado && s.IdSucursal != sucursal.IdSucursal);
+        // POST: Sucursal/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int IdSucursal,DetailsSucursal model)
+        {
+            if (IdSucursal != model.IdSucursal)
+            {
+                return NotFound();
+            }
 
-				if (sucursalExiste)
-				{
-					ModelState.AddModelError("NombreSucursal", "Ya existe otra sucursal con este nombre.");
-				}
-				else
-				{
-					try
-					{
-						_context.Update(sucursal);
-						await _context.SaveChangesAsync();
-					}
-					catch (DbUpdateConcurrencyException)
-					{
-						if (!SucursalExists(sucursal.IdSucursal))
-						{
-							return NotFound();
-						}
-						else
-						{
-							throw;
-						}
-					}
-					return RedirectToAction(nameof(Index));
-				}
-			}
-			return View(sucursal);
-		}
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var sucursal = await _context.Sucursales.FindAsync(IdSucursal);
+                    if (sucursal == null)
+                    {
+                        return NotFound();
+                    }
 
-		// GET: Sucursals/Delete/5
-		public async Task<IActionResult> Delete(int? IdSucursal)
+                    sucursal.NombreSucursal = model.NombreSucursal;
+                    sucursal.UbicacionSucursal = model.UbicacionSucursal;
+                    sucursal.Latitud = double.Parse(model.Latitud, CultureInfo.InvariantCulture);
+                    sucursal.Longitud = double.Parse(model.Longitud, CultureInfo.InvariantCulture);
+
+                    _context.Update(sucursal);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!SucursalExists(model.IdSucursal))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            return View(model);
+        }
+
+
+        // GET: Sucursals/Delete/5
+        public async Task<IActionResult> Delete(int? IdSucursal)
 		{
 			if (IdSucursal == null)
 			{

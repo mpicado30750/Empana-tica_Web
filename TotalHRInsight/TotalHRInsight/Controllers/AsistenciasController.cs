@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc;
@@ -32,13 +33,14 @@ namespace TotalHRInsight.Controllers
 
             var viewModel = asistencias.Select(a => new AsistenciaModel
             {
+
                 Id = a.IdAsistencia,
                 FechaEntrada = a.FechaEntrada,
                 FechaSalida = a.FechaSalida,
-                LatitudEntrada = ConvertirLatitud(a.UbicacionEntrada),
-                LongitudEntrada = ConvertirLongitud(a.UbicacionEntrada) ?? 0.0, // Manejo de valor null
-                LatitudSalida = ConvertirLatitud(a.UbicacionSalida),
-                LongitudSalida = ConvertirLongitud(a.UbicacionSalida) ?? 0.0, // Manejo de valor null
+                LatitudEntrada = ExtractLatitude(a.UbicacionEntrada),
+                LongitudEntrada = ExtractLongitude(a.UbicacionEntrada), // Manejo de valor null
+                LatitudSalida = ExtractLatitude(a.UbicacionSalida),
+                LongitudSalida = ExtractLongitude(a.UbicacionSalida), // Manejo de valor null
                 UsuarioCreacionId = a.UsuarioCreacionId,
                 UsuarioCreacion = a.UsuarioCreacion.UserName,
                 Nombre = a.UsuarioCreacion.Nombre,
@@ -48,19 +50,67 @@ namespace TotalHRInsight.Controllers
 
             return View(viewModel);
         }
- 
-       
+
+        public static double ExtractLatitude(string input)
+        {
+            string pattern = @"lat:\s*([\d\.,-]+)";
+            Regex regex = new Regex(pattern);
+
+            Match match = regex.Match(input);
+
+            if (match.Success)
+            {
+                string latitudeStr = match.Groups[1].Value;
+                latitudeStr = RemoveTrailingComma(latitudeStr);
+                latitudeStr = latitudeStr.Replace(',', '.');
+                return double.Parse(latitudeStr,CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                throw new FormatException("No se encontró la latitud en la cadena de entrada.");
+            }
+        }
+
+        private static string RemoveTrailingComma(string input)
+        {
+            if (input.EndsWith(","))
+            {
+                return input.Substring(0, input.Length - 1);
+            }
+            return input;
+        }
+        // Función para extraer la longitud de una cadena
+        public static double ExtractLongitude(string input)
+        {
+            string pattern = @"lng:\s*([\d\.,-]+)";
+            Regex regex = new Regex(pattern);
+
+            Match match = regex.Match(input);
+
+            if (match.Success)
+            {
+                string longitudeStr = match.Groups[1].Value;
+                longitudeStr = longitudeStr.Replace(',', '.');
+                return double.Parse(longitudeStr,CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                throw new FormatException("No se encontró la longitud en la cadena de entrada.");
+            }
+        }
+
         private static double ConvertirLatitud(string input)
         {
             int startIndex = input.IndexOf("lat:") + 4;
             int endIndex = input.IndexOf(",", startIndex);
 
-            if (startIndex < 0 || endIndex < 0)
+            if (startIndex < 4 || endIndex < 0)
             {
                 throw new ArgumentException("Formato de cadena no válido para latitud.");
             }
 
             string latStr = input.Substring(startIndex, endIndex - startIndex);
+            latStr = latStr.Replace(",", "."); // Reemplazar coma por punto decimal
             return double.Parse(latStr, CultureInfo.InvariantCulture);
         }
 
@@ -69,12 +119,18 @@ namespace TotalHRInsight.Controllers
             int startIndex = input.IndexOf("lng:") + 4;
             int endIndex = input.IndexOf(")", startIndex);
 
-            if (startIndex < 0 || endIndex < 0)
+            if (startIndex < 4) // Esto significa que "lng:" no fue encontrado
             {
-                return null; // Devuelve null si no se puede encontrar la longitud
+                throw new ArgumentException("Formato de cadena no válido para longitud.");
+            }
+
+            if (endIndex < 0) // Esto significa que no hay un paréntesis después de la longitud
+            {
+                endIndex = input.Length;
             }
 
             string lngStr = input.Substring(startIndex, endIndex - startIndex);
+            lngStr = lngStr.Replace(",", "."); // Reemplazar coma por punto decimal
             return double.Parse(lngStr, CultureInfo.InvariantCulture);
         }
 

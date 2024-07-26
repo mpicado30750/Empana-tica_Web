@@ -1,9 +1,10 @@
-﻿@model TotalHRInsight.DAL.Sucursal
+﻿@model TotalHRInsight.Models.Sucursal.DetailsSucursal
 
 @{
     ViewData["Title"] = "Editar Sucursal";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <h1 class="text-center">Editar Sucursal</h1>
 <hr />
 <div class="container">
@@ -13,8 +14,6 @@
                 <div class="card-body">
                     <form asp-action="Edit">
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-                        <input type="hidden" asp-for="IdSucursal" />
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="IdSucursal" />
                         <div class="form-group mb-3">
                             <label asp-for="NombreSucursal" class="form-label"></label>
@@ -26,25 +25,63 @@
                             <input asp-for="UbicacionSucursal" class="form-control" />
                             <span asp-validation-for="UbicacionSucursal" class="text-danger"></span>
                         </div>
-                        <form asp-action="Edit" method="post">
-                            <input type="hidden" name="IdProducto" value="@Model.IdSucursal" />
-                            <div class="d-flex justify-content-between mt-4">
-                                <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
-                                    <i class="bi bi-arrow-left-circle"></i> Regresar
-                                </a>
-                                <button type="submit" class="btn btn-danger ms-2" style="flex: 1;" onclick="showLoader()">
-                                    <i class="bi bi-plus-circle"></i> Guardar
-                                </button>
+                        <div class="form-group mb-3">
+                            <label class="form-label">Geolocalización</label>
+                            <div class="d-flex">
+                                <div class="me-2">
+                                    <label asp-for="Latitud" class="form-label"></label>
+                                    <input asp-for="Latitud" id="lat" class="form-control" placeholder="Latitud" readonly />
+                                </div>
+                                <div>
+                                    <label asp-for="Longitud" class="form-label"></label>
+                                    <input asp-for="Longitud" id="lng" class="form-control" placeholder="Longitud" readonly />
+                                </div>
                             </div>
-                        </form>
+                        </div>
+                        <div class="form-group mb-3">
+                            <div class="col-md-7">
+                                <div id="map" style="width: 500px; height: 300px;"></div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
+                                <i class="bi bi-arrow-left-circle"></i> Regresar
+                            </a>
+                            <button type="submit" class="btn btn-danger ms-2" style="flex: 1;" onclick="showLoader()">
+                                <i class="bi bi-save"></i> Guardar
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 @Html.Partial("_LoaderModal")
+
+<script src="~/lib/leaflet/leaflet.js"></script>
+<script src="~/lib/leaflet/leaflet.min.js"></script>
+<script src="~/js/loader.js"></script>
+
+<script>
+    var map = L.map('map').setView([@Model.Latitud, @Model.Longitud], 15);
+    var lastMarker = L.marker([@Model.Latitud, @Model.Longitud]).addTo(map);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    map.on('click', onMapClick);
+
+    function onMapClick(e) {
+        if (lastMarker) {
+            map.removeLayer(lastMarker);
+        }
+        lastMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+        document.getElementById('lat').value = e.latlng.lat;
+        document.getElementById('lng').value = e.latlng.lng;
+    }
+</script>
 
 @section Scripts {
     @{
