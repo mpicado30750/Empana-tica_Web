@@ -1,54 +1,60 @@
 ﻿@model IEnumerable<TotalHRInsight.DAL.Salario>
 
 @{
-    ViewData["Title"] = "Lista de Salarios";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="d-flex justify-content-between align-items-center my-4">
-    <h1 class="mb-0">Lista de Salarios</h1>
-    <div>
-        <a asp-action="Create" class="btn btn-danger me-2" onclick="showLoader()">
-            <i class="bi bi-plus-circle"></i> Crear Nuevo Registro
-        </a>
-    </div>
-</div>
-<hr />
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-header bg-danger text-white">
-                    <h5 class="card-title mb-0">@item.UsuarioAsignacion</h5>
-                </div>
-                <div class="card-body">
-                    <p class="card-text"><strong>Salario Bruto:</strong> @Html.DisplayFor(modelItem => item.SalarioBruto)</p>
-                    <p class="card-text"><strong>Salario Extra:</strong> @Html.DisplayFor(modelItem => item.SalarioExtra)</p>
-                    <p class="card-text"><strong>Salario Neto:</strong> @Html.DisplayFor(modelItem => item.SalarioExtra)</p>
-                    <p class="card-text"><strong>Usuario Creacion:</strong> @Html.DisplayFor(modelItem => item.UsuarioCreacion.Nombre)</p>
-                    <p class="card-text"><strong>Usuario Asignacion:</strong> @Html.DisplayFor(modelItem => item.UsuarioAsignacion.Nombre)</p>
-                </div>
-                <div class="card-footer bg-light">
-                    <div class="d-flex justify-content-between">
-                        <a asp-action="Edit" asp-route-IdSalario="@item.IdSalario" class="btn btn-warning" onclick="showLoader()">
-                            <i class="bi bi-pencil-square"></i> Editar
-                        </a>
-                        <a asp-action="Details" asp-route-IdSalario="@item.IdSalario" class="btn btn-info" onclick="showLoader()">
-                            <i class="bi bi-info-circle"></i> Detalles
-                        </a>
-                        <a asp-action="Delete" asp-route-IdSalario="@item.IdSalario" class="btn btn-danger" onclick="showLoader()">
-                            <i class="bi bi-trash"></i> Eliminar
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-</div>
-@Html.Partial("_LoaderModal")
+<h1>Index</h1>
 
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
-    <script src="~/js/loader.js"></script>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SalarioBruto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalarioExtra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalarioNeto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuarioCreacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuarioAsignacion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalarioBruto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalarioExtra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalarioNeto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsuarioCreacion.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsuarioAsignacion.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdSalario">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdSalario">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdSalario">Delete</a>
+            </td>
+        </tr>
 }
+    </tbody>
+</table>

@@ -1,4 +1,4 @@
-﻿@model TotalHRInsight.Models.Asistencia.CrearAsistencia
+﻿@model TotalHRInsight.DAL.Asistencia
 
 @{
     ViewData["Title"] = "Crear Asistencia";
@@ -24,9 +24,15 @@
                             <input asp-for="FechaSalida" class="form-control" />
                             <span asp-validation-for="FechaSalida" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="IdSucursal" class="control-label"></label>
-                            <select asp-for="IdSucursal" class="form-control" asp-items="ViewBag.IdSucursal"></select>
+                        <div class="form-group mb-3">
+                            <label asp-for="UbicacionEntrada" class="form-label"></label>
+                            <input asp-for="UbicacionEntrada" class="form-control" />
+                            <span asp-validation-for="UbicacionEntrada" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="UbicacionSalida" class="form-label"></label>
+                            <input asp-for="UbicacionSalida" class="form-control" />
+                            <span asp-validation-for="UbicacionSalida" class="text-danger"></span>
                         </div>
                         <div class="form-group mb-3">
                             <label asp-for="UsuarioCreacionId" class="form-label"></label>
@@ -46,8 +52,6 @@
         </div>
     </div>
 </div>
-
-@Html.Partial("_LoaderModal")
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

@@ -14,26 +14,22 @@ using Newtonsoft.Json.Linq;
 using TotalHRInsight.DAL;
 using TotalHRInsight.Models;
 using TotalHRInsight.Models.Pedidos;
-using Microsoft.AspNetCore.SignalR;
-using TotalHRInsight.Hubs;
 
 namespace TotalHRInsight.Controllers
 {
-    public class PedidosController : Controller
-    {
-        private readonly TotalHRInsightDbContext _context;
+	public class PedidosController : Controller
+	{
+		private readonly TotalHRInsightDbContext _context;
         private readonly TotalHRInsightDbContext _context2;
-        private readonly IHubContext<NotificationHub> _hubContext; // Agrega esta línea
 
-        public PedidosController(TotalHRInsightDbContext context, TotalHRInsightDbContext context2, IHubContext<NotificationHub> hubContext)
-        {
-            _context = context;
+        public PedidosController(TotalHRInsightDbContext context, TotalHRInsightDbContext context2)
+		{
+			_context = context;
             _context2 = context2;
-            _hubContext = hubContext; // Asigna el contexto de SignalR
         }
-
-        // GET: Pedidos
-        public async Task<IActionResult> Index()
+ 
+		// GET: Pedidos
+		public async Task<IActionResult> Index()
 		{
             var pedidos = await _context.Pedidos.Include(p => p.Estado)
                                         .Include(p => p.Sucursal)
@@ -164,6 +160,7 @@ namespace TotalHRInsight.Controllers
 
                 if (errorEnProductos)
                 {
+                    // Eliminar el pedido si hubo un error con los productos
                     _context.Pedidos.Remove(nuevoPedido);
                     await _context.SaveChangesAsync();
                     await transaction.RollbackAsync();
@@ -172,10 +169,6 @@ namespace TotalHRInsight.Controllers
 
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
-
-                // Enviar notificación
-                await _hubContext.Clients.All.SendAsync("ReceiveNotification", "Nuevo pedido creado");
-
                 return Ok(new { message = "Pedido creado exitosamente" });
             }
             catch (DbUpdateException ex)
@@ -190,7 +183,6 @@ namespace TotalHRInsight.Controllers
                 return StatusCode(500, $"Error al crear el pedido: {ex.Message}");
             }
         }
-
 
         private string ObtenerMensajeDeError(Exception ex)
         {
@@ -256,9 +248,10 @@ namespace TotalHRInsight.Controllers
             return View(pedido);
         }
 
+        // POST: Pedidos/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int IdPedido, [Bind("IdPedido,FechaEntrega,IdEstado")] ActualizarPedido pedidoActualizado)
+        public async Task<IActionResult> Edit(int IdPedido, [Bind("IdPedido,FechaEntrega,IdEstado")] Pedido pedidoActualizado)
         {
             if (IdPedido != pedidoActualizado.IdPedido)
             {
@@ -270,6 +263,7 @@ namespace TotalHRInsight.Controllers
             {
                 try
                 {
+                    // Obtener el pedido original de la base de datos
                     var pedidoOriginal = await _context.Pedidos
                         .Include(p => p.UsuarioCreacion)
                         .Include(p => p.Sucursal)
@@ -281,16 +275,13 @@ namespace TotalHRInsight.Controllers
                         return NotFound();
                     }
 
+                    // Actualizar solo los campos permitidos
                     pedidoOriginal.FechaEntrega = pedidoActualizado.FechaEntrega;
                     pedidoOriginal.IdEstado = pedidoActualizado.IdEstado;
 
+                    // Marcar solo el pedido como modificado
                     _context.Entry(pedidoOriginal).State = EntityState.Modified;
                     await _context.SaveChangesAsync();
-
-                    // Enviar notificación
-                    await _hubContext.Clients.All.SendAsync("ReceiveNotification", "Pedido actualizado");
-
-                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -303,9 +294,10 @@ namespace TotalHRInsight.Controllers
                         throw;
                     }
                 }
+                return RedirectToAction(nameof(Index));
             }
 
-            // Volver a cargar datos en caso de error
+            // Si llegamos aquí, algo falló, volvemos a cargar los datos necesarios
             var pedido = await _context.Pedidos
                 .Include(p => p.UsuarioCreacion)
                 .Include(p => p.Sucursal)
@@ -317,8 +309,6 @@ namespace TotalHRInsight.Controllers
             ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud", pedido.IdEstado);
             return View(pedido);
         }
-
-
 
         // GET: Pedidos/Delete/5
         public async Task<IActionResult> Delete(int? IdPedido)
@@ -391,6 +381,7 @@ namespace TotalHRInsight.Controllers
             using (var workbook = new XLWorkbook())
             {
                 var worksheet = workbook.Worksheets.Add("Pedidos");
+                worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
 
                 // Agregar las imágenes y ajustar tamaño (como en el ejemplo anterior)
                 var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
