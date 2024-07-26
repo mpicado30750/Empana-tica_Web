@@ -99,43 +99,6 @@ namespace TotalHRInsight.Controllers
             }
         }
 
-        private static double ConvertirLatitud(string input)
-        {
-            int startIndex = input.IndexOf("lat:") + 4;
-            int endIndex = input.IndexOf(",", startIndex);
-
-            if (startIndex < 4 || endIndex < 0)
-            {
-                throw new ArgumentException("Formato de cadena no válido para latitud.");
-            }
-
-            string latStr = input.Substring(startIndex, endIndex - startIndex);
-            latStr = latStr.Replace(",", "."); // Reemplazar coma por punto decimal
-            return double.Parse(latStr, CultureInfo.InvariantCulture);
-        }
-
-        private static double? ConvertirLongitud(string input)
-        {
-            int startIndex = input.IndexOf("lng:") + 4;
-            int endIndex = input.IndexOf(")", startIndex);
-
-            if (startIndex < 4) // Esto significa que "lng:" no fue encontrado
-            {
-                throw new ArgumentException("Formato de cadena no válido para longitud.");
-            }
-
-            if (endIndex < 0) // Esto significa que no hay un paréntesis después de la longitud
-            {
-                endIndex = input.Length;
-            }
-
-            string lngStr = input.Substring(startIndex, endIndex - startIndex);
-            lngStr = lngStr.Replace(",", "."); // Reemplazar coma por punto decimal
-            return double.Parse(lngStr, CultureInfo.InvariantCulture);
-        }
-
-
-
         // GET: Asistencias/Details/5
         public async Task<IActionResult> Details(int? id)
         {
