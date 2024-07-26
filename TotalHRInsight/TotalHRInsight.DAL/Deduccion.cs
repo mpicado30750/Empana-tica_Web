@@ -24,13 +24,9 @@ namespace TotalHRInsight.DAL
         [MaxLength(100, ErrorMessage = "El nombre de deducción no puede exceder los 100 caracteres")]
         public string NombreDeduccion { get; set; }
 
-        [DisplayName("Descripción")]
-        [Required(ErrorMessage = "La descripción es requerida")]
-        [MaxLength(150, ErrorMessage = "La descripcion no debe de exceder los 150")]
-        public string Descripcion { get; set; }
-
         [DisplayName("Monto de Deducción")]
         [Required(ErrorMessage = "El monto es requerido")]
+        [Column(TypeName = "double(18,2)")]
         public double MontoDeduccion { get; set; }
 
         [DisplayName("Asignado Por")]
@@ -43,16 +39,9 @@ namespace TotalHRInsight.DAL
         [ForeignKey("UsuarioAsignacion")]
         public string UsuarioAsignacionId { get; set; }
 
-        [DisplayName("Salario")]
-        [Required(ErrorMessage = "El salario es obligatorio")]
-        [ForeignKey("Salario")]
-        public int SalarioId { get; set; }
-
         public ApplicationUser? UsuarioCreacion { get; set; }
 
         public ApplicationUser? UsuarioAsignacion { get; set; }
-
-        public Salario? Salario { get; set; }
 
 
         [DisplayName("Tipo de Deduccion")]

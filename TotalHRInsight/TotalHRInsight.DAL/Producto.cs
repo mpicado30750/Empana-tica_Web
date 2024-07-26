@@ -22,8 +22,8 @@ namespace TotalHRInsight.DAL
 		public DateTime FechaVencimiento { get; set; }
 
 		[Required(ErrorMessage = "El precio unitario es obligatorio")]
-		[Column(TypeName = "decimal(18,2)")]
         [DisplayName("Precio Unitario")]
+        [Column(TypeName = "double(18,2)")]
         public double PrecioUnitario { get; set; }
 
 		[DisplayName("Unidad de Medida")]

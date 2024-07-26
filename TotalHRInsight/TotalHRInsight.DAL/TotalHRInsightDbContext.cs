@@ -9,7 +9,7 @@ namespace TotalHRInsight.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = "Server=viaduct.proxy.rlwy.net;Port=24583;Database=railway;User=root;Password=ZkYGcAFDHXksHyHUzxQDjGmVmqJyJUuK;";
+            var connectionString = "Server=monorail.proxy.rlwy.net;Port=54600;Database=railway;User=root;Password=BCBSjlyOPbTAtleZODNyqHDUdJoqYHdD;";
 
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));

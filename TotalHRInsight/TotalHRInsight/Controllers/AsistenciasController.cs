@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TotalHRInsight.DAL;
 using TotalHRInsight.Models;
+using TotalHRInsight.Models.Asistencia;
 
 namespace TotalHRInsight.Controllers
 {
@@ -99,13 +100,16 @@ namespace TotalHRInsight.Controllers
         }
 
 		// GET: Asistencias/Create
-		public IActionResult Create()
+		public async Task<IActionResult> Create()
         {
             ViewData["UsuarioCreacionid"] = new SelectList(
                 _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
                 "Id",
                 "NombreCompleto"
             );
+            var sucursales = await _context.Sucursales.ToListAsync();
+            ViewData["IdSucursal"] = new SelectList(sucursales, "IdSucursal", "NombreSucursal");
+
             return View();
         }
 
@@ -114,11 +118,21 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdAsistencia,FechaEntrada,FechaSalida,UbicacionEntrada,UbicacionSalida,UsuarioCreacionId")] Asistencia asistencia)
+        public async Task<IActionResult> Create(CrearAsistencia asistencia)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(asistencia);
+                var consultaUbicacion = await _context.Sucursales
+                    .FirstOrDefaultAsync(f => f.IdSucursal == asistencia.IdSucursal);
+                Asistencia datos = new Asistencia
+                {
+                    FechaEntrada = asistencia.FechaEntrada,
+                    FechaSalida = asistencia.FechaSalida,
+                    UbicacionEntrada = $"LatLng(lat: {consultaUbicacion.Latitud}, lng:{consultaUbicacion.Longitud})",
+                    UbicacionSalida = $"LatLng(lat: {consultaUbicacion.Latitud}, lng:{consultaUbicacion.Longitud})",
+                    UsuarioCreacionId = asistencia.UsuarioCreacionId
+                };
+                _context.Add(datos);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

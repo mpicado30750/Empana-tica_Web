@@ -31,8 +31,7 @@ namespace TotalHRInsight.DAL
 		public int NumeroTelefono { get; set; }
 
 		[Required(ErrorMessage = "El salario es obligatorio")]
-		[Column(TypeName = "float(18,4)")]
-		public float Salario { get; set; }
+        public double Salario { get; set; }
 
 		[Required]
 		[DefaultValue(true)]

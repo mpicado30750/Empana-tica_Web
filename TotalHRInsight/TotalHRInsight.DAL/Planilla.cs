@@ -20,10 +20,15 @@ namespace TotalHRInsight.DAL
         [DisplayName("Fecha de Fin")]
         public DateTime FechaFin { get; set; }
 
-		[Required(ErrorMessage = "El monto total es obligatorio")]
-		[Column(TypeName = "decimal(18,2)")]
+        [DisplayName("Descripción")]
+        [Required(ErrorMessage = "La descripción es requerida")]
+        [MaxLength(150, ErrorMessage = "La descripcion no debe de exceder los 150")]
+        public string Descripcion { get; set; }
+
+        [Required(ErrorMessage = "El monto total es obligatorio")]
+        [Column(TypeName = "double(18,2)")]
         [DisplayName("Monto total")]
-        public decimal MontoTotal { get; set; }
+        public double MontoTotal { get; set; }
 
         [DisplayName("Asignado Por")]
         [Required(ErrorMessage = "El usuario de creación es obligatorio")]

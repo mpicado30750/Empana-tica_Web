@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 {
     /// <inheritdoc />
-    public partial class Total : Migration
+    public partial class PrimeraMirgacion : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -124,7 +124,7 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                     NombreProducto = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     FechaVencimiento = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    PrecioUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PrecioUnitario = table.Column<double>(type: "double(18,2)", nullable: false),
                     MedidasId = table.Column<int>(type: "int", nullable: false),
                     CategoriaId = table.Column<int>(type: "int", nullable: false),
                     ProveedorId = table.Column<int>(type: "int", nullable: false)
@@ -137,19 +137,19 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.CategoriaId,
                         principalTable: "Categoria",
                         principalColumn: "IdCategoria",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Producto_Medidas_MedidasId",
                         column: x => x.MedidasId,
                         principalTable: "Medidas",
                         principalColumn: "IdMedida",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Producto_Proveedor_ProveedorId",
                         column: x => x.ProveedorId,
                         principalTable: "Proveedor",
                         principalColumn: "IdProveedor",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -176,7 +176,47 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.UsuarioCreacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Deduccion",
+                columns: table => new
+                {
+                    IdDeduccion = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    FechaDeduccion = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    NombreDeduccion = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    MontoDeduccion = table.Column<double>(type: "double(18,2)", nullable: false),
+                    UsuarioCreacionId = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UsuarioAsignacionId = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TipoDeduccionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Deduccion", x => x.IdDeduccion);
+                    table.ForeignKey(
+                        name: "FK_Deduccion_AspNetUsers_UsuarioAsignacionId",
+                        column: x => x.UsuarioAsignacionId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Deduccion_AspNetUsers_UsuarioCreacionId",
+                        column: x => x.UsuarioCreacionId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Deduccion_TipoDeduccion_TipoDeduccionId",
+                        column: x => x.TipoDeduccionId,
+                        principalTable: "TipoDeduccion",
+                        principalColumn: "IdTipoDeduccion",
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -204,25 +244,25 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.UsuarioCreacionid,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Inventario_AspNetUsers_UsuarioModificacionid",
                         column: x => x.UsuarioModificacionid,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Inventario_Producto_ProductoId",
                         column: x => x.ProductoId,
                         principalTable: "Producto",
                         principalColumn: "IdProducto",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Inventario_Sucursales_SucursalId",
                         column: x => x.SucursalId,
                         principalTable: "Sucursales",
                         principalColumn: "IdSucursal",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -248,19 +288,19 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.UsuarioCreacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Pedidos_Estados_IdEstado",
                         column: x => x.IdEstado,
                         principalTable: "Estados",
                         principalColumn: "IdEstado",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Pedidos_Sucursales_IdSucursal",
                         column: x => x.IdSucursal,
                         principalTable: "Sucursales",
                         principalColumn: "IdSucursal",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -292,25 +332,25 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.UsuarioAsignacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Permisos_AspNetUsers_UsuarioCreacionId",
                         column: x => x.UsuarioCreacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Permisos_Estados_IdEstado",
                         column: x => x.IdEstado,
                         principalTable: "Estados",
                         principalColumn: "IdEstado",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Permisos_TiposPermisos_IdTipoPermiso",
                         column: x => x.IdTipoPermiso,
                         principalTable: "TiposPermisos",
                         principalColumn: "IdTipoPermiso",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -322,7 +362,9 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     FechaInicio = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     FechaFin = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    MontoTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Descripcion = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    MontoTotal = table.Column<double>(type: "double(18,2)", nullable: false),
                     UsuarioCreacionId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     UsuarioAsignacionId = table.Column<string>(type: "varchar(255)", nullable: false)
@@ -336,13 +378,13 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.UsuarioAsignacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Planillas_AspNetUsers_UsuarioCreacionId",
                         column: x => x.UsuarioCreacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -352,9 +394,9 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                 {
                     IdSalario = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    SalarioBruto = table.Column<double>(type: "double", nullable: false),
-                    SalarioExtra = table.Column<double>(type: "double", nullable: false),
-                    SalarioNeto = table.Column<double>(type: "double", nullable: false),
+                    SalarioBruto = table.Column<double>(type: "double(18,2)", nullable: false),
+                    SalarioExtra = table.Column<double>(type: "double(18,2)", nullable: false),
+                    SalarioNeto = table.Column<double>(type: "double(18,2)", nullable: false),
                     UsuarioCreacionId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     UsuarioAsignacionId = table.Column<string>(type: "varchar(255)", nullable: false)
@@ -368,13 +410,13 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.UsuarioAsignacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Salario_AspNetUsers_UsuarioCreacionId",
                         column: x => x.UsuarioCreacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -386,7 +428,7 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     ProductosID = table.Column<int>(type: "int", nullable: false),
                     PedidoID = table.Column<int>(type: "int", nullable: false),
-                    Cantidad = table.Column<float>(type: "float", nullable: false)
+                    Cantidad = table.Column<double>(type: "double", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -396,62 +438,13 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.PedidoID,
                         principalTable: "Pedidos",
                         principalColumn: "IdPedido",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PedidoProductos_Producto_ProductosID",
                         column: x => x.ProductosID,
                         principalTable: "Producto",
                         principalColumn: "IdProducto",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Deduccion",
-                columns: table => new
-                {
-                    IdDeduccion = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    FechaDeduccion = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    NombreDeduccion = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Descripcion = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    MontoDeduccion = table.Column<double>(type: "double", nullable: false),
-                    UsuarioCreacionId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    UsuarioAsignacionId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    SalarioId = table.Column<int>(type: "int", nullable: false),
-                    TipoDeduccionId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Deduccion", x => x.IdDeduccion);
-                    table.ForeignKey(
-                        name: "FK_Deduccion_AspNetUsers_UsuarioAsignacionId",
-                        column: x => x.UsuarioAsignacionId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Deduccion_AspNetUsers_UsuarioCreacionId",
-                        column: x => x.UsuarioCreacionId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Deduccion_Salario_SalarioId",
-                        column: x => x.SalarioId,
-                        principalTable: "Salario",
-                        principalColumn: "IdSalario",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Deduccion_TipoDeduccion_TipoDeduccionId",
-                        column: x => x.TipoDeduccionId,
-                        principalTable: "TipoDeduccion",
-                        principalColumn: "IdTipoDeduccion",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -459,11 +452,6 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                 name: "IX_Asistencia_UsuarioCreacionId",
                 table: "Asistencia",
                 column: "UsuarioCreacionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Deduccion_SalarioId",
-                table: "Deduccion",
-                column: "SalarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Deduccion_TipoDeduccionId",

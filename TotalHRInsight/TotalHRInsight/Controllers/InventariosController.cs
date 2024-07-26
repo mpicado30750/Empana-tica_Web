@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -28,8 +29,30 @@ namespace TotalHRInsight.Controllers
         // GET: Inventarios
         public async Task<IActionResult> Index()
         {
-            var totalHRInsightDbContext = _context.Inventario.Include(i => i.Producto).Include(i => i.Sucursal).Include(i => i.UsuarioCreacion).Include(i => i.UsuarioModificacion);
+            var totalHRInsightDbContext = _context.Sucursales;
             return View(await totalHRInsightDbContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> DetalleSucursal(int? idSucursal)
+        {
+            var inventario = await _context.Inventario
+                .Where(w => w.SucursalId == idSucursal)
+                .Include(i => i.Producto)
+                .Include(i => i.Sucursal)
+                .Include(i => i.UsuarioCreacion)
+                .Include(i => i.UsuarioModificacion)
+                .ToListAsync();
+
+            if (inventario == null)
+            {
+                return NotFound();
+            }
+
+            var nombreSucursal = await _context.Sucursales
+                .FirstOrDefaultAsync(m => m.IdSucursal == idSucursal);
+            ViewData["SucursalNombre"] = nombreSucursal.NombreSucursal;
+
+            return View(inventario);
         }
 
         // GET: Inventarios/Details/5

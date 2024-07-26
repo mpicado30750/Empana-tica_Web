@@ -27,7 +27,7 @@
                     <h5 class="card-title mb-0">@item.NombreProducto</h5>
                 </div>
                 <div class="card-body">
-                    <p class="card-text"><strong>Categoria:</strong> @Html.DisplayFor(modelItem => item.CategoriaId)</p>
+                    <p class="card-text"><strong>Categoria:</strong> @Html.DisplayFor(modelItem => item.Categorias.NombreCategoria)</p>
                     <p class="card-text"><strong>Fecha de Vencimiento:</strong> @Html.DisplayFor(modelItem => item.FechaVencimiento)</p>
                     <p class="card-text"><strong>Precio Unitario:</strong> @Html.DisplayFor(modelItem => item.PrecioUnitario)</p>
                     <p class="card-text"><strong>Medidas:</strong> @Html.DisplayFor(modelItem => item.Medidas.NombreMedida)</p>
