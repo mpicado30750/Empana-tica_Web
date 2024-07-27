@@ -58,4 +58,5 @@ namespace TotalHRInsight.DAL
 	//					{ "A", "Administrador", "Administrador" },
 	//					{ "U", "Usuario", "Usuario" }
 	//				});
+
 }

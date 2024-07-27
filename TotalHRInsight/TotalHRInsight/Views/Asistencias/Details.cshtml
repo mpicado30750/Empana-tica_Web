@@ -1,54 +1,45 @@
-﻿@model TotalHRInsight.DAL.Asistencia
+﻿@model TotalHRInsight.Models.Sucursal.DetailsSucursal
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles de la Sucursal";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-center">Detalles Asistencia</h1>
+<h1 class="text-center">Detalles de la Sucursal</h1>
 <hr />
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <dl class="row">
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.FechaEntrada)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.FechaEntrada)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.FechaSalida)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.FechaSalida)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.UbicacionEntrada)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UbicacionEntrada)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.UbicacionSalida)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UbicacionSalida)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.UsuarioCreacion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UsuarioCreacion.Nombre)
-                        </dd>
-                    </dl>
-                    <div class="d-grid gap-2">
-                        <a asp-action="Edit" asp-route-id="@Model?.IdAsistencia" class="btn btn-warning">
-                            <i class="bi bi-pencil-square"></i> Editar
-                        </a>
-                        <a asp-action="Index" class="btn btn-secondary">
+                    <div class="form-group mb-3">
+                        <label asp-for="NombreSucursal" class="form-label"></label>
+                        <input asp-for="NombreSucursal" class="form-control" readonly />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="UbicacionSucursal" class="form-label"></label>
+                        <input asp-for="UbicacionSucursal" class="form-control" readonly />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Geolocalización</label>
+                        <div class="d-flex">
+                            <div class="me-2">
+                                <label asp-for="Latitud" class="form-label"></label>
+                                <input asp-for="Latitud" id="lat" class="form-control" placeholder="Latitud" readonly />
+                            </div>
+                            <div>
+                                <label asp-for="Longitud" class="form-label"></label>
+                                <input asp-for="Longitud" id="lng" class="form-control" placeholder="Longitud" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <div class="col-md-7">
+                            <div id="map" style="width: 500px; height: 300px;"></div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-4">
+                        <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
                             <i class="bi bi-arrow-left-circle"></i> Regresar
                         </a>
                     </div>
@@ -57,3 +48,26 @@
         </div>
     </div>
 </div>
+@Html.Partial("_LoaderModal")
+
+<script src="~/lib/leaflet/leaflet.js"></script>
+<script src="~/lib/leaflet/leaflet.min.js"></script>
+<script src="~/js/loader.js"></script>
+
+<script>
+    var map = L.map('map').setView([@Model.Latitud, @Model.Longitud], 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    L.marker([@Model.Latitud, @Model.Longitud]).addTo(map);
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script src="~/js/loader.js"></script>
+}
