@@ -30,7 +30,7 @@ namespace TotalHRInsight.DAL
 		[Phone(ErrorMessage = "El número de teléfono no es válido")]
 		public int NumeroTelefono { get; set; }
 
-		[Required(ErrorMessage = "El salario es obligatorio")]
+		[Required(ErrorMessage = "El salario por hora es obligatorio")]
         public double Salario { get; set; }
 
 		[Required]

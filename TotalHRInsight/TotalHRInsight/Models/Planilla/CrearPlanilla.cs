@@ -11,10 +11,7 @@ namespace TotalHRInsight.Models.Planilla
 
         public DateTime FechaFin { get; set; }
 
-        public string Descripcion { get; set; }
-
-        public double MontoTotal { get; set; }
-        public string CurrentUserId { get; set; }
+       public string CurrentUserId { get; set; }
         public string CurrentUserName { get; set; }
         public string UsuarioAsignacionId { get; set; }
     }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TotalHRInsight.DAL;
+using TotalHRInsight.Models.Planilla;
 
 namespace TotalHRInsight.Controllers
 {
@@ -67,17 +68,84 @@ namespace TotalHRInsight.Controllers
         // POST: Planillas/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdPlanilla,FechaInicio,FechaFin,MontoTotal,UsuarioCreacionId,UsuarioAsignacionId")] Planilla planilla)
+        public async Task<IActionResult> Create( CrearPlanilla planilla)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(planilla);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var empleado = _context.ApplicationUsers
+                    .Include(i => i.Sucursal)
+                    .FirstOrDefaultAsync(f => f.Id == planilla.UsuarioAsignacionId);
+
+                if (empleado == null)
+                {
+                    ModelState.AddModelError(string.Empty, "No se encontro al empleado especificado.");
+                    return View(planilla);
+                }
+
+                var asistencia = _context.Asistencias
+                    .Include(i => i.UsuarioCreacion)
+                    .Where(w => w.UsuarioCreacionId == planilla.UsuarioAsignacionId && 
+                    (w.FechaEntrada >= planilla.FechaInicio)&&
+                    (w.FechaSalida <= planilla.FechaFin)).ToList();
+
+                if (asistencia == null || asistencia.Count == 0)
+                {
+                    ModelState.AddModelError(string.Empty, "No se encontraron asistencias para el usuario y las fechas especificadas.");
+                    return View(planilla);
+                }
+
+                var (horasTrabajo, horasExtra) = CalcularHorasTabajo(asistencia);
+
+                var permisos = _context.Permisos
+                    .Include(i => i.UsuarioAsignacion)
+                    .Include(i => i.TipoPermisos)
+                    .Where(w => w.UsuarioAsignacionId == planilla.UsuarioAsignacionId &&
+                    (w.FechaInicio >= planilla.FechaInicio) &&
+                    (w.FechaFin <= planilla.FechaFin)).ToList();
+
+                var deduccion = _context.Deduccions
+                    .Include(i => i.TipoDeduccion)
+                    .Include(i => i.UsuarioAsignacion)
+                    .Where(w => w.FechaDeduccion >= planilla.FechaInicio &&
+                    w.FechaDeduccion <= planilla.FechaFin &&
+                    w.UsuarioAsignacionId == planilla.UsuarioAsignacionId);
+
+
+                //_context.Add(planilla);
+                //await _context.SaveChangesAsync();
+                //return RedirectToAction(nameof(Index));
             }
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", planilla.UsuarioAsignacionId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", planilla.UsuarioCreacionId);
+            ViewData["UsuarioAsignacionId"] = new SelectList(
+                _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
+                "Id",
+                "NombreCompleto"
+            );
+            var user = await _userManager.GetUserAsync(User);
+            ViewData["CurrentUserId"] = user.Id;
+            ViewData["CurrentUserName"] = $"{user.Nombre} {user.PrimerApellido}";
             return View(planilla);
+        }
+
+        private static (double horasTrabajo, double horasExtra) CalcularHorasTabajo (List<Asistencia> asistenciaList)
+        {
+            double horasExtraTotal = 0;
+            double horasTrabajoTotal = 0;
+
+            foreach ( var datos in asistenciaList)
+            {
+                TimeSpan diferencia = datos.FechaSalida - datos.FechaEntrada;
+                double horas = diferencia.TotalHours;
+                double horasExtra = horas - 8;
+                
+                if(horasExtra > 0)
+                {
+                    horasExtraTotal += horasExtra;
+                }
+
+                horasTrabajoTotal += horas - horasExtra;
+            }
+
+            return (horasTrabajoTotal, horasExtraTotal);
         }
 
         // GET: Planillas/Edit/5
