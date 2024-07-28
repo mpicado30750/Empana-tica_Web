@@ -127,10 +127,14 @@
                 <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
                     <div class="container-fluid">
                         <div class="d-flex w-100">
-                            <!-- Botón de refrescar en el lado izquierdo -->
-                            <a class="btn btn-info text-white me-2" onclick="location.reload();">
+                            <!-- Botones de refrescar y volver -->
+                            <a class="btn btn-danger text-white me-2" id="refreshButton" onclick="location.reload();">
                                 <i class="bi bi-arrow-clockwise"></i> Refrescar
                             </a>
+                            <a class="btn btn-danger text-white me-2" id="backButton" onclick="window.history.back();">
+                                <i class="bi bi-arrow-left"></i> Volver
+                            </a>
+
                             <!-- Espacio flexible para alinear el contenido a la derecha -->
                             <div class="ml-auto d-flex align-items-center">
                                 <!-- Aquí iría el nombre del usuario y el botón de cerrar sesión -->
@@ -153,6 +157,15 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
+            // Ocultar los botones en la página de inicio
+            var path = window.location.pathname;
+            var homePath = "/";
+
+            if (path === homePath) {
+                $('#refreshButton').hide();
+                $('#backButton').hide();
+            }
+
             $('.collapse').on('shown.bs.collapse', function () {
                 var button = $(this).prev('button');
                 button.find('i').removeClass('bi-caret-right-fill').addClass('bi-caret-down');
