@@ -12,7 +12,7 @@ namespace TotalHRInsight.DAL
 		[Key]
 		public int IdPermisos { get; set; }
 
-        [DisplayName("Fecha de Inicio")]
+         [DisplayName("Fecha de Inicio")]
         [Required(ErrorMessage = "La fecha de inicio es obligatoria")]
 		public DateTime FechaInicio { get; set; }
 

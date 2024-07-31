@@ -8,10 +8,9 @@ namespace TotalHRInsight.Models.Planilla
     public class CrearPlanilla
     {
         public DateTime FechaInicio { get; set; }
-
         public DateTime FechaFin { get; set; }
-
-       public string CurrentUserId { get; set; }
+        public string Comentarios { get; set; }
+        public string CurrentUserId { get; set; }
         public string CurrentUserName { get; set; }
         public string UsuarioAsignacionId { get; set; }
     }
