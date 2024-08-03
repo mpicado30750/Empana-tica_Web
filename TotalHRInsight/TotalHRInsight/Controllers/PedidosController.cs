@@ -110,7 +110,7 @@ namespace TotalHRInsight.Controllers
                 return BadRequest(string.Join(", ", errores));
             }
 
-            var estadoPendiente = await _context.Estados.FirstOrDefaultAsync(e => e.EstadoSolicitud == "En Progreso");
+            var estadoPendiente = await _context.Estados.FirstOrDefaultAsync(e => e.EstadoSolicitud == "En proceso");
 
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
@@ -156,6 +156,28 @@ namespace TotalHRInsight.Controllers
                         Cantidad = producto.CantidadSelecciona,
                     };
                     _context.PedidosProductos.Add(detallePedido);
+
+                    // Restar la cantidad de la sucursal principal
+                    var productoSucursalPrincipal = await _context.Inventario
+                        .FirstOrDefaultAsync(ps => ps.IdInventario == producto.IdProducto && ps.SucursalId == 2);
+
+                    if (productoSucursalPrincipal != null)
+                    {
+                        productoSucursalPrincipal.CantidadDisponible -= producto.CantidadSelecciona;
+                        if (productoSucursalPrincipal.CantidadDisponible < 0)
+                        {
+                            errorEnProductos = true;
+                            mensajeError = $"No hay suficiente stock del producto {producto.NombreProducto} en la sucursal principal.";
+                            break;
+                        }
+                        _context.Inventario.Update(productoSucursalPrincipal);
+                    }
+                    else
+                    {
+                        errorEnProductos = true;
+                        mensajeError = $"No se encontró el producto {producto.NombreProducto} en la sucursal principal.";
+                        break;
+                    }
                 }
 
                 if (errorEnProductos)

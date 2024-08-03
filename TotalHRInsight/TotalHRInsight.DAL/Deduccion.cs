@@ -19,7 +19,7 @@ namespace TotalHRInsight.DAL
         [Required(ErrorMessage = "La fecha de registro es obligatoria")]
         public DateTime FechaDeduccion { get; set; }
 
-        [DisplayName("Deducción")]
+        [DisplayName("Descripción")]
         [Required(ErrorMessage = "La deducción es requerida")]
         [MaxLength(100, ErrorMessage = "El nombre de deducción no puede exceder los 100 caracteres")]
         public string NombreDeduccion { get; set; }
