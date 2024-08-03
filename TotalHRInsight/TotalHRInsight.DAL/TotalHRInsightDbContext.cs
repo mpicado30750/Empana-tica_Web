@@ -32,5 +32,10 @@ namespace TotalHRInsight.DAL
 		public virtual DbSet<TipoDeduccion> TipoDeduccions { get; set; }
 		public virtual DbSet<Deduccion> Deduccions { get; set; }
 		public virtual DbSet<Salario> Salarios { get; set; }
-	}
+        public virtual DbSet<TipoGasto> TipoGastos { get; set; }
+        public virtual DbSet<TipoIngreso> TipoIngresos { get; set; }
+        public virtual DbSet<Gasto> Gastos { get; set; }
+        public virtual DbSet<Ingreso> Ingresos { get; set; }
+        public virtual DbSet<CierreCaja> CierreCajas { get; set; }
+    }
 }

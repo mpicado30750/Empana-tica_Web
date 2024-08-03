@@ -320,5 +320,90 @@ namespace TotalHRInsight.Controllers
                 }
             }
         }
+
+        public async Task<IActionResult> Export(int IdInventario)
+        {
+            try
+            {
+                var inventario = await _context.Inventario
+                    .Include(i => i.Producto)
+                    .Include(i => i.Sucursal)
+                    .Include(i => i.UsuarioCreacion)
+                    .Include(i => i.UsuarioModificacion)
+                    .FirstOrDefaultAsync(i => i.IdInventario == IdInventario);
+
+                if (inventario == null)
+                {
+                    return NotFound();
+                }
+
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add($"Inventario_{IdInventario}");
+                    worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+
+                    // Agregar las imágenes y ajustar tamaño
+                    var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
+                    var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
+
+                    if (!System.IO.File.Exists(imagePath1) || !System.IO.File.Exists(imagePath2))
+                    {
+                        throw new FileNotFoundException("Una o más imágenes no se encuentran en la ubicación especificada.");
+                    }
+
+                    var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
+                    var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
+
+                    // Ajustar las celdas para las imágenes
+                    worksheet.Row(1).Height = 60;
+                    worksheet.Column(1).Width = 12;
+                    worksheet.Column(7).Width = 12;
+
+                    // Título
+                    var titleCell = worksheet.Cell("A2");
+                    titleCell.Value = $"Detalles del Inventario #{IdInventario}";
+                    titleCell.Style.Font.Bold = true;
+                    titleCell.Style.Font.FontSize = 16;
+                    titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    titleCell.Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4");
+                    titleCell.Style.Font.FontColor = XLColor.White;
+                    worksheet.Range("A2:G2").Merge();
+
+                    // Información del inventario
+                    worksheet.Cell("A3").Value = "Fecha Creación:";
+                    worksheet.Cell("B3").Value = inventario.FechaCreacion.ToString("yyyy-MM-dd");
+                    worksheet.Cell("A4").Value = "Fecha Modificación:";
+                    worksheet.Cell("B4").Value = inventario.FechaModificacion.ToString("yyyy-MM-dd") ?? "N/A";
+                    worksheet.Cell("A5").Value = "Usuario Creación:";
+                    worksheet.Cell("B5").Value = $"{inventario.UsuarioCreacion.Nombre} {inventario.UsuarioCreacion.PrimerApellido}";
+                    worksheet.Cell("A6").Value = "Usuario Modificación:";
+                    worksheet.Cell("B6").Value = inventario.UsuarioModificacion != null ? $"{inventario.UsuarioModificacion.Nombre} {inventario.UsuarioModificacion.PrimerApellido}" : "N/A";
+                    worksheet.Cell("A7").Value = "Sucursal:";
+                    worksheet.Cell("B7").Value = inventario.Sucursal.NombreSucursal;
+                    worksheet.Cell("A8").Value = "Producto:";
+                    worksheet.Cell("B8").Value = inventario.Producto.NombreProducto;
+                    worksheet.Cell("A9").Value = "Cantidad Disponible:";
+                    worksheet.Cell("B9").Value = inventario.CantidadDisponible;
+
+                    worksheet.Columns().AdjustToContents();
+
+                    using (var stream = new MemoryStream())
+                    {
+                        workbook.SaveAs(stream);
+                        var content = stream.ToArray();
+                        return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Inventario_{IdInventario}.xlsx");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores
+                // Log the exception
+                return StatusCode(500, "Ocurrió un error al generar el archivo Excel.");
+            }
+        }
+
+
+
     }
 }
