@@ -142,6 +142,19 @@ namespace TotalHRInsight.Controllers
                 double salarioExtra = horasExtra * (empleado.Salario * 1.5); // Suponiendo que empleado.SalarioExtra es el salario por hora extra
                 double salarioNeto = (salarioBruto + salarioExtra) - totalDeduccion;
 
+
+                var nuevoSalario = new Salario
+                {
+                    SalarioBruto = salarioBruto,
+                    SalarioExtra = salarioExtra,
+                    SalarioNeto = salarioNeto,
+                    UsuarioCreacionId = user.Id,
+                    UsuarioAsignacionId = planilla.UsuarioAsignacionId
+                };
+
+                _context.Add(nuevoSalario);
+                await _context.SaveChangesAsync();
+
                 // Crear un nuevo registro de planilla
                 var nuevaPlanilla = new Planilla
                 {
@@ -180,20 +193,21 @@ namespace TotalHRInsight.Controllers
             foreach (var dato in permisos)
             {
                 string permisoNormalizado = NormalizarNombrePermiso(dato.TipoPermisos.NombrePermiso);
-
+                TimeSpan diferencia = dato.FechaFin - dato.FechaInicio;
+                int diasTrabajados = diferencia.Days;
                 switch (permisoNormalizado)
                 {
                     case "vacaciones":
-                        totalVacaciones++;
+                        totalVacaciones += diasTrabajados;
                         break;
                     case "licenciadematernidad":
-                        totalLicMaternidad++;
+                        totalLicMaternidad += diasTrabajados;
                         break;
                     case "licenciadepaternidad":
-                        totalLicPaternidad++;
+                        totalLicPaternidad += diasTrabajados;
                         break;
                     case "gocedesueldo":
-                        totalGoce++;
+                        totalGoce += diasTrabajados;
                         break;
                     default:
                         // Manejar casos desconocidos si es necesario
