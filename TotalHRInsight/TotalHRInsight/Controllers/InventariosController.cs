@@ -330,9 +330,10 @@ namespace TotalHRInsight.Controllers
                     .Include(i => i.Sucursal)
                     .Include(i => i.UsuarioCreacion)
                     .Include(i => i.UsuarioModificacion)
-                    .FirstOrDefaultAsync(i => i.IdInventario == IdInventario);
+                    .Where(i => i.SucursalId == IdInventario) // Asegúrate de que esto esté filtrando correctamente
+                    .ToListAsync();
 
-                if (inventario == null)
+                if (inventario == null || !inventario.Any())
                 {
                     return NotFound();
                 }
@@ -369,21 +370,37 @@ namespace TotalHRInsight.Controllers
                     titleCell.Style.Font.FontColor = XLColor.White;
                     worksheet.Range("A2:G2").Merge();
 
-                    // Información del inventario
+                    // Información del inventario general
+                    var firstInventario = inventario.First();
                     worksheet.Cell("A3").Value = "Fecha Creación:";
-                    worksheet.Cell("B3").Value = inventario.FechaCreacion.ToString("yyyy-MM-dd");
+                    worksheet.Cell("B3").Value = firstInventario.FechaCreacion.ToString("yyyy-MM-dd");
                     worksheet.Cell("A4").Value = "Fecha Modificación:";
-                    worksheet.Cell("B4").Value = inventario.FechaModificacion.ToString("yyyy-MM-dd") ?? "N/A";
+                    worksheet.Cell("B4").Value = firstInventario.FechaModificacion.ToString("yyyy-MM-dd") ?? "N/A";
                     worksheet.Cell("A5").Value = "Usuario Creación:";
-                    worksheet.Cell("B5").Value = $"{inventario.UsuarioCreacion.Nombre} {inventario.UsuarioCreacion.PrimerApellido}";
+                    worksheet.Cell("B5").Value = $"{firstInventario.UsuarioCreacion.Nombre} {firstInventario.UsuarioCreacion.PrimerApellido}";
                     worksheet.Cell("A6").Value = "Usuario Modificación:";
-                    worksheet.Cell("B6").Value = inventario.UsuarioModificacion != null ? $"{inventario.UsuarioModificacion.Nombre} {inventario.UsuarioModificacion.PrimerApellido}" : "N/A";
+                    worksheet.Cell("B6").Value = firstInventario.UsuarioModificacion != null ? $"{firstInventario.UsuarioModificacion.Nombre} {firstInventario.UsuarioModificacion.PrimerApellido}" : "N/A";
                     worksheet.Cell("A7").Value = "Sucursal:";
-                    worksheet.Cell("B7").Value = inventario.Sucursal.NombreSucursal;
-                    worksheet.Cell("A8").Value = "Producto:";
-                    worksheet.Cell("B8").Value = inventario.Producto.NombreProducto;
-                    worksheet.Cell("A9").Value = "Cantidad Disponible:";
-                    worksheet.Cell("B9").Value = inventario.CantidadDisponible;
+                    worksheet.Cell("B7").Value = firstInventario.Sucursal.NombreSucursal;
+
+                    // Encabezado de la tabla de productos
+                    var headers = new[] { "Producto", "Cantidad Disponible" };
+                    for (int i = 0; i < headers.Length; i++)
+                    {
+                        worksheet.Cell(9, i + 1).Value = headers[i];
+                        worksheet.Cell(9, i + 1).Style.Font.Bold = true;
+                        worksheet.Cell(9, i + 1).Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4");
+                        worksheet.Cell(9, i + 1).Style.Font.FontColor = XLColor.White;
+                    }
+
+                    // Información de los productos en el inventario
+                    int row = 10;
+                    foreach (var item in inventario)
+                    {
+                        worksheet.Cell(row, 1).Value = item.Producto.NombreProducto;
+                        worksheet.Cell(row, 2).Value = item.CantidadDisponible;
+                        row++;
+                    }
 
                     worksheet.Columns().AdjustToContents();
 

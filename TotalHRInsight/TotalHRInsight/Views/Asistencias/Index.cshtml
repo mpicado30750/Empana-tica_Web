@@ -133,12 +133,14 @@
             }
         }
     }
-
     function filterCards() {
         try {
-            var searchInput = document.getElementById('searchInput').value.toLowerCase();
+            var searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
             var startDateInput = document.getElementById('startDateInput').value;
             var endDateInput = document.getElementById('endDateInput').value;
+
+            var startDate = startDateInput ? new Date(startDateInput) : null;
+            var endDate = endDateInput ? new Date(endDateInput) : null;
 
             var cards = document.getElementsByClassName('asistencia-card');
             var filteredData = [];
@@ -147,25 +149,28 @@
                 var card = cards[i];
                 var cardId = card.id.split('-')[1];
 
-                var nombre = document.getElementById(`nombre-${cardId}`).textContent.toLowerCase();
+                var nombre = document.getElementById(`nombre-${cardId}`).textContent.trim().toLowerCase();
                 var fechaEntrada = document.getElementById(`fecha-entrada-${cardId}`).textContent.trim();
                 var fechaSalida = document.getElementById(`fecha-salida-${cardId}`).textContent.trim();
 
+                // Convertir las fechas de entrada y salida a objetos Date (sólo una vez)
+                var entradaDate = parseDate(fechaEntrada);
+                var salidaDate = parseDate(fechaSalida);
+
                 var isVisible = true;
 
+                // Filtrado por nombre
                 if (searchInput && !nombre.includes(searchInput)) {
                     isVisible = false;
                 }
 
-                if (startDateInput || endDateInput) {
-                    var entradaDate = new Date(fechaEntrada.split('/').reverse().join('-')).toISOString().split('T')[0];
-                    var salidaDate = new Date(fechaSalida.split('/').reverse().join('-')).toISOString().split('T')[0];
-
-                    if (startDateInput && entradaDate < new Date(startDateInput).toISOString().split('T')[0]) {
-                        isVisible = false;
-                    }
-
-                    if (endDateInput && entradaDate > new Date(endDateInput).toISOString().split('T')[0]) {
+                // Filtrado por rango de fechas
+                if (startDate || endDate) {
+                    if (
+                        (startDate && salidaDate < startDate) ||
+                        (endDate && entradaDate > endDate) ||
+                        (startDate && endDate && (salidaDate < startDate || entradaDate > endDate))
+                    ) {
                         isVisible = false;
                     }
                 }
@@ -179,8 +184,8 @@
                         latitudSalida: card.getAttribute('data-lat-salida'),
                         longitudSalida: card.getAttribute('data-lng-salida'),
                         nombre: nombre,
-                        primerApellido: document.getElementById(`nombre-${cardId}`).textContent.trim().split(' ')[1],
-                        segundoApellido: document.getElementById(`nombre-${cardId}`).textContent.trim().split(' ')[2],
+                        primerApellido: card.getAttribute('data-primer-apellido'),
+                        segundoApellido: card.getAttribute('data-segundo-apellido'),
                         fechaEntrada: fechaEntrada,
                         fechaSalida: fechaSalida
                     });
@@ -189,8 +194,24 @@
 
             updateMarkers(filteredData);
         } catch (error) {
-            console.error("Error en filterCards: " + error);
+            console.error("Error en filterCards: ", error);
         }
     }
+
+    // Función para convertir la fecha desde el formato dd/MM/yyyy HH:mm a un objeto Date
+    function parseDate(dateString) {
+        try {
+            var [datePart, timePart] = dateString.split(' ');
+            var [day, month, year] = datePart.split('/').map(Number);
+            var [hours, minutes] = timePart.split(':').map(Number);
+
+            return new Date(year, month - 1, day, hours, minutes);
+        } catch (error) {
+            console.error("Error al parsear la fecha: ", error);
+            return null;
+        }
+    }
+
+
 </script>
 
