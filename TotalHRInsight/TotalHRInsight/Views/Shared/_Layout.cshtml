@@ -38,7 +38,7 @@
                     <!-- Sección de Inventarios y Productos -->
                     <div class="container">
                         <button type="button" class="btn nav-link" data-toggle="collapse" data-target="#inventarios-productos-pedidos">
-                            Inventario <i class="bi bi-caret-right-fill"></i>
+                        <i class="bi bi-boxes"></i> Control <i class="bi bi-caret-right-fill"></i>
                         </button>
                         <div id="inventarios-productos-pedidos" class="collapse">
                             <ul class="nav flex-column">
@@ -61,7 +61,7 @@
                     <!-- Sección de Usuarios, Deducciones, Permisos y Salarios -->
                     <div class="container">
                         <button type="button" class="btn nav-link" data-toggle="collapse" data-target="#sucursales-usuarios-deducciones">
-                            Usuarios <i class="bi bi-caret-right-fill"></i>
+                         <i class="bi bi-bank"></i> Planilla <i class="bi bi-caret-right-fill"></i>
                         </button>
                         <div id="sucursales-usuarios-deducciones" class="collapse">
                             <ul class="nav flex-column">
@@ -87,25 +87,26 @@
                     <!-- Sección de Estados y Medidas -->
                     <div class="container">
                         <button type="button" class="btn nav-link" data-toggle="collapse" data-target="#estados-medidas">
-                            Tipos <i class="bi bi-caret-right-fill"></i>
+                            <i class="bi bi-gear-fill"></i> Ajustes <i class="bi bi-caret-right-fill"></i>
                         </button>
                         <div id="estados-medidas" class="collapse">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Estados" asp-action="Index">Estados</a>
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Estados" asp-action="Index"><i class="bi bi-list-check"></i> Estados</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Medidas" asp-action="Index">Medidas</a>
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Medidas" asp-action="Index"><i class="bi bi-rulers"></i> Medidas</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="TipoDeduccions" asp-action="Index">Tipo de Deducciones</a>
+                                    <a class="nav-link text-light" asp-area="" asp-controller="TipoDeduccions" asp-action="Index"><i class="bi bi-receipt-cutoff"></i> Deducciones</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="TipoPermiso" asp-action="Index">Tipo Permiso</a>
+                                    <a class="nav-link text-light" asp-area="" asp-controller="TipoPermiso" asp-action="Index"><i class="bi bi-calendar-check"></i> Permiso</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Categorias" asp-action="Index">Categoría</a>
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Categorias" asp-action="Index"><i class="bi bi-tags-fill"></i> Categoría</a>
                                 </li>
+
                             </ul>
                         </div>
                     </div>

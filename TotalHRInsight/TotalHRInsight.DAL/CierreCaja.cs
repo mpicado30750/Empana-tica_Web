@@ -30,6 +30,12 @@ namespace TotalHRInsight.DAL
         public double MontoTotal { get; set; }
         public Sucursal? Sucursal { get; set; }
 
+        [DisplayName("Asignado Por")]
+        [Required(ErrorMessage = "El ID del usuario creacion es obligatorio")]
+        [ForeignKey("UsuarioCreacion")]
+        public string UsuarioCreacionId { get; set; }
+
+        public ApplicationUser? UsuarioCreacion { get; set; }
         public ICollection<Ingreso> Ingreso { get; set; } = new List<Ingreso>();
         public ICollection<Gasto> Gasto { get; set; } = new List<Gasto>();
     }

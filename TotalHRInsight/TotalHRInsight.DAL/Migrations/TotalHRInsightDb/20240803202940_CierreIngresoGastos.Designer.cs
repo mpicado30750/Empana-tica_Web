@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TotalHRInsight.DAL;
 
@@ -11,9 +12,11 @@ using TotalHRInsight.DAL;
 namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
 {
     [DbContext(typeof(TotalHRInsightDbContext))]
-    partial class TotalHRInsightDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240803202940_CierreIngresoGastos")]
+    partial class CierreIngresoGastos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,15 +185,9 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                     b.Property<int>("SucursalId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UsuarioCreacionId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
                     b.HasKey("IdCierraCaja");
 
                     b.HasIndex("SucursalId");
-
-                    b.HasIndex("UsuarioCreacionId");
 
                     b.ToTable("CierreCaja");
                 });
@@ -761,15 +758,7 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TotalHRInsight.DAL.ApplicationUser", "UsuarioCreacion")
-                        .WithMany()
-                        .HasForeignKey("UsuarioCreacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Sucursal");
-
-                    b.Navigation("UsuarioCreacion");
                 });
 
             modelBuilder.Entity("TotalHRInsight.DAL.Deduccion", b =>
