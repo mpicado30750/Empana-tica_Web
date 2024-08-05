@@ -1,66 +1,65 @@
 ﻿@model IEnumerable<TotalHRInsight.DAL.Deduccion>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Deducciones";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="d-flex justify-content-between align-items-center my-4">
+    <h1 class="mb-0">Lista de Deducciones</h1>
+    <div>
+        <a asp-action="Create" class="btn btn-danger me-2" onclick="showLoader()">
+            <i class="bi bi-plus-circle"></i> Crear nuevo registro
+        </a>
+    </div>
+</div>
+<hr />
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Deduccion #@item.IdDeduccion</h5>
+                    <a asp-action="Detalles" asp-route-IdDeduccion="@item.IdDeduccion" class="btn btn-link text-white">
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="text-muted">Información de Deducciones</h6>
+                        <p class="mb-0"><strong>Nombre:</strong> @item.UsuarioAsignacion.Nombre @item.UsuarioAsignacion.PrimerApellido @item.UsuarioAsignacion.SegundoApellido</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-muted">Detalles de la Deduccion</h6>
+                        <p class="mb-0"><strong>Tipo de Deduccion:</strong> @item.TipoDeduccion.NombreDeduccion</p>
+                        <p class="mb-0"><strong>Detalle de Deduccion:</strong> @item.NombreDeduccion</p>
+                        <p class="mb-0"><strong>Monto:</strong> ₡ @item.MontoDeduccion</p>
+                        <p class="mb-0"><strong>Fecha de Deduccion:</strong> @item.FechaDeduccion.ToString("dd/MM/yyyy")</p>
+                        <p class="mb-0"><strong>Usuario Asignacion:</strong> @item.UsuarioCreacion.Nombre @item.UsuarioCreacion.PrimerApellido @item.UsuarioCreacion.SegundoApellido</p>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Edit" asp-route-IdDeduccion="@item.IdDeduccion" class="btn btn-warning" onclick="showLoader()">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a asp-action="Details" asp-route-IdDeduccion="@item.IdDeduccion" class="btn btn-info" onclick="showLoader()">
+                            <i class="bi bi-info-circle"></i> Detalles
+                        </a>
+                        <a asp-action="Delete" asp-route-IdDeduccion="@item.IdDeduccion" class="btn btn-danger" onclick="showLoader()">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaDeduccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreDeduccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MontoDeduccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioCreacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioAsignacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoDeduccion)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaDeduccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreDeduccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MontoDeduccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioCreacion.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioAsignacion.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoDeduccion.NombreDeduccion)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdDeduccion">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdDeduccion">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdDeduccion">Delete</a>
-            </td>
-        </tr>
+<!-- Incluir la vista parcial del loader modal -->
+@Html.Partial("_LoaderModal")
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script src="~/js/loader.js"></script>
 }
-    </tbody>
-</table>
