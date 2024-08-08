@@ -23,7 +23,6 @@ namespace TotalHRInsight.DAL
 
 		[Required(ErrorMessage = "El precio unitario es obligatorio")]
         [DisplayName("Precio Unitario")]
-        [Column(TypeName = "double(18,2)")]
         public double PrecioUnitario { get; set; }
 
 		[DisplayName("Unidad de Medida")]

@@ -58,10 +58,10 @@ namespace TotalHRInsightAPI.Controllers
         {
             try
             {
-                var estadoPendiente = await _context.Estados.FirstOrDefaultAsync(e => e.EstadoSolicitud == "En Progreso");
+                var estadoPendiente = await _context.Estados.FirstOrDefaultAsync(e => e.EstadoSolicitud == "En proceso");
                 if (estadoPendiente == null)
                 {
-                    return NotFound("No se encontró el estado 'En Progreso'");
+                    return NotFound("No se encontró el estado 'En proceso'");
                 }
 
                 var permiso = new Permiso

@@ -97,7 +97,7 @@ namespace TotalHRInsightAPI.Controllers
             try
             {
                 //Creacion de pedidos para la devolucion
-                var estadoPendiente = await _context.Estados.FirstOrDefaultAsync(e => e.EstadoSolicitud == "En Progreso");
+                var estadoPendiente = await _context.Estados.FirstOrDefaultAsync(e => e.EstadoSolicitud == "En proceso");
                 var sucursalID = await _context.Sucursales.FirstOrDefaultAsync(e => e.NombreSucursal == "Centro de Produccion");
 
                 var nuevoPedido = new Pedido
