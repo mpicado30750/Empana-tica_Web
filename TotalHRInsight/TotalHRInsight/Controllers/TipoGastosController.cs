@@ -25,15 +25,15 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: TipoGastos/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? IdTipoGasto)
         {
-            if (id == null)
+            if (IdTipoGasto == null)
             {
                 return NotFound();
             }
 
             var tipoGasto = await _context.TipoGastos
-                .FirstOrDefaultAsync(m => m.IdTipoGasto == id);
+                .FirstOrDefaultAsync(m => m.IdTipoGasto == IdTipoGasto);
             if (tipoGasto == null)
             {
                 return NotFound();
@@ -65,14 +65,14 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: TipoGastos/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? IdTipoGasto)
         {
-            if (id == null)
+            if (IdTipoGasto == null)
             {
                 return NotFound();
             }
 
-            var tipoGasto = await _context.TipoGastos.FindAsync(id);
+            var tipoGasto = await _context.TipoGastos.FindAsync(IdTipoGasto);
             if (tipoGasto == null)
             {
                 return NotFound();
@@ -85,9 +85,9 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTipoGasto,NombreGasto")] TipoGasto tipoGasto)
+        public async Task<IActionResult> Edit(int IdTipoGasto, [Bind("IdTipoGasto,NombreGasto")] TipoGasto tipoGasto)
         {
-            if (id != tipoGasto.IdTipoGasto)
+            if (IdTipoGasto != tipoGasto.IdTipoGasto)
             {
                 return NotFound();
             }
@@ -116,15 +116,15 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: TipoGastos/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? IdTipoGasto)
         {
-            if (id == null)
+            if (IdTipoGasto == null)
             {
                 return NotFound();
             }
 
             var tipoGasto = await _context.TipoGastos
-                .FirstOrDefaultAsync(m => m.IdTipoGasto == id);
+                .FirstOrDefaultAsync(m => m.IdTipoGasto == IdTipoGasto);
             if (tipoGasto == null)
             {
                 return NotFound();
@@ -136,9 +136,9 @@ namespace TotalHRInsight.Controllers
         // POST: TipoGastos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int IdTipoGasto)
         {
-            var tipoGasto = await _context.TipoGastos.FindAsync(id);
+            var tipoGasto = await _context.TipoGastos.FindAsync(IdTipoGasto);
             if (tipoGasto != null)
             {
                 _context.TipoGastos.Remove(tipoGasto);
@@ -148,9 +148,9 @@ namespace TotalHRInsight.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TipoGastoExists(int id)
+        private bool TipoGastoExists(int IdTipoGasto)
         {
-            return _context.TipoGastos.Any(e => e.IdTipoGasto == id);
+            return _context.TipoGastos.Any(e => e.IdTipoGasto == IdTipoGasto);
         }
     }
 }
