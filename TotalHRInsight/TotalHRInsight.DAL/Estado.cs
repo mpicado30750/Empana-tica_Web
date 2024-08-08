@@ -16,5 +16,8 @@ namespace TotalHRInsight.DAL
         [Required(ErrorMessage = "El espacio estado es obligatorio")]
         [DisplayName("Estado")]
         public string EstadoSolicitud { get; set; }
+
+        public ICollection<Pedido> Pedido { get; set; } = new List<Pedido>();
+
     }
 }

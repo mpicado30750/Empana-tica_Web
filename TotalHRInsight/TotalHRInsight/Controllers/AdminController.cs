@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using TotalHRInsight.DAL;
 using TotalHRInsight.Models;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TotalHRInsight.Controllers
 {
@@ -15,7 +17,6 @@ namespace TotalHRInsight.Controllers
     {
         private readonly AuthDbContext _authDbContext;
         private readonly RoleManager<IdentityRole> _roleManager;
-
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -36,7 +37,7 @@ namespace TotalHRInsight.Controllers
             var userRoleViewModelList = new List<UserRoleViewModel>();
             var users = await _userManager.Users.Include(u => u.Sucursal).ToListAsync();
 
-			foreach (var user in users)
+            foreach (var user in users)
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
                 var userRoleViewModel = new UserRoleViewModel
@@ -54,12 +55,11 @@ namespace TotalHRInsight.Controllers
         {
             var listaRol = _roleManager.Roles;
             ViewData["Roles"] = new SelectList(listaRol, "Id", "Name");
-			ViewData["Sucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
-			return View();
+            ViewData["Sucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
+            return View();
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> CrearUsuario(AdminCrearUsuarioViewModel usuarioModel)
         {
             if (ModelState.IsValid)
@@ -76,18 +76,44 @@ namespace TotalHRInsight.Controllers
                 user.NumeroTelefono = usuarioModel.NumeroTelefono;
                 user.idSucursal = usuarioModel.idSucursal;
                 user.Estado = true;
+
                 var result = await _userManager.CreateAsync(user, usuarioModel.Password);
                 if (result.Succeeded)
-                { 
-                    string normalizeRoleName = _roleManager.Roles.FirstOrDefault(r => r.Id == usuarioModel.IdRol).NormalizedName;
-                    var resultRole = await _userManager.AddToRoleAsync(user, normalizeRoleName);
-                    return RedirectToAction("Index", "Admin");
+                {
+                    string normalizeRoleName = _roleManager.Roles.FirstOrDefault(r => r.Id == usuarioModel.IdRol)?.NormalizedName;
+                    if (normalizeRoleName != null)
+                    {
+                        var resultRole = await _userManager.AddToRoleAsync(user, normalizeRoleName);
+                        if (resultRole.Succeeded)
+                        {
+                            return RedirectToAction("Index", "Admin");
+                        }
+                        else
+                        {
+                            foreach (var error in resultRole.Errors)
+                            {
+                                ModelState.AddModelError("", error.Description);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Rol no encontrado.");
+                    }
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
                 }
             }
+
             var listaRol = _roleManager.Roles;
             ViewData["Roles"] = new SelectList(listaRol, "Id", "Name");
-			ViewData["Sucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
-			return View(usuarioModel);
+            ViewData["Sucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
+            return View(usuarioModel);
         }
 
         // GET: Admin/Edit/5
@@ -109,6 +135,7 @@ namespace TotalHRInsight.Controllers
             var listaRol = _roleManager.Roles;
             ViewData["Roles"] = new SelectList(listaRol, "Id", "Name");
             ViewData["Sucursal"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", user.idSucursal);
+
             var model = new EditUserViewModel
             {
                 Id = user.Id,
@@ -119,9 +146,8 @@ namespace TotalHRInsight.Controllers
                 FechaNacimiento = user.FechaNacimiento,
                 NumeroTelefono = user.NumeroTelefono,
                 Email = user.Email,
-                //idSucursal = user.FirstOrDefault(r => userRoles.Contains(r.Name))?.Id,
                 SelectedRoleId = roles.FirstOrDefault(r => userRoles.Contains(r.Name))?.Id
-        };
+            };
 
             return View(model);
         }
@@ -129,7 +155,7 @@ namespace TotalHRInsight.Controllers
         // POST: Admin/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(EditUserViewModel model) 
+        public async Task<IActionResult> Edit(EditUserViewModel model)
         {
             // Remove the validation for Password and ConfirmPassword if they are empty
             if (string.IsNullOrEmpty(model.Password))
@@ -137,6 +163,7 @@ namespace TotalHRInsight.Controllers
                 ModelState.Remove(nameof(model.Password));
                 ModelState.Remove(nameof(model.ConfirmPassword));
             }
+
             if (!ModelState.IsValid)
             {
                 ViewData["Roles"] = new SelectList(await _roleManager.Roles.ToListAsync(), "Id", "Name", model.SelectedRoleId);
@@ -195,11 +222,10 @@ namespace TotalHRInsight.Controllers
             }
 
             var currentRoles = await _userManager.GetRolesAsync(user);
-
             var newRole = await _roleManager.FindByIdAsync(model.SelectedRoleId);
             if (newRole == null)
             {
-                ModelState.AddModelError("", "The selected role is invalid.");
+                ModelState.AddModelError("", "El rol seleccionado no es válido.");
                 return View(model);
             }
 
@@ -211,7 +237,6 @@ namespace TotalHRInsight.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
 
         // GET: Admin/Delete/5
         public async Task<IActionResult> Delete(string id)
@@ -245,7 +270,7 @@ namespace TotalHRInsight.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Admin/Ativar/5
+        // GET: Admin/Activar/5
         public async Task<IActionResult> Activar(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -262,7 +287,7 @@ namespace TotalHRInsight.Controllers
             return View(user);
         }
 
-        // POST: Admin/Ativar/5
+        // POST: Admin/Activar/5
         [HttpPost, ActionName("Activar")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ActivarConfirmed(string id)
@@ -270,13 +295,11 @@ namespace TotalHRInsight.Controllers
             var user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
-                user.Estado = true; // Establecer el usuario como Ativar
+                user.Estado = true; // Establecer el usuario como activo
                 await _userManager.UpdateAsync(user);
             }
 
             return RedirectToAction(nameof(Index));
         }
-
-
     }
 }

@@ -332,6 +332,8 @@ namespace TotalHRInsight.Controllers
             return View(pedido);
         }
 
+
+
         // GET: Pedidos/Delete/5
         public async Task<IActionResult> Delete(int? IdPedido)
         {
