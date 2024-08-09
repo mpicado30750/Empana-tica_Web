@@ -1,54 +1,73 @@
 ﻿@model IEnumerable<TotalHRInsight.DAL.Gasto>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Índice de Gastos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="d-flex justify-content-between align-items-center my-4">
+    <h1 class="mb-0">Gastos</h1>
+    <div>
+        <a asp-action="Create" class="btn btn-danger me-2" onclick="showLoader()">
+            <i class="bi bi-plus-circle"></i> Crear Nuevo Registro
+        </a>
+    </div>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MontoGasto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CierreCaja)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoGasto)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MontoGasto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CierreCaja.UsuarioCreacionId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoGasto.NombreGasto)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdGasto">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdGasto">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdGasto">Delete</a>
-            </td>
-        </tr>
+<div class="table-responsive">
+    <table class="table table-hover table-bordered table-striped shadow-lg rounded custom-table">
+        <thead class="bg-danger text-white">
+            <tr>
+                <th scope="col" class="rounded-top-left">
+                    @Html.DisplayNameFor(model => model.Fecha)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.MontoGasto)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.CierreCaja.UsuarioCreacionId)
+                </th>
+                <th scope="col" class="rounded-top-right">
+                    @Html.DisplayNameFor(model => model.TipoGasto.NombreGasto)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="bg-light">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MontoGasto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CierreCaja.UsuarioCreacionId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoGasto.NombreGasto)
+                    </td>
+                    <td class="text-center">
+                        <a asp-action="Edit" asp-route-id="@item.IdGasto" class="btn btn-sm btn-primary">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.IdGasto" class="btn btn-sm btn-info">
+                            <i class="bi bi-info-circle"></i> Detalles
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.IdGasto" class="btn btn-sm btn-danger">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@Html.Partial("_LoaderModal")
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script src="~/js/loader.js"></script>
 }
-    </tbody>
-</table>

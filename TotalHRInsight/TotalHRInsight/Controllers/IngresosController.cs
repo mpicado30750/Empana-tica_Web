@@ -28,9 +28,9 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Ingresos/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? IdIngreso)
         {
-            if (id == null)
+            if (IdIngreso == null)
             {
                 return NotFound();
             }
@@ -38,7 +38,7 @@ namespace TotalHRInsight.Controllers
             var ingreso = await _context.Ingresos
                 .Include(i => i.CierreCaja)
                 .Include(i => i.TipoIngreso)
-                .FirstOrDefaultAsync(m => m.IdIngreso == id);
+                .FirstOrDefaultAsync(m => m.IdIngreso == IdIngreso);
             if (ingreso == null)
             {
                 return NotFound();
@@ -96,9 +96,9 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdIngreso,Fecha,TipoIngresoId,MontoIngreso,CierreId")] Ingreso ingreso)
+        public async Task<IActionResult> Edit(int IdIngreso, [Bind("IdIngreso,Fecha,TipoIngresoId,MontoIngreso,CierreId")] Ingreso ingreso)
         {
-            if (id != ingreso.IdIngreso)
+            if (IdIngreso != ingreso.IdIngreso)
             {
                 return NotFound();
             }
@@ -129,9 +129,9 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Ingresos/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? IdIngreso)
         {
-            if (id == null)
+            if (IdIngreso == null)
             {
                 return NotFound();
             }
@@ -139,7 +139,7 @@ namespace TotalHRInsight.Controllers
             var ingreso = await _context.Ingresos
                 .Include(i => i.CierreCaja)
                 .Include(i => i.TipoIngreso)
-                .FirstOrDefaultAsync(m => m.IdIngreso == id);
+                .FirstOrDefaultAsync(m => m.IdIngreso == IdIngreso);
             if (ingreso == null)
             {
                 return NotFound();
@@ -151,9 +151,9 @@ namespace TotalHRInsight.Controllers
         // POST: Ingresos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int IdIngreso)
         {
-            var ingreso = await _context.Ingresos.FindAsync(id);
+            var ingreso = await _context.Ingresos.FindAsync(IdIngreso);
             if (ingreso != null)
             {
                 _context.Ingresos.Remove(ingreso);
@@ -163,9 +163,9 @@ namespace TotalHRInsight.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool IngresoExists(int id)
+        private bool IngresoExists(int IdIngreso)
         {
-            return _context.Ingresos.Any(e => e.IdIngreso == id);
+            return _context.Ingresos.Any(e => e.IdIngreso == IdIngreso);
         }
     }
 }

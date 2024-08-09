@@ -1,54 +1,77 @@
 ﻿@model IEnumerable<TotalHRInsight.DAL.Ingreso>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Índice de Ingreso";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="d-flex justify-content-between align-items-center my-4">
+    <h1 class="mb-0">Ingreso</h1>
+    <div>
+        <a asp-action="Create" class="btn btn-danger me-2" onclick="showLoader()">
+            <i class="bi bi-plus-circle"></i> Crear Nuevo Registro
+        </a>
+    </div>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MontoIngreso)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CierreCaja)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoIngreso)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MontoIngreso)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CierreCaja.UsuarioCreacionId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoIngreso.NombreIngreso)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdIngreso">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdIngreso">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdIngreso">Delete</a>
-            </td>
-        </tr>
+<div class="table-responsive">
+    <table class="table table-hover table-bordered table-striped shadow-lg rounded custom-table">
+        <thead class="bg-danger text-white">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fecha)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MontoIngreso)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CierreCaja.UsuarioCreacion.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TipoIngreso.NombreIngreso)
+                </th>
+                <th>
+                    Acciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="bg-light">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MontoIngreso)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CierreCaja.UsuarioCreacion.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoIngreso.NombreIngreso)
+                    </td>
+                    <td class="text-center">
+                        <a asp-action="Edit" asp-route-IdIngreso="@item.IdIngreso" class="btn btn-sm btn-primary">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a asp-action="Details" asp-route-IdIngreso="@item.IdIngreso" class="btn btn-sm btn-info">
+                            <i class="bi bi-info-circle"></i> Detalles
+                        </a>
+                        <a asp-action="Delete" asp-route-IdIngreso="@item.IdIngreso" class="btn btn-sm btn-danger">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+@Html.Partial("_LoaderModal")
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script src="~/js/loader.js"></script>
 }
-    </tbody>
-</table>
