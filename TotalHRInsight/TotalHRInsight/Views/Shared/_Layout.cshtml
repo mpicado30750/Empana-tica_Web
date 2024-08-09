@@ -1,207 +1,208 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TotalHRInsight</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <!-- No Borrar -->
-    <link href="~/lib/leaflet/leaflet.css" rel="stylesheet" />
-    <link href="~/lib/leaflet/leaflet.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- -------------- -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - TotalHRInsight</title>
+	<!-- Bootstrap CSS -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Bootstrap Icons -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<!-- No Borrar -->
+	<link href="~/lib/leaflet/leaflet.css" rel="stylesheet" />
+	<link href="~/lib/leaflet/leaflet.min.css" rel="stylesheet" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+	<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+	<!-- -------------- -->
 </head>
 <body>
-    <div class="d-flex">
-        @if (User.Identity.IsAuthenticated)
-        {
-            <nav class="sidebar bg-dark text-light d-flex flex-column p-3" aria-label="Sidebar">
-                <h1 class="sidebar-heading">
-                    <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
-                        <span style="color: #FFFFFF; font-weight: bold; margin-right: 10px;">TotalHRInsight</span>
-                        <img src="~/images/Empana-tica_Logo.jpg" class="img-fluid" alt="Empana-tica Logo" style="max-height: 30px;">
-                    </a>
-                </h1>
-                <ul class="nav flex-column mb-auto">
-                    <!-- Sección de Asistencias -->
-                    <div class="container">
-                        <a class="nav-link text-bold" asp-area="" asp-controller="Asistencias" asp-action="Index"><i class="bi bi-check2-circle"></i> Asistencia</a>
-                    </div>
+	<div class="d-flex">
+		@if (User.Identity.IsAuthenticated)
+		{
+			<nav class="sidebar bg-dark text-light d-flex flex-column p-3" aria-label="Sidebar">
+				<h1 class="sidebar-heading">
+					<a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+						<span style="color: #FFFFFF; font-weight: bold; margin-right: 10px;">TotalHRInsight</span>
+						<img src="~/images/Empana-tica_Logo.jpg" class="img-fluid" alt="Empana-tica Logo" style="max-height: 30px;">
+					</a>
+				</h1>
+				<ul class="nav flex-column mb-auto">
+					<!-- Sección de Asistencias -->
+					<div class="container">
+						<a class="nav-link text-bold" asp-area="" asp-controller="Asistencias" asp-action="Index"><i class="bi bi-check2-circle"></i> Asistencia</a>
+					</div>
 
-                    <!-- Sección de Pedidos -->
-                    <div class="container">
-                        <a class="nav-link text-bold" asp-area="" asp-controller="Pedidos" asp-action="Index"><i class="bi bi-basket"></i> Pedidos</a>
-                    </div>
+					<!-- Sección de Pedidos -->
+					<div class="container">
+						<a class="nav-link text-bold" asp-area="" asp-controller="Pedidos" asp-action="Index"><i class="bi bi-basket"></i> Pedidos</a>
+					</div>
 
-                    <!-- Sección de Inventarios y Productos -->
-                    <div class="container">
-                        <button type="button" class="btn nav-link" data-toggle="collapse" data-target="#inventarios-productos-pedidos">
-                            <i class="bi bi-boxes"></i> Control <i class="bi bi-caret-right-fill"></i>
-                        </button>
-                        <div id="inventarios-productos-pedidos" class="collapse">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Inventarios" asp-action="Index"><i class="bi bi-box-seam"></i> Inventario</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Productos" asp-action="Index"><i class="bi bi-bookshelf"></i> Productos</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Proveedors" asp-action="Index"><i class="bi bi-truck"></i> Proveedor</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Sucursals" asp-action="Index"> <i class="bi bi-shop-window"></i> Sucursales</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+					<!-- Sección de Inventarios y Productos -->
+					<div class="container">
+						<button type="button" class="btn nav-link" data-toggle="collapse" data-target="#inventarios-productos-pedidos">
+							<i class="bi bi-boxes"></i> Control <i class="bi bi-caret-right-fill"></i>
+						</button>
+						<div id="inventarios-productos-pedidos" class="collapse">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="Inventarios" asp-action="Index"><i class="bi bi-box-seam"></i> Inventario</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="Productos" asp-action="Index"><i class="bi bi-bookshelf"></i> Productos</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="Proveedors" asp-action="Index"><i class="bi bi-truck"></i> Proveedor</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="Sucursals" asp-action="Index"> <i class="bi bi-shop-window"></i> Sucursales</a>
+								</li>
+							</ul>
+						</div>
+					</div>
 
-                    <!-- Sección de Usuarios, Deducciones, Permisos y Salarios -->
-                    <div class="container">
-                        <button type="button" class="btn nav-link" data-toggle="collapse" data-target="#sucursales-usuarios-deducciones">
-                            <i class="bi bi-bank"></i> Planilla <i class="bi bi-caret-right-fill"></i>
-                        </button>
-                        <div id="sucursales-usuarios-deducciones" class="collapse">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="Index"><i class="bi bi-person-badge"></i> Usuarios</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Deduccions" asp-action="Index"><i class="bi bi-receipt"></i> Deducciones</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Permisoes" asp-action="Index"><i class="bi bi-calendar4-range"></i> Permiso</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Salarios" asp-action="Index"><i class="bi bi-wallet-fill"></i> Salarios</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Planillas" asp-action="Index"><i class="bi bi-wallet-fill"></i> Planillas</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Sección Contable -->
-                    <div class="container">
-                        <button type="button" class="btn nav-link" data-toggle="collapse" data-target="#sucursales-usuarios-contable">
-                            <i class="bi bi-cash-coin"></i> Contable <i class="bi bi-caret-right-fill"></i>
-                        </button>
-                        <div id="sucursales-usuarios-contable" class="collapse">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Ingresos" asp-action="Index"><i class="bi bi-coin"></i> Ingresos</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Gastos" asp-action="Index"><i class="bi bi-bag-x-fill"></i> Gastos</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Sección de Estados y Medidas -->
-                    <div class="container">
-                        <button type="button" class="btn nav-link" data-toggle="collapse" data-target="#estados-medidas">
-                            <i class="bi bi-gear-fill"></i> Ajustes <i class="bi bi-caret-right-fill"></i>
-                        </button>
-                        <div id="estados-medidas" class="collapse">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Estados" asp-action="Index"><i class="bi bi-list-check"></i> Estados</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Medidas" asp-action="Index"><i class="bi bi-rulers"></i> Medidas</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="TipoDeduccions" asp-action="Index"><i class="bi bi-receipt-cutoff"></i> Deducciones</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="TipoPermiso" asp-action="Index"><i class="bi bi-calendar-check"></i> Permiso</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="TipoIngresos" asp-action="Index"><i class="bi bi-coin"></i> Tipos Ingresos</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="TipoGastos" asp-action="Index"><i class="bi bi-bag-x-fill"></i> Tipos Gastos</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Categorias" asp-action="Index"><i class="bi bi-tags-fill"></i> Categoría</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </ul>
+					<!-- Sección de Usuarios, Deducciones, Permisos y Salarios -->
+					<div class="container">
+						<button type="button" class="btn nav-link" data-toggle="collapse" data-target="#sucursales-usuarios-deducciones">
+							<i class="bi bi-bank"></i> Planilla <i class="bi bi-caret-right-fill"></i>
+						</button>
+						<div id="sucursales-usuarios-deducciones" class="collapse">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="Index"><i class="bi bi-person-badge"></i> Usuarios</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="Deduccions" asp-action="Index"><i class="bi bi-receipt"></i> Deducciones</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="Permisoes" asp-action="Index"><i class="bi bi-calendar4-range"></i> Permiso</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="Salarios" asp-action="Index"><i class="bi bi-wallet-fill"></i> Salarios</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="Planillas" asp-action="Index"><i class="bi bi-wallet-fill"></i> Planillas</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!-- Sección Contable -->
+					<div class="container">
+						<button type="button" class="btn nav-link" data-toggle="collapse" data-target="#sucursales-usuarios-contable">
+							<i class="bi bi-cash-coin"></i> Contable <i class="bi bi-caret-right-fill"></i>
+						</button>
+						<div id="sucursales-usuarios-contable" class="collapse">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="Ingresos" asp-action="Index"><i class="bi bi-coin"></i> Ingresos</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="Gastos" asp-action="Index"><i class="bi bi-bag-x-fill"></i> Gastos</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!-- Sección de Estados y Medidas -->
+					<div class="container">
+						<button type="button" class="btn nav-link" data-toggle="collapse" data-target="#estados-medidas">
+							<i class="bi bi-gear-fill"></i> Ajustes <i class="bi bi-caret-right-fill"></i>
+						</button>
+						<div id="estados-medidas" class="collapse">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="Estados" asp-action="Index"><i class="bi bi-list-check"></i> Estados</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="Medidas" asp-action="Index"><i class="bi bi-rulers"></i> Medidas</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="TipoDeduccions" asp-action="Index"><i class="bi bi-receipt-cutoff"></i> Deducciones</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="TipoPermiso" asp-action="Index"><i class="bi bi-calendar-check"></i> Permiso</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="TipoIngresos" asp-action="Index"><i class="bi bi-coin"></i> Tipos Ingresos</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="TipoGastos" asp-action="Index"><i class="bi bi-bag-x-fill"></i> Tipos Gastos</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-light" asp-area="" asp-controller="Categorias" asp-action="Index"><i class="bi bi-tags-fill"></i> Categoría</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</ul>
 
-                <div class="mt-auto">
-                    <hr class="bg-light" />
-                    <span>&copy; 2024</span>
-                    <span>
-                        <a class="nav-link text-muted footer-text" asp-area="" asp-controller="Home" asp-action="Index">TotalHRInsight</a>
-                        <a class="nav-link text-muted footer-text" asp-area="" asp-controller="Home" asp-action="Privacy">Sobre Nosotros</a>
-                    </span>
-                </div>
-            </nav>
-        }
-        <div class="main-content flex-grow-1">
-            <header>
-                <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                    <div class="container-fluid">
-                        <div class="d-flex w-100">
-                            <!-- Botones de refrescar y volver -->
-                            <a class="btn btn-danger text-white me-2" id="refreshButton" onclick="location.reload();">
-                                <i class="bi bi-arrow-clockwise"></i> Refrescar
-                            </a>
-                            <a class="btn btn-danger text-white me-2" id="backButton" onclick="window.history.back();">
-                                <i class="bi bi-arrow-left"></i> Volver
-                            </a>
+				<div class="mt-auto">
+					<hr class="bg-light" />
+					<span>&copy; 2024</span>
+					<span>
+						<a class="nav-link text-muted footer-text" asp-area="" asp-controller="Home" asp-action="Index">TotalHRInsight</a>
+						<a class="nav-link text-muted footer-text" asp-area="" asp-controller="Home" asp-action="Privacy">Sobre Nosotros</a>
+					</span>
+				</div>
+			</nav>
+		}
+		<div class="main-content flex-grow-1">
+			<header>
+				<nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+					<div class="container-fluid">
+						<div class="d-flex w-100">
+							<!-- Botones de refrescar y volver -->
+							<a class="btn btn-danger text-white me-2" id="refreshButton" onclick="location.reload();">
+								<i class="bi bi-arrow-clockwise"></i> Refrescar
+							</a>
+							<a class="btn btn-danger text-white me-2" id="backButton" onclick="window.history.back();">
+								<i class="bi bi-arrow-left"></i> Volver
+							</a>
 
-                            <!-- Espacio flexible para alinear el contenido a la derecha -->
-                            <div class="ml-auto d-flex align-items-center">
-                                <!-- Aquí iría el nombre del usuario y el botón de cerrar sesión -->
-                                <partial name="_LoginPartial" />
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-            </header>
-            <div class="container">
-                <main role="main" class="pb-3">
-                    @RenderBody()
-                </main>
-            </div>
-        </div>
-    </div>
+							<!-- Espacio flexible para alinear el contenido a la derecha -->
+							<div class="ms-auto d-flex align-items-center">
+								<!-- Aquí iría el nombre del usuario y el botón de cerrar sesión -->
+								<partial name="_LoginPartial" />
+							</div>
+						</div>
+					</div>
+				</nav>
+			</header>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script>
-        $(document).ready(function () {
-            // Ocultar los botones en la página de inicio
-            var path = window.location.pathname;
-            var homePath = "/";
+			<div class="container">
+				<main role="main" class="pb-3">
+					@RenderBody()
+				</main>
+			</div>
+		</div>
+	</div>
 
-            if (path === homePath) {
-                $('#refreshButton').hide();
-                $('#backButton').hide();
-            }
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+	<!-- Bootstrap JS -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script>
+		$(document).ready(function () {
+			// Ocultar los botones en la página de inicio
+			var path = window.location.pathname;
+			var homePath = "/";
 
-            $('.collapse').on('shown.bs.collapse', function () {
-                var button = $(this).prev('button');
-                button.find('i').removeClass('bi-caret-right-fill').addClass('bi-caret-down');
-            });
+			if (path === homePath) {
+				$('#refreshButton').hide();
+				$('#backButton').hide();
+			}
 
-            $('.collapse').on('hidden.bs.collapse', function () {
-                var button = $(this).prev('button');
-                button.find('i').removeClass('bi-caret-down').addClass('bi-caret-right-fill');
-            });
-        });
-    </script>
-    @await RenderSectionAsync("Scripts", required: false)
+			$('.collapse').on('shown.bs.collapse', function () {
+				var button = $(this).prev('button');
+				button.find('i').removeClass('bi-caret-right-fill').addClass('bi-caret-down');
+			});
+
+			$('.collapse').on('hidden.bs.collapse', function () {
+				var button = $(this).prev('button');
+				button.find('i').removeClass('bi-caret-down').addClass('bi-caret-right-fill');
+			});
+		});
+	</script>
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
