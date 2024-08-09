@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +14,7 @@ using TotalHRInsight.Models.Inventario;
 
 namespace TotalHRInsight.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class InventariosController : Controller
     {
         private readonly TotalHRInsightDbContext _context;

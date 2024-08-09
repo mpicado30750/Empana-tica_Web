@@ -44,8 +44,8 @@
                         <p class="mb-0">
                             <strong>Estado:</strong>
                             <span class="badge
-                                @(item.Estado.EstadoSolicitud == "En Progreso" ? "bg-warning" :
-                                  item.Estado.EstadoSolicitud == "Aprobado" ? "bg-success" :
+                                @(item.Estado.EstadoSolicitud == "En proceso" ? "bg-warning" :
+                                  item.Estado.EstadoSolicitud == "Aceptado" ? "bg-success" :
                                   item.Estado.EstadoSolicitud == "Cancelado" ? "bg-danger" : "bg-secondary")">
                                 @item.Estado.EstadoSolicitud
                             </span>

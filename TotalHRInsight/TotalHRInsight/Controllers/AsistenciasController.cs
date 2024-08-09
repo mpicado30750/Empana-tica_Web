@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ using TotalHRInsight.Models.Asistencia;
 
 namespace TotalHRInsight.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class AsistenciasController : Controller
     {
         private readonly TotalHRInsightDbContext _context;

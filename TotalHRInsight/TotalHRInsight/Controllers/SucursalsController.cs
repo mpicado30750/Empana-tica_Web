@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,8 @@ using TotalHRInsight.Models.Sucursal;
 
 namespace TotalHRInsight.Controllers
 {
-	public class SucursalsController : Controller
+    [Authorize(Roles = "Administrador")]
+    public class SucursalsController : Controller
 	{
 		private readonly TotalHRInsightDbContext _context;
 

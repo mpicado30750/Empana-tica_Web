@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,8 @@ using TotalHRInsight.Models.Pedidos;
 
 namespace TotalHRInsight.Controllers
 {
-	public class PedidosController : Controller
+    [Authorize(Roles = "Administrador")]
+    public class PedidosController : Controller
 	{
 		private readonly TotalHRInsightDbContext _context;
         private readonly TotalHRInsightDbContext _context2;
