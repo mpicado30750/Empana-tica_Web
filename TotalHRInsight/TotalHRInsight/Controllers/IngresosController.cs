@@ -172,7 +172,21 @@ namespace TotalHRInsight.Controllers
         {
             return _context.Ingresos.Any(e => e.IdIngreso == IdIngreso);
         }
+        public async Task<IActionResult> ResumenFinanciero()
+        {
+            var totalIngresos = _context.Ingresos.Sum(i => i.MontoIngreso);
+            var totalGastos = _context.Gastos.Sum(g => g.MontoGasto);
+            var balance = totalIngresos - totalGastos;
 
+            var viewModel = new ResumenFinancieroViewModel
+            {
+                TotalIngresos = totalIngresos,
+                TotalGastos = totalGastos,
+                Balance = balance
+            };
+
+            return View(viewModel);
+        }
         public IActionResult ExportarResumenFinanciero()
         {
             // Obtener los datos necesarios para los gráficos
@@ -220,7 +234,7 @@ namespace TotalHRInsight.Controllers
 
                 // Crear un gráfico de pastel
                 var pieChart = worksheet.Drawings.AddChart("PieChart", eChartType.Pie);
-                pieChart.SetPosition(5, 0, 7, 0);
+                pieChart.SetPosition(5, 0, 10, 0);  // Cambia la posición para que haya más espacio entre los gráficos
                 pieChart.SetSize(500, 300);
                 var pieSeries = pieChart.Series.Add(worksheet.Cells["B2:B4"], worksheet.Cells["A2:A4"]);
                 pieSeries.Header = "Monto en ₡";
@@ -232,11 +246,15 @@ namespace TotalHRInsight.Controllers
                     package.SaveAs(stream);
                     var content = stream.ToArray();
 
+                    // Agregar la fecha al nombre del archivo
+                    string fileName = $"ResumenFinanciero_{DateTime.Now:ddMMyyyy}.xlsx";
+
                     // Devolver el archivo como un archivo descargable
-                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ResumenFinanciero.xlsx");
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
                 }
             }
         }
+
     }
 }
 

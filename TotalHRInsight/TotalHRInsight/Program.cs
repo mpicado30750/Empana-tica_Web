@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TotalHRInsight.DAL;
 using Microsoft.AspNetCore.Identity;
+using OfficeOpenXml;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,8 @@ var connectionString = builder.Configuration.GetConnectionString("ConnTHRIDB") ?
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+// Para EPPlus 5+
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 // Configurar los contextos de base de datos
 builder.Services.AddDbContext<TotalHRInsightDbContext>(options =>
