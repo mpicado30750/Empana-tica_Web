@@ -7,9 +7,12 @@
 <h2>@ViewData["Title"]</h2>
 
 <h3>¿Estás seguro de que deseas desactivar a @Model.Nombre?</h3>
-
 <form asp-action="Delete" method="post">
     <input type="hidden" asp-for="Id" />
-    <input type="submit" value="Confirmar" class="btn btn-danger" /> |
-    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    <button type="submit" class="btn btn-danger">
+        <i class="bi bi-check-circle"></i> Confirmar
+    </button>
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="bi bi-arrow-left-circle"></i> Cancelar
+    </a>
 </form>

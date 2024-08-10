@@ -44,7 +44,7 @@
                         @if (viewModel.User.Estado)
                         {
                             <a href="@Url.Action("Delete", new { id = viewModel.User.Id })" class="btn btn-danger" onclick="showLoader()">
-                                <i class="bi bi-trash"></i> Eliminar
+                                <i class="bi bi-person-x-fill"></i> Inactivar
                             </a>
                         }
                         else

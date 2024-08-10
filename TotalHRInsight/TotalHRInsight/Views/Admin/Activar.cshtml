@@ -5,12 +5,12 @@
 }
 
 <h2>@ViewData["Title"]</h2>
-
 <h3>¿Estás seguro de que deseas Activar a @Model.Nombre?</h3>
-
 <form asp-action="Activar" method="post">
     <input type="hidden" asp-for="Id" />
-    <input type="submit" value="ActivarConfirmed" class="btn btn-danger" /> |
+    <button type="submit" class="btn btn-danger">
+        <i class="bi bi-person-check"></i> Activar
+    </button>
     <a asp-action="Index" class="btn btn-secondary">
         <i class="bi bi-arrow-left-circle"></i> Cancelar
     </a>
