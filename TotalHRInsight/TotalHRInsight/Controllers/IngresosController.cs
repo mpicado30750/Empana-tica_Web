@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Math;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TotalHRInsight.DAL;
+using TotalHRInsight.Models;
+using OfficeOpenXml;
+using OfficeOpenXml.Drawing.Chart;
 
 namespace TotalHRInsight.Controllers
 {
@@ -167,5 +172,71 @@ namespace TotalHRInsight.Controllers
         {
             return _context.Ingresos.Any(e => e.IdIngreso == IdIngreso);
         }
+
+        public IActionResult ExportarResumenFinanciero()
+        {
+            // Obtener los datos necesarios para los gráficos
+            var totalIngresos = _context.Ingresos.Sum(i => i.MontoIngreso);
+            var totalGastos = _context.Gastos.Sum(g => g.MontoGasto);
+            var balance = totalIngresos - totalGastos;
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Resumen Financiero");
+
+                // Crear encabezados
+                worksheet.Cells[1, 1].Value = "Concepto";
+                worksheet.Cells[1, 2].Value = "Monto (₡)";
+
+                // Estilo de los encabezados
+                worksheet.Cells[1, 1, 1, 2].Style.Font.Bold = true;
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                worksheet.Cells[1, 1, 1, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+
+                // Llenar los datos
+                worksheet.Cells[2, 1].Value = "Ingresos";
+                worksheet.Cells[2, 2].Value = totalIngresos;
+
+                worksheet.Cells[3, 1].Value = "Gastos";
+                worksheet.Cells[3, 2].Value = totalGastos;
+
+                worksheet.Cells[4, 1].Value = "Balance";
+                worksheet.Cells[4, 2].Value = balance;
+
+                // Formato de moneda
+                worksheet.Column(2).Style.Numberformat.Format = "₡ #,##0.00";
+
+                // Ajustar el ancho de las columnas
+                worksheet.Cells.AutoFitColumns();
+
+                // Crear un gráfico de barras
+                var barChart = worksheet.Drawings.AddChart("BarChart", eChartType.BarClustered);
+                barChart.SetPosition(5, 0, 0, 0);
+                barChart.SetSize(500, 300);
+                var barSeries = barChart.Series.Add(worksheet.Cells["B2:B4"], worksheet.Cells["A2:A4"]);
+                barSeries.Header = "Monto en ₡";
+                barChart.Title.Text = "Resumen Financiero (Barras)";
+
+                // Crear un gráfico de pastel
+                var pieChart = worksheet.Drawings.AddChart("PieChart", eChartType.Pie);
+                pieChart.SetPosition(5, 0, 7, 0);
+                pieChart.SetSize(500, 300);
+                var pieSeries = pieChart.Series.Add(worksheet.Cells["B2:B4"], worksheet.Cells["A2:A4"]);
+                pieSeries.Header = "Monto en ₡";
+                pieChart.Title.Text = "Resumen Financiero (Pastel)";
+
+                // Guardar el archivo en un MemoryStream
+                using (var stream = new MemoryStream())
+                {
+                    package.SaveAs(stream);
+                    var content = stream.ToArray();
+
+                    // Devolver el archivo como un archivo descargable
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ResumenFinanciero.xlsx");
+                }
+            }
+        }
     }
 }
+

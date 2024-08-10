@@ -1,0 +1,174 @@
+﻿@model TotalHRInsight.Models.ResumenFinancieroViewModel
+
+<h2>Resumen Financiero</h2>
+
+<div style="display: flex; align-items: center; margin-bottom: 20px; gap: 10px;">
+    <label for="startDate" style="font-weight: bold;">Fecha de inicio:</label>
+    <input type="date" id="startDate" style="padding: 5px; border-radius: 5px; border: 1px solid #ccc;">
+
+    <label for="endDate" style="font-weight: bold;">Fecha de fin:</label>
+    <input type="date" id="endDate" style="padding: 5px; border-radius: 5px; border: 1px solid #ccc;">
+
+    <button onclick="filtrarDatos()" style="padding: 8px 15px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+        Filtrar
+    </button>
+</div>
+
+<!-- Botón para exportar a Excel -->
+<button onclick="window.location.href='@Url.Action("ExportarResumenFinanciero", "Ingresos")'" style="padding: 8px 15px; background-color: #FF9800; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+    Exportar Resumen Financiero a Excel
+</button>
+
+
+<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+    <div style="width: 400px; height: 400px; margin: 20px;">
+        <canvas id="resumenChartBar"></canvas>
+    </div>
+    <div style="width: 400px; height: 400px; margin: 20px;">
+        <canvas id="resumenChartPie"></canvas>
+    </div>
+    <div style="width: 400px; height: 400px; margin: 20px;">
+        <canvas id="resumenChartLine"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+    <script>
+        // Función para formatear los montos en colones costarricenses
+        function formatCurrency(value) {
+            return '₡' + value.toLocaleString('es-CR');
+        }
+
+        // Variables para almacenar las referencias a los gráficos
+        var resumenChartBar, resumenChartPie, resumenChartLine;
+
+        // Opciones comunes para todos los gráficos
+        var commonOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            return formatCurrency(tooltipItem.raw);
+                        }
+                    }
+                }
+            }
+        };
+
+        // Inicialización de los gráficos
+        function initCharts(dataIngresos, dataGastos, dataBalance) {
+            // Gráfico de barras
+            var ctxBar = document.getElementById('resumenChartBar').getContext('2d');
+            resumenChartBar = new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: ['Ingresos', 'Gastos', 'Balance'],
+                    datasets: [{
+                        label: 'Monto en ₡',
+                        data: [dataIngresos, dataGastos, dataBalance],
+                        backgroundColor: ['#4CAF50', '#F44336', '#FFC107'],
+                        borderColor: ['#388E3C', '#D32F2F', '#FFA000'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    ...commonOptions,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function (value) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Gráfico de pastel
+            var ctxPie = document.getElementById('resumenChartPie').getContext('2d');
+            resumenChartPie = new Chart(ctxPie, {
+                type: 'pie',
+                data: {
+                    labels: ['Ingresos', 'Gastos', 'Balance'],
+                    datasets: [{
+                        label: 'Monto en ₡',
+                        data: [dataIngresos, dataGastos, dataBalance],
+                        backgroundColor: ['#4CAF50', '#F44336', '#FFC107'],
+                        borderColor: ['#388E3C', '#D32F2F', '#FFA000'],
+                        borderWidth: 1
+                    }]
+                },
+                options: commonOptions
+            });
+
+            // Gráfico de líneas
+            var ctxLine = document.getElementById('resumenChartLine').getContext('2d');
+            resumenChartLine = new Chart(ctxLine, {
+                type: 'line',
+                data: {
+                    labels: ['Ingresos', 'Gastos', 'Balance'],
+                    datasets: [{
+                        label: 'Monto en ₡',
+                        data: [dataIngresos, dataGastos, dataBalance],
+                        backgroundColor: 'rgba(255, 193, 7, 0.2)',
+                        borderColor: '#FFC107',
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    ...commonOptions,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function (value) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Llamada inicial para mostrar los datos completos
+        initCharts(@Model.TotalIngresos, @Model.TotalGastos, @Model.Balance);
+
+        // Función para filtrar los datos por rango de fechas
+        function filtrarDatos() {
+            var startDate = document.getElementById('startDate').value;
+            var endDate = document.getElementById('endDate').value;
+
+            if (!startDate || !endDate) {
+                alert("Por favor, selecciona un rango de fechas válido.");
+                return;
+            }
+
+            // Simulación de los datos filtrados (en un caso real, harías una petición AJAX para obtener los datos filtrados del servidor)
+            var ingresosFiltrados = @Model.TotalIngresos * 0.8; // Ejemplo: reducir un 20%
+            var gastosFiltrados = @Model.TotalGastos * 0.7; // Ejemplo: reducir un 30%
+            var balanceFiltrado = ingresosFiltrados - gastosFiltrados;
+
+            // Actualizar los gráficos con los datos filtrados
+            resumenChartBar.data.datasets[0].data = [ingresosFiltrados, gastosFiltrados, balanceFiltrado];
+            resumenChartBar.update();
+
+            resumenChartPie.data.datasets[0].data = [ingresosFiltrados, gastosFiltrados, balanceFiltrado];
+            resumenChartPie.update();
+
+            resumenChartLine.data.datasets[0].data = [ingresosFiltrados, gastosFiltrados, balanceFiltrado];
+            resumenChartLine.update();
+        }
+
+      
+    </script>
+}

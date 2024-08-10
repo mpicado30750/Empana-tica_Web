@@ -167,5 +167,7 @@ namespace TotalHRInsight.Controllers
         {
             return _context.CierreCajas.Any(e => e.IdCierraCaja == id);
         }
+
+
     }
 }
