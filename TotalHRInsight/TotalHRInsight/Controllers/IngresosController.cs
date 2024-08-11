@@ -254,6 +254,67 @@ namespace TotalHRInsight.Controllers
                 }
             }
         }
+        public async Task<IActionResult> ExportCierreCajaToExcel(int idCierreCaja)
+        {
+            var cierreCaja = await _context.CierreCajas
+                .Include(c => c.Sucursal)
+                .Include(c => c.UsuarioCreacion)
+                .FirstOrDefaultAsync(c => c.IdCierraCaja == idCierreCaja);
+
+            if (cierreCaja == null)
+            {
+                return NotFound();
+            }
+
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add($"CierreCaja_{idCierreCaja}");
+                worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+
+                // Agregar las imágenes y ajustar tamaño
+                var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
+                var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
+                var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
+                var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
+
+                // Ajustar las celdas para las imágenes
+                worksheet.Row(1).Height = 60;
+                worksheet.Column(1).Width = 12;
+                worksheet.Column(7).Width = 12;
+
+                // Título
+                var titleCell = worksheet.Cell("A2");
+                titleCell.Value = $"Detalles del Cierre de Caja #{idCierreCaja}";
+                titleCell.Style.Font.Bold = true;
+                titleCell.Style.Font.FontSize = 16;
+                titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                titleCell.Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4"); // Color de fondo azul de Excel
+                titleCell.Style.Font.FontColor = XLColor.White;
+                worksheet.Range("A2:G2").Merge();
+
+                // Información del cierre de caja
+                worksheet.Cell("A3").Value = "Fecha Cierre:";
+                worksheet.Cell("B3").Value = cierreCaja.Fecha.ToString("yyyy-MM-dd");
+                worksheet.Cell("A4").Value = "Sucursal:";
+                worksheet.Cell("B4").Value = cierreCaja.Sucursal.NombreSucursal;
+                worksheet.Cell("A5").Value = "Usuario Creación:";
+                worksheet.Cell("B5").Value = cierreCaja.UsuarioCreacion.Nombre + " " + cierreCaja.UsuarioCreacion.PrimerApellido;
+                worksheet.Cell("A6").Value = "Monto Total:";
+                worksheet.Cell("B6").Value = cierreCaja.MontoTotal;
+                worksheet.Cell("B6").Style.NumberFormat.Format = "₡ #,##0.00";
+
+                // Ajustar el ancho de las columnas después de agregar los datos
+                worksheet.Columns().AdjustToContents();
+
+                // Guardar el archivo Excel en un MemoryStream y devolver como FileResult
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"CierreCaja_{idCierreCaja}.xlsx");
+                }
+            }
+        }
 
     }
 }
