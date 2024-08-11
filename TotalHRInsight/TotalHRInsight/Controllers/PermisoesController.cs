@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TotalHRInsight.DAL;
+using System.Threading.Tasks;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace TotalHRInsight.Controllers
 {
@@ -213,5 +216,91 @@ namespace TotalHRInsight.Controllers
         {
             return _context.Permisos.Any(e => e.IdPermisos == IdPermisos);
         }
+        public async Task<IActionResult> ExportToExcel()
+        {
+            var permisos = await _context.Permisos
+                .Include(p => p.TipoPermisos)
+                .Include(p => p.UsuarioAsignacion)
+                .Include(p => p.UsuarioCreacion)
+                .Include(p => p.Estado)
+                .ToListAsync();
+
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Permisos");
+                worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+
+                // Agregar imágenes y ajustar tamaño
+                var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
+                var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
+                var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
+                var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
+
+                // Ajustar celdas para las imágenes
+                worksheet.Row(1).Height = 60;
+                worksheet.Column(1).Width = 12;
+                worksheet.Column(7).Width = 12;
+
+                // Título
+                var titleCell = worksheet.Cell("A3");
+                titleCell.Value = "Informe de Permisos";
+                titleCell.Style.Font.Bold = true;
+                titleCell.Style.Font.FontSize = 16;
+                titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                titleCell.Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4");
+                titleCell.Style.Font.FontColor = XLColor.White;
+
+                // Cabeceras de la tabla
+                var headerRow = worksheet.Row(5);
+                headerRow.Cell(1).Value = "IdPermiso";
+                headerRow.Cell(2).Value = "Tipo de Permiso";
+                headerRow.Cell(3).Value = "Usuario Asignado";
+                headerRow.Cell(4).Value = "Usuario Creación";
+                headerRow.Cell(5).Value = "Fecha Creación";
+                headerRow.Cell(6).Value = "Fecha Modificación";
+                headerRow.Cell(7).Value = "Estado";
+                headerRow.Style.Font.Bold = true;
+                headerRow.Style.Font.FontSize = 12;
+                headerRow.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                headerRow.Style.Font.FontColor = XLColor.White;
+
+                // Datos
+                int rowIdx = 6;
+                foreach (var permiso in permisos)
+                {
+                    var dataRow = worksheet.Row(rowIdx);
+                    dataRow.Cell(1).Value = permiso.IdPermisos;
+                    dataRow.Cell(2).Value = permiso.TipoPermisos.NombrePermiso;
+                    dataRow.Cell(3).Value = permiso.UsuarioAsignacion.Nombre + " " + permiso.UsuarioAsignacion.PrimerApellido;
+                    dataRow.Cell(4).Value = permiso.UsuarioCreacion.Nombre + " " + permiso.UsuarioCreacion.PrimerApellido;
+                    dataRow.Cell(5).Value = permiso.FechaInicio.ToString("dd-MM-yyyy");
+                    dataRow.Cell(6).Value = permiso.FechaFin.ToString("dd-MM-yyyy") ?? string.Empty;
+                    dataRow.Cell(7).Value = permiso.Estado.EstadoSolicitud;
+                    rowIdx++;
+                }
+
+                // Establecer estilo de tabla para los datos
+                var tableRange = worksheet.Range("A5:G" + rowIdx);
+                var table = tableRange.CreateTable();
+
+                // Establecer estilo de tabla (opcional)
+                table.Theme = XLTableTheme.TableStyleMedium2;
+
+                // Ajustar el ancho de las columnas después de agregar los datos
+                worksheet.Columns().AdjustToContents();
+
+                // Guardar el archivo Excel en un MemoryStream y devolver como FileResult
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+                    string fileName = $"Permisos_{DateTime.Now:ddMMyyyy}.xlsx";
+
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                }
+            }
+        }
+
+
     }
 }

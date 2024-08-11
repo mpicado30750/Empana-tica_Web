@@ -11,16 +11,30 @@
         <a asp-action="Create" class="btn btn-danger me-2" onclick="showLoader()">
             <i class="bi bi-plus-circle"></i> Crear Nuevo Registro
         </a>
+        <a asp-action="ExportToExcel" class="btn btn-success me-2" onclick="showLoader()">
+            <i class="bi bi-download"></i> Descargar Datos
+        </a>
     </div>
 </div>
 <hr />
 <div class="row row-cols-1 row-cols-md-3 g-4">
     @foreach (var item in Model)
     {
+        @{
+            // Determinar la clase CSS basada en el estado
+            var estadoClase = item.Estado.EstadoSolicitud switch
+            {
+                "Aceptado" => "bg-success text-white",
+                "En proceso" => "bg-warning text-dark",
+                "Cancelado" => "bg-danger text-white",
+                _ => "bg-secondary text-white"
+            };
+        }
+
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card h-100 shadow-sm">
                 <div class="card-header bg-danger text-white">
-                    <h5 class="card-title mb-0">@item.IdPermisos</h5>
+                    <h5 class="card-title mb-0">Solicitud de Permiso #@item.IdPermisos</h5>
                 </div>
                 <div class="card-body">
                     <p class="card-text"><strong>Fecha de Inicio:</strong> @Html.DisplayFor(modelItem => item.FechaInicio)</p>
@@ -31,7 +45,7 @@
                     <p class="card-text"><strong>Tipo de Permiso:</strong> @Html.DisplayFor(modelItem => item.TipoPermisos.NombrePermiso)</p>
                     <p class="card-text"><strong>Usuario de Creación:</strong> @item.UsuarioCreacion.Nombre @item.UsuarioCreacion.PrimerApellido</p>
                     <p class="card-text"><strong>Usuario de Asignación:</strong> @item.UsuarioAsignacion.Nombre @item.UsuarioAsignacion.PrimerApellido</p>
-                    <p class="card-text"><strong>Estado:</strong> @Html.DisplayFor(modelItem => item.Estado.EstadoSolicitud)</p>
+                    <p class="card-text"><strong>Estado:</strong> <span class="badge @estadoClase">@Html.DisplayFor(modelItem => item.Estado.EstadoSolicitud)</span></p>
                 </div>
                 <div class="card-footer bg-light">
                     <div class="d-flex justify-content-between">

@@ -570,7 +570,7 @@ namespace TotalHRInsight.Controllers
                 {
                     workbook.SaveAs(stream);
                     var content = stream.ToArray();
-                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Pedido_{IdPedido}.xlsx");
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Pedido_{DateTime.Now:ddMMyyyy}.xlsx");
                 }
             }
         }

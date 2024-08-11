@@ -318,7 +318,11 @@ namespace TotalHRInsight.Controllers
                 {
                     workbook.SaveAs(stream);
                     var content = stream.ToArray();
-                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Inventarios.xlsx");
+                    // Agregar la fecha al nombre del archivo
+                    string fileName = $"InventarioGeneral_{DateTime.Now:ddMMyyyy}.xlsx";
+
+                    // Devolver el archivo como un archivo descargable
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
                 }
             }
         }
@@ -375,9 +379,9 @@ namespace TotalHRInsight.Controllers
                     // Información del inventario general
                     var firstInventario = inventario.First();
                     worksheet.Cell("A3").Value = "Fecha Creación:";
-                    worksheet.Cell("B3").Value = firstInventario.FechaCreacion.ToString("yyyy-MM-dd");
+                    worksheet.Cell("B3").Value = firstInventario.FechaCreacion.ToString("dd-MM-yyyy");
                     worksheet.Cell("A4").Value = "Fecha Modificación:";
-                    worksheet.Cell("B4").Value = firstInventario.FechaModificacion.ToString("yyyy-MM-dd") ?? "N/A";
+                    worksheet.Cell("B4").Value = firstInventario.FechaModificacion.ToString("dd-MM-yyyy") ?? "N/A";
                     worksheet.Cell("A5").Value = "Usuario Creación:";
                     worksheet.Cell("B5").Value = $"{firstInventario.UsuarioCreacion.Nombre} {firstInventario.UsuarioCreacion.PrimerApellido}";
                     worksheet.Cell("A6").Value = "Usuario Modificación:";
@@ -410,7 +414,7 @@ namespace TotalHRInsight.Controllers
                     {
                         workbook.SaveAs(stream);
                         var content = stream.ToArray();
-                        return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Inventario_{IdInventario}.xlsx");
+                        return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Inventario_{DateTime.Now:ddMMyyyy}.xlsx");
                     }
                 }
             }

@@ -44,7 +44,8 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
+<!-- Incluir la vista parcial del loader modal -->
+@Html.Partial("_LoaderModal")
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -220,7 +220,11 @@ namespace TotalHRInsight.Controllers
                 {
                     workbook.SaveAs(stream);
                     var content = stream.ToArray();
-                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Proveedores.xlsx");
+                    // Agregar la fecha al nombre del archivo
+                    string fileName = $"Proveedores_{DateTime.Now:ddMMyyyy}.xlsx";
+
+                    // Devolver el archivo como un archivo descargable
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
                 }
             }
         }
