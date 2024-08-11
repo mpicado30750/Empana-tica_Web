@@ -51,7 +51,11 @@ namespace TotalHRInsight.Controllers
         public IActionResult Create()
         {
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
+            ViewData["UsuarioCreacionid"] = new SelectList(
+                _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
+                "Id",
+                "NombreCompleto"
+            );
             return View();
         }
 
@@ -69,7 +73,11 @@ namespace TotalHRInsight.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", cierreCaja.SucursalId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", cierreCaja.UsuarioCreacionId);
+            ViewData["UsuarioCreacionid"] = new SelectList(
+                _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
+                "Id",
+                "NombreCompleto"
+            );
             return View(cierreCaja);
         }
 
@@ -87,7 +95,11 @@ namespace TotalHRInsight.Controllers
                 return NotFound();
             }
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", cierreCaja.SucursalId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", cierreCaja.UsuarioCreacionId);
+            ViewData["UsuarioCreacionid"] = new SelectList(
+                _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
+                "Id",
+                "NombreCompleto"
+            );
             return View(cierreCaja);
         }
 
@@ -124,7 +136,11 @@ namespace TotalHRInsight.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal", cierreCaja.SucursalId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", cierreCaja.UsuarioCreacionId);
+            ViewData["UsuarioCreacionid"] = new SelectList(
+               _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
+               "Id",
+               "NombreCompleto"
+           );
             return View(cierreCaja);
         }
 

@@ -29,8 +29,8 @@
                     <p class="card-text"><strong>Comentario:</strong> @Html.DisplayFor(modelItem => item.Comentario)</p>
                     <p class="card-text"><strong>Motivo Admin:</strong> @Html.DisplayFor(modelItem => item.MotivoAdmin)</p>
                     <p class="card-text"><strong>Tipo de Permiso:</strong> @Html.DisplayFor(modelItem => item.TipoPermisos.NombrePermiso)</p>
-                    <p class="card-text"><strong>Usuario de Creación:</strong> @Html.DisplayFor(modelItem => item.UsuarioCreacion.Nombre)</p>
-                    <p class="card-text"><strong>Usuario de Asignación:</strong> @Html.DisplayFor(modelItem => item.UsuarioAsignacion.Nombre)</p>
+                    <p class="card-text"><strong>Usuario de Creación:</strong> @item.UsuarioCreacion.Nombre @item.UsuarioCreacion.PrimerApellido</p>
+                    <p class="card-text"><strong>Usuario de Asignación:</strong> @item.UsuarioAsignacion.Nombre @item.UsuarioAsignacion.PrimerApellido</p>
                     <p class="card-text"><strong>Estado:</strong> @Html.DisplayFor(modelItem => item.Estado.EstadoSolicitud)</p>
                 </div>
                 <div class="card-footer bg-light">

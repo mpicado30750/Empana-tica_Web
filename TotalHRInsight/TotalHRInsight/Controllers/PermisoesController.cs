@@ -57,8 +57,16 @@ namespace TotalHRInsight.Controllers
         {
             ViewData["IdTipoPermiso"] = new SelectList(_context.TipoPermisos, "IdTipoPermiso", "NombrePermiso");
             ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud");
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre");
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre");
+            ViewData["UsuarioAsignacionId"] = new SelectList(
+               _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
+               "Id",
+               "NombreCompleto"
+           );
+            ViewData["UsuarioCreacionid"] = new SelectList(
+               _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
+               "Id",
+               "NombreCompleto"
+           );
             return View();
         }
 
@@ -77,8 +85,16 @@ namespace TotalHRInsight.Controllers
             }
             ViewData["IdTipoPermiso"] = new SelectList(_context.TipoPermisos, "IdTipoPermiso", "NombrePermiso", permiso.IdTipoPermiso);
             ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud");
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioAsignacionId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioCreacionId);
+            ViewData["UsuarioAsignacionId"] = new SelectList(
+            _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
+            "Id",
+            "NombreCompleto"
+        );
+            ViewData["UsuarioCreacionid"] = new SelectList(
+               _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
+               "Id",
+               "NombreCompleto"
+           );
             return View(permiso);
         }
 
@@ -97,8 +113,16 @@ namespace TotalHRInsight.Controllers
             }
             ViewData["IdTipoPermiso"] = new SelectList(_context.TipoPermisos, "IdTipoPermiso", "NombrePermiso", permiso.IdTipoPermiso);
             ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud");
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioAsignacionId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioCreacionId);
+            ViewData["UsuarioAsignacionId"] = new SelectList(
+             _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
+             "Id",
+             "NombreCompleto"
+         );
+            ViewData["UsuarioCreacionid"] = new SelectList(
+               _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
+               "Id",
+               "NombreCompleto"
+           );
             return View(permiso);
         }
 
@@ -136,8 +160,16 @@ namespace TotalHRInsight.Controllers
             }
             ViewData["IdTipoPermiso"] = new SelectList(_context.TipoPermisos, "IdTipoPermiso", "NombrePermiso", permiso.IdTipoPermiso);
             ViewData["IdEstado"] = new SelectList(_context.Estados, "IdEstado", "EstadoSolicitud");
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioAsignacionId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Nombre", permiso.UsuarioCreacionId);
+            ViewData["UsuarioAsignacionId"] = new SelectList(
+              _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
+              "Id",
+              "NombreCompleto"
+          );
+            ViewData["UsuarioCreacionid"] = new SelectList(
+               _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
+               "Id",
+               "NombreCompleto"
+           );
             return View(permiso);
         }
 

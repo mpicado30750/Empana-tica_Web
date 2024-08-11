@@ -54,7 +54,7 @@
                                 <li class="list-group-item cierre-caja-item" data-fecha="@item.Fecha.ToString("yyyy-MM-dd")">
                                     <strong>Fecha:</strong> @Html.DisplayFor(modelItem => item.Fecha)<br />
                                     <strong>Monto Total:</strong> ₡@Html.DisplayFor(modelItem => item.MontoTotal)<br />
-                                    <strong>Usuario:</strong> @Html.DisplayFor(modelItem => item.UsuarioCreacion.Id)<br />
+                                    <strong>Usuario:</strong> @item.UsuarioCreacion.Nombre @item.UsuarioCreacion.PrimerApellido<br />
                                     <div class="mt-2">
                                         <a asp-action="Edit" asp-route-id="@item.IdCierraCaja" class="btn btn-sm btn-warning">
                                             <i class="bi bi-pencil-square"></i> Editar
