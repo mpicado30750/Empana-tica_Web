@@ -88,7 +88,7 @@ namespace TotalHRInsight.Controllers
             {
                 return NotFound();
             }
-            ViewData["CierreId"] = new SelectList(_context.CierreCajas, "IdCierraCaja", "UsuarioCreacionId", gasto.CierreId);
+            ViewData["CierreId"] = new SelectList(_context.CierreCajas, "IdCierraCaja", "Fecha", gasto.CierreId);
             ViewData["TipoGastoId"] = new SelectList(_context.TipoGastos, "IdTipoGasto", "NombreGasto", gasto.TipoGastoId);
             return View(gasto);
         }
@@ -125,7 +125,7 @@ namespace TotalHRInsight.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CierreId"] = new SelectList(_context.CierreCajas, "IdCierraCaja", "UsuarioCreacionId", gasto.CierreId);
+            ViewData["CierreId"] = new SelectList(_context.CierreCajas, "IdCierraCaja", "Fecha", gasto.CierreId);
             ViewData["TipoGastoId"] = new SelectList(_context.TipoGastos, "IdTipoGasto", "NombreGasto", gasto.TipoGastoId);
             return View(gasto);
         }

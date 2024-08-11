@@ -8,14 +8,41 @@
 <h1 class="text-center">Cierres de Caja por Sucursal</h1>
 
 <p class="text-center">
-    <a asp-action="Create" class="btn btn-danger">Crear Nuevo Cierre de Caja</a>
+    <a asp-action="Create" class="btn btn-danger">
+        <i class="bi bi-plus-circle"></i> Crear Nuevo Cierre de Caja
+    </a>
 </p>
 
+
+<div class="container mb-4">
+    <div class="row g-3 align-items-end">
+        <div class="col-md-4">
+            <label for="filterSucursal" class="form-label fw-bold">Filtrar por Sucursal:</label>
+            <select id="filterSucursal" class="form-select">
+                <option value="">Todas</option>
+                @foreach (var sucursal in Model.Select(c => c.Sucursal.NombreSucursal).Distinct())
+                {
+                    <option value="@sucursal">@sucursal</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="filterStartDate" class="form-label fw-bold">Fecha Inicio:</label>
+            <input type="date" id="filterStartDate" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label for="filterEndDate" class="form-label fw-bold">Fecha Fin:</label>
+            <input type="date" id="filterEndDate" class="form-control" />
+        </div>
+    </div>
+</div>
+
+
 <div class="container">
-    <div class="row">
+    <div class="row" id="cierreCajaContainer">
         @foreach (var sucursalGroup in Model.GroupBy(c => c.Sucursal.NombreSucursal))
         {
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6 mb-4 cierre-caja-card" data-sucursal="@sucursalGroup.Key">
                 <div class="card shadow-sm">
                     <div class="card-header bg-danger text-white">
                         <h5 class="card-title">@sucursalGroup.Key</h5>
@@ -24,14 +51,20 @@
                         <ul class="list-group list-group-flush">
                             @foreach (var item in sucursalGroup)
                             {
-                                <li class="list-group-item">
+                                <li class="list-group-item cierre-caja-item" data-fecha="@item.Fecha.ToString("yyyy-MM-dd")">
                                     <strong>Fecha:</strong> @Html.DisplayFor(modelItem => item.Fecha)<br />
                                     <strong>Monto Total:</strong> ₡@Html.DisplayFor(modelItem => item.MontoTotal)<br />
                                     <strong>Usuario:</strong> @Html.DisplayFor(modelItem => item.UsuarioCreacion.Id)<br />
                                     <div class="mt-2">
-                                        <a asp-action="Edit" asp-route-id="@item.IdCierraCaja" class="btn btn-sm btn-warning">Editar</a>
-                                        <a asp-action="Details" asp-route-id="@item.IdCierraCaja" class="btn btn-sm btn-info">Detalles</a>
-                                        <a asp-action="Delete" asp-route-id="@item.IdCierraCaja" class="btn btn-sm btn-danger">Eliminar</a>
+                                        <a asp-action="Edit" asp-route-id="@item.IdCierraCaja" class="btn btn-sm btn-warning">
+                                            <i class="bi bi-pencil-square"></i> Editar
+                                        </a>
+                                        <a asp-action="Details" asp-route-id="@item.IdCierraCaja" class="btn btn-sm btn-info">
+                                            <i class="bi bi-eye"></i> Detalles
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.IdCierraCaja" class="btn btn-sm btn-danger">
+                                            <i class="bi bi-trash"></i> Eliminar
+                                        </a>
                                     </div>
                                 </li>
                             }
@@ -42,3 +75,40 @@
         }
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script>
+        document.getElementById('filterSucursal').addEventListener('change', filterCards);
+        document.getElementById('filterStartDate').addEventListener('change', filterCards);
+        document.getElementById('filterEndDate').addEventListener('change', filterCards);
+
+        function filterCards() {
+            const sucursal = document.getElementById('filterSucursal').value.toLowerCase();
+            const startDate = document.getElementById('filterStartDate').value;
+            const endDate = document.getElementById('filterEndDate').value;
+            const cards = document.querySelectorAll('.cierre-caja-card');
+
+            cards.forEach(card => {
+                const cardSucursal = card.getAttribute('data-sucursal').toLowerCase();
+                let showCard = sucursal === '' || cardSucursal === sucursal;
+
+                const items = card.querySelectorAll('.cierre-caja-item');
+                let showItems = false;
+
+                items.forEach(item => {
+                    const fecha = item.getAttribute('data-fecha');
+                    const fechaValida = (!startDate || fecha >= startDate) && (!endDate || fecha <= endDate);
+                    if (showCard && fechaValida) {
+                        item.style.display = '';
+                        showItems = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                card.style.display = showItems ? '' : 'none';
+            });
+        }
+    </script>
+}
