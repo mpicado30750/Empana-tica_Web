@@ -19,7 +19,7 @@ namespace TotalHRInsight.DAL
         [DisplayName("Tipo de Gasto")]
         public string NombreGasto { get; set; }
 
-        public ICollection<Gasto> Gasto { get; set; } = new List<Gasto>();
+        public ICollection<Gasto> Gastos { get; set; } = new List<Gasto>();
 
     }
 }

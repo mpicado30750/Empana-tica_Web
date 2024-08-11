@@ -50,7 +50,7 @@ namespace TotalHRInsight.Controllers
         // GET: Gastos/Create
         public IActionResult Create()
         {
-            ViewData["CierreId"] = new SelectList(_context.CierreCajas, "IdCierraCaja", "UsuarioCreacionId");
+            ViewData["CierreId"] = new SelectList(_context.CierreCajas, "IdCierraCaja", "Fecha");
             ViewData["TipoGastoId"] = new SelectList(_context.TipoGastos, "IdTipoGasto", "NombreGasto");
             return View();
         }
@@ -68,10 +68,12 @@ namespace TotalHRInsight.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CierreId"] = new SelectList(_context.CierreCajas, "IdCierraCaja", "UsuarioCreacionId", gasto.CierreId);
+            ViewData["CierreId"] = new SelectList(_context.CierreCajas, "IdCierraCaja", "Fecha", gasto.CierreId);
             ViewData["TipoGastoId"] = new SelectList(_context.TipoGastos, "IdTipoGasto", "NombreGasto", gasto.TipoGastoId);
             return View(gasto);
         }
+
+
 
         // GET: Gastos/Edit/5
         public async Task<IActionResult> Edit(int? id)

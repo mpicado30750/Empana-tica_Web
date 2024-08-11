@@ -5,50 +5,40 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">Cierres de Caja por Sucursal</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
+<p class="text-center">
+    <a asp-action="Create" class="btn btn-danger">Crear Nuevo Cierre de Caja</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MontoTotal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sucursal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioCreacion)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MontoTotal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sucursal.NombreSucursal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioCreacion.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdCierraCaja">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdCierraCaja">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdCierraCaja">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="container">
+    <div class="row">
+        @foreach (var sucursalGroup in Model.GroupBy(c => c.Sucursal.NombreSucursal))
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="card-title">@sucursalGroup.Key</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            @foreach (var item in sucursalGroup)
+                            {
+                                <li class="list-group-item">
+                                    <strong>Fecha:</strong> @Html.DisplayFor(modelItem => item.Fecha)<br />
+                                    <strong>Monto Total:</strong> ₡@Html.DisplayFor(modelItem => item.MontoTotal)<br />
+                                    <strong>Usuario:</strong> @Html.DisplayFor(modelItem => item.UsuarioCreacion.Id)<br />
+                                    <div class="mt-2">
+                                        <a asp-action="Edit" asp-route-id="@item.IdCierraCaja" class="btn btn-sm btn-warning">Editar</a>
+                                        <a asp-action="Details" asp-route-id="@item.IdCierraCaja" class="btn btn-sm btn-info">Detalles</a>
+                                        <a asp-action="Delete" asp-route-id="@item.IdCierraCaja" class="btn btn-sm btn-danger">Eliminar</a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

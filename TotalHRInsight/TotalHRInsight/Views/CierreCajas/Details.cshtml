@@ -1,43 +1,61 @@
 ﻿@model TotalHRInsight.DAL.CierreCaja
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles del Cierre de Caja";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1 class="text-center">Detalles del Cierre de Caja</h1>
+<hr />
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="text-danger text-center">Cierre de Caja</h4>
+                    <dl class="row mt-4">
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.Fecha)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.Fecha)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.MontoTotal)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.MontoTotal)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.Sucursal)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.Sucursal.NombreSucursal)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.UsuarioCreacion)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.UsuarioCreacion.Id)
+                        </dd>
+                    </dl>
+                    <div class="d-flex justify-content-between mt-4">
+                        <a asp-action="Edit" asp-route-id="@Model?.IdCierraCaja" class="btn btn-danger" style="flex: 1;" onclick="showLoader()">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a asp-action="Index" class="btn btn-secondary ms-2" style="flex: 1;" onclick="showLoader()">
+                            <i class="bi bi-arrow-left-circle"></i> Regresar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div>
-    <h4>CierreCaja</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Fecha)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Fecha)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MontoTotal)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MontoTotal)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sucursal)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sucursal.NombreSucursal)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UsuarioCreacion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UsuarioCreacion.Id)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdCierraCaja">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+@Html.Partial("_LoaderModal")
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script src="~/js/loader.js"></script>
+}

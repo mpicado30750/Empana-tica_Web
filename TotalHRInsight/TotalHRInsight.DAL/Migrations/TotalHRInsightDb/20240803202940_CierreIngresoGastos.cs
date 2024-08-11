@@ -30,7 +30,7 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.SucursalId,
                         principalTable: "Sucursales",
                         principalColumn: "IdSucursal",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -83,13 +83,13 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.CierreId,
                         principalTable: "CierreCaja",
                         principalColumn: "IdCierraCaja",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Gasto_TipoGasto_TipoGastoId",
                         column: x => x.TipoGastoId,
                         principalTable: "TipoGasto",
                         principalColumn: "IdTipoGasto",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -112,13 +112,13 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.CierreId,
                         principalTable: "CierreCaja",
                         principalColumn: "IdCierraCaja",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Ingreso_TipoIngreso_TipoIngresoId",
                         column: x => x.TipoIngresoId,
                         principalTable: "TipoIngreso",
                         principalColumn: "IdTipoIngreso",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
