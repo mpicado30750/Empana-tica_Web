@@ -1,4 +1,4 @@
-/* General styling for html and body */
+/* Estilo general para html y body */
 html {
     font-size: 14px;
     position: relative;
@@ -17,7 +17,7 @@ body {
     color: #1F2D2B;
 }
 
-/* Focus states for various elements */
+/* Estados de foco para varios elementos */
 .btn:focus,
 .btn:active:focus,
 .btn-link.nav-link:focus,
@@ -26,7 +26,7 @@ body {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-/* Navbar styling */
+/* Estilo para la barra de navegación (navbar) */
 .navbar {
     background-color: #be2324;
 }
@@ -44,7 +44,7 @@ body {
     color: #E29E3D !important;
 }
 
-/* Sidebar styling */
+/* Estilo para la barra lateral (sidebar) */
 .sidebar {
     position: fixed;
     top: 0;
@@ -55,12 +55,12 @@ body {
     padding-top: 56px;
     width: 200px;
     transition: all 0.3s;
-    padding: 20px;
+    padding: 10px 20px; /* Reducir el padding para minimizar el espacio */
     max-height: 100vh;
     overflow-y: scroll;
     overflow-x: hidden; /* Evitar desplazamiento horizontal */
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
 }
 
     .sidebar::-webkit-scrollbar {
@@ -75,6 +75,10 @@ body {
 
     .sidebar .nav-link {
         color: #FFFFFF !important;
+        padding: 5px 10px; /* Reducir el padding para que el espaciado sea consistente */
+        display: flex;
+        align-items: center;
+        border-radius: 4px; /* Opcional: Añadir radio de borde para un aspecto más suave */
     }
 
         .sidebar .nav-link:hover {
@@ -82,52 +86,95 @@ body {
         }
 
 .sidebar-heading {
-    padding: 10px 15px;
+    padding: 5px 10px; /* Reducir el padding para el encabezado */
     text-align: center;
-    font-size: 1.2em;
+    font-size: 1em; /* Ajustar el tamaño de fuente */
     background-color: #be2324;
     color: #FFFFFF;
 }
 
-/* Main content styling */
+/* Estilo general para los elementos de la lista en la barra lateral */
+.sidebar ul.nav {
+    padding-left: 0; /* Asegurarse de que no haya padding por defecto */
+    list-style: none; /* Eliminar los puntos de la lista */
+    margin: 0; /* Eliminar el margen por defecto */
+}
+
+    .sidebar ul.nav li.nav-item {
+        margin-bottom: 5px; /* Reducir el espacio entre ítems */
+    }
+
+        .sidebar ul.nav li.nav-item ul.nav {
+            padding-left: 20px; /* Reducir el padding para submenús */
+            list-style: none; /* Asegurarse de que no haya puntos en los submenús */
+            margin: 0; /* Eliminar el margen por defecto */
+        }
+
+/* Estilo para los botones que colapsan los menús */
+.sidebar .btn.nav-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px; /* Ajustar el padding para que se alinee con el nivel de submenú */
+    margin-bottom: 5px; /* Reducir el espacio debajo del botón */
+}
+
+/* Opcional: Estilo para los elementos colapsables */
+.sidebar .collapse {
+    padding-left: 10px; /* Ajustar el padding para que los elementos colapsables se alineen bien */
+}
+
+    /* Opcional: Estilo para los ítems de la lista en las secciones colapsables */
+    .sidebar .collapse ul.nav li.nav-item {
+        margin-bottom: 3px; /* Reducir el espacio entre ítems en secciones colapsables */
+    }
+
+/* Estilo del contenido principal */
 .main-content {
     margin-left: 200px;
     padding: 20px;
 }
 
-/* Footer styling to match the navbar */
+/* Estilo del pie de página para que coincida con la barra de navegación */
 .footer {
     color: #ffffff;
-    margin-right: 100px; /* Align margin with the sidebar width */
+    margin-right: 100px; /* Alinear el margen con el ancho de la barra lateral */
     clear: both;
 }
 
     .footer a {
-        color: #ffffff; /* Match link color with the navbar links */
+        color: #ffffff; /* Coincidir el color del enlace con el de los enlaces en la barra de navegación */
         text-decoration: none;
     }
 
         .footer a:hover {
-            color: #E29E3D; /* Match hover color with the navbar links */
+            color: #E29E3D; /* Coincidir el color al pasar el ratón con el de los enlaces en la barra de navegación */
         }
 
 /* Botones */
 .btn-crear {
-    color: #ffffff; /* color del texto */
-    background-color: #be2324; /* color de fondo */
-    border-color: #be2324; /* color del borde si es necesario */
+    color: #ffffff; /* Color del texto */
+    background-color: #be2324; /* Color de fondo */
+    border-color: #be2324; /* Color del borde si es necesario */
 }
 
     .btn-crear:hover {
-        background-color: #ad1f20; /* color de fondo en el hover */
-        color: #E29E3D; /* color del borde en el hover si es necesario */
+        background-color: #ad1f20; /* Color de fondo en el hover */
+        color: #E29E3D; /* Color del borde en el hover si es necesario */
     }
 
-.text-bold {
-    font-weight: bold; /* Makes the text bold */
+/* Separador */
+.separator {
+    border-left: 1px solid #dee2e6; /* Color de la línea separadora */
+    height: 40px; /* Ajusta la altura según el diseño */
+    margin: 0 10px; /* Ajusta el espaciado horizontal */
 }
 
-/* Container styling */
+.text-bold {
+    font-weight: bold; /* Hace que el texto sea negrita */
+}
+
+/* Estilo para el contenedor */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -150,7 +197,8 @@ body {
         margin-left: 0;
     }
 }
-/*Tablas*/
+
+/* Estilo para tablas */
 .rounded-top-left {
     border-top-left-radius: 0.5rem;
 }
@@ -171,6 +219,7 @@ body {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     border-radius: 0.375rem;
 }
+
 .custom-table {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
     border-radius: 0.75rem;

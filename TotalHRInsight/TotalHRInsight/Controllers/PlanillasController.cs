@@ -287,8 +287,21 @@ namespace TotalHRInsight.Controllers
             {
                 return NotFound();
             }
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", planilla.UsuarioAsignacionId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", planilla.UsuarioCreacionId);
+
+            // SelectLists actualizados para mostrar el NombreCompleto
+            ViewData["UsuarioAsignacionId"] = new SelectList(
+                _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido + " " + u.SegundoApellido}),
+                "Id",
+                "NombreCompleto",
+                planilla.UsuarioAsignacionId
+            );
+            ViewData["UsuarioCreacionId"] = new SelectList(
+                _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido + " " + u.SegundoApellido}),
+                "Id",
+                "NombreCompleto",
+                planilla.UsuarioCreacionId
+            );
+
             return View(planilla);
         }
 
@@ -322,10 +335,24 @@ namespace TotalHRInsight.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", planilla.UsuarioAsignacionId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", planilla.UsuarioCreacionId);
+
+            // SelectLists actualizados para mostrar el NombreCompleto
+            ViewData["UsuarioAsignacionId"] = new SelectList(
+                _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
+                "Id",
+                "NombreCompleto",
+                planilla.UsuarioAsignacionId
+            );
+            ViewData["UsuarioCreacionId"] = new SelectList(
+                _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
+                "Id",
+                "NombreCompleto",
+                planilla.UsuarioCreacionId
+            );
+
             return View(planilla);
         }
+
 
         // GET: Planillas/Delete/5
         public async Task<IActionResult> Delete(int? id)
