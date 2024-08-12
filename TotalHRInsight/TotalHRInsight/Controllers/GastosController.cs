@@ -48,12 +48,29 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Gastos/Create
+        // GET: Gastos/Create
         public IActionResult Create()
         {
-            ViewData["CierreId"] = new SelectList(_context.CierreCajas, "IdCierraCaja", "Fecha");
+            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
             ViewData["TipoGastoId"] = new SelectList(_context.TipoGastos, "IdTipoGasto", "NombreGasto");
             return View();
         }
+
+        [HttpGet]
+        public async Task<JsonResult> GetCierresBySucursal(int sucursalId)
+        {
+            var cierres = await _context.CierreCajas
+                .Where(c => c.SucursalId == sucursalId)
+                .Select(c => new
+                {
+                    c.IdCierraCaja,
+                    c.Fecha
+                })
+                .ToListAsync();
+
+            return Json(cierres);
+        }
+
 
         // POST: Gastos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.

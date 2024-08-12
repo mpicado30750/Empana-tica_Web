@@ -20,16 +20,14 @@
 <div class="row row-cols-1 row-cols-md-3 g-4">
     @foreach (var item in Model)
     {
-        @{
-            // Determinar la clase CSS basada en el estado
-            var estadoClase = item.Estado.EstadoSolicitud switch
-            {
-                "Aceptado" => "bg-success text-white",
-                "En proceso" => "bg-warning text-dark",
-                "Cancelado" => "bg-danger text-white",
-                _ => "bg-secondary text-white"
-            };
-        }
+        // Determinar la clase CSS basada en el estado
+        var estadoClase = item.Estado.EstadoSolicitud switch
+        {
+            "Aceptado" => "bg-success text-white",
+            "En proceso" => "bg-warning text-dark",
+            "Cancelado" => "bg-danger text-white",
+            _ => "bg-secondary text-white"
+        };
 
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card h-100 shadow-sm">

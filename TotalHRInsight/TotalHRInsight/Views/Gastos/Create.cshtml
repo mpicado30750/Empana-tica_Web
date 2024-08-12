@@ -1,4 +1,4 @@
-﻿@model TotalHRInsight.DAL.Gasto
+﻿@model TotalHRInsight.Models.Gastos.GastoViewModel
 
 @{
     ViewData["Title"] = "Crear Gasto";
@@ -29,8 +29,15 @@
                             <span asp-validation-for="MontoGasto" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="CierreCaja.Fecha" class="control-label"></label>
-                            <select asp-for="CierreId" class="form-control" asp-items="ViewBag.CierreId"></select>
+                            <label asp-for="SucursalId" class="control-label">Sucursal</label>
+                            <select asp-for="SucursalId" class="form-control" asp-items="ViewBag.SucursalId" id="sucursalSelect"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="CierreCaja.Fecha" class="control-label">Fecha de Cierre de Caja</label>
+                            <select asp-for="CierreId" class="form-control" id="cierreSelect">
+                                <option value="">Seleccione una sucursal primero</option>
+                            </select>
                         </div>
 
                         <div class="d-flex justify-content-between mt-4">
@@ -57,3 +64,30 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
     <script src="~/js/loader.js"></script>
 }
+
+
+<script>
+    document.getElementById('sucursalSelect').addEventListener('change', function () {
+        var sucursalId = this.value;
+        var cierreSelect = document.getElementById('cierreSelect');
+        cierreSelect.innerHTML = '<option value="">Cargando...</option>';
+
+        fetch(`/Gastos/GetCierresBySucursal?sucursalId=${sucursalId}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);  // Agrega esto para ver qué datos estás recibiendo
+                cierreSelect.innerHTML = '';
+                data.forEach(cierre => {
+                    var option = document.createElement('option');
+                    option.value = cierre.idCierraCaja;
+                    option.text = cierre.fecha;
+                    cierreSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                cierreSelect.innerHTML = '<option value="">Error al cargar las fechas</option>';
+            });
+
+    });
+
+</script>
