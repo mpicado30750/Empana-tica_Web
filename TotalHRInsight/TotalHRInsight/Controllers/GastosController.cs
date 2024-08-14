@@ -28,9 +28,9 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Gastos/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? IdGasto)
         {
-            if (id == null)
+            if (IdGasto == null)
             {
                 return NotFound();
             }
@@ -38,7 +38,7 @@ namespace TotalHRInsight.Controllers
             var gasto = await _context.Gastos
                 .Include(g => g.CierreCaja)
                 .Include(g => g.TipoGasto)
-                .FirstOrDefaultAsync(m => m.IdGasto == id);
+                .FirstOrDefaultAsync(m => m.IdGasto == IdGasto);
             if (gasto == null)
             {
                 return NotFound();
@@ -93,14 +93,14 @@ namespace TotalHRInsight.Controllers
 
 
         // GET: Gastos/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? IdGasto)
         {
-            if (id == null)
+            if (IdGasto == null)
             {
                 return NotFound();
             }
 
-            var gasto = await _context.Gastos.FindAsync(id);
+            var gasto = await _context.Gastos.FindAsync(IdGasto);
             if (gasto == null)
             {
                 return NotFound();
@@ -115,9 +115,9 @@ namespace TotalHRInsight.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdGasto,Fecha,TipoGastoId,MontoGasto,CierreId")] Gasto gasto)
+        public async Task<IActionResult> Edit(int IdGasto, [Bind("IdGasto,Fecha,TipoGastoId,MontoGasto,CierreId")] Gasto gasto)
         {
-            if (id != gasto.IdGasto)
+            if (IdGasto != gasto.IdGasto)
             {
                 return NotFound();
             }
@@ -148,9 +148,9 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Gastos/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? IdGasto)
         {
-            if (id == null)
+            if (IdGasto == null)
             {
                 return NotFound();
             }
@@ -158,7 +158,7 @@ namespace TotalHRInsight.Controllers
             var gasto = await _context.Gastos
                 .Include(g => g.CierreCaja)
                 .Include(g => g.TipoGasto)
-                .FirstOrDefaultAsync(m => m.IdGasto == id);
+                .FirstOrDefaultAsync(m => m.IdGasto == IdGasto);
             if (gasto == null)
             {
                 return NotFound();
@@ -170,9 +170,9 @@ namespace TotalHRInsight.Controllers
         // POST: Gastos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int IdGasto)
         {
-            var gasto = await _context.Gastos.FindAsync(id);
+            var gasto = await _context.Gastos.FindAsync(IdGasto);
             if (gasto != null)
             {
                 _context.Gastos.Remove(gasto);
