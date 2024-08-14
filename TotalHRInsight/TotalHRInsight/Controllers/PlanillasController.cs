@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using ClosedXML.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +19,13 @@ namespace TotalHRInsight.Controllers
     {
         private readonly TotalHRInsightDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ILogger<PlanillasController> _logger;
 
-        public PlanillasController(TotalHRInsightDbContext context, UserManager<ApplicationUser> userManager)
+        public PlanillasController(TotalHRInsightDbContext context, UserManager<ApplicationUser> userManager, ILogger<PlanillasController> logger)
         {
             _context = context;
             _userManager = userManager;
+            _logger = logger;
         }
         public async Task<ApplicationUser?> GetUserAsync()
         {
@@ -427,8 +431,159 @@ namespace TotalHRInsight.Controllers
             return View(viewModel);
         }
 
+        //Export
+        public async Task<IActionResult> ExportarColillaPago(int id)
+        {
+            try
+            {
+                // Fetch the planilla including relevant details
+                var planilla = await _context.Planillas
+                    .Include(p => p.UsuarioAsignacion)
+                    .Include(p => p.UsuarioCreacion)
+                    .FirstOrDefaultAsync(p => p.IdPlanilla == id);
+
+                if (planilla == null)
+                {
+                    return NotFound();
+                }
+
+                var usuario = await _context.ApplicationUsers
+                    .FirstOrDefaultAsync(u => u.Id == planilla.UsuarioAsignacionId);
+
+                if (usuario == null)
+                {
+                    return NotFound();
+                }
+
+                var salario = await _context.Salarios
+                    .FirstOrDefaultAsync(s => s.UsuarioAsignacionId == usuario.Id);
+
+                if (salario == null)
+                {
+                    return NotFound();
+                }
+
+                var permisos = await _context.Permisos
+                    .Where(p => p.UsuarioAsignacionId == usuario.Id)
+                    .Include(p => p.TipoPermisos)
+                    .ToListAsync();
+
+                var deducciones = await _context.Deduccions
+                    .Where(d => d.UsuarioAsignacionId == usuario.Id)
+                    .Include(d => d.TipoDeduccion)
+                    .ToListAsync();
+
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add("Colilla de Pago");
+                    worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+
+                    // Add images (optional)
+                    var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
+                    var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
+                    if (System.IO.File.Exists(imagePath1) && System.IO.File.Exists(imagePath2))
+                    {
+                        worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
+                        worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("F1")).Scale(0.1);
+                    }
+
+                    worksheet.Row(1).Height = 60;
+                    worksheet.Column(1).Width = 12;
+                    worksheet.Column(6).Width = 12;
+
+                    // Title
+                    var titleCell = worksheet.Cell("A3");
+                    titleCell.Value = "Colilla de Pago";
+                    titleCell.Style.Font.Bold = true;
+                    titleCell.Style.Font.FontSize = 16;
+                    titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    titleCell.Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4");
+                    titleCell.Style.Font.FontColor = XLColor.White;
+                    worksheet.Range("A3:F3").Merge();  // Asegúrate que solo estas celdas tienen el fondo azul
+
+                    // Headers
+                    var headerRow = worksheet.Row(5);
+                    headerRow.Cell(1).Value = "Nombre";
+                    headerRow.Cell(2).Value = "Sueldo Bruto";
+                    headerRow.Cell(3).Value = "Deducciones";
+                    headerRow.Cell(4).Value = "Permisos";
+                    headerRow.Cell(5).Value = "Horas Extra";
+                    headerRow.Cell(6).Value = "Sueldo Neto";
+                    headerRow.Style.Font.Bold = true;
+                    headerRow.Style.Font.FontSize = 12;
+                    headerRow.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    headerRow.Style.Font.FontColor = XLColor.White;
+                    worksheet.Range("A5:F5").Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4");  // Aplicar azul solo a las celdas A5:F5
+
+                    // Format for currency in colones
+                    var colonesCurrencyFormat = "₡ #,##0.00";
+
+                    // Content
+                    worksheet.Cell(6, 1).Value = $"{usuario.Nombre} {usuario.PrimerApellido} {usuario.SegundoApellido}";
+                    worksheet.Cell(6, 2).Value = salario.SalarioBruto;
+                    worksheet.Cell(6, 2).Style.NumberFormat.Format = colonesCurrencyFormat;
+                    worksheet.Cell(6, 3).Value = "Ver detalles abajo";
+                    worksheet.Cell(6, 4).Value = "Ver detalles abajo";
+                    worksheet.Cell(6, 5).Value = salario.SalarioExtra;
+                    worksheet.Cell(6, 5).Style.NumberFormat.Format = colonesCurrencyFormat;
+                    worksheet.Cell(6, 6).Value = salario.SalarioNeto;
+                    worksheet.Cell(6, 6).Style.NumberFormat.Format = colonesCurrencyFormat;
+
+                    // Add deduction details
+                    var deduccionesStartRow = 10; // Starting row for deductions details
+                    worksheet.Cell(deduccionesStartRow, 1).Value = "Tipo de Deducción";
+                    worksheet.Cell(deduccionesStartRow, 2).Value = "Descripción";
+                    worksheet.Cell(deduccionesStartRow, 3).Value = "Monto";
+                    worksheet.Row(deduccionesStartRow).Style.Font.Bold = true;
+                    worksheet.Range(deduccionesStartRow, 1, deduccionesStartRow, 3).Style.Fill.BackgroundColor = XLColor.FromHtml("#D9EAD3");
+
+                    int row = deduccionesStartRow + 1;
+                    foreach (var deduccion in deducciones)
+                    {
+                        worksheet.Cell(row, 1).Value = deduccion.TipoDeduccion?.NombreDeduccion;
+                        worksheet.Cell(row, 2).Value = deduccion.NombreDeduccion;
+                        worksheet.Cell(row, 3).Value = deduccion.MontoDeduccion;
+                        worksheet.Cell(row, 3).Style.NumberFormat.Format = colonesCurrencyFormat;
+                        row++;
+                    }
+
+                    // Add permission details
+                    var permisosStartRow = row + 2; // Starting row for permissions details
+                    worksheet.Cell(permisosStartRow, 1).Value = "Tipo de Permiso";
+                    worksheet.Cell(permisosStartRow, 2).Value = "Cantidad de Días";
+                    worksheet.Row(permisosStartRow).Style.Font.Bold = true;
+                    worksheet.Range(permisosStartRow, 1, permisosStartRow, 2).Style.Fill.BackgroundColor = XLColor.FromHtml("#D9EAD3");
+
+                    row = permisosStartRow + 1;
+                    foreach (var permiso in permisos)
+                    {
+                        worksheet.Cell(row, 1).Value = permiso.TipoPermisos?.NombrePermiso;
+                        worksheet.Cell(row, 2).Value = permiso.CantidadDias;
+                        row++;
+                    }
+
+                    // Add planilla details
+                    worksheet.Cell(row + 2, 1).Value = "Comentarios:";
+                    worksheet.Cell(row + 2, 1).Style.Fill.BackgroundColor = XLColor.FromHtml("#D9EAD3"); // Mantiene el fondo verde en "Comentarios:"
+                    worksheet.Cell(row + 2, 2).Value = planilla.Descripcion;
+
+                    worksheet.Columns().AdjustToContents();
+
+                    using (var stream = new MemoryStream())
+                    {
+                        workbook.SaveAs(stream);
+                        var content = stream.ToArray();
+                        var fileName = $"ColillaPago_{usuario.Nombre}{usuario.PrimerApellido}_{DateTime.Now:ddMMyyyy}.xlsx";
+                        return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al generar la colilla de pago.");
+                return StatusCode(500, "Ocurrió un error al generar la colilla de pago.");
+            }
+        }
     }
-
 }
-
 

@@ -86,14 +86,25 @@ namespace TotalHRInsight.Controllers
             {
                 return NotFound();
             }
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", salario.UsuarioAsignacionId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", salario.UsuarioCreacionId);
+
+            // SelectLists actualizados para mostrar el NombreCompleto
+            ViewData["UsuarioAsignacionId"] = new SelectList(
+                _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido + " " + u.SegundoApellido }),
+                "Id",
+                "NombreCompleto",
+                salario.UsuarioAsignacionId
+            );
+            ViewData["UsuarioCreacionId"] = new SelectList(
+                _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido + " " + u.SegundoApellido }),
+                "Id",
+                "NombreCompleto",
+                salario.UsuarioCreacionId
+            );
+
             return View(salario);
         }
 
         // POST: Salarios/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdSalario,SalarioBruto,SalarioExtra,SalarioNeto,UsuarioCreacionId,UsuarioAsignacionId")] Salario salario)
@@ -123,10 +134,24 @@ namespace TotalHRInsight.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UsuarioAsignacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", salario.UsuarioAsignacionId);
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", salario.UsuarioCreacionId);
+
+            // SelectLists actualizados para mostrar el NombreCompleto
+            ViewData["UsuarioAsignacionId"] = new SelectList(
+                _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido + " " + u.SegundoApellido }),
+                "Id",
+                "NombreCompleto",
+                salario.UsuarioAsignacionId
+            );
+            ViewData["UsuarioCreacionId"] = new SelectList(
+                _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido + " " + u.SegundoApellido }),
+                "Id",
+                "NombreCompleto",
+                salario.UsuarioCreacionId
+            );
+
             return View(salario);
         }
+
 
         // GET: Salarios/Delete/5
         public async Task<IActionResult> Delete(int? id)

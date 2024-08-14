@@ -237,6 +237,7 @@ namespace TotalHRInsight.Controllers
         {
             return _context.Inventario.Any(e => e.IdInventario == IdInventario);
         }
+
         // GET: Inventarios/ExportToExcel
         public async Task<IActionResult> ExportToExcel()
         {
@@ -425,8 +426,5 @@ namespace TotalHRInsight.Controllers
                 return StatusCode(500, "Ocurrió un error al generar el archivo Excel.");
             }
         }
-
-
-
     }
 }
