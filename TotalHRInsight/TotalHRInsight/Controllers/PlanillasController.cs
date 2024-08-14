@@ -566,7 +566,6 @@ namespace TotalHRInsight.Controllers
                     worksheet.Cell(row + 2, 1).Value = "Comentarios:";
                     worksheet.Cell(row + 2, 1).Style.Fill.BackgroundColor = XLColor.FromHtml("#D9EAD3"); // Mantiene el fondo verde en "Comentarios:"
                     worksheet.Cell(row + 2, 2).Value = planilla.Descripcion;
-                    // Se eliminó el color de fondo para la celda que contiene la descripción
 
                     worksheet.Columns().AdjustToContents();
 
