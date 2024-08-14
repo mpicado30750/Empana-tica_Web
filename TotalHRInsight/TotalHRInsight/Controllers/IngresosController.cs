@@ -94,19 +94,19 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Ingresos/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? IdIngreso)
         {
-            if (id == null)
+            if (IdIngreso == null)
             {
                 return NotFound();
             }
 
-            var ingreso = await _context.Ingresos.FindAsync(id);
+            var ingreso = await _context.Ingresos.FindAsync(IdIngreso);
             if (ingreso == null)
             {
                 return NotFound();
             }
-            ViewData["CierreId"] = new SelectList(_context.CierreCajas, "IdCierraCaja", "UsuarioCreacionId", ingreso.CierreId);
+            ViewData["CierreId"] = new SelectList(_context.CierreCajas, "IdCierraCaja", "Fecha", ingreso.CierreId);
             ViewData["TipoIngresoId"] = new SelectList(_context.TipoIngresos, "IdTipoIngreso", "NombreIngreso", ingreso.TipoIngresoId);
             return View(ingreso);
         }
