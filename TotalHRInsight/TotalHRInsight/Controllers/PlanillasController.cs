@@ -432,6 +432,7 @@ namespace TotalHRInsight.Controllers
         }
 
         //Export
+
         public async Task<IActionResult> ExportarColillaPago(int id)
         {
             try
