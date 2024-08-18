@@ -184,66 +184,109 @@ namespace TotalHRInsight.Controllers
         {
             return _context.CierreCajas.Any(e => e.IdCierraCaja == id);
         }
+
         public async Task<IActionResult> ExportCierreCajaToExcel(int idCierreCaja)
         {
-            var cierreCaja = await _context.CierreCajas
-                .Include(c => c.Sucursal)
-                .Include(c => c.UsuarioCreacion)
-                .FirstOrDefaultAsync(c => c.IdCierraCaja == idCierreCaja);
-
-            if (cierreCaja == null)
+            try
             {
-                return NotFound();
-            }
+                Console.WriteLine($"Inicio del método ExportCierreCajaToExcel con idCierreCaja: {idCierreCaja}");
 
-            using (var workbook = new XLWorkbook())
-            {
-                var worksheet = workbook.Worksheets.Add($"CierreCaja_{idCierreCaja}");
-                worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+                var cierreCaja = await _context.CierreCajas
+                    .Include(c => c.Sucursal)
+                    .Include(c => c.UsuarioCreacion)
+                    .FirstOrDefaultAsync(c => c.IdCierraCaja == idCierreCaja);
 
-                // Agregar las imágenes y ajustar tamaño
-                var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
-                var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
-                var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
-                var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
-
-                // Ajustar las celdas para las imágenes
-                worksheet.Row(1).Height = 60;
-                worksheet.Column(1).Width = 12;
-                worksheet.Column(7).Width = 12;
-
-                // Título
-                var titleCell = worksheet.Cell("A2");
-                titleCell.Value = $"Detalles del Cierre de Caja #{idCierreCaja}";
-                titleCell.Style.Font.Bold = true;
-                titleCell.Style.Font.FontSize = 16;
-                titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                titleCell.Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4"); // Color de fondo azul de Excel
-                titleCell.Style.Font.FontColor = XLColor.White;
-                worksheet.Range("A2:G2").Merge();
-
-                // Información del cierre de caja
-                worksheet.Cell("A3").Value = "Fecha Cierre:";
-                worksheet.Cell("B3").Value = cierreCaja.Fecha.ToString("yyyy-MM-dd");
-                worksheet.Cell("A4").Value = "Sucursal:";
-                worksheet.Cell("B4").Value = cierreCaja.Sucursal.NombreSucursal;
-                worksheet.Cell("A5").Value = "Usuario Creación:";
-                worksheet.Cell("B5").Value = cierreCaja.UsuarioCreacion.Nombre + " " + cierreCaja.UsuarioCreacion.PrimerApellido;
-                worksheet.Cell("A6").Value = "Monto Total:";
-                worksheet.Cell("B6").Value = cierreCaja.MontoTotal;
-                worksheet.Cell("B6").Style.NumberFormat.Format = "₡ #,##0.00";
-
-                // Ajustar el ancho de las columnas después de agregar los datos
-                worksheet.Columns().AdjustToContents();
-
-                // Guardar el archivo Excel en un MemoryStream y devolver como FileResult
-                using (var stream = new MemoryStream())
+                if (cierreCaja == null)
                 {
-                    workbook.SaveAs(stream);
-                    var content = stream.ToArray();
-                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"CierreCaja_{DateTime.Now:ddMMyyyy}.xlsx");
+                    Console.WriteLine("Cierre de Caja no encontrado.");
+                    return NotFound();
+                }
+
+                Console.WriteLine("Cierre de Caja encontrado.");
+
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add($"CierreCaja_{idCierreCaja}");
+                    worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+                    Console.WriteLine("Orientación de página establecida a paisaje");
+
+                    // Agregar las imágenes y ajustar tamaño
+                    var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
+                    var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
+
+                    Console.WriteLine($"Ruta de imagen 1: {imagePath1}");
+                    Console.WriteLine($"Ruta de imagen 2: {imagePath2}");
+
+                    if (System.IO.File.Exists(imagePath1))
+                    {
+                        var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
+                        Console.WriteLine("Imagen 1 agregada al Excel");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Imagen 1 no encontrada");
+                    }
+
+                    if (System.IO.File.Exists(imagePath2))
+                    {
+                        var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
+                        Console.WriteLine("Imagen 2 agregada al Excel");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Imagen 2 no encontrada");
+                    }
+
+                    // Ajustar las celdas para las imágenes
+                    worksheet.Row(1).Height = 60;
+                    worksheet.Column(1).Width = 12;
+                    worksheet.Column(7).Width = 12;
+                    Console.WriteLine("Celdas ajustadas para las imágenes");
+
+                    // Título
+                    var titleCell = worksheet.Cell("A2");
+                    titleCell.Value = $"Detalles del Cierre de Caja #{idCierreCaja}";
+                    titleCell.Style.Font.Bold = true;
+                    titleCell.Style.Font.FontSize = 16;
+                    titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    titleCell.Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4");
+                    titleCell.Style.Font.FontColor = XLColor.White;
+                    worksheet.Range("A2:G2").Merge();
+                    Console.WriteLine("Título del informe configurado");
+
+                    // Información del cierre de caja
+                    worksheet.Cell("A3").Value = "Fecha Cierre:";
+                    worksheet.Cell("B3").Value = cierreCaja.Fecha.ToString("yyyy-MM-dd");
+                    worksheet.Cell("A4").Value = "Sucursal:";
+                    worksheet.Cell("B4").Value = cierreCaja.Sucursal.NombreSucursal;
+                    worksheet.Cell("A5").Value = "Usuario Creación:";
+                    worksheet.Cell("B5").Value = cierreCaja.UsuarioCreacion.Nombre + " " + cierreCaja.UsuarioCreacion.PrimerApellido;
+                    worksheet.Cell("A6").Value = "Monto Total:";
+                    worksheet.Cell("B6").Value = cierreCaja.MontoTotal;
+                    worksheet.Cell("B6").Style.NumberFormat.Format = "₡ #,##0.00";
+                    Console.WriteLine("Información del cierre de caja agregada al Excel");
+
+                    // Ajustar el ancho de las columnas después de agregar los datos
+                    worksheet.Columns().AdjustToContents();
+                    Console.WriteLine("Columnas ajustadas al contenido");
+
+                    // Guardar el archivo Excel en un MemoryStream y devolver como FileResult
+                    using (var stream = new MemoryStream())
+                    {
+                        workbook.SaveAs(stream);
+                        var content = stream.ToArray();
+                        Console.WriteLine("Archivo Excel guardado en memoria");
+
+                        return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"CierreCaja_{DateTime.Now:ddMMyyyy}.xlsx");
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}\n{ex.StackTrace}");
+                return StatusCode(500, "Ocurrió un error al generar el archivo Excel.");
+            }
         }
+
     }
 }

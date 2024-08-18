@@ -161,7 +161,7 @@ namespace TotalHRInsight.Controllers
 
                     // Restar la cantidad de la sucursal principal
                     var productoSucursalPrincipal = await _context.Inventario
-                        .FirstOrDefaultAsync(ps => ps.IdInventario == producto.IdProducto && ps.SucursalId == 2);
+                        .FirstOrDefaultAsync(ps => ps.ProductoId == producto.IdProducto && ps.SucursalId == 2);
 
                     if (productoSucursalPrincipal != null)
                     {
@@ -186,6 +186,8 @@ namespace TotalHRInsight.Controllers
                 {
                     // Eliminar el pedido si hubo un error con los productos
                     _context.Pedidos.Remove(nuevoPedido);
+                    var registros = _context.PedidosProductos.Where(x => x.PedidoID == nuevoPedido.IdPedido);
+                    _context.RemoveRange(registros);
                     await _context.SaveChangesAsync();
                     await transaction.RollbackAsync();
                     return BadRequest(mensajeError);
@@ -394,92 +396,129 @@ namespace TotalHRInsight.Controllers
 		{
 			return _context.Pedidos.Any(e => e.IdPedido == IdPedido);
 		}
-       
+
 
         public async Task<IActionResult> ExportToExcel()
         {
-            var pedidos = await _context.Pedidos
-                .Include(p => p.Estado)
-                .Include(p => p.Sucursal)
-                .Include(p => p.UsuarioCreacion)
-                .ToListAsync();
-
-            using (var workbook = new XLWorkbook())
+            try
             {
-                var worksheet = workbook.Worksheets.Add("Pedidos");
-                worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+                Console.WriteLine("Inicio del método ExportToExcel");
 
-                // Agregar las imágenes y ajustar tamaño (como en el ejemplo anterior)
-                var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
-                var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
-                var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
-                var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
+                var pedidos = await _context.Pedidos
+                    .Include(p => p.Estado)
+                    .Include(p => p.Sucursal)
+                    .Include(p => p.UsuarioCreacion)
+                    .ToListAsync();
+                Console.WriteLine($"Cantidad de pedidos obtenidos: {pedidos.Count}");
 
-                // Ajustar las celdas para las imágenes (como en el ejemplo anterior)
-                worksheet.Row(1).Height = 60;
-                worksheet.Column(1).Width = 12;
-                worksheet.Column(7).Width = 12;
-
-                // Título
-                var titleCell = worksheet.Cell("A3");
-                titleCell.Value = "Informe de Pedidos";
-                titleCell.Style.Font.Bold = true;
-                titleCell.Style.Font.FontSize = 16;
-                titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                titleCell.Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4"); // Color de fondo azul de Excel
-                titleCell.Style.Font.FontColor = XLColor.White;
-
-
-                // Cabeceras de la tabla
-                var headerRow = worksheet.Row(5);
-                headerRow.Cell(1).Value = "IdPedido";
-                headerRow.Cell(2).Value = "FechaPedido";
-                headerRow.Cell(3).Value = "FechaEntrega";
-                headerRow.Cell(4).Value = "UsuarioCreacion";
-                headerRow.Cell(5).Value = "Sucursal";
-                headerRow.Cell(6).Value = "Estado";
-                headerRow.Cell(7).Value = "MontoTotal";
-                headerRow.Style.Font.Bold = true;
-                headerRow.Style.Font.FontSize = 12;
-                headerRow.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                headerRow.Style.Font.FontColor = XLColor.White;
-
-
-                // Datos
-                int rowIdx = 6;
-                foreach (var pedido in pedidos)
+                using (var workbook = new XLWorkbook())
                 {
-                    var dataRow = worksheet.Row(rowIdx);
-                    dataRow.Cell(1).Value = pedido.IdPedido;
-                    dataRow.Cell(2).Value = pedido.FechaPedido.ToString("yyyy-MM-dd");
-                    dataRow.Cell(3).Value = pedido.FechaEntrega.ToString("yyyy-MM-dd");
-                    dataRow.Cell(4).Value = pedido.UsuarioCreacion.Nombre; // Ajusta según la propiedad correcta
-                    dataRow.Cell(5).Value = pedido.Sucursal.NombreSucursal;
-                    dataRow.Cell(6).Value = pedido.Estado.EstadoSolicitud;
-                    dataRow.Cell(7).Value = pedido.MontoTotal;
-                 
-                    rowIdx++;
-                }
+                    var worksheet = workbook.Worksheets.Add("Pedidos");
+                    worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+                    Console.WriteLine("Orientación de página establecida a paisaje");
 
-                // Establecer el estilo de tabla para los datos
-                var tableRange = worksheet.Range("A5:G" + rowIdx);
-                var table = tableRange.CreateTable();
+                    // Agregar las imágenes y ajustar tamaño
+                    var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
+                    var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
 
-                // Establecer estilo de tabla (opcional): Aquí puedes ajustar según tus preferencias
-                table.Theme = XLTableTheme.TableStyleMedium2; // Ejemplo de estilo de tabla
+                    Console.WriteLine($"Ruta de imagen 1: {imagePath1}");
+                    Console.WriteLine($"Ruta de imagen 2: {imagePath2}");
 
-                // Ajustar el ancho de las columnas después de agregar los datos
-                worksheet.Columns().AdjustToContents();
+                    if (System.IO.File.Exists(imagePath1))
+                    {
+                        var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
+                        Console.WriteLine("Imagen 1 agregada al Excel");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Imagen 1 no encontrada");
+                    }
 
-                // Guardar el archivo Excel en un MemoryStream y devolver como FileResult
-                using (var stream = new MemoryStream())
-                {
-                    workbook.SaveAs(stream);
-                    var content = stream.ToArray();
-                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Pedidos.xlsx");
+                    if (System.IO.File.Exists(imagePath2))
+                    {
+                        var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
+                        Console.WriteLine("Imagen 2 agregada al Excel");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Imagen 2 no encontrada");
+                    }
+
+                    // Ajustar las celdas para las imágenes
+                    worksheet.Row(1).Height = 60;
+                    worksheet.Column(1).Width = 12;
+                    worksheet.Column(7).Width = 12;
+                    Console.WriteLine("Celdas ajustadas para las imágenes");
+
+                    // Título
+                    var titleCell = worksheet.Cell("A3");
+                    titleCell.Value = "Informe de Pedidos";
+                    titleCell.Style.Font.Bold = true;
+                    titleCell.Style.Font.FontSize = 16;
+                    titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    titleCell.Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4");
+                    titleCell.Style.Font.FontColor = XLColor.White;
+                    Console.WriteLine("Título del informe configurado");
+
+                    // Cabeceras de la tabla
+                    var headerRow = worksheet.Row(5);
+                    headerRow.Cell(1).Value = "IdPedido";
+                    headerRow.Cell(2).Value = "FechaPedido";
+                    headerRow.Cell(3).Value = "FechaEntrega";
+                    headerRow.Cell(4).Value = "UsuarioCreacion";
+                    headerRow.Cell(5).Value = "Sucursal";
+                    headerRow.Cell(6).Value = "Estado";
+                    headerRow.Cell(7).Value = "MontoTotal";
+                    headerRow.Style.Font.Bold = true;
+                    headerRow.Style.Font.FontSize = 12;
+                    headerRow.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    headerRow.Style.Font.FontColor = XLColor.White;
+                    Console.WriteLine("Cabeceras de la tabla configuradas");
+
+                    // Datos
+                    int rowIdx = 6;
+                    foreach (var pedido in pedidos)
+                    {
+                        var dataRow = worksheet.Row(rowIdx);
+                        dataRow.Cell(1).Value = pedido.IdPedido;
+                        dataRow.Cell(2).Value = pedido.FechaPedido.ToString("yyyy-MM-dd");
+                        dataRow.Cell(3).Value = pedido.FechaEntrega.ToString("yyyy-MM-dd");
+                        dataRow.Cell(4).Value = pedido.UsuarioCreacion.Nombre;
+                        dataRow.Cell(5).Value = pedido.Sucursal.NombreSucursal;
+                        dataRow.Cell(6).Value = pedido.Estado.EstadoSolicitud;
+                        dataRow.Cell(7).Value = pedido.MontoTotal;
+                        rowIdx++;
+                    }
+                    Console.WriteLine("Datos de pedidos agregados al Excel");
+
+                    // Establecer el estilo de tabla para los datos
+                    var tableRange = worksheet.Range("A5:G" + rowIdx);
+                    var table = tableRange.CreateTable();
+                    table.Theme = XLTableTheme.TableStyleMedium2;
+                    Console.WriteLine("Estilo de tabla establecido");
+
+                    // Ajustar el ancho de las columnas después de agregar los datos
+                    worksheet.Columns().AdjustToContents();
+                    Console.WriteLine("Columnas ajustadas al contenido");
+
+                    // Guardar el archivo Excel en un MemoryStream y devolver como FileResult
+                    using (var stream = new MemoryStream())
+                    {
+                        workbook.SaveAs(stream);
+                        var content = stream.ToArray();
+                        Console.WriteLine("Archivo Excel guardado en memoria");
+
+                        return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Pedidos.xlsx");
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}\n{ex.StackTrace}");
+                return Content($"Ocurrió un error al generar el archivo Excel: {ex.Message}\n{ex.StackTrace}");
+            }
         }
+
 
         public async Task<IActionResult> ExportPedido(int IdPedido)
         {

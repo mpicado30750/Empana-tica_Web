@@ -216,90 +216,130 @@ namespace TotalHRInsight.Controllers
         {
             return _context.Permisos.Any(e => e.IdPermisos == IdPermisos);
         }
+
         public async Task<IActionResult> ExportToExcel()
         {
-            var permisos = await _context.Permisos
-                .Include(p => p.TipoPermisos)
-                .Include(p => p.UsuarioAsignacion)
-                .Include(p => p.UsuarioCreacion)
-                .Include(p => p.Estado)
-                .ToListAsync();
-
-            using (var workbook = new XLWorkbook())
+            try
             {
-                var worksheet = workbook.Worksheets.Add("Permisos");
-                worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+                Console.WriteLine("Inicio del método ExportToExcel");
 
-                // Agregar imágenes y ajustar tamaño
-                var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
-                var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
-                var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
-                var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
+                var permisos = await _context.Permisos
+                    .Include(p => p.TipoPermisos)
+                    .Include(p => p.UsuarioAsignacion)
+                    .Include(p => p.UsuarioCreacion)
+                    .Include(p => p.Estado)
+                    .ToListAsync();
+                Console.WriteLine($"Cantidad de permisos obtenidos: {permisos.Count}");
 
-                // Ajustar celdas para las imágenes
-                worksheet.Row(1).Height = 60;
-                worksheet.Column(1).Width = 12;
-                worksheet.Column(7).Width = 12;
-
-                // Título
-                var titleCell = worksheet.Cell("A3");
-                titleCell.Value = "Informe de Permisos";
-                titleCell.Style.Font.Bold = true;
-                titleCell.Style.Font.FontSize = 16;
-                titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                titleCell.Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4");
-                titleCell.Style.Font.FontColor = XLColor.White;
-
-                // Cabeceras de la tabla
-                var headerRow = worksheet.Row(5);
-                headerRow.Cell(1).Value = "IdPermiso";
-                headerRow.Cell(2).Value = "Tipo de Permiso";
-                headerRow.Cell(3).Value = "Usuario Asignado";
-                headerRow.Cell(4).Value = "Usuario Creación";
-                headerRow.Cell(5).Value = "Fecha Creación";
-                headerRow.Cell(6).Value = "Fecha Modificación";
-                headerRow.Cell(7).Value = "Estado";
-                headerRow.Style.Font.Bold = true;
-                headerRow.Style.Font.FontSize = 12;
-                headerRow.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                headerRow.Style.Font.FontColor = XLColor.White;
-
-                // Datos
-                int rowIdx = 6;
-                foreach (var permiso in permisos)
+                using (var workbook = new XLWorkbook())
                 {
-                    var dataRow = worksheet.Row(rowIdx);
-                    dataRow.Cell(1).Value = permiso.IdPermisos;
-                    dataRow.Cell(2).Value = permiso.TipoPermisos.NombrePermiso;
-                    dataRow.Cell(3).Value = permiso.UsuarioAsignacion.Nombre + " " + permiso.UsuarioAsignacion.PrimerApellido;
-                    dataRow.Cell(4).Value = permiso.UsuarioCreacion.Nombre + " " + permiso.UsuarioCreacion.PrimerApellido;
-                    dataRow.Cell(5).Value = permiso.FechaInicio.ToString("dd-MM-yyyy");
-                    dataRow.Cell(6).Value = permiso.FechaFin.ToString("dd-MM-yyyy") ?? string.Empty;
-                    dataRow.Cell(7).Value = permiso.Estado.EstadoSolicitud;
-                    rowIdx++;
-                }
+                    var worksheet = workbook.Worksheets.Add("Permisos");
+                    worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+                    Console.WriteLine("Orientación de página establecida a paisaje");
 
-                // Establecer estilo de tabla para los datos
-                var tableRange = worksheet.Range("A5:G" + rowIdx);
-                var table = tableRange.CreateTable();
+                    // Agregar imágenes y ajustar tamaño
+                    var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
+                    var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
 
-                // Establecer estilo de tabla (opcional)
-                table.Theme = XLTableTheme.TableStyleMedium2;
+                    Console.WriteLine($"Ruta de imagen 1: {imagePath1}");
+                    Console.WriteLine($"Ruta de imagen 2: {imagePath2}");
 
-                // Ajustar el ancho de las columnas después de agregar los datos
-                worksheet.Columns().AdjustToContents();
+                    if (System.IO.File.Exists(imagePath1))
+                    {
+                        var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
+                        Console.WriteLine("Imagen 1 agregada al Excel");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Imagen 1 no encontrada");
+                    }
 
-                // Guardar el archivo Excel en un MemoryStream y devolver como FileResult
-                using (var stream = new MemoryStream())
-                {
-                    workbook.SaveAs(stream);
-                    var content = stream.ToArray();
-                    string fileName = $"Permisos_{DateTime.Now:ddMMyyyy}.xlsx";
+                    if (System.IO.File.Exists(imagePath2))
+                    {
+                        var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
+                        Console.WriteLine("Imagen 2 agregada al Excel");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Imagen 2 no encontrada");
+                    }
 
-                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                    // Ajustar celdas para las imágenes
+                    worksheet.Row(1).Height = 60;
+                    worksheet.Column(1).Width = 12;
+                    worksheet.Column(7).Width = 12;
+                    Console.WriteLine("Celdas ajustadas para las imágenes");
+
+                    // Título
+                    var titleCell = worksheet.Cell("A3");
+                    titleCell.Value = "Informe de Permisos";
+                    titleCell.Style.Font.Bold = true;
+                    titleCell.Style.Font.FontSize = 16;
+                    titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    titleCell.Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4");
+                    titleCell.Style.Font.FontColor = XLColor.White;
+                    Console.WriteLine("Título del informe configurado");
+
+                    // Cabeceras de la tabla
+                    var headerRow = worksheet.Row(5);
+                    headerRow.Cell(1).Value = "IdPermiso";
+                    headerRow.Cell(2).Value = "Tipo de Permiso";
+                    headerRow.Cell(3).Value = "Usuario Asignado";
+                    headerRow.Cell(4).Value = "Usuario Creación";
+                    headerRow.Cell(5).Value = "Fecha Creación";
+                    headerRow.Cell(6).Value = "Fecha Modificación";
+                    headerRow.Cell(7).Value = "Estado";
+                    headerRow.Style.Font.Bold = true;
+                    headerRow.Style.Font.FontSize = 12;
+                    headerRow.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    headerRow.Style.Font.FontColor = XLColor.White;
+                    Console.WriteLine("Cabeceras de la tabla configuradas");
+
+                    // Datos
+                    int rowIdx = 6;
+                    foreach (var permiso in permisos)
+                    {
+                        var dataRow = worksheet.Row(rowIdx);
+                        dataRow.Cell(1).Value = permiso.IdPermisos;
+                        dataRow.Cell(2).Value = permiso.TipoPermisos.NombrePermiso;
+                        dataRow.Cell(3).Value = permiso.UsuarioAsignacion.Nombre + " " + permiso.UsuarioAsignacion.PrimerApellido;
+                        dataRow.Cell(4).Value = permiso.UsuarioCreacion.Nombre + " " + permiso.UsuarioCreacion.PrimerApellido;
+                        dataRow.Cell(5).Value = permiso.FechaInicio.ToString("dd-MM-yyyy");
+                        dataRow.Cell(6).Value = permiso.FechaFin.ToString("dd-MM-yyyy") ?? string.Empty;
+                        dataRow.Cell(7).Value = permiso.Estado.EstadoSolicitud;
+                        rowIdx++;
+                    }
+                    Console.WriteLine("Datos de permisos agregados al Excel");
+
+                    // Establecer estilo de tabla para los datos
+                    var tableRange = worksheet.Range("A5:G" + rowIdx);
+                    var table = tableRange.CreateTable();
+                    table.Theme = XLTableTheme.TableStyleMedium2;
+                    Console.WriteLine("Estilo de tabla establecido");
+
+                    // Ajustar el ancho de las columnas después de agregar los datos
+                    worksheet.Columns().AdjustToContents();
+                    Console.WriteLine("Columnas ajustadas al contenido");
+
+                    // Guardar el archivo Excel en un MemoryStream y devolver como FileResult
+                    using (var stream = new MemoryStream())
+                    {
+                        workbook.SaveAs(stream);
+                        var content = stream.ToArray();
+                        string fileName = $"Permisos_{DateTime.Now:ddMMyyyy}.xlsx";
+                        Console.WriteLine("Archivo Excel guardado en memoria");
+
+                        return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}\n{ex.StackTrace}");
+                return StatusCode(500, "Ocurrió un error al generar el archivo Excel.");
+            }
         }
+
 
 
     }
