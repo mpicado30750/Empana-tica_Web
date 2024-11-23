@@ -1,64 +1,96 @@
 ﻿@model TotalHRInsight.DAL.Asistencia
-
 @{
     ViewData["Title"] = "Editar Asistencia";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-center">Editar Asistencia</h1>
-<hr />
-
-<div class="container">
+<div class="container py-3">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body">
+        <div class="col-md-7">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-primary text-white py-2">
+                    <h5 class="card-title mb-0 text-center">
+                        <i class="bi bi-pencil-square me-1"></i>Editar Asistencia
+                    </h5>
+                </div>
+                <div class="card-body p-3">
                     <form asp-action="Edit">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 small"></div>
                         <input type="hidden" asp-for="IdAsistencia" />
 
-                        <div class="form-group mb-3">
-                            <label asp-for="FechaEntrada" class="form-label"></label>
-                            <input asp-for="FechaEntrada" class="form-control" />
-                            <span asp-validation-for="FechaEntrada" class="text-danger"></span>
+                        <!-- Sección de Horarios -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="FechaEntrada" class="form-label">
+                                        <i class="bi bi-clock me-1"></i>Hora de Entrada
+                                    </label>
+                                    <input asp-for="FechaEntrada" class="form-control" />
+                                    <span asp-validation-for="FechaEntrada" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="FechaSalida" class="form-label">
+                                        <i class="bi bi-clock-history me-1"></i>Hora de Salida
+                                    </label>
+                                    <input asp-for="FechaSalida" class="form-control" />
+                                    <span asp-validation-for="FechaSalida" class="text-danger small"></span>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="form-group mb-3">
-                            <label asp-for="FechaSalida" class="form-label"></label>
-                            <input asp-for="FechaSalida" class="form-control" />
-                            <span asp-validation-for="FechaSalida" class="text-danger"></span>
+                        <!-- Sección de Ubicaciones -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="UbicacionEntrada" class="form-label">
+                                        <i class="bi bi-geo-alt me-1"></i>Ubicación de Entrada
+                                    </label>
+                                    <input asp-for="UbicacionEntrada"
+                                           class="form-control bg-light"
+                                           readonly />
+                                    <span asp-validation-for="UbicacionEntrada" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="UbicacionSalida" class="form-label">
+                                        <i class="bi bi-geo-alt-fill me-1"></i>Ubicación de Salida
+                                    </label>
+                                    <input asp-for="UbicacionSalida"
+                                           class="form-control bg-light"
+                                           readonly />
+                                    <span asp-validation-for="UbicacionSalida" class="text-danger small"></span>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="form-group mb-3">
-                            <label asp-for="UbicacionEntrada" class="form-label"></label>
-                            <input asp-for="UbicacionEntrada" class="form-control" readonly />
-                            <span asp-validation-for="UbicacionEntrada" class="text-danger" ></span>
+                        <!-- Empleado -->
+                        <div class="form-group mb-4">
+                            <label asp-for="UsuarioCreacionId" class="form-label">
+                                <i class="bi bi-person me-1"></i>Empleado
+                            </label>
+                            <select asp-for="UsuarioCreacionId"
+                                    class="form-select bg-light"
+                                    disabled
+                                    asp-items="ViewBag.UsuarioCreacionId">
+                            </select>
+                            <span asp-validation-for="UsuarioCreacionId" class="text-danger small"></span>
                         </div>
 
-                        <div class="form-group mb-3">
-                            <label asp-for="UbicacionSalida" class="form-label"></label>
-                            <input asp-for="UbicacionSalida" class="form-control" readonly />
-                            <span asp-validation-for="UbicacionSalida" class="text-danger" ></span>
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label asp-for="UsuarioCreacionId" class="form-label"></label>
-                            <select asp-for="UsuarioCreacionId" class="form-control" disabled asp-items="ViewBag.UsuarioCreacionId"></select>
-                            <span asp-validation-for="UsuarioCreacionId" class="text-danger"></span>
-                        </div>
-
-                        <div class="d-grid gap-2 mb-3">
-                            <button type="submit" class="btn btn-danger btn-block">
-                                <i class="bi bi-save"></i> Guardar
+                        <!-- Botones de Acción -->
+                        <div class="d-flex gap-2 justify-content-end mt-4">
+                            <a asp-action="Index"
+                               class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left-circle me-1"></i>Cancelar
+                            </a>
+                            <button type="submit"
+                                    class="btn btn-primary">
+                                <i class="bi bi-save me-1"></i>Guardar Cambios
                             </button>
                         </div>
                     </form>
-
-                    <div class="text-center">
-                        <a asp-action="Index" class="btn btn-secondary">
-                            <i class="bi bi-arrow-left-circle"></i> Regresar
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>

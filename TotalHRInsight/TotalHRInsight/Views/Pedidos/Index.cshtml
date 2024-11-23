@@ -1,80 +1,130 @@
 ﻿@model IEnumerable<TotalHRInsight.DAL.Pedido>
-
 @{
-    ViewData["Title"] = "Lista de Pedidos";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Lista de Pedidos";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container-fluid bg-light">
+	<div class="row align-items-center mb-4">
+		<div class="col-md-6">
+			<h1 class="display-6 text-primary mb-0">Lista de Pedidos</h1>
+		</div>
+		<div class="col-md-6 text-end">
+			<div class="btn-group" role="group" aria-label="Acciones de Pedidos">
+				<a asp-action="Create" class="btn btn-outline-primary" onclick="showLoader()">
+					<i class="bi bi-plus-circle me-2"></i>Nuevo Pedido
+				</a>
+				<a asp-action="Devolucion" class="btn btn-outline-secondary" onclick="showLoader()">
+					<i class="bi bi-file-earmark-excel-fill me-2"></i>Devoluciones
+				</a>
+				<a asp-action="ExportToExcel" class="btn btn-outline-success" onclick="showLoader()">
+					<i class="bi bi-cloud-arrow-down-fill me-2"></i>Descargar
+				</a>
+			</div>
+		</div>
+	</div>
 
-<div class="d-flex justify-content-between align-items-center my-4">
-    <h1 class="mb-0">Lista de Pedidos</h1>
-    <div>
-        <a asp-action="Create" class="btn btn-danger me-2" onclick="showLoader()">
-            <i class="bi bi-plus-circle"></i> Crear nuevo registro
-        </a>
-        <a asp-action="Devolucion" class="btn btn-secondary me-2 text-white" onclick="showLoader()">
-            <i class="bi bi-file-earmark-excel-fill"></i> Devoluciones
-        </a>
-        <a asp-action="ExportToExcel" class="btn btn-success" onclick="showLoader()">
-            <i class="bi bi-cloud-arrow-down-fill"></i> Descargar datos
-        </a>
-    </div>
-</div>
-<hr />
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">Pedido #@item.IdPedido</h5>
-                    <a asp-action="ExportPedido" asp-route-IdPedido="@item.IdPedido" class="btn btn-link text-white">
-                        <i class="bi bi-cloud-arrow-down-fill fs-3"></i>
-                    </a>
+	<div class="row">
+		<div class="col-12">
+			<div class="ContenedorPedidos overflow-auto" >
+				<div class="row g-4">
+					@foreach (var item in Model)
+					{
+						<div class="col-sm-12 col-md-6 col-lg-4">
+							<div class="card border-0 shadow-sm hover-lift">
+								<div class="card-header @GetHeaderColor(item.Estado.EstadoSolicitud) text-white d-flex justify-content-between align-items-center">
+									<h5 class="card-title mb-0">Pedido #@item.IdPedido</h5>
+									<a asp-action="ExportPedido" asp-route-IdPedido="@item.IdPedido" class="btn btn-link text-white p-0">
+										<i class="bi bi-cloud-arrow-down-fill fs-4"></i>
+									</a>
+								</div>
+								<div class="card-body">
+									<div class="mb-3">
+										<h6 class="text-muted small text-uppercase">Información de Pedido</h6>
+										<p class="mb-0 text-dark"><strong>Nombre:</strong> @item.UsuarioCreacion.Nombre @item.UsuarioCreacion.PrimerApellido @item.UsuarioCreacion.SegundoApellido</p>
+									</div>
+									<div class="mb-3">
+										<h6 class="text-muted small text-uppercase">Detalles del Pedido</h6>
+										<div class="list-group list-group-flush">
+											<div class="list-group-item d-flex justify-content-between px-0">
+												<span class="text-muted">Sucursal</span>
+												<strong>@item.Sucursal.NombreSucursal</strong>
+											</div>
+											<div class="list-group-item d-flex justify-content-between px-0">
+												<span class="text-muted">Fecha de Pedido</span>
+												<strong>@item.FechaPedido.ToString("dd/MM/yyyy")</strong>
+											</div>
+											<div class="list-group-item d-flex justify-content-between px-0">
+												<span class="text-muted">Fecha de Entrega</span>
+												<strong>@item.FechaEntrega.ToString("dd/MM/yyyy")</strong>
+											</div>
+											<div class="list-group-item d-flex justify-content-between px-0">
+												<span class="text-muted">Estado</span>
+												<span class="badge @GetBadgeColor(item.Estado.EstadoSolicitud)">
+													@item.Estado.EstadoSolicitud
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="card-footer bg-transparent border-0">
+									<div class="d-flex justify-content-between gap-2">
+										<a asp-action="Edit" asp-route-IdPedido="@item.IdPedido" class="btn btn-sm btn-outline-warning flex-grow-1" onclick="showLoader()">
+											<i class="bi bi-pencil-square me-2"></i>Editar
+										</a>
+										<a asp-action="Details" asp-route-IdPedido="@item.IdPedido" class="btn btn-sm btn-outline-info flex-grow-1" onclick="showLoader()">
+											<i class="bi bi-info-circle me-2"></i>Detalles
+										</a>
+										<a asp-action="Delete" asp-route-IdPedido="@item.IdPedido" class="btn btn-sm btn-outline-danger flex-grow-1" onclick="showLoader()">
+											<i class="bi bi-trash me-2"></i>Eliminar
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+			</div>
 
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <h6 class="text-muted">Información de Pedido</h6>
-                        <p class="mb-0"><strong>Nombre:</strong> @item.UsuarioCreacion.Nombre @item.UsuarioCreacion.PrimerApellido @item.UsuarioCreacion.SegundoApellido</p>
-                    </div>
-                    <div class="mb-3">
-                        <h6 class="text-muted">Detalles del Pedido</h6>
-                        <p class="mb-0"><strong>Sucursal:</strong> @item.Sucursal.NombreSucursal</p>
-                        <p class="mb-0"><strong>Fecha de Pedido:</strong> @item.FechaPedido.ToString("dd/MM/yyyy")</p>
-                        <p class="mb-0"><strong>Fecha de Entrega:</strong> @item.FechaEntrega.ToString("dd/MM/yyyy")</p>
-                        <p class="mb-0">
-                            <strong>Estado:</strong>
-                            <span class="badge
-                                @(item.Estado.EstadoSolicitud == "En proceso" ? "bg-warning" :
-                                  item.Estado.EstadoSolicitud == "Aceptado" ? "bg-success" :
-                                  item.Estado.EstadoSolicitud == "Cancelado" ? "bg-danger" : "bg-secondary")">
-                                @item.Estado.EstadoSolicitud
-                            </span>
-                        </p>
-                    </div>
-                </div>
-                <div class="card-footer bg-light">
-                    <div class="d-flex justify-content-between">
-                        <a asp-action="Edit" asp-route-IdPedido="@item.IdPedido" class="btn btn-warning" onclick="showLoader()">
-                            <i class="bi bi-pencil-square"></i> Editar
-                        </a>
-                        <a asp-action="Details" asp-route-IdPedido="@item.IdPedido" class="btn btn-info" onclick="showLoader()">
-                            <i class="bi bi-info-circle"></i> Detalles
-                        </a>
-                        <a asp-action="Delete" asp-route-IdPedido="@item.IdPedido" class="btn btn-danger" onclick="showLoader()">
-                            <i class="bi bi-trash"></i> Eliminar
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-</div>
+			@Html.Partial("_LoaderModal")
 
-<!-- Incluir la vista parcial del loader modal -->
-@Html.Partial("_LoaderModal")
+			@section Scripts {
+				<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+				<script src="~/js/loader.js"></script>
+				<script>
+					document.addEventListener('DOMContentLoaded', function () {
+						const cards = document.querySelectorAll('.hover-lift');
+						cards.forEach(card => {
+							card.addEventListener('mouseenter', function () {
+								this.classList.add('shadow');
+							});
+							card.addEventListener('mouseleave', function () {
+								this.classList.remove('shadow');
+							});
+						});
+					});
+				</script>
+			}
 
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
-    <script src="~/js/loader.js"></script>
-}
+			@functions {
+				private string GetHeaderColor(string estado)
+				{
+					return estado switch
+					{
+						"En proceso" => "bg-warning",
+						"Aceptado" => "bg-success",
+						"Cancelado" => "bg-danger",
+						_ => "bg-secondary"
+					};
+				}
+
+				private string GetBadgeColor(string estado)
+				{
+					return estado switch
+					{
+						"En proceso" => "bg-warning text-dark",
+						"Aceptado" => "bg-success",
+						"Cancelado" => "bg-danger",
+						_ => "bg-secondary"
+					};
+				}
+			}

@@ -1,62 +1,100 @@
 ﻿@model TotalHRInsight.DAL.Asistencia
-
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Eliminar Asistencia";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-center">Eliminar Asistencia</h1>
-<hr />
-<div class="container">
+<div class="container py-3">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <dl class="row">
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.FechaEntrada)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.FechaEntrada)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.FechaSalida)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.FechaSalida)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.UbicacionEntrada)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UbicacionEntrada)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.UbicacionSalida)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UbicacionSalida)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.UsuarioCreacion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UsuarioCreacion.Nombre)
-                        </dd>
-                    </dl>
-                    <form asp-action="Delete">
+        <div class="col-md-7">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-danger text-white py-2">
+                    <h5 class="card-title mb-0 text-center">
+                        <i class="bi bi-exclamation-triangle me-1"></i>Eliminar Asistencia
+                    </h5>
+                </div>
+                <div class="card-body p-3">
+                    <!-- Mensaje de Advertencia -->
+                    <div class="alert alert-warning mb-4">
+                        <i class="bi bi-exclamation-circle me-2"></i>
+                        ¿Está seguro que desea eliminar este registro de asistencia?
+                    </div>
+
+                    <!-- Detalles de la Asistencia -->
+                    <div class="card bg-light border-0 mb-4">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-3 text-muted">
+                                <i class="bi bi-info-circle me-1"></i>Detalles del Registro
+                            </h6>
+
+                            <div class="row g-3">
+                                <!-- Horarios -->
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="small text-muted d-block">
+                                            <i class="bi bi-clock me-1"></i>Hora de Entrada
+                                        </label>
+                                        <span class="fw-medium">
+                                            @Html.DisplayFor(model => model.FechaEntrada)
+                                        </span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="small text-muted d-block">
+                                            <i class="bi bi-clock-history me-1"></i>Hora de Salida
+                                        </label>
+                                        <span class="fw-medium">
+                                            @Html.DisplayFor(model => model.FechaSalida)
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Ubicaciones -->
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="small text-muted d-block">
+                                            <i class="bi bi-geo-alt me-1"></i>Ubicación de Entrada
+                                        </label>
+                                        <span class="fw-medium">
+                                            @Html.DisplayFor(model => model.UbicacionEntrada)
+                                        </span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="small text-muted d-block">
+                                            <i class="bi bi-geo-alt-fill me-1"></i>Ubicación de Salida
+                                        </label>
+                                        <span class="fw-medium">
+                                            @Html.DisplayFor(model => model.UbicacionSalida)
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Empleado -->
+                                <div class="col-12">
+                                    <label class="small text-muted d-block">
+                                        <i class="bi bi-person me-1"></i>Empleado
+                                    </label>
+                                    <span class="fw-medium">
+                                        @Html.DisplayFor(model => model.UsuarioCreacion.Nombre)
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones de Acción -->
+                    <form asp-action="Delete" class="mt-4">
                         <input type="hidden" asp-for="IdAsistencia" />
-                        <div class="d-grid gap-2 mb-3">
-                            <button type="submit" class="btn btn-danger btn-block">
-                                <i class="bi bi-trash"></i> Eliminar
+                        <div class="d-flex gap-2 justify-content-end">
+                            <a asp-action="Index"
+                               class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left-circle me-1"></i>Cancelar
+                            </a>
+                            <button type="submit"
+                                    class="btn btn-danger">
+                                <i class="bi bi-trash me-1"></i>Eliminar
                             </button>
                         </div>
                     </form>
-                    <div class="text-center">
-                        <a asp-action="Index" class="btn btn-secondary">
-                            <i class="bi bi-arrow-left-circle"></i> Regresar
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>

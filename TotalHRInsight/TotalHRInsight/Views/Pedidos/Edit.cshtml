@@ -3,95 +3,121 @@
     ViewData["Title"] = "Editar Pedido";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1 class="text-center">Editar Pedido</h1>
-<hr />
-<div class="container">
+
+<div class="container py-4">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <form asp-action="Edit">
-                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-                        <input type="hidden" asp-for="IdPedido" />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label asp-for="FechaPedido" class="form-label"></label>
-                                    <input asp-for="FechaPedido" class="form-control" readonly />
+        <div class="col-md-11 col-lg-10">
+            <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+                <div class="card-header bg-gradient bg-primary bg-opacity-90 text-white d-flex align-items-center py-3">
+                    <i class="bi bi-pencil-square me-2 fs-4"></i>
+                    <h2 class="mb-0 fs-4 fw-semibold">Editar Pedido</h2>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-4">
+                        <!-- Columna izquierda: Formulario (más pequeña) -->
+                        <div class="col-lg-5">
+                            <form asp-action="Edit" class="bg-light p-4 rounded-3 shadow-sm">
+                                <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 shadow-sm" role="alert"></div>
+                                <input type="hidden" asp-for="IdPedido" />
+
+                                <!-- Datos generales -->
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input asp-for="FechaPedido" class="form-control bg-white border-0 shadow-sm" readonly id="fechaPedido" placeholder="Fecha de Pedido" />
+                                            <label for="fechaPedido" class="text-secondary">Fecha de Pedido</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input asp-for="FechaEntrega" class="form-control border-0 shadow-sm" type="date" id="fechaEntrega" placeholder="Fecha de Entrega" />
+                                            <label for="fechaEntrega" class="text-secondary">Fecha de Entrega</label>
+                                            <span asp-validation-for="FechaEntrega" class="text-danger small"></span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label asp-for="FechaEntrega" class="form-label"></label>
-                                    <input asp-for="FechaEntrega" class="form-control" type="date" />
-                                    <span asp-validation-for="FechaEntrega" class="text-danger"></span>
+
+                                <div class="row g-3 mt-2">
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input asp-for="UsuarioCreacion.Nombre" class="form-control bg-white border-0 shadow-sm" readonly id="usuarioCreacion" placeholder="Usuario Creación" />
+                                            <label for="usuarioCreacion" class="text-secondary">Usuario Creación</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input asp-for="Sucursal.NombreSucursal" class="form-control bg-white border-0 shadow-sm" readonly id="sucursal" placeholder="Sucursal" />
+                                            <label for="sucursal" class="text-secondary">Sucursal</label>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label asp-for="UsuarioCreacion.Nombre" class="form-label">Usuario Creación</label>
-                                    <input asp-for="UsuarioCreacion.Nombre" class="form-control" readonly />
+
+                                <div class="row g-3 mt-2">
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <select asp-for="IdEstado" class="form-select border-0 shadow-sm" asp-items="ViewBag.IdEstado" id="estado">
+                                                <option value="">Seleccionar Estado</option>
+                                            </select>
+                                            <label for="estado" class="text-secondary">Estado</label>
+                                            <span asp-validation-for="IdEstado" class="text-danger small"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input asp-for="MontoTotal" class="form-control bg-white border-0 shadow-sm" readonly id="montoTotal" placeholder="Monto Total" />
+                                            <label for="montoTotal" class="text-secondary">Monto Total</label>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label asp-for="Sucursal.NombreSucursal" class="form-label">Sucursal</label>
-                                    <input asp-for="Sucursal.NombreSucursal" class="form-control" readonly />
+
+                                <!-- Botones -->
+                                <div class="d-flex justify-content-between mt-4">
+                                    <a asp-action="Index" class="btn btn-outline-secondary hover-scale">
+                                        <i class="bi bi-arrow-left me-2"></i>Regresar
+                                    </a>
+                                    <button type="submit" class="btn btn-primary hover-scale">
+                                        <i class="bi bi-save me-2"></i>Guardar
+                                    </button>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label asp-for="Estado.EstadoSolicitud" class="form-label">Estado</label>
-                                    <select asp-for="IdEstado" class="form-control" asp-items="ViewBag.IdEstado"></select>
-                                    <span asp-validation-for="IdEstado" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label asp-for="MontoTotal" class="form-label"></label>
-                                    <input asp-for="MontoTotal" class="form-control" readonly />
-                                </div>
-                            </div>
+                            </form>
                         </div>
 
-                        <h4 class="mt-4">Productos del Pedido</h4>
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Producto</th>
-                                        <th>Cantidad</th>
-                                        <th>Precio Unitario</th>
-                                        <th>Subtotal</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.PedidosProductos)
-                                    {
-                                        <tr>
-                                            <td>@item.Producto.NombreProducto</td>
-                                            <td>@item.Cantidad</td>
-                                            <td>@item.Producto.PrecioUnitario.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
-                                            <td>@((item.Cantidad * item.Producto.PrecioUnitario).ToString("C", new System.Globalization.CultureInfo("es-CR")))</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
+                        <!-- Columna derecha: Productos (más grande con scroll vertical) -->
+                        <div class="col-lg-7">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-header bg-light py-3 border-bottom">
+                                    <h4 class="mb-0 text-primary fw-semibold fs-5">
+                                        <i class="bi bi-box-seam me-2"></i>Productos del Pedido
+                                    </h4>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="custom-scrollbar" style="height: 400px; overflow-y: auto;">
+                                        <table class="table table-hover mb-0">
+                                            <thead class="bg-light sticky-top">
+                                                <tr>
+                                                    <th class="px-3 py-3 border-bottom">Producto</th>
+                                                    <th class="text-end px-3 py-3 border-bottom" style="width: 100px;">Cantidad</th>
+                                                    <th class="text-end px-3 py-3 border-bottom" style="width: 120px;">Precio</th>
+                                                    <th class="text-end px-3 py-3 border-bottom" style="width: 120px;">Subtotal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.PedidosProductos)
+                                                {
+                                                    <tr class="border-bottom">
+                                                        <td class="px-3 py-3">@item.Producto.NombreProducto</td>
+                                                        <td class="text-end px-3 py-3">@item.Cantidad</td>
+                                                        <td class="text-end px-3 py-3">@item.Producto.PrecioUnitario.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                                        <td class="text-end px-3 py-3">@((item.Cantidad * item.Producto.PrecioUnitario).ToString("C", new System.Globalization.CultureInfo("es-CR")))</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <input type="hidden" name="IdPedido" value="@Model.IdPedido" />
-                        <div class="d-flex justify-content-between mt-4">
-                            <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
-                                <i class="bi bi-arrow-left-circle"></i> Regresar
-                            </a>
-                            <button type="submit" class="btn btn-danger ms-2" style="flex: 1;" onclick="showLoader()">
-                                <i class="bi bi-plus-circle"></i> Guardar
-                            </button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -106,4 +132,66 @@
     }
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
     <script src="~/js/loader.js"></script>
+    <style>
+        .hover-scale {
+            transition: transform 0.2s ease-in-out;
+        }
+
+            .hover-scale:hover {
+                transform: scale(1.05);
+            }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        /* Estilos personalizados para el scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cfd4da;
+            border-radius: 3px;
+        }
+
+            .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                background: #a8aeb6;
+            }
+
+        /* Estilos para Firefox */
+        .custom-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: #cfd4da #f1f1f1;
+        }
+
+        /* Hover suave en las filas de la tabla */
+        .table-hover tbody tr:hover {
+            background-color: rgba(13, 110, 253, 0.05);
+            transition: background-color 0.2s ease;
+        }
+
+        /* Mantener la cabecera fija */
+        .sticky-top {
+            top: 0;
+            z-index: 1020;
+            background-color: #f8f9fa;
+        }
+
+        /* Hacer el formulario más compacto */
+        .form-floating > .form-control {
+            padding-top: 1.2rem;
+            padding-bottom: 0.2rem;
+            
+        }
+
+        .form-floating > label {
+            padding-top: 0.5rem;
+        }
+    </style>
 }

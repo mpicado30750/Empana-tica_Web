@@ -1,38 +1,84 @@
 ﻿@model TotalHRInsight.DAL.Sucursal
-
 @{
     ViewData["Title"] = "Eliminar Sucursal";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1 class="text-center">Eliminar Sucursal</h1>
-<hr />
-<div class="container">
+
+<div class="container-fluid py-4 bg-light">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <dl class="row">
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.NombreSucursal)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.NombreSucursal)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.UbicacionSucursal)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UbicacionSucursal)
-                        </dd>
-                    </dl>
+        <div class="col-12 col-lg-8">
+            <div class="d-flex align-items-center mb-4">
+                <h1 class="h3 mb-0 text-danger fw-bold">
+                    <i class="bi bi-exclamation-triangle me-2"></i>Eliminar Sucursal
+                </h1>
+            </div>
+
+            <div class="card border-danger border-2 shadow-sm">
+                <div class="card-header bg-danger bg-opacity-10 border-danger py-3">
+                    <h5 class="card-title mb-0 text-danger">
+                        <i class="bi bi-exclamation-circle me-2"></i>
+                        ¿Está seguro que desea eliminar esta sucursal?
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <!-- Información de la Sucursal -->
+                    <div class="bg-light rounded-3 p-4 mb-4">
+                        <h6 class="text-dark mb-4">
+                            <i class="bi bi-info-circle me-2"></i>Detalles de la Sucursal
+                        </h6>
+
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label text-secondary small text-uppercase">
+                                        <i class="bi bi-building me-2"></i>
+                                        @Html.DisplayNameFor(model => model.NombreSucursal)
+                                    </label>
+                                    <div class="form-control-lg bg-white border-0 rounded-3">
+                                        <span class="fw-semibold">
+                                            @Html.DisplayFor(model => model.NombreSucursal)
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label text-secondary small text-uppercase">
+                                        <i class="bi bi-geo-alt me-2"></i>
+                                        @Html.DisplayNameFor(model => model.UbicacionSucursal)
+                                    </label>
+                                    <div class="form-control-lg bg-white border-0 rounded-3">
+                                        <span class="fw-semibold">
+                                            @Html.DisplayFor(model => model.UbicacionSucursal)
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advertencia -->
+                    <div class="alert alert-danger mb-4">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-exclamation-octagon fs-4 me-3"></i>
+                            <div>
+                                <h6 class="alert-heading mb-1">Advertencia</h6>
+                                <p class="mb-0">Esta acción no se puede deshacer. Se eliminarán todos los datos asociados a esta sucursal.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulario de Eliminación -->
                     <form asp-action="Delete" method="post">
                         <input type="hidden" name="IdSucursal" value="@Model.IdSucursal" />
-                        <div class="d-flex justify-content-between mt-4">
-                            <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
-                                <i class="bi bi-arrow-left-circle"></i> Regresar
+
+                        <div class="d-flex gap-3 mt-4">
+                            <a asp-action="Index" class="btn btn-light btn-lg px-4 fw-semibold flex-grow-1" onclick="showLoader()">
+                                <i class="bi bi-arrow-left me-2"></i>Cancelar
                             </a>
-                            <button type="submit" class="btn btn-danger ms-2" style="flex: 1;" onclick="showLoader()">
-                                <i class="bi bi-plus-circle"></i> Eliminar
+                            <button type="submit" class="btn btn-danger btn-lg px-4 fw-semibold flex-grow-1" onclick="showLoader()">
+                                <i class="bi bi-trash me-2"></i>Confirmar Eliminación
                             </button>
                         </div>
                     </form>

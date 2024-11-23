@@ -1,59 +1,101 @@
 ﻿@model TotalHRInsight.Models.Sucursal.DetailsSucursal
-
 @{
     ViewData["Title"] = "Detalles de la Sucursal";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-center">Detalles de la Sucursal</h1>
-<hr />
-<div class="container">
+<div class="container-fluid py-4 bg-light">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <div class="form-group mb-3">
-                        <label asp-for="NombreSucursal" class="form-label"></label>
-                        <input asp-for="NombreSucursal" class="form-control" readonly />
-                    </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="UbicacionSucursal" class="form-label"></label>
-                        <input asp-for="UbicacionSucursal" class="form-control" readonly />
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="form-label">Geolocalización</label>
-                        <div class="d-flex">
-                            <div class="me-2">
-                                <label asp-for="Latitud" class="form-label"></label>
-                                <input asp-for="Latitud" id="lat" class="form-control" placeholder="Latitud" readonly />
-                            </div>
-                            <div>
-                                <label asp-for="Longitud" class="form-label"></label>
-                                <input asp-for="Longitud" id="lng" class="form-control" placeholder="Longitud" readonly />
+        <div class="col-12">
+            <div class="d-flex align-items-center mb-4">
+                <h1 class="h3 mb-0 text-primary fw-bold">
+                    <i class="bi bi-building-check me-2"></i>Detalles de la Sucursal
+                </h1>
+            </div>
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="row">
+                        <!-- Columna de información -->
+                        <div class="col-md-6">
+                            <div class="card bg-light border-0 mb-4">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-4 text-primary">
+                                        <i class="bi bi-info-circle me-2"></i>Información General
+                                    </h5>
+
+                                    <div class="mb-4">
+                                        <label asp-for="NombreSucursal" class="form-label text-dark fw-semibold">
+                                            <i class="bi bi-building me-2"></i>Nombre de la Sucursal
+                                        </label>
+                                        <input asp-for="NombreSucursal"
+                                               class="form-control form-control-lg bg-white border-0"
+                                               readonly />
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label asp-for="UbicacionSucursal" class="form-label text-dark fw-semibold">
+                                            <i class="bi bi-geo-alt me-2"></i>Dirección
+                                        </label>
+                                        <input asp-for="UbicacionSucursal"
+                                               class="form-control form-control-lg bg-white border-0"
+                                               readonly />
+                                    </div>
+
+                                    <h5 class="card-title mb-3 text-primary mt-4">
+                                        <i class="bi bi-geo me-2"></i>Coordenadas Geográficas
+                                    </h5>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label asp-for="Latitud" class="form-label text-dark fw-semibold">
+                                                <i class="bi bi-compass me-2"></i>Latitud
+                                            </label>
+                                            <input asp-for="Latitud" id="lat"
+                                                   class="form-control form-control-lg bg-white border-0"
+                                                   readonly />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label asp-for="Longitud" class="form-label text-dark fw-semibold">
+                                                <i class="bi bi-compass me-2"></i>Longitud
+                                            </label>
+                                            <input asp-for="Longitud" id="lng"
+                                                   class="form-control form-control-lg bg-white border-0"
+                                                   readonly />
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-4">
+                                        <a asp-action="Index" class="btn btn-primary btn-lg px-4 fw-semibold" onclick="showLoader()">
+                                            <i class="bi bi-arrow-left me-2"></i>Volver al Listado
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group mb-3">
-                        <div class="col-md-7">
-                            <div id="map" style="width: 500px; height: 300px;"></div>
+
+                        <!-- Columna del mapa -->
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-header bg-primary text-white border-0 py-3">
+                                    <h5 class="mb-0">
+                                        <i class="bi bi-pin-map me-2"></i>Ubicación en el Mapa
+                                    </h5>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div id="map" style="width: 100%; height: 600px; border-radius: 0 0 8px 8px;"></div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-4">
-                        <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
-                            <i class="bi bi-arrow-left-circle"></i> Regresar
-                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 @Html.Partial("_LoaderModal")
 
 <script src="~/lib/leaflet/leaflet.js"></script>
-<script src="~/lib/leaflet/leaflet.min.js"></script>
-<script src="~/js/loader.js"></script>
-
 <script>
     var map = L.map('map').setView([@Model.Latitud, @Model.Longitud], 15);
 
@@ -61,7 +103,11 @@
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    L.marker([@Model.Latitud, @Model.Longitud]).addTo(map);
+    var marker = L.marker([@Model.Latitud, @Model.Longitud], {
+        title: '@Model.NombreSucursal'
+    }).addTo(map);
+
+    marker.bindPopup("<b>@Model.NombreSucursal</b><br>@Model.UbicacionSucursal").openPopup();
 </script>
 
 @section Scripts {

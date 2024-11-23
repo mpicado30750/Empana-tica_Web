@@ -3,72 +3,88 @@
 @{
     ViewData["Title"] = "Crear Sucursal";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
 
-<h1 class="text-center">Añadir Sucursal</h1>
-<hr />
-<div class="container">
+<div class="container-fluid py-4 bg-light">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body">
+        <div class="col-12">
+            <div class="d-flex align-items-center mb-4">
+                <h1 class="h3 mb-0 text-primary fw-bold">Añadir Sucursal</h1>
+            </div>
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
                     <form asp-action="Create">
-                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-                        <div class="form-group mb-3">
-                            <label asp-for="NombreSucursal" class="form-label"></label>
-                            <input asp-for="NombreSucursal" class="form-control" />
-                            <span asp-validation-for="NombreSucursal" class="text-danger"></span>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label asp-for="UbicacionSucursal" class="form-label"></label>
-                            <input asp-for="UbicacionSucursal" class="form-control" />
-                            <span asp-validation-for="UbicacionSucursal" class="text-danger"></span>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="form-label">Geolocalizacion</label>
-                            <div class="d-flex">
-                                <div class="me-2">
-                                    <label asp-for="Latitud" class="form-label"></label>
-                                    <input asp-for="Latitud" id="lat" class="form-control" placeholder="Latitud" required readonly />
-                                    <span asp-validation-for="Latitud" class="text-danger"></span>
-                                </div>
-                                <div>
-                                    <label asp-for="Longitud" class="form-label"></label>
-                                    <input asp-for="Longitud" id="lng" class="form-control" placeholder="Longitud" required readonly />
-                                    <span asp-validation-for="Longitud" class="text-danger"></span>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <div class="form-group mb-3">
-                            <div class="col-md-7">
-                                <div id="map" style="width: 180%; height: 300px;"></div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between mt-4">
-                            <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
-                                <i class="bi bi-arrow-left-circle"></i> Regresar
-                            </a>
-                            <button type="submit" class="btn btn-danger ms-2" style="flex: 1;" onclick="showLoader()">
-                                <i class="bi bi-plus-circle"></i> Añadir
-                            </button>
-                        </div>
+                        <div class="row">
+                            <!-- Columna del formulario -->
+                            <div class="col-md-6">
+                                <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4"></div>
 
+                                <div class="mb-4">
+                                    <label asp-for="NombreSucursal" class="form-label text-dark fw-semibold">
+                                        <i class="bi bi-building me-2"></i>Nombre de la Sucursal
+                                    </label>
+                                    <input asp-for="NombreSucursal" class="form-control form-control-lg border-0 bg-light"
+                                           placeholder="Ingrese el nombre de la sucursal" />
+                                    <span asp-validation-for="NombreSucursal" class="text-danger small"></span>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label asp-for="UbicacionSucursal" class="form-label text-dark fw-semibold">
+                                        <i class="bi bi-geo-alt me-2"></i>Dirección
+                                    </label>
+                                    <input asp-for="UbicacionSucursal" class="form-control form-control-lg border-0 bg-light"
+                                           placeholder="Ingrese la dirección exacta" />
+                                    <span asp-validation-for="UbicacionSucursal" class="text-danger small"></span>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <label asp-for="Latitud" class="form-label text-dark fw-semibold">
+                                            <i class="bi bi-geo me-2"></i>Latitud
+                                        </label>
+                                        <input asp-for="Latitud" id="lat" class="form-control form-control-lg border-0 bg-light"
+                                               placeholder="Latitud" required readonly />
+                                        <span asp-validation-for="Latitud" class="text-danger small"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Longitud" class="form-label text-dark fw-semibold">
+                                            <i class="bi bi-geo me-2"></i>Longitud
+                                        </label>
+                                        <input asp-for="Longitud" id="lng" class="form-control form-control-lg border-0 bg-light"
+                                               placeholder="Longitud" required readonly />
+                                        <span asp-validation-for="Longitud" class="text-danger small"></span>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-3 mt-4">
+                                    <a asp-action="Index" class="btn btn-light btn-lg px-4 fw-semibold" onclick="showLoader()">
+                                        <i class="bi bi-arrow-left me-2"></i>Regresar
+                                    </a>
+                                    <button type="submit" class="btn btn-primary btn-lg px-4 fw-semibold" onclick="showLoader()">
+                                        <i class="bi bi-plus-circle me-2"></i>Añadir Sucursal
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Columna del mapa -->
+                            <div class="col-md-6">
+                                <div class="card h-90 border-0 shadow-sm">
+                                    <div class="card-body p-0">
+                                        <div id="map" style="width: 100%; height: 450px; border-radius: 8px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
+
 @Html.Partial("_LoaderModal")
 
-
 <script src="~/lib/leaflet/leaflet.js"></script>
-<script src="~/lib/leaflet/leaflet.min.js"></script>
-<script src="~/js/loader.js"></script>
-
 <script>
     var map = L.map('map').setView([9.895403, -84.063574], 15);
     var lastMarker = null;
@@ -76,17 +92,14 @@
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    map.on('click', onMapClick);
-
-    function onMapClick(e) {
+    map.on('click', function (e) {
         if (lastMarker) {
             map.removeLayer(lastMarker);
         }
         lastMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
-        document.getElementById('lat').value = e.latlng.lat;
-        document.getElementById('lng').value = e.latlng.lng;
-    }
-
+        document.getElementById('lat').value = e.latlng.lat.toFixed(6);
+        document.getElementById('lng').value = e.latlng.lng.toFixed(6);
+    });
 </script>
 
 @section Scripts {

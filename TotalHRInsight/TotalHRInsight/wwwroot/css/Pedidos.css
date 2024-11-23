@@ -1,0 +1,10 @@
+﻿.VistaPedido {
+    background-color: aqua;
+    /*padding: 10px;*/
+}
+
+.ContenedorPedidos {
+    /*background-color:brown;*/
+    max-height: 70vh;
+    padding:20px;
+}
