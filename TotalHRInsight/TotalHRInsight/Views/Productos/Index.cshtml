@@ -1,58 +1,54 @@
 ﻿@model IEnumerable<TotalHRInsight.DAL.Producto>
-
 @{
     ViewData["Title"] = "Índice Producto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-<div class="d-flex justify-content-between align-items-center my-4">
-    <h1 class="mb-0">Lista de Productos</h1>
-    <div>
-        <a asp-action="Create" class="btn btn-danger me-2" onclick="showLoader()">
-            <i class="bi bi-plus-circle"></i> Crear Nuevo Registro
-        </a>
-        <a asp-action="ExportToExcel" class="btn btn-success" onclick="showLoader()">
-            <i class="bi bi-download"></i> Descargar datos
-        </a>
+<div class="container-fluid px-4" style="max-width: 1560px;">
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <h1 class="mb-0 text-primary">Lista de Productos</h1>
+        <div>
+            <a asp-action="Create" class="btn btn-outline-primary me-2" onclick="showLoader()">
+                <i class="bi bi-plus-circle me-2"></i>Crear Nuevo Registro
+            </a>
+            <a asp-action="ExportToExcel" class="btn btn-success" onclick="showLoader()">
+                <i class="bi bi-download me-2"></i>Descargar datos
+            </a>
+        </div>
     </div>
-</div>
-<hr />
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-header bg-danger text-white">
-                    <h5 class="card-title mb-0">@item.NombreProducto</h5>
-                </div>
-                <div class="card-body">
-                    <p class="card-text"><strong>Categoria:</strong> @Html.DisplayFor(modelItem => item.Categorias.NombreCategoria)</p>
-                    <p class="card-text"><strong>Fecha de Vencimiento:</strong> @Html.DisplayFor(modelItem => item.FechaVencimiento)</p>
-                    <p class="card-text"><strong>Precio Unitario:</strong> @Html.DisplayFor(modelItem => item.PrecioUnitario)</p>
-                    <p class="card-text"><strong>Medidas:</strong> @Html.DisplayFor(modelItem => item.Medidas.NombreMedida)</p>
-                </div>
-                <div class="card-footer bg-light">
-                    <div class="d-flex justify-content-between">
-                        <a asp-action="Edit" asp-route-IdProducto="@item.IdProducto" class="btn btn-warning" onclick="showLoader()">
-                            <i class="bi bi-pencil-square"></i> Editar
-                        </a>
-                        <a asp-action="Details" asp-route-IdProducto="@item.IdProducto" class="btn btn-info" onclick="showLoader()">
-                            <i class="bi bi-info-circle"></i> Detalles
-                        </a>
-                        <a asp-action="Delete" asp-route-IdProducto="@item.IdProducto" class="btn btn-danger" onclick="showLoader()">
-                            <i class="bi bi-trash"></i> Eliminar
-                        </a>
+    <hr class="border-primary" />
+    <div class="row row-cols-1 row-cols-md-3 g-4 overflow-auto" style="max-height: 70vh;">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm border-primary">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0">@item.NombreProducto</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"><strong>Categoria:</strong> @Html.DisplayFor(modelItem => item.Categorias.NombreCategoria)</p>
+                        <p class="card-text"><strong>Fecha de Vencimiento:</strong> @Html.DisplayFor(modelItem => item.FechaVencimiento)</p>
+                        <p class="card-text"><strong>Precio Unitario:</strong> @Html.DisplayFor(modelItem => item.PrecioUnitario)</p>
+                        <p class="card-text"><strong>Medidas:</strong> @Html.DisplayFor(modelItem => item.Medidas.NombreMedida)</p>
+                    </div>
+                    <div class="card-footer bg-light">
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Edit" asp-route-IdProducto="@item.IdProducto" class="btn btn-warning" onclick="showLoader()">
+                                <i class="bi bi-pencil-square"></i> Editar
+                            </a>
+                            <a asp-action="Details" asp-route-IdProducto="@item.IdProducto" class="btn btn-info" onclick="showLoader()">
+                                <i class="bi bi-info-circle"></i> Detalles
+                            </a>
+                            <a asp-action="Delete" asp-route-IdProducto="@item.IdProducto" class="btn btn-danger" onclick="showLoader()">
+                                <i class="bi bi-trash"></i> Eliminar
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
-
-<!-- Incluir la vista parcial del loader modal -->
 @Html.Partial("_LoaderModal")
-
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
     <script src="~/js/loader.js"></script>

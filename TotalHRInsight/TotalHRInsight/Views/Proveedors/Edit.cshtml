@@ -1,67 +1,61 @@
 ﻿@model TotalHRInsight.DAL.Proveedor
-
 @{
     ViewData["Title"] = "Editar Proveedor";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1 class="text-center">Editar Proveedor</h1>
-<hr />
-<div class="container">
+<div class="container" style="max-height:150px;">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card shadow-sm">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-warning text-white text-center">
+                    <h2 class="mb-0">
+                        <i class="bi bi-pencil me-2"></i>Editar Proveedor
+                    </h2>
+                </div>
                 <div class="card-body">
                     <form asp-action="Edit">
-                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
                         <input type="hidden" asp-for="IdProveedor" />
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="IdProveedor" />
-                        <div class="form-group">
-                            <label asp-for="NombreProveedor" class="control-label"></label>
-                            <input asp-for="NombreProveedor" class="form-control" />
+                        <div class="mb-3">
+                            <label asp-for="NombreProveedor" class="form-label text-primary"></label>
+                            <input asp-for="NombreProveedor" class="form-control form-control-lg" />
                             <span asp-validation-for="NombreProveedor" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Descripcion" class="control-label"></label>
-                            <input asp-for="Descripcion" class="form-control" />
+                        <div class="mb-3">
+                            <label asp-for="Descripcion" class="form-label text-primary"></label>
+                            <input asp-for="Descripcion" class="form-control form-control-lg" />
                             <span asp-validation-for="Descripcion" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Email" class="control-label"></label>
-                            <input asp-for="Email" class="form-control" />
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label text-primary"></label>
+                            <input asp-for="Email" class="form-control form-control-lg" type="email" />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Telefono" class="control-label"></label>
-                            <input asp-for="Telefono" class="form-control" />
+                        <div class="mb-3">
+                            <label asp-for="Telefono" class="form-label text-primary"></label>
+                            <input asp-for="Telefono" class="form-control form-control-lg" type="tel" />
                             <span asp-validation-for="Telefono" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="MetodoPago" class="control-label"></label>
-                            <input asp-for="MetodoPago" class="form-control" />
+                        <div class="mb-3">
+                            <label asp-for="MetodoPago" class="form-label text-primary"></label>
+                            <input asp-for="MetodoPago" class="form-control form-control-lg" />
                             <span asp-validation-for="MetodoPago" class="text-danger"></span>
                         </div>
-                        <form asp-action="Edit" method="post">
-                            <input type="hidden" name="IdProveedor" value="@Model.IdProveedor" />
-                            <div class="d-flex justify-content-between mt-4">
-                                <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
-                                    <i class="bi bi-arrow-left-circle"></i> Regresar
-                                </a>
-                                <button type="submit" class="btn btn-danger ms-2" style="flex: 1;" onclick="showLoader()">
-                                    <i class="bi bi-plus-circle"></i> Guardar
-                                </button>
-                            </div>
-                        </form>
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-action="Index" class="btn btn-secondary btn-lg flex-grow-1 me-2" onclick="showLoader()">
+                                <i class="bi bi-arrow-left-circle me-2"></i>Regresar
+                            </a>
+                            <button type="submit" class="btn btn-success btn-lg flex-grow-1 ms-2" onclick="showLoader()">
+                                <i class="bi bi-save me-2"></i>Guardar
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 @Html.Partial("_LoaderModal")
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

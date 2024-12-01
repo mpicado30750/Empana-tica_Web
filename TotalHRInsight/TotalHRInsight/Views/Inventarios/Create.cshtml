@@ -1,39 +1,48 @@
 ﻿@model TotalHRInsight.DAL.Inventario
-
 @{
     ViewData["Title"] = "Crear Inventario";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-center">Añadir Registro</h1>
-<hr />
-<div class="container">
+<div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body">
+        <div class="col-md-8 col-lg-6">
+            <div class="card border-0 shadow-lg rounded-4">
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <h2 class="mb-0">
+                        <i class="bi bi-box-seam me-2"></i>Añadir Registro de Inventario
+                    </h2>
+                </div>
+                <div class="card-body p-4">
                     <form asp-action="Create">
-                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-                        <div class="form-group mb-3">
-                            <label asp-for="CantidadDisponible" class="control-label"></label>
-                            <input asp-for="CantidadDisponible" class="form-control" />
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="CantidadDisponible" class="form-control" placeholder="Cantidad" />
+                            <label asp-for="CantidadDisponible" class="form-label">Cantidad Disponible</label>
                             <span asp-validation-for="CantidadDisponible" class="text-danger"></span>
                         </div>
-                        <div class="form-group mb-3">
-                            <label asp-for="SucursalId" class="control-label"></label>
-                            <select asp-for="SucursalId" class="form-control" asp-items="ViewBag.SucursalId"></select>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label asp-for="ProductoId" class="control-label"></label>
-                            <select asp-for="ProductoId" class="form-control" asp-items="ViewBag.ProductoId"></select>
+
+                        <div class="form-floating mb-3">
+                            <select asp-for="SucursalId" class="form-select" asp-items="ViewBag.SucursalId">
+                                <option value="">Selecciona una Sucursal</option>
+                            </select>
+                            <label asp-for="SucursalId" class="form-label">Sucursal</label>
                         </div>
 
-                        <div class="d-flex justify-content-between mt-4">
-                            <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
-                                <i class="bi bi-arrow-left-circle"></i> Regresar
+                        <div class="form-floating mb-4">
+                            <select asp-for="ProductoId" class="form-select" asp-items="ViewBag.ProductoId">
+                                <option value="">Selecciona un Producto</option>
+                            </select>
+                            <label asp-for="ProductoId" class="form-label">Producto</label>
+                        </div>
+
+                        <div class="d-grid gap-3 d-md-flex justify-content-md-between">
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg flex-fill me-md-2" onclick="showLoader()">
+                                <i class="bi bi-arrow-left-circle me-2"></i>Cancelar
                             </a>
-                            <button type="submit" class="btn btn-danger ms-2" style="flex: 1;" onclick="showLoader()">
-                                <i class="bi bi-plus-circle"></i> Añadir
+                            <button type="submit" class="btn btn-success btn-lg flex-fill ms-md-2" onclick="showLoader()">
+                                <i class="bi bi-plus-circle me-2"></i>Añadir Registro
                             </button>
                         </div>
                     </form>
@@ -41,10 +50,9 @@
             </div>
         </div>
     </div>
-
 </div>
-@Html.Partial("_LoaderModal")
 
+@Html.Partial("_LoaderModal")
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

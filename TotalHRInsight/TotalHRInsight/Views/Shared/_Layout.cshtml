@@ -9,12 +9,12 @@
 	<!-- Bootstrap Icons -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- No Borrar -->
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/header.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/BarraNavegacion.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/Asistencia.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/Pedidos.css" asp-append-version="true" />
+	<!-- No Borrar -->
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/header.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/BarraNavegacion.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/Asistencia.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/Pedidos.css" asp-append-version="true" />
 
 	<!-- No Borrar -->
 	<link href="~/lib/leaflet/leaflet.css" rel="stylesheet" />
@@ -24,64 +24,76 @@
 	<!-- -------------- -->
 </head>
 <body>
-	@* <div class=""> *@
-		@if (User.Identity.IsAuthenticated)
+	@inject UserManager<ApplicationUser> UserManager
+
+	@if (User.Identity.IsAuthenticated)
+	{
+		var user = await UserManager.GetUserAsync(User);
+		if (user.Estado)
 		{
-            <partial name="_HeaderPartial" />
-		}
-		<div class="main-content flex-grow-1">
-
-            <partial name="_BarraNavegacion"/>
-
-        @* <div class="bg-dark"> *@
-            <main role="main" class="Main">
+			<partial name="_HeaderPartial" />
+			<div class="main-content flex-grow-1">
+				<partial name="_BarraNavegacion" />
+				<main role="main" class="Main">
 					@RenderBody()
 				</main>
-			@* </div> *@
-		</div>
-	@* </div> *@
+			</div>
+		}
+		else
+		{
+			<div class="alert alert-warning text-center">
+				Tu cuenta no está activa. Por favor, contacta al administrador.
+			</div>
+		}
+	}
+	else
+	{
+		<partial name="_BarraNavegacion" />
+		@RenderBody() <!-- Esto permitirá que las páginas de inicio de sesión o públicas se muestren -->
+	}
+
 
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 	<!-- Bootstrap JS -->
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
-    <script>
+	<script>
 
-        function toggleSubMenu(subMenuId) {
-            const submenu = document.getElementById(subMenuId);
-            const button = document.querySelector(`[aria-controls="${subMenuId}"]`);
-            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+		function toggleSubMenu(subMenuId) {
+			const submenu = document.getElementById(subMenuId);
+			const button = document.querySelector(`[aria-controls="${subMenuId}"]`);
+			const isExpanded = button.getAttribute('aria-expanded') === 'true';
 
-            // Cambiar el estado de aria-expanded
-            button.setAttribute('aria-expanded', !isExpanded);
+			// Cambiar el estado de aria-expanded
+			button.setAttribute('aria-expanded', !isExpanded);
 
-            // Mostrar u ocultar el submenú
-            submenu.style.display = isExpanded ? 'none' : 'block';
-        }
+			// Mostrar u ocultar el submenú
+			submenu.style.display = isExpanded ? 'none' : 'block';
+		}
 
-        $(document).ready(function () {
-            // Ocultar los botones en la página de inicio y en la página de login
-            var path = window.location.pathname;
-            var homePath = "/";
-            var loginPath = "/Identity/Account/Login";
+		$(document).ready(function () {
+			// Ocultar los botones en la página de inicio y en la página de login
+			var path = window.location.pathname;
+			var homePath = "/";
+			var loginPath = "/Identity/Account/Login";
 
-            if (path === homePath || path === loginPath) {
-                $('#refreshButton').hide();
-                $('#backButton').hide();
-            }
+			if (path === homePath || path === loginPath) {
+				$('#refreshButton').hide();
+				$('#backButton').hide();
+			}
 
-            $('.collapse').on('shown.bs.collapse', function () {
-                var button = $(this).prev('button');
-                button.find('i').removeClass('bi-caret-right-fill').addClass('bi-caret-down');
-            });
+			$('.collapse').on('shown.bs.collapse', function () {
+				var button = $(this).prev('button');
+				button.find('i').removeClass('bi-caret-right-fill').addClass('bi-caret-down');
+			});
 
-            $('.collapse').on('hidden.bs.collapse', function () {
-                var button = $(this).prev('button');
-                button.find('i').removeClass('bi-caret-down').addClass('bi-caret-right-fill');
-            });
-        });
-    </script>
+			$('.collapse').on('hidden.bs.collapse', function () {
+				var button = $(this).prev('button');
+				button.find('i').removeClass('bi-caret-down').addClass('bi-caret-right-fill');
+			});
+		});
+	</script>
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

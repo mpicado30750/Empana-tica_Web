@@ -1,61 +1,38 @@
 ﻿@model TotalHRInsight.DAL.Producto
-
 @{
     ViewData["Title"] = "Detalles de Producto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1 class="text-center">Detalles de Producto</h1>
-<hr />
 <div class="container">
+    <h1 class="text-center text-primary mb-4">Detalles de Producto</h1>
+    <hr class="border-primary" />
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card shadow-sm">
+            <div class="card shadow-sm border-primary">
                 <div class="card-body">
                     <dl class="row">
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.NombreProducto)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.NombreProducto)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.FechaVencimiento)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.FechaVencimiento)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.PrecioUnitario)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.PrecioUnitario)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.Medidas)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.Medidas.NombreMedida)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.Categorias)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.Categorias.Descripcion)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.Proveedor)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.Proveedor.Descripcion)
-                        </dd>
-
+                        @{
+                            var detailItems = new[] {
+                        new { Label = "Nombre de Producto", Value = Model.NombreProducto },
+                        new { Label = "Fecha de Vencimiento", Value = Model.FechaVencimiento.ToString() },
+                        new { Label = "Precio Unitario", Value = Model.PrecioUnitario.ToString() },
+                        new { Label = "Medidas", Value = Model.Medidas.NombreMedida },
+                        new { Label = "Categoría", Value = Model.Categorias.Descripcion },
+                        new { Label = "Proveedor", Value = Model.Proveedor.Descripcion }
+                        };
+                        }
+                        @foreach (var item in detailItems)
+                        {
+                            <dt class="col-sm-4 text-primary">@item.Label</dt>
+                            <dd class="col-sm-8">@item.Value</dd>
+                        }
                     </dl>
                     <div class="d-flex justify-content-between mt-4">
-                        <a asp-action="Edit" asp-route-IdProducto="@Model.IdProducto" class="btn btn-warning ms-2" style="flex: 1;" onclick="showLoader()">
-                            <i class="bi bi-pencil-square"></i> Editar
+                        <a asp-action="Edit" asp-route-IdProducto="@Model.IdProducto" class="btn btn-warning flex-grow-1 me-2" onclick="showLoader()">
+                            <i class="bi bi-pencil-square me-2"></i>Editar
                         </a>
-                        <a asp-action="Index" class="btn btn-secondary ms-2" style="flex: 1;" onclick="showLoader()">
-                            <i class="bi bi-arrow-left-circle"></i> Regresar
+                        <a asp-action="Index" class="btn btn-secondary flex-grow-1" onclick="showLoader()">
+                            <i class="bi bi-arrow-left-circle me-2"></i>Regresar
                         </a>
                     </div>
                 </div>
@@ -64,11 +41,7 @@
     </div>
 </div>
 @Html.Partial("_LoaderModal")
-
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
     <script src="~/js/loader.js"></script>
 }

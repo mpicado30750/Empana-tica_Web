@@ -1,72 +1,138 @@
 ﻿@model IEnumerable<TotalHRInsight.DAL.Permiso>
-
 @{
     ViewData["Title"] = "Lista de Permisos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="d-flex justify-content-between align-items-center my-4">
-    <h1 class="mb-0">Lista de Permisos</h1>
-    <div>
-        <a asp-action="Create" class="btn btn-danger me-2" onclick="showLoader()">
-            <i class="bi bi-plus-circle"></i> Crear Nuevo Registro
-        </a>
-        <a asp-action="ExportToExcel" class="btn btn-success me-2" onclick="showLoader()">
-            <i class="bi bi-download"></i> Descargar Datos
-        </a>
+<div class="container-fluid" style="max-height:150;max-width:1500px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="mb-0"><i class="bi bi-list-check me-2"></i>Lista de Permisos</h3>
+        <div class="d-flex gap-2">
+            <a asp-action="Create" class="btn btn-primary px-3 py-2 d-flex align-items-center" onclick="showLoader()">
+                <i class="bi bi-plus-circle-fill me-2"></i>Nuevo Permiso
+            </a>
+            <a asp-action="ExportToExcel" class="btn btn-success px-3 py-2 d-flex align-items-center" onclick="showLoader()">
+                <i class="bi bi-file-earmark-excel-fill me-2"></i>Exportar
+            </a>
+        </div>
     </div>
-</div>
-<hr />
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    @foreach (var item in Model)
-    {
-        // Determinar la clase CSS basada en el estado
-        var estadoClase = item.Estado.EstadoSolicitud switch
-        {
-            "Aceptado" => "bg-success text-white",
-            "En proceso" => "bg-warning text-dark",
-            "Cancelado" => "bg-danger text-white",
-            _ => "bg-secondary text-white"
-        };
 
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-header bg-danger text-white">
-                    <h5 class="card-title mb-0">Solicitud de Permiso #@item.IdPermisos</h5>
-                </div>
-                <div class="card-body">
-                    <p class="card-text"><strong>Fecha de Inicio:</strong> @Html.DisplayFor(modelItem => item.FechaInicio)</p>
-                    <p class="card-text"><strong>Fecha de Fin:</strong> @Html.DisplayFor(modelItem => item.FechaFin)</p>
-                    <p class="card-text"><strong>Cantidad de Días:</strong> @Html.DisplayFor(modelItem => item.CantidadDias)</p>
-                    <p class="card-text"><strong>Comentario:</strong> @Html.DisplayFor(modelItem => item.Comentario)</p>
-                    <p class="card-text"><strong>Motivo Admin:</strong> @Html.DisplayFor(modelItem => item.MotivoAdmin)</p>
-                    <p class="card-text"><strong>Tipo de Permiso:</strong> @Html.DisplayFor(modelItem => item.TipoPermisos.NombrePermiso)</p>
-                    <p class="card-text"><strong>Usuario de Creación:</strong> @item.UsuarioCreacion.Nombre @item.UsuarioCreacion.PrimerApellido</p>
-                    <p class="card-text"><strong>Usuario de Asignación:</strong> @item.UsuarioAsignacion.Nombre @item.UsuarioAsignacion.PrimerApellido</p>
-                    <p class="card-text"><strong>Estado:</strong> <span class="badge @estadoClase">@Html.DisplayFor(modelItem => item.Estado.EstadoSolicitud)</span></p>
-                </div>
-                <div class="card-footer bg-light">
-                    <div class="d-flex justify-content-between">
-                        <a asp-action="Edit" asp-route-IdPermisos="@item.IdPermisos" class="btn btn-warning" onclick="showLoader()">
-                            <i class="bi bi-pencil-square"></i> Editar
-                        </a>
-                        <a asp-action="Details" asp-route-IdPermisos="@item.IdPermisos" class="btn btn-info" onclick="showLoader()">
-                            <i class="bi bi-info-circle"></i> Detalles
-                        </a>
-                        <a asp-action="Delete" asp-route-IdPermisos="@item.IdPermisos" class="btn btn-danger" onclick="showLoader()">
-                            <i class="bi bi-trash"></i> Eliminar
-                        </a>
+    <div class="row g-4" style="max-height: 80vh; overflow-y: auto;">
+        @foreach (var item in Model)
+        {
+            var estadoClase = item.Estado.EstadoSolicitud switch
+            {
+                "Aceptado" => "success",
+                "En proceso" => "warning",
+                "Cancelado" => "danger",
+                _ => "secondary"
+            };
+
+            <div class="col-xl-4 col-lg-6">
+                <div class="card h-100 border-0 shadow-sm hover-shadow-md transition-all">
+                    <div class="card-header bg-primary bg-gradient text-white py-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-calendar-check me-2"></i>
+                                Permiso #@item.IdPermisos
+                            </h5>
+                            <span class="badge bg-@estadoClase">
+                                @item.Estado.EstadoSolicitud
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item border-0 px-0">
+                                <small class="text-muted d-block mb-1">Período</small>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-calendar-range text-primary me-2"></i>
+                                    <span>@item.FechaInicio.ToString("dd/MM/yyyy") - @item.FechaFin.ToString("dd/MM/yyyy")</span>
+                                    <span class="badge bg-light text-dark ms-2">@item.CantidadDias días</span>
+                                </div>
+                            </div>
+
+                            <div class="list-group-item border-0 px-0">
+                                <small class="text-muted d-block mb-1">Tipo de Permiso</small>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-tag text-primary me-2"></i>
+                                    <span>@item.TipoPermisos.NombrePermiso</span>
+                                </div>
+                            </div>
+
+                            <div class="list-group-item border-0 px-0">
+                                <small class="text-muted d-block mb-1">Solicitante</small>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-person text-primary me-2"></i>
+                                    <span>@item.UsuarioCreacion.Nombre @item.UsuarioCreacion.PrimerApellido</span>
+                                </div>
+                            </div>
+
+                            <div class="list-group-item border-0 px-0">
+                                <small class="text-muted d-block mb-1">Asignado a</small>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-person-check text-primary me-2"></i>
+                                    <span>@item.UsuarioAsignacion.Nombre @item.UsuarioAsignacion.PrimerApellido</span>
+                                </div>
+                            </div>
+
+                            @if (!string.IsNullOrEmpty(item.Comentario))
+                            {
+                                <div class="list-group-item border-0 px-0">
+                                    <small class="text-muted d-block mb-1">Comentario</small>
+                                    <div class="d-flex">
+                                        <i class="bi bi-chat-text text-primary me-2"></i>
+                                        <p class="mb-0">@item.Comentario</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="card-footer bg-light border-0">
+                        <div class="d-flex justify-content-between gap-2">
+                            <a asp-action="Edit" asp-route-IdPermisos="@item.IdPermisos"
+                               class="btn btn-outline-warning flex-grow-1 d-flex align-items-center justify-content-center"
+                               onclick="showLoader()">
+                                <i class="bi bi-pencil-square me-2"></i>Editar
+                            </a>
+                            <a asp-action="Details" asp-route-IdPermisos="@item.IdPermisos"
+                               class="btn btn-outline-primary flex-grow-1 d-flex align-items-center justify-content-center"
+                               onclick="showLoader()">
+                                <i class="bi bi-info-circle me-2"></i>Detalles
+                            </a>
+                            <a asp-action="Delete" asp-route-IdPermisos="@item.IdPermisos"
+                               class="btn btn-outline-danger flex-grow-1 d-flex align-items-center justify-content-center"
+                               onclick="showLoader()">
+                                <i class="bi bi-trash me-2"></i>Eliminar
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
 
-<!-- Incluir la vista parcial del loader modal -->
 @Html.Partial("_LoaderModal")
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
     <script src="~/js/loader.js"></script>
+
+    <style>
+        .hover-shadow-md {
+            transition: box-shadow 0.3s ease;
+        }
+
+            .hover-shadow-md:hover {
+                box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+            }
+
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+
+    </style>
 }

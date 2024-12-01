@@ -66,18 +66,24 @@
                             </div>
                         </div>
 
-                        <!-- Empleado -->
                         <div class="form-group mb-4">
                             <label asp-for="UsuarioCreacionId" class="form-label">
                                 <i class="bi bi-person me-1"></i>Empleado
                             </label>
-                            <select asp-for="UsuarioCreacionId"
-                                    class="form-select bg-light"
-                                    disabled
-                                    asp-items="ViewBag.UsuarioCreacionId">
-                            </select>
+                            <!-- Campo visible que muestra el nombre completo -->
+                            <input type="text"
+                                   class="form-select bg-light"
+                                   value="@ViewData["NombreCompletoUsuarioCreacion"]"
+                                   disabled />
+
+                            <!-- Campo oculto para almacenar el ID -->
+                            <input type="hidden"
+                                   asp-for="UsuarioCreacionId"
+                                   value="@ViewData["UsuarioCreacionId"]" />
+
                             <span asp-validation-for="UsuarioCreacionId" class="text-danger small"></span>
                         </div>
+
 
                         <!-- Botones de Acción -->
                         <div class="d-flex gap-2 justify-content-end mt-4">

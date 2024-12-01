@@ -3,61 +3,65 @@
     ViewData["Title"] = "Editar Deduccion";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1 class="text-center">Editar Deduccion</h1>
-<hr />
-<div class="container">
+<div class="container py-4">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body">
+        <div class="col-md-10 col-lg-8">
+            <div class="card border-0 shadow-lg rounded-3">
+                <div class="card-header bg-warning text-dark py-3 text-center">
+                    <h1 class="h3 mb-0">Editar Deducción</h1>
+                </div>
+                <div class="card-body p-4">
                     <form asp-action="Edit">
-                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-3"></div>
                         <input type="hidden" asp-for="IdDeduccion" />
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="IdDeduccion" />
-                        <div class="form-group">
-                            <label asp-for="FechaDeduccion" class="control-label"></label>
-                            <input asp-for="FechaDeduccion" class="form-control" />
-                            <span asp-validation-for="FechaDeduccion" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="NombreDeduccion" class="control-label"></label>
-                            <input asp-for="NombreDeduccion" class="form-control" />
-                            <span asp-validation-for="NombreDeduccion" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="MontoDeduccion" class="control-label"></label>
-                            <input asp-for="MontoDeduccion" class="form-control" />
-                            <span asp-validation-for="MontoDeduccion" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="UsuarioCreacionId" class="control-label"></label>
-                            <select asp-for="UsuarioCreacionId" class="form-control" asp-items="ViewBag.UsuarioCreacionId"></select>
-                            <span asp-validation-for="UsuarioCreacionId" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="UsuarioAsignacionId" class="control-label"></label>
-                            <select asp-for="UsuarioAsignacionId" class="form-control" asp-items="ViewBag.UsuarioAsignacionId"></select>
-                            <span asp-validation-for="UsuarioAsignacionId" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="TipoDeduccionId" class="control-label"></label>
-                            <select asp-for="TipoDeduccionId" class="form-control" asp-items="ViewBag.TipoDeduccionId"></select>
-                            <span asp-validation-for="TipoDeduccionId" class="text-danger"></span>
+
+                        <div class="row g-4">
+                            <div class="col-md-6 form-group">
+                                <label asp-for="FechaDeduccion" class="form-label fw-bold"></label>
+                                <input asp-for="FechaDeduccion" class="form-control form-control-lg" />
+                                <span asp-validation-for="FechaDeduccion" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label asp-for="NombreDeduccion" class="form-label fw-bold"></label>
+                                <input asp-for="NombreDeduccion" class="form-control form-control-lg" />
+                                <span asp-validation-for="NombreDeduccion" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label asp-for="MontoDeduccion" class="form-label fw-bold"></label>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text">₡</span>
+                                    <input asp-for="MontoDeduccion" class="form-control" />
+                                </div>
+                                <span asp-validation-for="MontoDeduccion" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label asp-for="UsuarioCreacionId" class="form-label fw-bold"></label>
+                                <select asp-for="UsuarioCreacionId" class="form-select form-select-lg"
+                                        asp-items="ViewBag.UsuarioCreacionId"></select>
+                                <span asp-validation-for="UsuarioCreacionId" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label asp-for="UsuarioAsignacionId" class="form-label fw-bold"></label>
+                                <select asp-for="UsuarioAsignacionId" class="form-select form-select-lg"
+                                        asp-items="ViewBag.UsuarioAsignacionId"></select>
+                                <span asp-validation-for="UsuarioAsignacionId" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label asp-for="TipoDeduccionId" class="form-label fw-bold"></label>
+                                <select asp-for="TipoDeduccionId" class="form-select form-select-lg"
+                                        asp-items="ViewBag.TipoDeduccionId"></select>
+                                <span asp-validation-for="TipoDeduccionId" class="text-danger small"></span>
+                            </div>
                         </div>
 
-                        <form asp-action="Edit" method="post">
-                            <input type="hidden" name="IdDeduccion" value="@Model.IdDeduccion" />
-                            <div class="d-flex justify-content-between mt-4">
-                                <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
-                                    <i class="bi bi-arrow-left-circle"></i> Regresar
-                                </a>
-                                <button type="submit" class="btn btn-danger ms-2" style="flex: 1;" onclick="showLoader()">
-                                    <i class="bi bi-plus-circle"></i> Guardar
-                                </button>
-                            </div>
-                        </form>
+                        <div class="d-grid gap-3 d-md-flex justify-content-md-between mt-4">
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-4 flex-grow-1" onclick="showLoader()">
+                                <i class="bi bi-arrow-left-circle me-2"></i>Regresar
+                            </a>
+                            <button type="submit" class="btn btn-warning btn-lg px-4 flex-grow-1" onclick="showLoader()">
+                                <i class="bi bi-check-circle me-2"></i>Guardar Cambios
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -66,7 +70,6 @@
 </div>
 
 @Html.Partial("_LoaderModal")
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

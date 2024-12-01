@@ -1,49 +1,54 @@
 ﻿@model TotalHRInsight.DAL.Gasto
-
 @{
     ViewData["Title"] = "Detalles de Gasto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1 class="text-center">Detalles de Gasto</h1>
-<hr />
-<div class="container">
+
+<div class="container py-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <dl class="row">
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Fecha)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.Fecha)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.MontoGasto)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.MontoGasto)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.CierreCaja)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.CierreCaja.Fecha)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.TipoGasto)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.TipoGasto.NombreGasto)
-                        </dd>
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header bg-primary bg-opacity-10 border-0 py-3">
+                    <h2 class="card-title text-primary mb-0 fw-bold text-center">Detalles de Gasto</h2>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <div class="p-3 bg-light rounded-3">
+                                <small class="text-muted d-block mb-1">@Html.DisplayNameFor(model => model.Fecha)</small>
+                                <h5 class="mb-0">@Html.DisplayFor(model => model.Fecha)</h5>
+                            </div>
+                        </div>
 
-                    </dl>
-                    <div class="d-flex justify-content-between mt-4">
-                        <a asp-action="Edit" asp-route-IdGasto="@Model.IdGasto" class="btn btn-warning ms-2" style="flex: 1;" onclick="showLoader()">
-                            <i class="bi bi-pencil-square"></i> Editar
+                        <div class="col-12">
+                            <div class="p-3 bg-light rounded-3">
+                                <small class="text-muted d-block mb-1">@Html.DisplayNameFor(model => model.MontoGasto)</small>
+                                <h5 class="mb-0">$@Html.DisplayFor(model => model.MontoGasto)</h5>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="p-3 bg-light rounded-3">
+                                <small class="text-muted d-block mb-1">@Html.DisplayNameFor(model => model.CierreCaja)</small>
+                                <h5 class="mb-0">@Html.DisplayFor(model => model.CierreCaja.Fecha)</h5>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="p-3 bg-light rounded-3">
+                                <small class="text-muted d-block mb-1">@Html.DisplayNameFor(model => model.TipoGasto)</small>
+                                <h5 class="mb-0">@Html.DisplayFor(model => model.TipoGasto.NombreGasto)</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-between mt-4">
+                        <a asp-action="Edit" asp-route-IdGasto="@Model.IdGasto"
+                           class="btn btn-primary btn-lg px-4 shadow-sm" onclick="showLoader()">
+                            <i class="bi bi-pencil-square me-2"></i>Editar
                         </a>
-                        <a asp-action="Index" class="btn btn-secondary ms-2" style="flex: 1;" onclick="showLoader()">
-                            <i class="bi bi-arrow-left-circle"></i> Regresar
+                        <a asp-action="Index" class="btn btn-light btn-lg px-4 shadow-sm" onclick="showLoader()">
+                            <i class="bi bi-arrow-left-circle me-2"></i>Regresar
                         </a>
                     </div>
                 </div>
@@ -51,6 +56,7 @@
         </div>
     </div>
 </div>
+
 @Html.Partial("_LoaderModal")
 
 @section Scripts {

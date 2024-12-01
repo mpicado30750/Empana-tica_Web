@@ -1,78 +1,95 @@
 ﻿@model TotalHRInsight.DAL.Permiso
 
 @{
-    ViewData["Title"] = "Editar Registro";
+    ViewData["Title"] = "Editar Permiso";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-center">Editar Registro</h1>
-<hr />
-<div class="container">
+<div class="container py-4">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <form asp-action="Edit">
-                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <div class="col-lg-10 col-md-12">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-warning text-dark py-3">
+                    <h4 class="mb-0 text-center">
+                        <i class="bi bi-pencil-square me-2"></i>
+                        Editar Permiso
+                    </h4>
+                </div>
+                <div class="card-body bg-light">
+                    <form asp-action="Edit" class="needs-validation">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
                         <input type="hidden" asp-for="IdPermisos" />
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="IdPermisos" />
-                        <div class="form-group">
-                            <label asp-for="FechaInicio" class="control-label"></label>
-                            <input asp-for="FechaInicio" class="form-control" />
-                            <span asp-validation-for="FechaInicio" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="FechaFin" class="control-label"></label>
-                            <input asp-for="FechaFin" class="form-control" />
-                            <span asp-validation-for="FechaFin" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="CantidadDias" class="control-label"></label>
-                            <input asp-for="CantidadDias" class="form-control" />
-                            <span asp-validation-for="CantidadDias" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Comentario" class="control-label"></label>
-                            <input asp-for="Comentario" class="form-control" />
-                            <span asp-validation-for="Comentario" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="MotivoAdmin" class="control-label"></label>
-                            <input asp-for="MotivoAdmin" class="form-control" />
-                            <span asp-validation-for="MotivoAdmin" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="UsuarioCreacionId" class="control-label"></label>
-                            <select asp-for="UsuarioCreacionId" class="form-control" asp-items="ViewBag.UsuarioCreacionId"></select>
-                            <span asp-validation-for="UsuarioCreacionId" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="UsuarioAsignacionId" class="control-label"></label>
-                            <select asp-for="UsuarioAsignacionId" class="form-control" asp-items="ViewBag.UsuarioAsignacionId"></select>
-                            <span asp-validation-for="UsuarioAsignacionId" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="TipoPermisos.NombrePermiso" class="control-label"></label>
-                            <select asp-for="IdTipoPermiso" class="form-control" asp-items="ViewBag.IdTipoPermiso"></select>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Estado.EstadoSolicitud" class="control-label"></label>
-                            <select asp-for="IdEstado" class="form-control" asp-items="ViewBag.IdEstado"></select>
-                            <span asp-validation-for="IdEstado" class="text-danger"></span>
+                        
+                        <div class="row">
+                            <!-- Columna Izquierda -->
+                            <div class="col-md-6 pe-md-4">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="FechaInicio" class="form-control" type="date" />
+                                    <label asp-for="FechaInicio"></label>
+                                    <span asp-validation-for="FechaInicio" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input asp-for="CantidadDias" class="form-control" type="number" />
+                                    <label asp-for="CantidadDias"></label>
+                                    <span asp-validation-for="CantidadDias" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <textarea asp-for="Comentario" class="form-control" style="height: 100px"></textarea>
+                                    <label asp-for="Comentario"></label>
+                                    <span asp-validation-for="Comentario" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <select asp-for="UsuarioCreacionId" class="form-select" asp-items="ViewBag.UsuarioCreacionId">
+                                    </select>
+                                    <label asp-for="UsuarioCreacionId"></label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <select asp-for="IdTipoPermiso" class="form-select" asp-items="ViewBag.IdTipoPermiso">
+                                    </select>
+                                    <label asp-for="TipoPermisos.NombrePermiso"></label>
+                                </div>
+                            </div>
+
+                            <!-- Columna Derecha -->
+                            <div class="col-md-6 ps-md-4">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="FechaFin" class="form-control" type="date" />
+                                    <label asp-for="FechaFin"></label>
+                                    <span asp-validation-for="FechaFin" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <textarea asp-for="MotivoAdmin" class="form-control" style="height: 100px"></textarea>
+                                    <label asp-for="MotivoAdmin"></label>
+                                    <span asp-validation-for="MotivoAdmin" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <select asp-for="UsuarioAsignacionId" class="form-select" asp-items="ViewBag.UsuarioAsignacionId">
+                                    </select>
+                                    <label asp-for="UsuarioAsignacionId"></label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <select asp-for="IdEstado" class="form-select" asp-items="ViewBag.IdEstado">
+                                    </select>
+                                    <label asp-for="Estado.EstadoSolicitud"></label>
+                                </div>
+                            </div>
                         </div>
 
-                        <form asp-action="Edit" method="post">
-                            <input type="hidden" name="IdPermisos" value="@Model.IdPermisos" />
-                            <div class="d-flex justify-content-between mt-4">
-                                <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
-                                    <i class="bi bi-arrow-left-circle"></i> Regresar
-                                </a>
-                                <button type="submit" class="btn btn-danger ms-2" style="flex: 1;" onclick="showLoader()">
-                                    <i class="bi bi-plus-circle"></i> Guardar
-                                </button>
-                            </div>
-                        </form>
+                        <div class="d-grid gap-3 d-md-flex justify-content-md-between mt-4">
+                            <a asp-action="Index" class="btn btn-outline-secondary px-4 py-2 flex-grow-1" onclick="showLoader()">
+                                <i class="bi bi-arrow-left-circle me-2"></i>Regresar
+                            </a>
+                            <button type="submit" class="btn btn-warning px-4 py-2 flex-grow-1" onclick="showLoader()">
+                                <i class="bi bi-save me-2"></i>Guardar Cambios
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -83,9 +100,8 @@
 @Html.Partial("_LoaderModal")
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
     <script src="~/js/loader.js"></script>
+
 }

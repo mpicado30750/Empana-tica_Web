@@ -1,51 +1,60 @@
 ﻿@model TotalHRInsight.DAL.Gasto
-
 @{
     ViewData["Title"] = "Eliminar Gasto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1 class="text-center">Eliminar Gasto</h1>
-<hr />
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <dl class="row">
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Fecha)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.Fecha)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.MontoGasto)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.MontoGasto)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.CierreCaja)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.CierreCaja.Fecha)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.TipoGasto)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.TipoGasto.NombreGasto)
-                        </dd>
 
-                    </dl>
-                    <form asp-action="Delete" method="post">
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header bg-danger bg-opacity-10 border-0 py-3">
+                    <h2 class="card-title text-danger mb-0 fw-bold text-center">¿Eliminar este Gasto?</h2>
+                </div>
+                <div class="card-body p-4">
+                    <div class="alert alert-warning mb-4">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        Esta acción no se puede deshacer
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="p-3 bg-light rounded-3 h-100">
+                                <small class="text-muted d-block mb-1">@Html.DisplayNameFor(model => model.Fecha)</small>
+                                <h5 class="mb-0">@Html.DisplayFor(model => model.Fecha)</h5>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="p-3 bg-light rounded-3 h-100">
+                                <small class="text-muted d-block mb-1">@Html.DisplayNameFor(model => model.MontoGasto)</small>
+                                <h5 class="mb-0">$@Html.DisplayFor(model => model.MontoGasto)</h5>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="p-3 bg-light rounded-3 h-100">
+                                <small class="text-muted d-block mb-1">@Html.DisplayNameFor(model => model.CierreCaja)</small>
+                                <h5 class="mb-0">@Html.DisplayFor(model => model.CierreCaja.Fecha)</h5>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="p-3 bg-light rounded-3 h-100">
+                                <small class="text-muted d-block mb-1">@Html.DisplayNameFor(model => model.TipoGasto)</small>
+                                <h5 class="mb-0">@Html.DisplayFor(model => model.TipoGasto.NombreGasto)</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form asp-action="Delete" method="post" class="mt-4">
                         <input type="hidden" name="IdProducto" value="@Model.IdGasto" />
-                        <div class="d-flex justify-content-between mt-4">
-                            <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
-                                <i class="bi bi-arrow-left-circle"></i> Regresar
+                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-between">
+                            <a asp-action="Index" class="btn btn-light btn-lg px-4 shadow-sm" onclick="showLoader()">
+                                <i class="bi bi-arrow-left-circle me-2"></i>Cancelar
                             </a>
-                            <button type="submit" class="btn btn-danger ms-2" style="flex: 1;" onclick="showLoader()">
-                                <i class="bi bi-plus-circle"></i> Eliminar
+                            <button type="submit" class="btn btn-danger btn-lg px-4 shadow-sm" onclick="showLoader()">
+                                <i class="bi bi-trash me-2"></i>Eliminar
                             </button>
                         </div>
                     </form>

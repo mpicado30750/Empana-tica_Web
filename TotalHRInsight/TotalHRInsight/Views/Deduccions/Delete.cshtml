@@ -1,62 +1,100 @@
 ﻿@model TotalHRInsight.DAL.Deduccion
 @{
-    ViewData["Title"] = "Eliminar Deduccion";
+    ViewData["Title"] = "Eliminar Deducción";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1 class="text-center">Eliminar Deduccion</h1>
-<hr />
-<div class="container">
+<div class="container py-4">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-sm">
+        <div class="col-lg-8 col-md-10">
+            <div class="card border-0 shadow-lg rounded-3">
+                <div class="card-header bg-danger text-white py-3">
+                    <h4 class="mb-0 text-center">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        Eliminar Deducción
+                    </h4>
+                </div>
                 <div class="card-body">
-                    <dl class="row">
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.FechaDeduccion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.FechaDeduccion)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.NombreDeduccion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.NombreDeduccion)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.MontoDeduccion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            ₡ @Html.DisplayFor(model => model.MontoDeduccion)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.UsuarioCreacion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UsuarioCreacion.Nombre)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.UsuarioAsignacion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UsuarioAsignacion.Nombre)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.TipoDeduccion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.TipoDeduccion.NombreDeduccion)
-                        </dd>
-                    </dl>
-                    <form asp-action="Delete" method="post">
+                    <div class="alert alert-warning mb-4">
+                        <i class="bi bi-info-circle-fill me-2"></i>
+                        ¿Está seguro que desea eliminar esta deducción? Esta acción no se puede deshacer.
+                    </div>
+
+                    <div class="list-group list-group-flush bg-light rounded-3 p-3">
+                        <div class="list-group-item bg-transparent">
+                            <div class="row align-items-center">
+                                <dt class="col-sm-4 text-muted mb-0">
+                                    @Html.DisplayNameFor(model => model.FechaDeduccion)
+                                </dt>
+                                <dd class="col-sm-8 fw-bold mb-0">
+                                    @Html.DisplayFor(model => model.FechaDeduccion)
+                                </dd>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item bg-transparent">
+                            <div class="row align-items-center">
+                                <dt class="col-sm-4 text-muted mb-0">
+                                    @Html.DisplayNameFor(model => model.NombreDeduccion)
+                                </dt>
+                                <dd class="col-sm-8 fw-bold mb-0">
+                                    @Html.DisplayFor(model => model.NombreDeduccion)
+                                </dd>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item bg-transparent">
+                            <div class="row align-items-center">
+                                <dt class="col-sm-4 text-muted mb-0">
+                                    @Html.DisplayNameFor(model => model.MontoDeduccion)
+                                </dt>
+                                <dd class="col-sm-8 fw-bold text-danger mb-0">
+                                    ₡ @Html.DisplayFor(model => model.MontoDeduccion)
+                                </dd>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item bg-transparent">
+                            <div class="row align-items-center">
+                                <dt class="col-sm-4 text-muted mb-0">
+                                    @Html.DisplayNameFor(model => model.UsuarioCreacion)
+                                </dt>
+                                <dd class="col-sm-8 mb-0">
+                                    @Html.DisplayFor(model => model.UsuarioCreacion.Nombre)
+                                </dd>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item bg-transparent">
+                            <div class="row align-items-center">
+                                <dt class="col-sm-4 text-muted mb-0">
+                                    @Html.DisplayNameFor(model => model.UsuarioAsignacion)
+                                </dt>
+                                <dd class="col-sm-8 mb-0">
+                                    @Html.DisplayFor(model => model.UsuarioAsignacion.Nombre)
+                                </dd>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item bg-transparent">
+                            <div class="row align-items-center">
+                                <dt class="col-sm-4 text-muted mb-0">
+                                    @Html.DisplayNameFor(model => model.TipoDeduccion)
+                                </dt>
+                                <dd class="col-sm-8 mb-0">
+                                    @Html.DisplayFor(model => model.TipoDeduccion.NombreDeduccion)
+                                </dd>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form asp-action="Delete" method="post" class="mt-4">
                         <input type="hidden" name="IdDeduccion" value="@Model.IdDeduccion" />
-                        <div class="d-flex justify-content-between mt-4">
-                            <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
-                                <i class="bi bi-arrow-left-circle"></i> Regresar
+                        <div class="d-grid gap-3 d-md-flex justify-content-md-between">
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-4 flex-grow-1" onclick="showLoader()">
+                                <i class="bi bi-arrow-left-circle me-2"></i>Regresar
                             </a>
-                            <button type="submit" class="btn btn-danger ms-2" style="flex: 1;" onclick="showLoader()">
-                                <i class="bi bi-trash3-fill"></i> Eliminar
+                            <button type="submit" class="btn btn-danger btn-lg px-4 flex-grow-1" onclick="showLoader()">
+                                <i class="bi bi-trash3-fill me-2"></i>Eliminar
                             </button>
                         </div>
                     </form>
@@ -67,7 +105,6 @@
 </div>
 
 @Html.Partial("_LoaderModal")
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

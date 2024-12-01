@@ -13,6 +13,7 @@ using System.Linq;
 
 namespace TotalHRInsight.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class AdminController : Controller
     {
         private readonly AuthDbContext _authDbContext;
@@ -60,7 +61,6 @@ namespace TotalHRInsight.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> CrearUsuario(AdminCrearUsuarioViewModel usuarioModel)
         {
             if (ModelState.IsValid)
@@ -118,7 +118,6 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Admin/Edit/5
-        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -156,7 +155,6 @@ namespace TotalHRInsight.Controllers
 
         // POST: Admin/Edit/5
         [HttpPost]
-        [Authorize(Roles = "Administrador")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditUserViewModel model)
         {
@@ -242,7 +240,6 @@ namespace TotalHRInsight.Controllers
         }
 
         // GET: Admin/Delete/5
-        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -261,7 +258,6 @@ namespace TotalHRInsight.Controllers
 
         // POST: Admin/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Authorize(Roles = "Administrador")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
@@ -295,7 +291,6 @@ namespace TotalHRInsight.Controllers
 
         // POST: Admin/Activar/5
         [HttpPost, ActionName("Activar")]
-        [Authorize(Roles = "Administrador")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ActivarConfirmed(string id)
         {

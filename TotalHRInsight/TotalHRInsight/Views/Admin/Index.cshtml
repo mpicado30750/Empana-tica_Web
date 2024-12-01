@@ -1,70 +1,75 @@
 ﻿@model IEnumerable<UserRoleViewModel>
 
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @{
-    ViewData["Title"] = "Índice Usuarios";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Índice Usuarios";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="d-flex justify-content-between align-items-center my-4">
-    <h1 class="mb-0 text-primary">Índice Usuarios</h1>
-    <div>
-        <a asp-action="CrearUsuario" class="btn btn-outline-primary me-2" onclick="showLoader()">
-            <i class="bi bi-plus-circle"></i> Crear Nuevo Usuario
-        </a>
-    </div>
+	<h1 class="mb-0 text-primary">Índice Usuarios</h1>
+	<div>
+		<a asp-action="CrearUsuario" class="btn btn-outline-primary me-2" onclick="showLoader()">
+			<i class="bi bi-plus-circle"></i> Crear Nuevo Usuario
+		</a>
+	</div>
 </div>
 <hr class="text-muted" />
 <!-- Contenedor con scroll vertical -->
-<div class="overflow-auto" style="max-height: 70vh; max-width: 85vw;">
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        @foreach (var viewModel in Model)
-        {
-            <div class="col">
-                <div class="card shadow-sm border-0">
-                    <div class="card-header bg-primary text-white rounded-top">
-                        <h5 class="card-title mb-0 text-truncate">@viewModel.User.Nombre @viewModel.User.PrimerApellido @viewModel.User.SegundoApellido</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <h6 class="text-muted">Estado:</h6>
-                            <span class="badge rounded-pill @(viewModel.User.Estado ? "bg-success" : "bg-danger")">
-                                @(viewModel.User.Estado ? "Activo" : "Inactivo")
-                            </span>
-                        </div>
-                        <div class="mb-3">
-                            <h6 class="text-muted">Rol(es):</h6>
-                            <p class="mb-0 text-dark">@string.Join(", ", viewModel.Roles)</p>
-                        </div>
-                    </div>
-                    <div class="card-footer bg-light border-0">
-                        <div class="d-flex justify-content-between">
-                            <a href="@Url.Action("Edit", new { id = viewModel.User.Id })" class="btn btn-outline-secondary" onclick="showLoader()">
-                                <i class="bi bi-pencil-square"></i> Editar
-                            </a>
-                            @if (viewModel.User.Estado)
-                            {
-                                <a href="@Url.Action("Delete", new { id = viewModel.User.Id })" class="btn btn-outline-danger" onclick="showLoader()">
-                                    <i class="bi bi-person-x-fill"></i> Inactivar
-                                </a>
-                            }
-                            else
-                            {
-                                <a href="@Url.Action("Activar", new { id = viewModel.User.Id })" class="btn btn-outline-success" onclick="showLoader()">
-                                    <i class="bi bi-check-circle"></i> Activar
-                                </a>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
+<div style="max-height: 70vh; max-width: 90vw;overflow-y: auto;">
+	<div class="row row-cols-1 row-cols-md-3 g-4">
+		@foreach (var viewModel in Model)
+		{
+			if (viewModel.User.Id != UserManager.GetUserId(User))
+			{
+				<div class="col">
+					<div class="card shadow-sm border-0">
+						<div class="card-header bg-primary text-white rounded-top">
+							<h5 class="card-title mb-0 text-truncate">@viewModel.User.Nombre @viewModel.User.PrimerApellido @viewModel.User.SegundoApellido</h5>
+						</div>
+						<div class="card-body">
+							<div class="mb-3">
+								<h6 class="text-muted">Estado:</h6>
+								<span class="badge rounded-pill @(viewModel.User.Estado ? "bg-success" : "bg-danger")">
+									@(viewModel.User.Estado ? "Activo" : "Inactivo")
+								</span>
+							</div>
+							<div class="mb-3">
+								<h6 class="text-muted">Rol(es):</h6>
+								<p class="mb-0 text-dark">@string.Join(", ", viewModel.Roles)</p>
+							</div>
+						</div>
+						<div class="card-footer bg-light border-0">
+							<div class="d-flex justify-content-between">
+								<a href="@Url.Action("Edit", new { id = viewModel.User.Id })" class="btn btn-outline-secondary" onclick="showLoader()">
+									<i class="bi bi-pencil-square"></i> Editar
+								</a>
+								@if (viewModel.User.Estado)
+								{
+									<a href="@Url.Action("Delete", new { id = viewModel.User.Id })" class="btn btn-outline-danger" onclick="showLoader()">
+										<i class="bi bi-person-x-fill"></i> Inactivar
+									</a>
+								}
+								else
+								{
+									<a href="@Url.Action("Activar", new { id = viewModel.User.Id })" class="btn btn-outline-success" onclick="showLoader()">
+										<i class="bi bi-check-circle"></i> Activar
+									</a>
+								}
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+		}
+	</div>
 </div>
 
 <!-- Incluir la vista parcial del loader modal -->
 @Html.Partial("_LoaderModal")
 
 @section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
-    <script src="~/js/loader.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+	<script src="~/js/loader.js"></script>
 }

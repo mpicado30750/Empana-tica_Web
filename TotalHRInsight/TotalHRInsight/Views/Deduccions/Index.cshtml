@@ -1,64 +1,85 @@
 ﻿@model IEnumerable<TotalHRInsight.DAL.Deduccion>
-
 @{
     ViewData["Title"] = "Lista de Deducciones";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div class="d-flex justify-content-between align-items-center my-4">
-    <h1 class="mb-0">Lista de Deducciones</h1>
-    <div>
-        <a asp-action="Create" class="btn btn-danger me-2" onclick="showLoader()">
-            <i class="bi bi-plus-circle"></i> Crear nuevo registro
+<div class="container-fluid px-4 py-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+        <h1 class="display-4 text-primary mb-3 mb-md-0">Lista de Deducciones</h1>
+        <a asp-action="Create" class="btn btn-primary btn-lg px-4" onclick="showLoader()">
+            <i class="bi bi-plus-circle me-2"></i>Crear Nueva Deducción
         </a>
     </div>
-</div>
-<hr />
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">Deduccion #@item.IdDeduccion</h5>
-                    <a asp-action="Detalles" asp-route-IdDeduccion="@item.IdDeduccion" class="btn btn-link text-white">
-                    </a>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <h6 class="text-muted">Información de Deducciones</h6>
-                        <p class="mb-0"><strong>Nombre:</strong> @item.UsuarioAsignacion.Nombre @item.UsuarioAsignacion.PrimerApellido @item.UsuarioAsignacion.SegundoApellido</p>
+
+    <hr class="border-primary mb-4" />
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"
+         style="max-height: 75vh; overflow-y: auto; scrollbar-width: thin;">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm hover-shadow transition">
+                    <div class="card-header bg-primary text-white py-3">
+                        <h5 class="card-title mb-0 d-flex justify-content-between align-items-center">
+                            <span>Deducción #@item.IdDeduccion</span>
+                            <span class="badge bg-light text-primary">
+                                ₡ @item.MontoDeduccion
+                            </span>
+                        </h5>
                     </div>
-                    <div class="mb-3">
-                        <h6 class="text-muted">Detalles de la Deduccion</h6>
-                        <p class="mb-0"><strong>Tipo de Deduccion:</strong> @item.TipoDeduccion.NombreDeduccion</p>
-                        <p class="mb-0"><strong>Detalle de Deduccion:</strong> @item.NombreDeduccion</p>
-                        <p class="mb-0"><strong>Monto:</strong> ₡ @item.MontoDeduccion</p>
-                        <p class="mb-0"><strong>Fecha de Deduccion:</strong> @item.FechaDeduccion.ToString("dd/MM/yyyy")</p>
-                        <p class="mb-0"><strong>Usuario Asignacion:</strong> @item.UsuarioCreacion.Nombre @item.UsuarioCreacion.PrimerApellido @item.UsuarioCreacion.SegundoApellido</p>
+
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <h6 class="text-primary mb-2">Información del Empleado</h6>
+                            <p class="mb-0 text-dark">
+                                <strong>Nombre:</strong>
+                                @item.UsuarioAsignacion.Nombre @item.UsuarioAsignacion.PrimerApellido @item.UsuarioAsignacion.SegundoApellido
+                            </p>
+                        </div>
+
+                        <div class="mb-0">
+                            <h6 class="text-primary mb-2">Detalles de la Deducción</h6>
+                            <div class="list-group list-group-flush">
+                                <div class="list-group-item px-0">
+                                    <strong>Tipo:</strong> @item.TipoDeduccion.NombreDeduccion
+                                </div>
+                                <div class="list-group-item px-0">
+                                    <strong>Detalle:</strong> @item.NombreDeduccion
+                                </div>
+                                <div class="list-group-item px-0">
+                                    <strong>Fecha:</strong> @item.FechaDeduccion.ToString("dd/MM/yyyy")
+                                </div>
+                                <div class="list-group-item px-0">
+                                    <strong>Creado por:</strong>
+                                    @item.UsuarioCreacion.Nombre @item.UsuarioCreacion.PrimerApellido
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="card-footer bg-light">
-                    <div class="d-flex justify-content-between">
-                        <a asp-action="Edit" asp-route-IdDeduccion="@item.IdDeduccion" class="btn btn-warning" onclick="showLoader()">
-                            <i class="bi bi-pencil-square"></i> Editar
-                        </a>
-                        <a asp-action="Details" asp-route-IdDeduccion="@item.IdDeduccion" class="btn btn-info" onclick="showLoader()">
-                            <i class="bi bi-info-circle"></i> Detalles
-                        </a>
-                        <a asp-action="Delete" asp-route-IdDeduccion="@item.IdDeduccion" class="btn btn-danger" onclick="showLoader()">
-                            <i class="bi bi-trash"></i> Eliminar
-                        </a>
+
+                    <div class="card-footer bg-light p-3 border-0">
+                        <div class="d-flex gap-2 justify-content-between">
+                            <a asp-action="Edit" asp-route-IdDeduccion="@item.IdDeduccion"
+                               class="btn btn-warning flex-grow-1" onclick="showLoader()">
+                                <i class="bi bi-pencil-square me-1"></i>Editar
+                            </a>
+                            <a asp-action="Details" asp-route-IdDeduccion="@item.IdDeduccion"
+                               class="btn btn-info flex-grow-1" onclick="showLoader()">
+                                <i class="bi bi-info-circle me-1"></i>Detalles
+                            </a>
+                            <a asp-action="Delete" asp-route-IdDeduccion="@item.IdDeduccion"
+                               class="btn btn-danger flex-grow-1" onclick="showLoader()">
+                                <i class="bi bi-trash me-1"></i>Eliminar
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
 
-<!-- Incluir la vista parcial del loader modal -->
 @Html.Partial("_LoaderModal")
-
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
     <script src="~/js/loader.js"></script>

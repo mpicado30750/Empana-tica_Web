@@ -46,6 +46,7 @@ namespace TotalHRInsight.Controllers
                 .Include(p => p.TipoPermisos)
                 .Include(p => p.UsuarioAsignacion)
                 .Include(p => p.UsuarioCreacion)
+                .Include(p => p.Estado)
                 .FirstOrDefaultAsync(m => m.IdPermisos == IdPermisos);
             if (permiso == null)
             {
@@ -188,6 +189,7 @@ namespace TotalHRInsight.Controllers
                 .Include(p => p.TipoPermisos)
                 .Include(p => p.UsuarioAsignacion)
                 .Include(p => p.UsuarioCreacion)
+                .Include(p => p.Estado)
                 .FirstOrDefaultAsync(m => m.IdPermisos == IdPermisos);
             if (permiso == null)
             {

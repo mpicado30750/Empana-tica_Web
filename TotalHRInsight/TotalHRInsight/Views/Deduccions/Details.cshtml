@@ -1,61 +1,51 @@
 ﻿@model TotalHRInsight.DAL.Deduccion
-
 @{
     ViewData["Title"] = "Detalles de Deducciones";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1 class="text-center">Detalles de Deduccion</h1>
-<hr />
-<div class="container">
+<div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <dl class="row">
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.FechaDeduccion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.FechaDeduccion)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.NombreDeduccion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.NombreDeduccion)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.MontoDeduccion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.MontoDeduccion)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.UsuarioCreacion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UsuarioCreacion.Nombre)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.UsuarioAsignacion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UsuarioAsignacion.Nombre)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.TipoDeduccion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.TipoDeduccion.NombreDeduccion)
-                        </dd>
-
-                    </dl>
-                    <div class="d-flex justify-content-between mt-4">
-                        <a asp-action="Edit" asp-route-IdDeduccion="@Model.IdDeduccion" class="btn btn-warning ms-2" style="flex: 1;" onclick="showLoader()">
-                            <i class="bi bi-pencil-square"></i> Editar
+        <div class="col-md-10 col-lg-8">
+            <div class="card border-0 shadow-lg rounded-3">
+                <div class="card-header bg-info text-white py-3 text-center">
+                    <h1 class="h3 mb-0">Detalles de Deducción</h1>
+                </div>
+                <div class="card-body p-4">
+                    <div class="bg-light rounded-3 p-4 mb-4">
+                        <dl class="row g-3 mb-0">
+                            <div class="col-md-6">
+                                <dt class="text-muted fw-semibold">Fecha de Deducción</dt>
+                                <dd class="fw-bold mb-0">@Html.DisplayFor(model => model.FechaDeduccion)</dd>
+                            </div>
+                            <div class="col-md-6">
+                                <dt class="text-muted fw-semibold">Nombre de Deducción</dt>
+                                <dd class="fw-bold mb-0">@Html.DisplayFor(model => model.NombreDeduccion)</dd>
+                            </div>
+                            <div class="col-md-6">
+                                <dt class="text-muted fw-semibold">Monto de Deducción</dt>
+                                <dd class="fw-bold text-success mb-0">₡ @Html.DisplayFor(model => model.MontoDeduccion)</dd>
+                            </div>
+                            <div class="col-md-6">
+                                <dt class="text-muted fw-semibold">Usuario de Creación</dt>
+                                <dd class="fw-bold mb-0">@Html.DisplayFor(model => model.UsuarioCreacion.Nombre)</dd>
+                            </div>
+                            <div class="col-md-6">
+                                <dt class="text-muted fw-semibold">Usuario de Asignación</dt>
+                                <dd class="fw-bold mb-0">@Html.DisplayFor(model => model.UsuarioAsignacion.Nombre)</dd>
+                            </div>
+                            <div class="col-md-6">
+                                <dt class="text-muted fw-semibold">Tipo de Deducción</dt>
+                                <dd class="fw-bold mb-0">@Html.DisplayFor(model => model.TipoDeduccion.NombreDeduccion)</dd>
+                            </div>
+                        </dl>
+                    </div>
+                    <div class="d-grid gap-3 d-md-flex justify-content-md-between mt-4">
+                        <a asp-action="Edit" asp-route-IdDeduccion="@Model.IdDeduccion"
+                           class="btn btn-warning btn-lg px-4" onclick="showLoader()">
+                            <i class="bi bi-pencil-square me-2"></i>Editar
                         </a>
-                        <a asp-action="Index" class="btn btn-secondary ms-2" style="flex: 1;" onclick="showLoader()">
-                            <i class="bi bi-arrow-left-circle"></i> Regresar
+                        <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-4" onclick="showLoader()">
+                            <i class="bi bi-arrow-left-circle me-2"></i>Regresar
                         </a>
                     </div>
                 </div>
@@ -63,12 +53,9 @@
         </div>
     </div>
 </div>
-@Html.Partial("_LoaderModal")
 
+@Html.Partial("_LoaderModal")
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
     <script src="~/js/loader.js"></script>
 }

@@ -1,50 +1,68 @@
 ﻿@model TotalHRInsight.DAL.CierreCaja
-
 @{
     ViewData["Title"] = "Detalles del Cierre de Caja";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-center">Detalles del Cierre de Caja</h1>
-<hr />
-<div class="container">
+<div class="container py-4">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h4 class="text-danger text-center">Cierre de Caja</h4>
-                    <dl class="row mt-4">
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.Fecha)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.Fecha)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.MontoTotal)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.MontoTotal)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.Sucursal)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.Sucursal.NombreSucursal)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.UsuarioCreacion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UsuarioCreacion.Nombre) 
-                        </dd>
-                    </dl>
-                    <div class="d-flex justify-content-between mt-4">
-                        <a asp-action="Edit" asp-route-id="@Model?.IdCierraCaja" class="btn btn-danger" style="flex: 1;" onclick="showLoader()">
-                            <i class="bi bi-pencil-square"></i> Editar
+        <div class="col-lg-8 col-md-10">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-primary bg-gradient text-white py-3">
+                    <h4 class="mb-0">
+                        <i class="bi bi-info-circle me-2"></i>Detalles del Cierre de Caja
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="p-3 bg-light rounded">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-calendar3 text-primary fs-4 me-2"></i>
+                                    <h6 class="mb-0">@Html.DisplayNameFor(model => model.Fecha)</h6>
+                                </div>
+                                <p class="mb-0 fs-5">@Html.DisplayFor(model => model.Fecha)</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="p-3 bg-light rounded">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-cash text-success fs-4 me-2"></i>
+                                    <h6 class="mb-0">@Html.DisplayNameFor(model => model.MontoTotal)</h6>
+                                </div>
+                                <p class="mb-0 fs-5">₡@Html.DisplayFor(model => model.MontoTotal)</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="p-3 bg-light rounded">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-building text-primary fs-4 me-2"></i>
+                                    <h6 class="mb-0">@Html.DisplayNameFor(model => model.Sucursal)</h6>
+                                </div>
+                                <p class="mb-0 fs-5">@Html.DisplayFor(model => model.Sucursal.NombreSucursal)</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="p-3 bg-light rounded">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-person text-primary fs-4 me-2"></i>
+                                    <h6 class="mb-0">@Html.DisplayNameFor(model => model.UsuarioCreacion)</h6>
+                                </div>
+                                <p class="mb-0 fs-5">@Html.DisplayFor(model => model.UsuarioCreacion.Nombre)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <a asp-action="Edit" asp-route-id="@Model?.IdCierraCaja"
+                           class="btn btn-warning btn-lg px-4" onclick="showLoader()">
+                            <i class="bi bi-pencil-square me-2"></i>Editar
                         </a>
-                        <a asp-action="Index" class="btn btn-secondary ms-2" style="flex: 1;" onclick="showLoader()">
-                            <i class="bi bi-arrow-left-circle"></i> Regresar
+                        <a asp-action="Index" class="btn btn-light btn-lg px-4" onclick="showLoader()">
+                            <i class="bi bi-arrow-left me-2"></i>Regresar
                         </a>
                     </div>
                 </div>

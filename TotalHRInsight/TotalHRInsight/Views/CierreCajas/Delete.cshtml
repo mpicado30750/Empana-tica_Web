@@ -1,55 +1,77 @@
 ﻿@model TotalHRInsight.DAL.CierreCaja
-
 @{
     ViewData["Title"] = "Eliminar Cierre de Caja";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-center">Eliminar Cierre de Caja</h1>
-<hr />
-<div class="container">
+<div class="container py-4">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h3 class="text-danger text-center">¿Estás seguro de que quieres eliminar este registro?</h3>
-                    <hr />
-                    <h4 class="text-center text-danger">Detalles del Cierre</h4>
-                    <dl class="row mt-4">
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.Fecha)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.Fecha)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.MontoTotal)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.MontoTotal)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.Sucursal)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.Sucursal.NombreSucursal)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.UsuarioCreacion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UsuarioCreacion.Nombre)
-                        </dd>
-                    </dl>
+        <div class="col-lg-8 col-md-10">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-danger bg-gradient text-white py-3">
+                    <h4 class="mb-0 text-center">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>Confirmar Eliminación
+                    </h4>
+                </div>
+
+                <div class="card-body p-4">
+                    <div class="alert alert-warning">
+                        <h5 class="alert-heading mb-0">
+                            <i class="bi bi-question-circle me-2"></i>
+                            ¿Estás seguro de que quieres eliminar este cierre de caja?
+                        </h5>
+                    </div>
+
+                    <div class="row g-4 mt-2">
+                        <div class="col-md-6">
+                            <div class="p-3 border rounded bg-light">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-calendar3 text-primary fs-4 me-2"></i>
+                                    <h6 class="mb-0">@Html.DisplayNameFor(model => model.Fecha)</h6>
+                                </div>
+                                <p class="mb-0 fs-5">@Html.DisplayFor(model => model.Fecha)</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="p-3 border rounded bg-light">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-cash text-success fs-4 me-2"></i>
+                                    <h6 class="mb-0">@Html.DisplayNameFor(model => model.MontoTotal)</h6>
+                                </div>
+                                <p class="mb-0 fs-5">₡@Html.DisplayFor(model => model.MontoTotal)</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="p-3 border rounded bg-light">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-building text-primary fs-4 me-2"></i>
+                                    <h6 class="mb-0">@Html.DisplayNameFor(model => model.Sucursal)</h6>
+                                </div>
+                                <p class="mb-0 fs-5">@Html.DisplayFor(model => model.Sucursal.NombreSucursal)</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="p-3 border rounded bg-light">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-person text-primary fs-4 me-2"></i>
+                                    <h6 class="mb-0">@Html.DisplayNameFor(model => model.UsuarioCreacion)</h6>
+                                </div>
+                                <p class="mb-0 fs-5">@Html.DisplayFor(model => model.UsuarioCreacion.Nombre)</p>
+                            </div>
+                        </div>
+                    </div>
 
                     <form asp-action="Delete" class="mt-4">
                         <input type="hidden" asp-for="IdCierraCaja" />
-                        <div class="d-flex justify-content-between">
-                            <a asp-action="Index" class="btn btn-secondary" style="flex: 1;" onclick="showLoader()">
-                                <i class="bi bi-arrow-left-circle"></i> Regresar
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="Index" class="btn btn-light btn-lg px-4" onclick="showLoader()">
+                                <i class="bi bi-arrow-left me-2"></i>Cancelar
                             </a>
-                            <button type="submit" class="btn btn-danger ms-2" style="flex: 1;" onclick="showLoader()">
-                                <i class="bi bi-trash-fill"></i> Eliminar
+                            <button type="submit" class="btn btn-danger btn-lg px-4" onclick="showLoader()">
+                                <i class="bi bi-trash me-2"></i>Eliminar
                             </button>
                         </div>
                     </form>

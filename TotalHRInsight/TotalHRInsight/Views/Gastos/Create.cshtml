@@ -1,51 +1,68 @@
 ﻿@model TotalHRInsight.Models.Gastos.GastoViewModel
-
 @{
     ViewData["Title"] = "Crear Gasto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-center">Añadir Gasto</h1>
-<hr />
-<div class="container">
+<div class="container py-4">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header bg-primary bg-opacity-10 border-0 py-3">
+                    <h2 class="card-title text-primary mb-0 fw-bold text-center">Añadir Gasto</h2>
+                </div>
+                <div class="card-body p-4">
                     <form asp-action="Create">
-                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-                        <div class="form-group">
-                            <label asp-for="Fecha" class="control-label"></label>
-                            <input asp-for="Fecha" class="form-control" />
-                            <span asp-validation-for="Fecha" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="TipoGastoId" class="control-label"></label>
-                            <select asp-for="TipoGastoId" class="form-control" asp-items="ViewBag.TipoGastoId"></select>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="MontoGasto" class="control-label"></label>
-                            <input asp-for="MontoGasto" class="form-control" />
-                            <span asp-validation-for="MontoGasto" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="SucursalId" class="control-label">Sucursal</label>
-                            <select asp-for="SucursalId" class="form-control" asp-items="ViewBag.SucursalId" id="sucursalSelect"></select>
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4"></div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label asp-for="Fecha" class="form-label fw-semibold"></label>
+                                    <input asp-for="Fecha" class="form-control form-control-lg shadow-sm" />
+                                    <span asp-validation-for="Fecha" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label asp-for="TipoGastoId" class="form-label fw-semibold"></label>
+                                    <select asp-for="TipoGastoId" class="form-select form-select-lg shadow-sm" asp-items="ViewBag.TipoGastoId">
+                                        <option value="">Seleccione un tipo...</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label asp-for="MontoGasto" class="form-label fw-semibold"></label>
+                                    <div class="input-group input-group-lg shadow-sm">
+                                        <span class="input-group-text">$</span>
+                                        <input asp-for="MontoGasto" class="form-control" type="number" step="0.01" />
+                                    </div>
+                                    <span asp-validation-for="MontoGasto" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label asp-for="SucursalId" class="form-label fw-semibold">Sucursal</label>
+                                    <select asp-for="SucursalId" class="form-select form-select-lg shadow-sm" asp-items="ViewBag.SucursalId" id="sucursalSelect">
+                                        <option value="">Seleccione una sucursal...</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label asp-for="CierreId" class="form-label fw-semibold">Fecha de Cierre de Caja</label>
+                                    <select asp-for="CierreId" class="form-select form-select-lg shadow-sm" id="cierreSelect">
+                                        <option value="">Seleccione una sucursal primero</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label asp-for="CierreId" class="control-label">Fecha de Cierre de Caja</label>
-                            <select asp-for="CierreId" class="form-control" id="cierreSelect">
-                                <option value="">Seleccione una sucursal primero</option>
-                            </select>
-                        </div>
-
-                        <div class="d-flex justify-content-between mt-4">
-                            <a asp-action="Index" class="btn btn-secondary me-2" style="flex: 1;" onclick="showLoader()">
-                                <i class="bi bi-arrow-left-circle"></i> Regresar
+                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-between mt-4">
+                            <a asp-action="Index" class="btn btn-light btn-lg px-4 shadow-sm" onclick="showLoader()">
+                                <i class="bi bi-arrow-left-circle me-2"></i>Regresar
                             </a>
-                            <button type="submit" class="btn btn-danger ms-2" style="flex: 1;" onclick="showLoader()">
-                                <i class="bi bi-plus-circle"></i> Añadir
+                            <button type="submit" class="btn btn-primary btn-lg px-4 shadow-sm" onclick="showLoader()">
+                                <i class="bi bi-plus-circle me-2"></i>Añadir
                             </button>
                         </div>
                     </form>
@@ -53,8 +70,8 @@
             </div>
         </div>
     </div>
-
 </div>
+
 @Html.Partial("_LoaderModal")
 
 @section Scripts {
@@ -63,31 +80,31 @@
     }
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
     <script src="~/js/loader.js"></script>
-}
 
+    <script>
+        document.getElementById('sucursalSelect').addEventListener('change', function () {
+            var sucursalId = this.value;
+            var cierreSelect = document.getElementById('cierreSelect');
 
-<script>
-    document.getElementById('sucursalSelect').addEventListener('change', function () {
-        var sucursalId = this.value;
-        var cierreSelect = document.getElementById('cierreSelect');
-        cierreSelect.innerHTML = '<option value="">Cargando...</option>';
+            cierreSelect.innerHTML = '<option value="">Cargando...</option>';
+            cierreSelect.disabled = true;
 
-        fetch(`/Gastos/GetCierresBySucursal?sucursalId=${sucursalId}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);  // Agrega esto para ver qué datos estás recibiendo
-                cierreSelect.innerHTML = '';
-                data.forEach(cierre => {
-                    var option = document.createElement('option');
-                    option.value = cierre.idCierraCaja;
-                    option.text = cierre.fecha;
-                    cierreSelect.appendChild(option);
+            fetch(`/Gastos/GetCierresBySucursal?sucursalId=${sucursalId}`)
+                .then(response => response.json())
+                .then(data => {
+                    cierreSelect.innerHTML = '<option value="">Seleccione una fecha...</option>';
+                    data.forEach(cierre => {
+                        var option = document.createElement('option');
+                        option.value = cierre.idCierraCaja;
+                        option.text = cierre.fecha;
+                        cierreSelect.appendChild(option);
+                    });
+                    cierreSelect.disabled = false;
+                })
+                .catch(error => {
+                    cierreSelect.innerHTML = '<option value="">Error al cargar las fechas</option>';
+                    cierreSelect.disabled = true;
                 });
-            })
-            .catch(error => {
-                cierreSelect.innerHTML = '<option value="">Error al cargar las fechas</option>';
-            });
-
-    });
-
-</script>
+        });
+    </script>
+}

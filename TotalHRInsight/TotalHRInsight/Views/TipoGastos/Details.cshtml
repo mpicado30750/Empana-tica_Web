@@ -1,31 +1,34 @@
 ﻿@model TotalHRInsight.DAL.TipoGasto
-
 @{
     ViewData["Title"] = "Detalles de Tipo de Gasto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1 class="text-center">Detalles de Tipo de Gasto</h1>
-<hr />
-<div class="container">
+<div class="container py-4">
+    <h1 class="text-center display-4 mb-4 text-info">Detalles de Tipo de Gasto</h1>
+    <hr class="mb-4" />
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <dl class="row">
-                        <dt class="col-sm-4">
+            <div class="card border-0 shadow-lg rounded-3">
+                <div class="card-header bg-info text-white py-3">
+                    <h5 class="card-title mb-0">Información Detallada</h5>
+                </div>
+                <div class="card-body p-4">
+                    <dl class="row bg-light p-4 rounded-3 mb-4">
+                        <dt class="col-sm-4 text-muted">
                             @Html.DisplayNameFor(model => model.NombreGasto)
                         </dt>
-                        <dd class="col-sm-8">
+                        <dd class="col-sm-8 fw-bold">
                             @Html.DisplayFor(model => model.NombreGasto)
                         </dd>
                     </dl>
-                    <div class="d-flex justify-content-between mt-4">
-                        <a asp-action="Edit" asp-route-IdTipoGasto="@Model.IdTipoGasto" class="btn btn-warning ms-2" style="flex: 1;" onclick="showLoader()">
-                            <i class="bi bi-pencil-square"></i> Editar
+
+                    <div class="d-grid gap-3 d-md-flex justify-content-md-between">
+                        <a asp-action="Edit" asp-route-IdTipoGasto="@Model.IdTipoGasto"
+                           class="btn btn-warning btn-lg px-4 flex-grow-1" onclick="showLoader()">
+                            <i class="bi bi-pencil-square me-2"></i>Editar
                         </a>
-                        <a asp-action="Index" class="btn btn-secondary ms-2" style="flex: 1;" onclick="showLoader()">
-                            <i class="bi bi-arrow-left-circle"></i> Regresar
+                        <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-4 flex-grow-1" onclick="showLoader()">
+                            <i class="bi bi-arrow-left-circle me-2"></i>Regresar
                         </a>
                     </div>
                 </div>
@@ -33,8 +36,8 @@
         </div>
     </div>
 </div>
-@Html.Partial("_LoaderModal")
 
+@Html.Partial("_LoaderModal")
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

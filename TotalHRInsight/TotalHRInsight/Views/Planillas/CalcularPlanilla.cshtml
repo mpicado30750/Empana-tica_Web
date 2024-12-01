@@ -1,37 +1,68 @@
 ﻿@model IEnumerable<dynamic>
-
 @{
     ViewData["Title"] = "Calcular Planilla";
 }
 
-<h2>Calcular Planilla</h2>
+<div class="container py-4">
+    <div class="card border-0 shadow-lg">
+        <div class="card-header bg-gradient p-4" style="background-color: #3498db;">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="text-white h3 mb-0">Calcular Planilla</h2>
+                <small class="badge bg-light text-primary">Período Actual</small>
+            </div>
+        </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Salario Base</th>
-            <th>Total Deducciones</th>
-            <th>Días Trabajados</th>
-            <th>Salario Neto</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Id</td>
-                <td>@item.Nombre</td>
-                <td>@item.SalarioBase</td>
-                <td>@item.TotalDeducciones</td>
-                <td>@item.DiasTrabajados</td>
-                <td>@item.SalarioNeto</td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <div class="card-body p-4">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="text-center">ID</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col" class="text-end">Salario Base</th>
+                            <th scope="col" class="text-end">Deducciones</th>
+                            <th scope="col" class="text-center">Días</th>
+                            <th scope="col" class="text-end">Salario Neto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center">@item.Id</td>
+                                <td>@item.Nombre</td>
+                                <td class="text-end">₡@string.Format("{0:N2}", item.SalarioBase)</td>
+                                <td class="text-end text-danger">-₡@string.Format("{0:N2}", item.TotalDeducciones)</td>
+                                <td class="text-center">@item.DiasTrabajados</td>
+                                <td class="text-end fw-bold text-success">₡@string.Format("{0:N2}", item.SalarioNeto)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+        <div class="card-footer bg-light p-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left-circle me-2"></i>Volver al listado
+                </a>
+                <button class="btn btn-primary">
+                    <i class="bi bi-calculator me-2"></i>Generar Planilla
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    <style>
+        .table th {
+            white-space: nowrap;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+    </style>
+}

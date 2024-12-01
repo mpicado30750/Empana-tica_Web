@@ -1,48 +1,55 @@
 ﻿@model TotalHRInsight.DAL.Ingreso
-
 @{
     ViewData["Title"] = "Detalles de Ingreso";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1 class="text-center">Detalles de Ingreso</h1>
-<hr />
-<div class="container">
+
+<div class="container py-4">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <dl class="row">
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Fecha)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.Fecha)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.MontoIngreso)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.MontoIngreso)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.CierreCaja)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.CierreCaja.Fecha)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.TipoIngreso)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.TipoIngreso.NombreIngreso)
-                        </dd>
-                    </dl>
-                    <div class="d-flex justify-content-between mt-4">
-                        <a asp-action="Edit" asp-route-IdIngreso="@Model.IdIngreso" class="btn btn-warning ms-2" style="flex: 1;" onclick="showLoader()">
-                            <i class="bi bi-pencil-square"></i> Editar
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-gradient p-4" style="background-color: #3498db;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h1 class="text-white h3 mb-0">Ingreso #@Model.IdIngreso</h1>
+                        <span class="badge bg-light text-primary">Detalles</span>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="list-group list-group-flush">
+                                <div class="list-group-item py-3 px-0">
+                                    <small class="text-muted d-block">@Html.DisplayNameFor(model => model.Fecha)</small>
+                                    <span class="fs-5">@Html.DisplayFor(model => model.Fecha)</span>
+                                </div>
+                                <div class="list-group-item py-3 px-0">
+                                    <small class="text-muted d-block">@Html.DisplayNameFor(model => model.MontoIngreso)</small>
+                                    <span class="fs-5 text-success fw-bold">₡ @Html.DisplayFor(model => model.MontoIngreso)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="list-group list-group-flush">
+                                <div class="list-group-item py-3 px-0">
+                                    <small class="text-muted d-block">@Html.DisplayNameFor(model => model.CierreCaja)</small>
+                                    <span class="fs-5">@Html.DisplayFor(model => model.CierreCaja.Fecha)</span>
+                                </div>
+                                <div class="list-group-item py-3 px-0">
+                                    <small class="text-muted d-block">@Html.DisplayNameFor(model => model.TipoIngreso)</small>
+                                    <span class="badge bg-info fs-6">@Html.DisplayFor(model => model.TipoIngreso.NombreIngreso)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3 mt-4 pt-3 border-top">
+                        <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-4 flex-grow-1" onclick="showLoader()">
+                            <i class="bi bi-arrow-left-circle me-2"></i>Regresar
                         </a>
-                        <a asp-action="Index" class="btn btn-secondary ms-2" style="flex: 1;" onclick="showLoader()">
-                            <i class="bi bi-arrow-left-circle"></i> Regresar
+                        <a asp-action="Edit" asp-route-IdIngreso="@Model.IdIngreso" class="btn btn-primary btn-lg px-4 flex-grow-1" onclick="showLoader()">
+                            <i class="bi bi-pencil-square me-2"></i>Editar
                         </a>
                     </div>
                 </div>
@@ -50,12 +57,10 @@
         </div>
     </div>
 </div>
+
 @Html.Partial("_LoaderModal")
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
     <script src="~/js/loader.js"></script>
 }

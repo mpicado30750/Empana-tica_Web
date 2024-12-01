@@ -66,15 +66,14 @@ namespace TotalHRInsight.Controllers
                 _context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
                 "Id",
                 "NombreCompleto"
-            ); 
-            
+            );
+
             var user = await _userManager.GetUserAsync(User);
             ViewData["CurrentUserId"] = user.Id;
             ViewData["CurrentUserName"] = $"{user.Nombre} {user.PrimerApellido}";
             return View();
         }
 
-        // POST: Planillas/Create
         // POST: Planillas/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -83,99 +82,119 @@ namespace TotalHRInsight.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (ModelState.IsValid)
             {
-                // Obtener el empleado y su sucursal
-                var empleado = await _context.ApplicationUsers
-                    .Include(i => i.Sucursal)
-                    .FirstOrDefaultAsync(f => f.Id == planilla.UsuarioAsignacionId);
-
-                if (empleado == null)
+                try
                 {
-                    ModelState.AddModelError(string.Empty, "No se encontró al empleado especificado.");
-                    return View(planilla);
+                    // Obtener el empleado y su sucursal
+                    var empleado = await _context.ApplicationUsers
+                        .Include(i => i.Sucursal)
+                        .FirstOrDefaultAsync(f => f.Id == planilla.UsuarioAsignacionId);
+
+                    if (empleado == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "No se encontró al empleado especificado.");
+                        return View(planilla);
+                    }
+
+                    // Ajustar las fechas para incluir el día completo
+                    var fechaInicio = planilla.FechaInicio.Date;
+                    var fechaFin = planilla.FechaFin.Date.AddDays(1).AddTicks(-1);
+
+                    // Obtener asistencias del empleado
+                    var asistencia = await _context.Asistencias
+                        .Include(i => i.UsuarioCreacion)
+                        .Where(w => w.UsuarioCreacionId == planilla.UsuarioAsignacionId &&
+                                  ((w.FechaEntrada >= fechaInicio && w.FechaEntrada <= fechaFin) ||
+                                   (w.FechaSalida >= fechaInicio && w.FechaSalida <= fechaFin) ||
+                                   (w.FechaEntrada <= fechaInicio && w.FechaSalida >= fechaFin)))
+                        .ToListAsync();
+
+                    if (!asistencia.Any())
+                    {
+                        ModelState.AddModelError(string.Empty, "No se encontraron asistencias para el usuario y las fechas especificadas.");
+                        return View(planilla);
+                    }
+
+                    // Calcular horas de trabajo y extras
+                    var (horasTrabajo, horasExtra) = CalcularHorasTabajo(asistencia);
+
+                    // Obtener permisos del empleado
+                    var permisos = await _context.Permisos
+                        .Include(i => i.UsuarioAsignacion)
+                        .Include(i => i.TipoPermisos)
+                        .Where(w => w.UsuarioAsignacionId == planilla.UsuarioAsignacionId &&
+                                  ((w.FechaInicio >= fechaInicio && w.FechaInicio <= fechaFin) ||
+                                   (w.FechaFin >= fechaInicio && w.FechaFin <= fechaFin) ||
+                                   (w.FechaInicio <= fechaInicio && w.FechaFin >= fechaFin)))
+                        .ToListAsync();
+
+                    // Calcular permisos
+                    int permisosTotal = CalcularPermisos(permisos);
+                    horasTrabajo += 12 * permisosTotal; // Agregar las horas por permisos
+
+                    // Obtener deducciones
+                    var deducciones = await _context.Deduccions
+                        .Include(i => i.TipoDeduccion)
+                        .Include(i => i.UsuarioAsignacion)
+                        .Where(w => w.FechaDeduccion >= fechaInicio &&
+                                   w.FechaDeduccion <= fechaFin &&
+                                   w.UsuarioAsignacionId == planilla.UsuarioAsignacionId)
+                        .ToListAsync();
+
+                    //if (!deducciones.Any())
+                    //{
+                    //    ModelState.AddModelError(string.Empty, "No se encontraron deducciones para el período especificado.");
+                    //    return View(planilla);
+                    //}
+
+                    // Calcular salarios
+                    double totalDeduccion = CantidadDeduccion(deducciones);
+                    double salarioBruto = horasTrabajo * empleado.Salario;
+                    double salarioExtra = horasExtra * (empleado.Salario * 1.5);
+                    double salarioNeto = (salarioBruto + salarioExtra) - totalDeduccion;
+
+                    using var transaction = await _context.Database.BeginTransactionAsync();
+                    try
+                    {
+                        // Crear registro de salario
+                        var nuevoSalario = new Salario
+                        {
+                            SalarioBruto = salarioBruto,
+                            SalarioExtra = salarioExtra,
+                            SalarioNeto = salarioNeto,
+                            UsuarioCreacionId = user.Id,
+                            UsuarioAsignacionId = planilla.UsuarioAsignacionId
+                        };
+
+                        _context.Add(nuevoSalario);
+
+                        // Crear registro de planilla
+                        var nuevaPlanilla = new Planilla
+                        {
+                            FechaInicio = planilla.FechaInicio,
+                            FechaFin = planilla.FechaFin,
+                            Descripcion = planilla.Descripcion,
+                            MontoTotal = salarioNeto,
+                            UsuarioCreacionId = user.Id,
+                            UsuarioAsignacionId = planilla.UsuarioAsignacionId
+                        };
+
+                        _context.Add(nuevaPlanilla);
+                        await _context.SaveChangesAsync();
+                        await transaction.CommitAsync();
+
+                        return RedirectToAction(nameof(Index));
+                    }
+                    catch (Exception)
+                    {
+                        await transaction.RollbackAsync();
+                        ModelState.AddModelError(string.Empty, "Ocurrió un error al guardar la planilla.");
+                        throw;
+                    }
                 }
-
-                // Obtener asistencias del empleado en el rango de fechas especificado
-                var asistencia = _context.Asistencias
-                    .Include(i => i.UsuarioCreacion)
-                    .Where(w => w.UsuarioCreacionId == planilla.UsuarioAsignacionId &&
-                                w.FechaEntrada >= planilla.FechaInicio &&
-                                w.FechaSalida <= planilla.FechaFin)
-                    .ToList();
-
-                if (asistencia == null || asistencia.Count == 0)
+                catch (Exception ex)
                 {
-                    ModelState.AddModelError(string.Empty, "No se encontraron asistencias para el usuario y las fechas especificadas.");
-                    return View(planilla);
+                    ModelState.AddModelError(string.Empty, $"Error al procesar la planilla: {ex.Message}");
                 }
-
-                // Calcular horas de trabajo y horas extras
-                var (horasTrabajo, horasExtra) = CalcularHorasTabajo(asistencia);
-
-                // Obtener permisos del empleado en el rango de fechas especificado
-                var permisos = _context.Permisos
-                    .Include(i => i.UsuarioAsignacion)
-                    .Include(i => i.TipoPermisos)
-                    .Where(w => w.UsuarioAsignacionId == planilla.UsuarioAsignacionId &&
-                                w.FechaInicio >= planilla.FechaInicio &&
-                                w.FechaFin <= planilla.FechaFin)
-                    .ToList();
-
-                // Calcular permisos
-                int permisosTotal = CalcularPermisos(permisos);
-
-                horasTrabajo += 12 * permisosTotal;
-
-                // Obtener deducciones del empleado en el rango de fechas especificado
-                var deduccion = _context.Deduccions
-                    .Include(i => i.TipoDeduccion)
-                    .Include(i => i.UsuarioAsignacion)
-                    .Where(w => w.FechaDeduccion >= planilla.FechaInicio &&
-                                w.FechaDeduccion <= planilla.FechaFin &&
-                                w.UsuarioAsignacionId == planilla.UsuarioAsignacionId)
-                    .ToList();
-
-                if (deduccion == null || deduccion.Count == 0)
-                {
-                    ModelState.AddModelError(string.Empty, "No se encontraron datos especificados.");
-                    return View(planilla);
-                }
-
-                // Calcular total de deducciones
-                double totalDeduccion = CantidadDeduccion(deduccion);
-
-                // Calcular salario bruto, horas extras y salario neto
-                double salarioBruto = horasTrabajo * empleado.Salario; // Suponiendo que empleado.SalarioBase es el salario por hora
-                double salarioExtra = horasExtra * (empleado.Salario * 1.5); // Suponiendo que empleado.SalarioExtra es el salario por hora extra
-                double salarioNeto = (salarioBruto + salarioExtra) - totalDeduccion;
-
-
-                var nuevoSalario = new Salario
-                {
-                    SalarioBruto = salarioBruto,
-                    SalarioExtra = salarioExtra,
-                    SalarioNeto = salarioNeto,
-                    UsuarioCreacionId = user.Id,
-                    UsuarioAsignacionId = planilla.UsuarioAsignacionId
-                };
-
-                _context.Add(nuevoSalario);
-                await _context.SaveChangesAsync();
-
-                // Crear un nuevo registro de planilla
-                var nuevaPlanilla = new Planilla
-                {
-                    FechaInicio = planilla.FechaInicio,
-                    FechaFin = planilla.FechaFin,
-                    Descripcion = planilla.Comentarios,
-                    MontoTotal = salarioNeto,
-                    UsuarioCreacionId = user.Id,
-                    UsuarioAsignacionId = planilla.UsuarioAsignacionId
-                };
-
-                // Guardar la planilla en la base de datos
-                _context.Add(nuevaPlanilla);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
 
             ViewData["UsuarioAsignacionId"] = new SelectList(
@@ -188,7 +207,6 @@ namespace TotalHRInsight.Controllers
             return View(planilla);
         }
 
-
         private int CalcularPermisos(List<Permiso> permisos)
         {
             int totalVacaciones = 0;
@@ -200,7 +218,8 @@ namespace TotalHRInsight.Controllers
             {
                 string permisoNormalizado = NormalizarNombrePermiso(dato.TipoPermisos.NombrePermiso);
                 TimeSpan diferencia = dato.FechaFin - dato.FechaInicio;
-                int diasTrabajados = diferencia.Days;
+                int diasTrabajados = diferencia.Days + 1; // Incluir el día final
+
                 switch (permisoNormalizado)
                 {
                     case "vacaciones":
@@ -215,26 +234,21 @@ namespace TotalHRInsight.Controllers
                     case "gocedesueldo":
                         totalGoce += diasTrabajados;
                         break;
-                    default:
-                        // Manejar casos desconocidos si es necesario
-                        break;
                 }
             }
 
-            int permisosTotal = totalGoce + totalLicMaternidad + totalLicPaternidad + totalVacaciones;
-
-            return (permisosTotal);
+            return totalGoce + totalLicMaternidad + totalLicPaternidad + totalVacaciones;
         }
 
         private static string NormalizarNombrePermiso(string nombrePermiso)
         {
             return nombrePermiso.ToLower()
-                                .Replace(" ", "")
-                                .Replace("é", "e")  // Reemplazar acentos, si es necesario
-                                .Replace("í", "i")
-                                .Replace("ó", "o")
-                                .Replace("á", "a")
-                                .Replace("ú", "u");
+                               .Replace(" ", "")
+                               .Replace("é", "e")
+                               .Replace("í", "i")
+                               .Replace("ó", "o")
+                               .Replace("á", "a")
+                               .Replace("ú", "u");
         }
 
         private static (double horasTrabajo, double horasExtra) CalcularHorasTabajo(List<Asistencia> asistenciaList)
@@ -247,36 +261,31 @@ namespace TotalHRInsight.Controllers
             {
                 TimeSpan diferencia = datos.FechaSalida - datos.FechaEntrada;
                 double horasTrabajadas = diferencia.TotalHours;
-                double horasExtra = 0;
 
                 if (horasTrabajadas > horasNormales)
                 {
-                    horasExtra = horasTrabajadas - horasNormales;
+                    horasExtraTotal += horasTrabajadas - horasNormales;
                     horasTrabajoTotal += horasNormales;
                 }
                 else
                 {
                     horasTrabajoTotal += horasTrabajadas;
                 }
-
-                horasExtraTotal += horasExtra;
             }
 
             return (horasTrabajoTotal, horasExtraTotal);
         }
 
-        private double CantidadDeduccion (List<Deduccion> deduccion)
+        private double CantidadDeduccion(List<Deduccion> deducciones)
         {
-            double total = 0;
-
-            foreach (var dato in deduccion)
+            try
             {
-                total += dato.MontoDeduccion;
+            return deducciones.Sum(d => d.MontoDeduccion);
+            }catch(Exception ex)
+            {
+                return 0;
             }
-
-            return total;
         }
-
 
         // GET: Planillas/Edit/5
         public async Task<IActionResult> Edit(int? id)

@@ -178,11 +178,20 @@ namespace TotalHRInsight.Controllers
             {
                 return NotFound();
             }
-            ViewData["UsuarioCreacionId"] = new SelectList(_context.Set<ApplicationUser>().Select(u => new { u.Id, NombreCompleto = u.Nombre + " " + u.PrimerApellido }),
-                 "Id",
-                 "NombreCompleto",
-                 asistencia.UsuarioCreacionId
-             );
+            var usuarioCreacion = await _context.Set<ApplicationUser>()
+    .Where(u => u.Id == asistencia.UsuarioCreacionId)
+    .Select(u => new
+    {
+        u.Id,
+        NombreCompleto = u.Nombre + " " + u.PrimerApellido
+    })
+    .FirstOrDefaultAsync();
+
+            ViewData["UsuarioCreacionId"] = usuarioCreacion?.Id;
+            ViewData["NombreCompletoUsuarioCreacion"] = usuarioCreacion?.NombreCompleto;
+
+
+
             return View(asistencia);
         }
 
@@ -197,7 +206,15 @@ namespace TotalHRInsight.Controllers
             {
                 return NotFound();
             }
-
+            //ModelState.Remove("UsuarioCreacionId");
+            //Asistencia datos = new Asistencia
+            //{
+            //    IdAsistencia = asistencia.IdAsistencia,
+            //    FechaEntrada = asistencia.FechaEntrada,
+            //    FechaSalida = asistencia.FechaSalida,
+            //    UbicacionEntrada = asistencia.UbicacionEntrada,
+            //    UbicacionSalida = asistencia.UbicacionSalida
+            //};
             if (ModelState.IsValid)
             {
                 try

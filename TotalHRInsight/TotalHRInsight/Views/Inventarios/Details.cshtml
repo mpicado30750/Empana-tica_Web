@@ -1,66 +1,60 @@
 ﻿@model TotalHRInsight.DAL.Inventario
-
 @{
     ViewData["Title"] = "Detalles Inventario";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1 class="text-center">Detalles de Registro</h1>
-<hr />
-<div class="container">
+
+<div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <dl class="row">
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.UsuarioCreacionid)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UsuarioCreacion.Nombre)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.UsuarioModificacionid)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.UsuarioModificacion.Nombre)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.FechaCreacion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.FechaCreacion)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.FechaModificacion)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.FechaModificacion)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.CantidadDisponible)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.CantidadDisponible)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.Sucursal.NombreSucursal)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.Sucursal.NombreSucursal)
-                        </dd>
-                        <dt class="col-sm-4">
-                            @Html.DisplayNameFor(model => model.ProductoId)
-                        </dt>
-                        <dd class="col-sm-8">
-                            @Html.DisplayFor(model => model.Producto.NombreProducto)
-                        </dd>
-                    </dl>
-                    <div class="d-flex justify-content-between mt-4">
-                        <a asp-action="Edit" asp-route-IdInventario="@Model.IdInventario" class="btn btn-warning ms-2" style="flex: 1;" onclick="showLoader()">
-                            <i class="bi bi-pencil-square"></i> Editar
+        <div class="col-md-10 col-lg-8">
+            <div class="card border-0 shadow-lg rounded-4">
+                <div class="card-header bg-info text-white text-center py-3">
+                    <h2 class="mb-0">
+                        <i class="bi bi-info-circle me-2"></i>Detalles de Registro de Inventario
+                    </h2>
+                </div>
+                <div class="card-body p-4">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th class="bg-light">Usuario de Creación</th>
+                                    <td>@Html.DisplayFor(model => model.UsuarioCreacion.Nombre)</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">Usuario de Modificación</th>
+                                    <td>@Html.DisplayFor(model => model.UsuarioModificacion.Nombre)</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">Fecha de Creación</th>
+                                    <td>@Html.DisplayFor(model => model.FechaCreacion)</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">Fecha de Modificación</th>
+                                    <td>@Html.DisplayFor(model => model.FechaModificacion)</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">Cantidad Disponible</th>
+                                    <td>@Html.DisplayFor(model => model.CantidadDisponible)</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">Sucursal</th>
+                                    <td>@Html.DisplayFor(model => model.Sucursal.NombreSucursal)</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">Producto</th>
+                                    <td>@Html.DisplayFor(model => model.Producto.NombreProducto)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="d-grid gap-3 d-md-flex justify-content-md-between mt-4">
+                        <a asp-action="Edit" asp-route-IdInventario="@Model.IdInventario" class="btn btn-warning btn-lg flex-fill me-md-2" onclick="showLoader()">
+                            <i class="bi bi-pencil-square me-2"></i>Editar Registro
                         </a>
-                        <a asp-action="Index" class="btn btn-secondary ms-2" style="flex: 1;" onclick="showLoader()">
-                            <i class="bi bi-arrow-left-circle"></i> Regresar
+                        <a asp-action="Index" class="btn btn-outline-secondary btn-lg flex-fill ms-md-2" onclick="showLoader()">
+                            <i class="bi bi-arrow-left-circle me-2"></i>Regresar
                         </a>
                     </div>
                 </div>
@@ -68,8 +62,8 @@
         </div>
     </div>
 </div>
-@Html.Partial("_LoaderModal")
 
+@Html.Partial("_LoaderModal")
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
@@ -77,5 +71,3 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
     <script src="~/js/loader.js"></script>
 }
-
-
