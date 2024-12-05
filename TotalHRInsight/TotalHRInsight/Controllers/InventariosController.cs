@@ -365,7 +365,129 @@ namespace TotalHRInsight.Controllers
                 Console.WriteLine($"Error: {ex.Message}\n{ex.StackTrace}");
                 return Content($"Ocurrió un error al generar el archivo Excel: {ex.Message}\n{ex.StackTrace}");
             }
-        }       
+        }
+
+        public async Task<IActionResult> Export(int IdInventario)
+        {
+            try
+            {
+                Console.WriteLine($"Inicio del método Export con IdInventario: {IdInventario}");
+
+                var inventario = await _context.Inventario
+                    .Include(i => i.Producto)
+                    .Include(i => i.Sucursal)
+                    .Include(i => i.UsuarioCreacion)
+                    .Include(i => i.UsuarioModificacion)
+                    .Where(i => i.SucursalId == IdInventario)
+                    .ToListAsync();
+                Console.WriteLine($"Cantidad de elementos en el inventario obtenidos: {inventario.Count}");
+
+                if (inventario == null || !inventario.Any())
+                {
+                    Console.WriteLine("Inventario no encontrado o vacío.");
+                    return NotFound();
+                }
+
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add($"Inventario_{IdInventario}");
+                    worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+                    Console.WriteLine("Orientación de página establecida a paisaje");
+
+                    // Agregar las imágenes y ajustar tamaño
+                    var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
+                    var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
+
+                    Console.WriteLine($"Ruta de imagen 1: {imagePath1}");
+                    Console.WriteLine($"Ruta de imagen 2: {imagePath2}");
+
+                    if (!System.IO.File.Exists(imagePath1) || !System.IO.File.Exists(imagePath2))
+                    {
+                        Console.WriteLine("Una o más imágenes no se encuentran en la ubicación especificada.");
+                        throw new FileNotFoundException("Una o más imágenes no se encuentran en la ubicación especificada.");
+                    }
+
+                    var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
+                    Console.WriteLine("Imagen 1 agregada al Excel");
+                    var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
+                    Console.WriteLine("Imagen 2 agregada al Excel");
+
+                    // Ajustar las celdas para las imágenes
+                    worksheet.Row(1).Height = 60;
+                    worksheet.Column(1).Width = 12;
+                    worksheet.Column(7).Width = 12;
+                    Console.WriteLine("Celdas ajustadas para las imágenes");
+
+                    // Título
+                    var titleCell = worksheet.Cell("A2");
+                    titleCell.Value = $"Detalles del Inventario #{IdInventario}";
+                    titleCell.Style.Font.Bold = true;
+                    titleCell.Style.Font.FontSize = 16;
+                    titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    titleCell.Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4");
+                    titleCell.Style.Font.FontColor = XLColor.White;
+                    worksheet.Range("A2:G2").Merge();
+                    Console.WriteLine("Título del informe configurado");
+
+                    // Información del inventario general
+                    var firstInventario = inventario.First();
+                    worksheet.Cell("A3").Value = "Fecha Creación:";
+                    worksheet.Cell("B3").Value = firstInventario.FechaCreacion.ToString("dd-MM-yyyy");
+                    worksheet.Cell("A4").Value = "Fecha Modificación:";
+                    worksheet.Cell("B4").Value = firstInventario.FechaModificacion.ToString("dd-MM-yyyy") ?? "N/A";
+                    worksheet.Cell("A5").Value = "Usuario Creación:";
+                    worksheet.Cell("B5").Value = $"{firstInventario.UsuarioCreacion.Nombre} {firstInventario.UsuarioCreacion.PrimerApellido}";
+                    worksheet.Cell("A6").Value = "Usuario Modificación:";
+                    worksheet.Cell("B6").Value = firstInventario.UsuarioModificacion != null ? $"{firstInventario.UsuarioModificacion.Nombre} {firstInventario.UsuarioModificacion.PrimerApellido}" : "N/A";
+                    worksheet.Cell("A7").Value = "Sucursal:";
+                    worksheet.Cell("B7").Value = firstInventario.Sucursal.NombreSucursal;
+                    Console.WriteLine("Información general del inventario configurada");
+
+                    // Encabezado de la tabla de productos
+                    var headers = new[] { "Producto", "Cantidad Disponible" };
+                    for (int i = 0; i < headers.Length; i++)
+                    {
+                        worksheet.Cell(9, i + 1).Value = headers[i];
+                        worksheet.Cell(9, i + 1).Style.Font.Bold = true;
+                        worksheet.Cell(9, i + 1).Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4");
+                        worksheet.Cell(9, i + 1).Style.Font.FontColor = XLColor.White;
+                    }
+                    Console.WriteLine("Cabeceras de la tabla configuradas");
+
+                    // Información de los productos en el inventario
+                    int row = 10;
+                    foreach (var item in inventario)
+                    {
+                        worksheet.Cell(row, 1).Value = item.Producto.NombreProducto;
+                        worksheet.Cell(row, 2).Value = item.CantidadDisponible;
+                        row++;
+                    }
+                    Console.WriteLine("Datos de los productos agregados al Excel");
+
+                    worksheet.Columns().AdjustToContents();
+                    Console.WriteLine("Columnas ajustadas al contenido");
+
+                    using (var stream = new MemoryStream())
+                    {
+                        workbook.SaveAs(stream);
+                        var content = stream.ToArray();
+                        Console.WriteLine("Archivo Excel guardado en memoria");
+
+                        return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Inventario_{DateTime.Now:ddMMyyyy}.xlsx");
+                    }
+                }
+            }
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine($"Error de archivo: {ex.Message}\n{ex.StackTrace}");
+                return StatusCode(404, "No se encontraron las imágenes necesarias para generar el archivo Excel.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error general: {ex.Message}\n{ex.StackTrace}");
+                return StatusCode(500, "Ocurrió un error al generar el archivo Excel.");
+            }
+        }
 
     }
 }
