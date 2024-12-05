@@ -201,7 +201,7 @@ namespace TotalHRInsight.Controllers
                 // Cabeceras
                 worksheet.Cell(1, 1).Value = "IdProducto";
                 worksheet.Cell(1, 2).Value = "NombreProducto";
-                worksheet.Cell(1, 2).Value = "NombreCategoria";
+                worksheet.Cell(1, 3).Value = "NombreCategoria";
                 worksheet.Cell(1, 4).Value = "Unidad";
                 worksheet.Cell(1, 5).Value = "FechaVencimiento";
                 worksheet.Cell(1, 6).Value = "PrecioUnitario";
@@ -211,23 +211,23 @@ namespace TotalHRInsight.Controllers
                 {
                     worksheet.Cell(i + 2, 1).Value = productos[i].IdProducto;
                     worksheet.Cell(i + 2, 2).Value = productos[i].NombreProducto;
-                    worksheet.Cell(i + 2, 2).Value = productos[i].CategoriaId;
+                    worksheet.Cell(i + 2, 3).Value = productos[i].CategoriaId;
                     worksheet.Cell(i + 2, 5).Value = productos[i].FechaVencimiento.ToString("dd-MM-yyyy");
                     worksheet.Cell(i + 2, 6).Value = productos[i].PrecioUnitario;
                 }
 
                 using (var stream = new MemoryStream())
                 {
+                    string fileName = $"Productos_{DateTime.Now:ddMMyyyy}.xlsx";
                     workbook.SaveAs(stream);
                     var content = stream.ToArray();
-                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Productos.xlsx");
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
                 }
             }
         }
 
-
-
-
-
     }
 }
+
+
+
