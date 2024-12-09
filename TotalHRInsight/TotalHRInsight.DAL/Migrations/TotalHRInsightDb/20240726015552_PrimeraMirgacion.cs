@@ -137,19 +137,19 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.CategoriaId,
                         principalTable: "Categoria",
                         principalColumn: "IdCategoria",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Producto_Medidas_MedidasId",
                         column: x => x.MedidasId,
                         principalTable: "Medidas",
                         principalColumn: "IdMedida",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Producto_Proveedor_ProveedorId",
                         column: x => x.ProveedorId,
                         principalTable: "Proveedor",
                         principalColumn: "IdProveedor",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -176,7 +176,7 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.UsuarioCreacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -204,19 +204,19 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.UsuarioAsignacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Deduccion_AspNetUsers_UsuarioCreacionId",
                         column: x => x.UsuarioCreacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Deduccion_TipoDeduccion_TipoDeduccionId",
                         column: x => x.TipoDeduccionId,
                         principalTable: "TipoDeduccion",
                         principalColumn: "IdTipoDeduccion",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -244,25 +244,25 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.UsuarioCreacionid,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Inventario_AspNetUsers_UsuarioModificacionid",
                         column: x => x.UsuarioModificacionid,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Inventario_Producto_ProductoId",
                         column: x => x.ProductoId,
                         principalTable: "Producto",
                         principalColumn: "IdProducto",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Inventario_Sucursales_SucursalId",
                         column: x => x.SucursalId,
                         principalTable: "Sucursales",
                         principalColumn: "IdSucursal",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -288,19 +288,19 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.UsuarioCreacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Pedidos_Estados_IdEstado",
                         column: x => x.IdEstado,
                         principalTable: "Estados",
                         principalColumn: "IdEstado",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Pedidos_Sucursales_IdSucursal",
                         column: x => x.IdSucursal,
                         principalTable: "Sucursales",
                         principalColumn: "IdSucursal",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -332,25 +332,25 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.UsuarioAsignacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Permisos_AspNetUsers_UsuarioCreacionId",
                         column: x => x.UsuarioCreacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Permisos_Estados_IdEstado",
                         column: x => x.IdEstado,
                         principalTable: "Estados",
                         principalColumn: "IdEstado",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Permisos_TiposPermisos_IdTipoPermiso",
                         column: x => x.IdTipoPermiso,
                         principalTable: "TiposPermisos",
                         principalColumn: "IdTipoPermiso",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -378,13 +378,13 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.UsuarioAsignacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Planillas_AspNetUsers_UsuarioCreacionId",
                         column: x => x.UsuarioCreacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -410,13 +410,13 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.UsuarioAsignacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Salario_AspNetUsers_UsuarioCreacionId",
                         column: x => x.UsuarioCreacionId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -438,13 +438,13 @@ namespace TotalHRInsight.DAL.Migrations.TotalHRInsightDb
                         column: x => x.PedidoID,
                         principalTable: "Pedidos",
                         principalColumn: "IdPedido",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PedidoProductos_Producto_ProductosID",
                         column: x => x.ProductosID,
                         principalTable: "Producto",
                         principalColumn: "IdProducto",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 

@@ -507,7 +507,7 @@ namespace TotalHRInsight.Controllers
                         workbook.SaveAs(stream);
                         var content = stream.ToArray();
                         Console.WriteLine("Archivo Excel guardado en memoria");
-
+                        string fileName = $"Pedido_{DateTime.Now:ddMMyyyy}.xlsx";
                         return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Pedidos.xlsx");
                     }
                 }
@@ -611,6 +611,7 @@ namespace TotalHRInsight.Controllers
                     {
                         workbook.SaveAs(stream);
                         var content = stream.ToArray();
+                        string fileName = $"Pedidos_{DateTime.Now:ddMMyyyy}.xlsx";
                         return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Pedido_{IdPedido}.xlsx");
                     }
                 }
