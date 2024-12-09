@@ -5,9 +5,9 @@
 }
 <div class="container-fluid px-4" style="max-width: 1560px;">
     <div class="d-flex justify-content-between align-items-center my-4">
-        <h1 class="mb-0 text-primary">Lista de Productos</h1>
+        <h1 class="mb-0 text-secondary">Lista de Productos</h1>
         <div>
-            <a asp-action="Create" class="btn btn-outline-primary me-2" onclick="showLoader()">
+            <a asp-action="Create" class="btn btn-primary me-2" onclick="showLoader()">
                 <i class="bi bi-plus-circle me-2"></i>Crear Nuevo Registro
             </a>
             <a asp-action="ExportToExcel" class="btn btn-success" onclick="showLoader()">
@@ -15,13 +15,13 @@
             </a>
         </div>
     </div>
-    <hr class="border-primary" />
+    <hr class="border-secondary" />
     <div class="row row-cols-1 row-cols-md-3 g-4 overflow-auto" style="max-height: 70vh;">
         @foreach (var item in Model)
         {
             <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100 shadow-sm border-primary">
-                    <div class="card-header bg-primary text-white">
+                <div class="card h-100 shadow-sm border-secondary">
+                    <div class="card-header bg-secondary text-white">
                         <h5 class="card-title mb-0">@item.NombreProducto</h5>
                     </div>
                     <div class="card-body">
@@ -32,13 +32,13 @@
                     </div>
                     <div class="card-footer bg-light">
                         <div class="d-flex justify-content-between">
-                            <a asp-action="Edit" asp-route-IdProducto="@item.IdProducto" class="btn btn-warning" onclick="showLoader()">
+                            <a asp-action="Edit" asp-route-IdProducto="@item.IdProducto" class="btn btn-outline-warning" onclick="showLoader()">
                                 <i class="bi bi-pencil-square"></i> Editar
                             </a>
-                            <a asp-action="Details" asp-route-IdProducto="@item.IdProducto" class="btn btn-info" onclick="showLoader()">
+                            <a asp-action="Details" asp-route-IdProducto="@item.IdProducto" class="btn btn-outline-info" onclick="showLoader()">
                                 <i class="bi bi-info-circle"></i> Detalles
                             </a>
-                            <a asp-action="Delete" asp-route-IdProducto="@item.IdProducto" class="btn btn-danger" onclick="showLoader()">
+                            <a asp-action="Delete" asp-route-IdProducto="@item.IdProducto" class="btn btn-outline-danger" onclick="showLoader()">
                                 <i class="bi bi-trash"></i> Eliminar
                             </a>
                         </div>

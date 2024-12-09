@@ -6,17 +6,17 @@
 <div class="container-fluid bg-light">
 	<div class="row align-items-center mb-4">
 		<div class="col-md-6">
-			<h1 class="display-6 text-primary mb-0">Lista de Pedidos</h1>
+			<h1 class="display-6 text-gray-500 mb-0">Lista de Pedidos</h1>
 		</div>
 		<div class="col-md-6 text-end">
 			<div class="btn-group" role="group" aria-label="Acciones de Pedidos">
-				<a asp-action="Create" class="btn btn-outline-primary" onclick="showLoader()">
+				<a asp-action="Create" class="btn btn-primary" onclick="showLoader()">
 					<i class="bi bi-plus-circle me-2"></i>Nuevo Pedido
 				</a>
-				<a asp-action="Devolucion" class="btn btn-outline-secondary" onclick="showLoader()">
+				<a asp-action="Devolucion" class="btn btn-secondary" onclick="showLoader()">
 					<i class="bi bi-file-earmark-excel-fill me-2"></i>Devoluciones
 				</a>
-				<a asp-action="ExportToExcel" class="btn btn-outline-success" onclick="showLoader()">
+				<a asp-action="ExportToExcel" class="btn btn-success" onclick="showLoader()">
 					<i class="bi bi-cloud-arrow-down-fill me-2"></i>Descargar
 				</a>
 			</div>

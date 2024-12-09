@@ -5,7 +5,7 @@
 }
 <div class="container py-4">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
-        <h1 class="display-4 text-primary mb-3 mb-md-0">Lista de Tipos de Permisos</h1>
+        <h1 class=" text-secondary mb-3 mb-md-0">Lista de Tipos de Permisos</h1>
         <a asp-action="Create" class="btn btn-primary btn-lg px-4" onclick="showLoader()">
             <i class="bi bi-plus-circle me-2"></i>Crear Nuevo Permiso
         </a>
@@ -19,21 +19,21 @@
         {
             <div class="col">
                 <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-                    <div class="card-header bg-primary text-white py-3">
+                    <div class="card-header bg-secondary text-white py-3">
                         <h5 class="card-title mb-0">@item.NombrePermiso</h5>
                     </div>
                     <div class="card-footer bg-light p-3 border-0">
                         <div class="d-flex gap-2 justify-content-between">
                             <a asp-action="Edit" asp-route-IdTipoPermiso="@item.IdTipoPermiso"
-                               class="btn btn-warning flex-grow-1" onclick="showLoader()">
+                               class="btn btn-outline-warning flex-grow-1" onclick="showLoader()">
                                 <i class="bi bi-pencil-square me-1"></i>Editar
                             </a>
                             <a asp-action="Details" asp-route-IdTipoPermiso="@item.IdTipoPermiso"
-                               class="btn btn-info flex-grow-1" onclick="showLoader()">
+                               class="btn btn-outline-info flex-grow-1" onclick="showLoader()">
                                 <i class="bi bi-info-circle me-1"></i>Detalles
                             </a>
                             <a asp-action="Delete" asp-route-IdTipoPermiso="@item.IdTipoPermiso"
-                               class="btn btn-danger flex-grow-1" onclick="showLoader()">
+                               class="btn btn-outline-danger flex-grow-1" onclick="showLoader()">
                                 <i class="bi bi-trash me-1"></i>Eliminar
                             </a>
                         </div>

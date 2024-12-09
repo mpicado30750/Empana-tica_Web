@@ -8,9 +8,9 @@
 }
 
 <div class="d-flex justify-content-between align-items-center my-4">
-	<h1 class="mb-0 text-primary">Índice Usuarios</h1>
+	<h1 class="mb-0 text-secondary">Usuarios</h1>
 	<div>
-		<a asp-action="CrearUsuario" class="btn btn-outline-primary me-2" onclick="showLoader()">
+		<a asp-action="CrearUsuario" class="btn btn-primary me-2" onclick="showLoader()">
 			<i class="bi bi-plus-circle"></i> Crear Nuevo Usuario
 		</a>
 	</div>
@@ -25,7 +25,7 @@
 			{
 				<div class="col">
 					<div class="card shadow-sm border-0">
-						<div class="card-header bg-primary text-white rounded-top">
+						<div class="card-header bg-secondary text-white rounded-top">
 							<h5 class="card-title mb-0 text-truncate">@viewModel.User.Nombre @viewModel.User.PrimerApellido @viewModel.User.SegundoApellido</h5>
 						</div>
 						<div class="card-body">

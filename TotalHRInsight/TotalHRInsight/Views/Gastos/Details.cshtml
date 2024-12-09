@@ -8,8 +8,8 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow-lg border-0 rounded-3">
-                <div class="card-header bg-primary bg-opacity-10 border-0 py-3">
-                    <h2 class="card-title text-primary mb-0 fw-bold text-center">Detalles de Gasto</h2>
+                <div class="card-header bg-secondary border-0 py-3">
+                    <h2 class="card-title text-white mb-0 fw-bold text-center">Detalles de Gasto</h2>
                 </div>
                 <div class="card-body p-4">
                     <div class="row g-4">
@@ -44,7 +44,7 @@
 
                     <div class="d-grid gap-2 d-sm-flex justify-content-sm-between mt-4">
                         <a asp-action="Edit" asp-route-IdGasto="@Model.IdGasto"
-                           class="btn btn-primary btn-lg px-4 shadow-sm" onclick="showLoader()">
+                           class="btn btn-warning btn-lg px-4 shadow-sm" onclick="showLoader()">
                             <i class="bi bi-pencil-square me-2"></i>Editar
                         </a>
                         <a asp-action="Index" class="btn btn-light btn-lg px-4 shadow-sm" onclick="showLoader()">

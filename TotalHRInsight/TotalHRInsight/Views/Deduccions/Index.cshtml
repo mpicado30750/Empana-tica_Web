@@ -5,7 +5,7 @@
 }
 <div class="container-fluid px-4 py-4">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
-        <h1 class="display-4 text-primary mb-3 mb-md-0">Lista de Deducciones</h1>
+        <h1 class=" text-secondary mb-1 mb-md-0">Lista de Deducciones</h1>
         <a asp-action="Create" class="btn btn-primary btn-lg px-4" onclick="showLoader()">
             <i class="bi bi-plus-circle me-2"></i>Crear Nuevo Registro
         </a>
@@ -19,10 +19,10 @@
         {
             <div class="col">
                 <div class="card h-100 border-0 shadow-sm hover-shadow transition">
-                    <div class="card-header bg-primary text-white py-3">
+                    <div class="card-header bg-secondary text-white py-3">
                         <h5 class="card-title mb-0 d-flex justify-content-between align-items-center">
                             <span>Deducción #@item.IdDeduccion</span>
-                            <span class="badge bg-light text-primary">
+                            <span class="badge bg-light text-secondary">
                                 ₡ @item.MontoDeduccion
                             </span>
                         </h5>
@@ -30,7 +30,7 @@
 
                     <div class="card-body">
                         <div class="mb-3">
-                            <h6 class="text-primary mb-2">Información del Empleado</h6>
+                            <h6 class="text-secondary mb-2">Información del Empleado</h6>
                             <p class="mb-0 text-dark">
                                 <strong>Nombre:</strong>
                                 @item.UsuarioAsignacion.Nombre @item.UsuarioAsignacion.PrimerApellido @item.UsuarioAsignacion.SegundoApellido
@@ -38,7 +38,7 @@
                         </div>
 
                         <div class="mb-0">
-                            <h6 class="text-primary mb-2">Detalles de la Deducción</h6>
+                            <h6 class="text-secondary mb-2">Detalles de la Deducción</h6>
                             <div class="list-group list-group-flush">
                                 <div class="list-group-item px-0">
                                     <strong>Tipo:</strong> @item.TipoDeduccion.NombreDeduccion
@@ -60,15 +60,15 @@
                     <div class="card-footer bg-light p-3 border-0">
                         <div class="d-flex gap-2 justify-content-between">
                             <a asp-action="Edit" asp-route-IdDeduccion="@item.IdDeduccion"
-                               class="btn btn-warning flex-grow-1" onclick="showLoader()">
+                               class="btn btn-outline-warning flex-grow-1" onclick="showLoader()">
                                 <i class="bi bi-pencil-square me-1"></i>Editar
                             </a>
                             <a asp-action="Details" asp-route-IdDeduccion="@item.IdDeduccion"
-                               class="btn btn-info flex-grow-1" onclick="showLoader()">
+                               class="btn btn-outline-info flex-grow-1" onclick="showLoader()">
                                 <i class="bi bi-info-circle me-1"></i>Detalles
                             </a>
                             <a asp-action="Delete" asp-route-IdDeduccion="@item.IdDeduccion"
-                               class="btn btn-danger flex-grow-1" onclick="showLoader()">
+                               class="btn btn-outline-danger flex-grow-1" onclick="showLoader()">
                                 <i class="bi bi-trash me-1"></i>Eliminar
                             </a>
                         </div>

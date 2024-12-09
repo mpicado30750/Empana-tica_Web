@@ -10,12 +10,11 @@
     <div class="row mb-3 align-items-center flex-shrink-0">
         <div class="col-md-6">
             <div class="d-flex align-items-center">
-                <i class="bi bi-list-task me-3 text-primary fs-2"></i>
-                <h1 class="mb-0">Lista de Pedidos</h1>
+                <h1 class="display-6 text-gray-500 mb-0">Lista de Devoluciones</h1>
             </div>
         </div>
         <div class="col-md-6 text-end">
-            <a asp-action="Index" class="btn btn-outline-secondary me-2" onclick="showLoader()">
+            <a asp-action="Index" class="btn btn-secondary me-2" onclick="showLoader()">
                 <i class="bi bi-arrow-left me-2"></i>Volver
             </a>
         </div>
@@ -64,13 +63,13 @@
                         </div>
                         <div class="card-footer bg-light border-0">
                             <div class="d-flex justify-content-between">
-                                <a asp-action="Edit" asp-route-IdPedido="@item.IdPedido" class="btn btn-warning btn-sm" onclick="showLoader()">
+                                <a asp-action="Edit" asp-route-IdPedido="@item.IdPedido" class="btn btn-outline-warning btn-sm" onclick="showLoader()">
                                     <i class="bi bi-pencil-square me-1"></i>Editar
                                 </a>
-                                <a asp-action="Details" asp-route-IdPedido="@item.IdPedido" class="btn btn-info btn-sm" onclick="showLoader()">
+                                <a asp-action="Details" asp-route-IdPedido="@item.IdPedido" class="btn btn-outline-info btn-sm" onclick="showLoader()">
                                     <i class="bi bi-info-circle me-1"></i>Detalles
                                 </a>
-                                <a asp-action="Delete" asp-route-IdPedido="@item.IdPedido" class="btn btn-danger btn-sm" onclick="showLoader()">
+                                <a asp-action="Delete" asp-route-IdPedido="@item.IdPedido" class="btn btn-outline-danger btn-sm" onclick="showLoader()">
                                     <i class="bi bi-trash me-1"></i>Eliminar
                                 </a>
                             </div>

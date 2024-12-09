@@ -15,27 +15,29 @@
 			<div class="menu-scroll">
 				<!-- Enlace de Menú Principal -->
 				<div class="menu-item">
-					<a asp-area="" asp-controller="Asistencias" asp-action="Index" class="menu-link text-blue-500">
+					<a asp-area="" asp-controller="Asistencias" asp-action="Index" class="menu-link  link-dark">
+						<span class="text-gray-600">
 						<i class="bi bi-hand-thumbs-up"></i> Asistencia
+						</span>
 					</a>
 				</div>
 
 				<!-- Otro Enlace de Menú Principal -->
 				<div class="menu-item">
-					<a asp-area="" asp-controller="Pedidos" asp-action="Index" class="menu-link text-yellow-500">
+					<a asp-area="" asp-controller="Pedidos" asp-action="Index" class="menu-link link-dark">
 						<i class="bi bi-cart icon"></i> Pedidos
 					</a>
 				</div>
 
 				<div class="menu-item">
-					<a asp-area="" asp-controller="Sucursals" asp-action="Index" class="menu-link text-yellow-500">
+					<a asp-area="" asp-controller="Sucursals" asp-action="Index" class="menu-link link-dark">
 						<i class="bi bi-shop-window icon"></i> Sucursales
 					</a>
 				</div>
 
 				<!-- Más Elementos del Menú -->
 				<div class="menu-item">
-					<a asp-area="" asp-controller="Admin" asp-action="Index" class="menu-link text-purple-500">
+					<a asp-area="" asp-controller="Admin" asp-action="Index" class="menu-link link-dark">
 						<i class="bi bi-person-badge icon"></i> Usuarios
 					</a>
 				</div>
@@ -50,17 +52,17 @@
 					<!-- Submenú -->
 					<ul class="submenu" id="inventario-submenu" role="menu">
 						<li>
-							<a asp-area="" asp-controller="Inventarios" asp-action="Index" class="submenu-link text-green-400">
+							<a asp-area="" asp-controller="Inventarios" asp-action="Index" class="submenu-link link-dark">
 								<i class="bi bi-boxes icon"></i> Ver Stock
 							</a>
 						</li>
 						<li>
-							<a asp-area="" asp-controller="Productos" asp-action="Index" class="submenu-link text-green-400">
+							<a asp-area="" asp-controller="Productos" asp-action="Index" class="submenu-link link-dark">
 								<i class="bi bi-tags icon"></i>Productos
 							</a>
 						</li>
 						<li>
-							<a asp-area="" asp-controller="Proveedors" asp-action="Index" class="submenu-link text-green-400">
+							<a asp-area="" asp-controller="Proveedors" asp-action="Index" class="submenu-link link-dark">
 								<i class="bi bi-people icon"></i> Proveedores
 							</a>
 						</li>
@@ -77,22 +79,22 @@
 					<!-- Submenú -->
 					<ul class="submenu" id="planilla-submenu" role="menu">
 						<li>
-							<a asp-area="" asp-controller="Deduccions" asp-action="Index" class="submenu-link text-red-400">
+							<a asp-area="" asp-controller="Deduccions" asp-action="Index" class="submenu-link link-dark">
 								<i class="bi bi-wallet icon"></i> Deducciones
 							</a>
 						</li>
 						<li>
-							<a asp-area="" asp-controller="Permisoes" asp-action="Index" class="submenu-link text-red-400">
+							<a asp-area="" asp-controller="Permisoes" asp-action="Index" class="submenu-link link-dark">
 								<i class="bi bi-paperclip icon"></i> Permisos
 							</a>
 						</li>
 						<li>
-							<a asp-area="" asp-controller="Salarios" asp-action="Index" class="submenu-link text-red-400">
+							<a asp-area="" asp-controller="Salarios" asp-action="Index" class="submenu-link link-dark">
 								<i class="bi bi-cash-coin icon"></i> Salarios
 							</a>
 						</li>
 						<li>
-							<a asp-area="" asp-controller="Planillas" asp-action="Index" class="submenu-link text-red-400">
+							<a asp-area="" asp-controller="Planillas" asp-action="Index" class="submenu-link link-dark">
 								<i class="bi bi-calendar icon"></i> Planilla
 							</a>
 						</li>
@@ -109,22 +111,22 @@
 					<!-- Submenú -->
 					<ul class="submenu" id="informes-submenu" role="menu">
 						<li>
-							<a asp-area="" asp-controller="Ingresos" asp-action="Index" class="submenu-link text-red-400">
+							<a asp-area="" asp-controller="Ingresos" asp-action="Index" class="submenu-link link-dark">
 								<i class="bi bi-graph-up-arrow icon"></i> Ingresos
 							</a>
 						</li>
 						<li>
-							<a asp-area="" asp-controller="Gastos" asp-action="Index" class="submenu-link text-red-400">
+							<a asp-area="" asp-controller="Gastos" asp-action="Index" class="submenu-link link-dark">
 								<i class="bi bi-graph-down-arrow icon"></i> Gastos
 							</a>
 						</li>
 						<li>
-							<a asp-area="" asp-controller="CierreCajas" asp-action="Index" class="submenu-link text-red-400">
+							<a asp-area="" asp-controller="CierreCajas" asp-action="Index" class="submenu-link link-dark">
 								<i class="bi bi-piggy-bank icon"></i> Cierres
 							</a>
 						</li>
 						<li>
-							<a asp-area="" asp-controller="Ingresos" asp-action="ResumenFinanciero" class="submenu-link text-red-400">
+							<a asp-area="" asp-controller="Ingresos" asp-action="ResumenFinanciero" class="submenu-link link-dark ">
 								<i class="bi bi-flag icon"></i> Reporte
 							</a>
 						</li>
@@ -139,37 +141,37 @@
 					<!-- Submenú -->
 					<ul class="submenu" id="ajustes-submenu" role="menu">
 						<li>
-							<a asp-area="" asp-controller="Estados" asp-action="Index" class="submenu-link text-red-400">
+							<a asp-area="" asp-controller="Estados" asp-action="Index" class="submenu-link link-dark">
 								<i class="bi bi-slash-circle icon"></i> Estados
 							</a>
 						</li>
 						<li>
-							<a asp-area="" asp-controller="Medidas" asp-action="Index" class="submenu-link text-red-400">
+							<a asp-area="" asp-controller="Medidas" asp-action="Index" class="submenu-link link-dark">
 								<i class="bi bi-box-arrow-up-right icon"></i> Medidas
 							</a>
 						</li>
 						<li>
-							<a asp-area="" asp-controller="TipoDeduccions" asp-action="Index" class="submenu-link text-red-400">
+							<a asp-area="" asp-controller="TipoDeduccions" asp-action="Index" class="submenu-link link-dark">
 								<i class="bi bi-clipboard-data icon"></i> Deducciones
 							</a>
 						</li>
 						<li>
-							<a asp-area="" asp-controller="TipoPermiso" asp-action="Index" class="submenu-link text-red-400">
+							<a asp-area="" asp-controller="TipoPermiso" asp-action="Index" class="submenu-link link-dark">
 								<i class="bi bi-stickies icon"></i> Tipos permisos
 							</a>
 						</li>
 						<li>
-							<a asp-area="" asp-controller="TipoIngresos" asp-action="Index" class="submenu-link text-red-400">
+							<a asp-area="" asp-controller="TipoIngresos" asp-action="Index" class="submenu-link link-dark">
 								<i class="bi bi-currency-pound icon"></i> Tipos ingresos
 							</a>
 						</li>
 						<li>
-							<a asp-area="" asp-controller="TipoGastos" asp-action="Index" class="submenu-link text-red-400">
+							<a asp-area="" asp-controller="TipoGastos" asp-action="Index" class="submenu-link link-dark">
 								<i class="bi bi-currency-dollar icon"></i> Tipos gastos
 							</a>
 						</li>
 						<li>
-							<a asp-area="" asp-controller="Categorias" asp-action="Index" class="submenu-link text-red-400">
+							<a asp-area="" asp-controller="Categorias" asp-action="Index" class="submenu-link link-dark">
 								<i class="bi bi-bookmark icon"></i> Categorias
 							</a>
 						</li>
@@ -182,10 +184,10 @@
 
 		<!-- Pie de Página del Sidebar -->
 		<footer class="sidebar-footer">			
-			<a asp-area="" asp-controller="Home" asp-action="Privacy" class="menu-link text-gray-500">
+			<a asp-area="" asp-controller="Home" asp-action="Privacy" class="menu-link link-dark">
 				 Sobre Nosotros
 			</a>
-			<a asp-area="" asp-controller="Home" asp-action="Index" class="menu-link text-gray-500">
+			<a asp-area="" asp-controller="Home" asp-action="Index" class="menu-link link-dark">
 				TotalHRInsight
 			</a>
 			<span>&copy; 2024</span>
