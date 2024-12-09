@@ -27,11 +27,12 @@
                             </div>
                             <div class="col-md-6">
                                 <dt class="text-muted fw-semibold">Usuario de Creación</dt>
-                                <dd class="fw-bold mb-0">@Html.DisplayFor(model => model.UsuarioCreacion.Nombre)</dd>
+                                <dd class="fw-bold mb-0">@Html.DisplayFor(model => model.UsuarioCreacion.Nombre)
+                                 @Html.DisplayFor(model => model.UsuarioCreacion.PrimerApellido)</dd>
                             </div>
                             <div class="col-md-6">
                                 <dt class="text-muted fw-semibold">Usuario de Asignación</dt>
-                                <dd class="fw-bold mb-0">@Html.DisplayFor(model => model.UsuarioAsignacion.Nombre)</dd>
+                                <dd class="fw-bold mb-0">@Html.DisplayFor(model => model.UsuarioAsignacion.Nombre) @Html.DisplayFor(model => model.UsuarioAsignacion.PrimerApellido)</dd>
                             </div>
                             <div class="col-md-6">
                                 <dt class="text-muted fw-semibold">Tipo de Deducción</dt>
