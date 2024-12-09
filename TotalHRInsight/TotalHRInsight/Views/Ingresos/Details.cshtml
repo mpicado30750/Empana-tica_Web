@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="card border-0 shadow-lg">
-                <div class="card-header bg-gradient p-4" style="background-color: #3498db;">
+                <div class="card-header bg-secondary p-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h1 class="text-white h3 mb-0">Ingreso #@Model.IdIngreso</h1>
                         <span class="badge bg-light text-primary">Detalles</span>
@@ -48,9 +48,9 @@
                         <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-4 flex-grow-1" onclick="showLoader()">
                             <i class="bi bi-arrow-left-circle me-2"></i>Regresar
                         </a>
-                        <a asp-action="Edit" asp-route-IdIngreso="@Model.IdIngreso" class="btn btn-primary btn-lg px-4 flex-grow-1" onclick="showLoader()">
+                       @*  <a asp-action="Edit" asp-route-IdIngreso="@Model.IdIngreso" class="btn btn-primary btn-lg px-4 flex-grow-1" onclick="showLoader()">
                             <i class="bi bi-pencil-square me-2"></i>Editar
-                        </a>
+                        </a> *@
                     </div>
                 </div>
             </div>

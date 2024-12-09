@@ -4,11 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container">
-    <h1 class="text-center text-primary mb-4">Detalles de Producto</h1>
-    <hr class="border-primary" />
+    <h1 class="text-center text-secondary mb-4">Detalles de Producto</h1>
+    <hr class="border-secondary" />
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card shadow-sm border-primary">
+            <div class="card shadow-sm border-secondary">
                 <div class="card-body">
                     <dl class="row">
                         @{
@@ -23,7 +23,7 @@
                         }
                         @foreach (var item in detailItems)
                         {
-                            <dt class="col-sm-4 text-primary">@item.Label</dt>
+                            <dt class="col-sm-4 text-secondary">@item.Label</dt>
                             <dd class="col-sm-8">@item.Value</dd>
                         }
                     </dl>

@@ -6,17 +6,17 @@
 
 <div class="container-fluid py-4">
     <div class="card border-0 shadow-lg">
-        <div class="card-header bg-gradient p-4" style="background-color: #3498db;">
+        <div class="card-header bg-secondary p-4">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <h1 class="h3 text-white mb-0">Registro de Ingresos</h1>
                     <p class="text-white-50 mb-0">Control y gestión de transacciones</p>
                 </div>
                 <div class="d-flex gap-2">
-                    <a asp-action="Create" class="btn btn-light hover-scale" onclick="showLoader()">
+                    <a asp-action="Create" class="btn btn-primary hover-scale" onclick="showLoader()">
                         <i class="bi bi-plus-circle-fill me-2"></i>Nuevo Ingreso
                     </a>
-                    <a asp-action="ResumenFinanciero" class="btn btn-warning hover-scale" onclick="showLoader()">
+                    <a asp-action="ResumenFinanciero" class="btn btn-success hover-scale" onclick="showLoader()">
                         <i class="bi bi-graph-up-arrow me-2"></i>Resumen Financiero
                     </a>
                 </div>
@@ -71,10 +71,10 @@
                                 </td>
                                 <td class="text-center py-3">
                                     <div class="btn-group">
-                                        <a asp-action="Edit" asp-route-IdIngreso="@item.IdIngreso"
+                                        @* <a asp-action="Edit" asp-route-IdIngreso="@item.IdIngreso"
                                            class="btn btn-outline-primary btn-sm hover-scale" title="Editar">
                                             <i class="bi bi-pencil-square"></i>
-                                        </a>
+                                        </a> *@
                                         <a asp-action="Details" asp-route-IdIngreso="@item.IdIngreso"
                                            class="btn btn-outline-info btn-sm hover-scale" title="Detalles">
                                             <i class="bi bi-info-circle"></i>
