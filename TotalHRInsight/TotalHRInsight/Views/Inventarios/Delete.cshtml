@@ -24,13 +24,16 @@
                             <tbody>
                                 <tr>
                                     <th class="bg-light">Usuario de Creación</th>
-                                    <td>@Html.DisplayFor(model => model.UsuarioCreacion.Nombre)</td>
+                                    <td>
+                                        @Model.UsuarioCreacion.Nombre @Model.UsuarioCreacion.PrimerApellido
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th class="bg-light">Usuario de Modificación</th>
-                                    <td>@Html.DisplayFor(model => model.UsuarioModificacion.Nombre)</td>
+                                    <td>
+                                        @Model.UsuarioModificacion.Nombre @Model.UsuarioModificacion.PrimerApellido
+                                    </td>
                                 </tr>
-                                <tr>
                                     <th class="bg-light">Fecha de Creación</th>
                                     <td>@Html.DisplayFor(model => model.FechaCreacion)</td>
                                 </tr>
