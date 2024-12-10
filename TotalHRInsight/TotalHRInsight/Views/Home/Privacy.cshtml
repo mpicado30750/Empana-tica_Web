@@ -9,6 +9,78 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 
+<style>
+    :root {
+        /* Primary Colors */
+        --primary-500: #9CA3AF; /* Lighter Gray for buttons */
+        --primary-600: #6B7280; /* Hover/Active state Gray */
+        --primary-100: #E5E7EB; /* Background Light Gray */
+        /* Neutral Colors */
+        --neutral-900: #374151; /* Darker Gray for text */
+        --neutral-700: #4B5563; /* Medium Gray for secondary text */
+        --neutral-500: #9CA3AF; /* Placeholder text Light Gray */
+        --neutral-200: #D1D5DB; /* Border Light Gray */
+        --neutral-100: #F3F4F6; /* Background accent - very light */
+        --neutral-50: #F9FAFB; /* Card background - off white */
+        /* Feedback Colors */
+        --error-500: #F87171; /* Light Error Red */
+        --error-100: #FEE2E2; /* Error background */
+    }
+
+    /* Main container */
+    .container {
+        padding: 3rem 1rem;
+    }
+
+    /* Heading Styles */
+    h1 {
+        color: var(--neutral-900);
+        font-weight: 600;
+        font-size: 2.25rem;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .sidebar-heading {
+        color: var(--neutral-900);
+        font-weight: 600;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    /* Paragraph Styles */
+    p {
+        color: var(--neutral-700);
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Card container */
+    .row {
+        margin-top: 2rem;
+    }
+
+    .col-md-4 {
+        background-color: var(--neutral-50);
+        border-radius: 0.5rem;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s ease;
+    }
+
+        .col-md-4:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+    
+        margin-bottom: 1.5rem;
+    }
+
+    }
+</style>
+
 <div class="container">
     <h1>@ViewData["Title"]</h1>
 
@@ -34,4 +106,3 @@
         </div>
     </div>
 </div>
-

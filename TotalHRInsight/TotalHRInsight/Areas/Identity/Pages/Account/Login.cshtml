@@ -7,19 +7,19 @@
 <style>
     :root {
         /* Primary Colors */
-        --primary-500: #2563eb; /* Main Primary - Accessible Blue */
-        --primary-600: #1d4ed8; /* Hover/Active state */
-        --primary-100: #dbeafe; /* Light Primary for backgrounds */
+        --primary-500: #9CA3AF; /* Lighter Gray for buttons */
+        --primary-600: #6B7280; /* Hover/Active state Gray */
+        --primary-100: #E5E7EB; /* Background Light Gray */
         /* Neutral Colors */
-        --neutral-900: #111827; /* Main text color */
-        --neutral-700: #374151; /* Secondary text */
-        --neutral-500: #6b7280; /* Placeholder text */
-        --neutral-200: #e5e7eb; /* Borders */
-        --neutral-100: #f3f4f6; /* Background accents */
-        --neutral-50: #f9fafb; /* Card background */
+        --neutral-900: #374151; /* Darker Gray for text */
+        --neutral-700: #4B5563; /* Medium Gray for secondary text */
+        --neutral-500: #9CA3AF; /* Placeholder text Light Gray */
+        --neutral-200: #D1D5DB; /* Border Light Gray */
+        --neutral-100: #F3F4F6; /* Background accent - very light */
+        --neutral-50: #F9FAFB; /* Card background - off white */
         /* Feedback Colors */
-        --error-500: #ef4444; /* Error text */
-        --error-100: #fee2e2; /* Error background */
+        --error-500: #F87171; /* Light Error Red */
+        --error-100: #FEE2E2; /* Error background */
     }
 
     .login-container {
@@ -29,22 +29,21 @@
     .login-card {
         background-color: var(--neutral-50);
         border-radius: 1rem;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
         padding: 2.5rem;
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
     }
 
         .login-card:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
     .login-title {
         color: var(--neutral-900);
-        font-weight: 700;
-        font-size: 1.875rem;
+        font-weight: 600;
+        font-size: 2rem;
         margin-bottom: 2rem;
         text-align: center;
-        letter-spacing: -0.025em;
     }
 
     .form-control {
@@ -89,12 +88,12 @@
         transition: all 0.2s ease;
         width: 100%;
         max-width: 320px;
-        letter-spacing: 0.025em;
+        cursor: pointer;
     }
 
         .btn-inicio:hover {
             background-color: var(--primary-600);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
 
         .btn-inicio:active {
@@ -124,6 +123,31 @@
             margin: 0;
             padding-left: 1.25rem;
         }
+
+    /* Bootstrap responsive improvements */
+    .login-card {
+        /* Adding some responsiveness with Bootstrap grid system */
+        padding: 2rem; /* Set padding for smaller screens */
+    }
+
+    .btn-inicio {
+        padding: 0.75rem 1.5rem; /* Slightly smaller padding for better mobile view */
+        font-size: 0.875rem; /* Adjust font size for better readability on small devices */
+    }
+
+   
+        font-size: 1.5rem; /* Smaller title size for smaller screens */
+    }
+
+    .login-card {
+        padding: 1.5rem; /* Reduce padding for very small screens */
+    }
+
+    .form-control {
+        font-size: 0.9rem; /* Slightly smaller font size for input fields */
+    }
+
+    }
 </style>
 
 <div class="container-fluid login-container">
