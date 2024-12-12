@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TotalHRInsight.DAL;
+using TotalHRInsight.Models;
 
 namespace TotalHRInsight.Controllers
 {
@@ -170,19 +171,51 @@ namespace TotalHRInsight.Controllers
             return View(producto);
         }
 
-        // POST: Productos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int IdProducto)
         {
-			var producto = await _context.Productos.FindAsync(IdProducto);
-			if (producto != null)
-			{
-				_context.Productos.Remove(producto);
-				await _context.SaveChangesAsync();
-			}
-			return RedirectToAction(nameof(Index));
-		}
+            try
+            {
+                var producto = await _context.Productos
+                    .Include(p => p.Medidas)
+                    .Include(p => p.Categorias)
+                    .Include(p => p.Proveedor)
+                    .FirstOrDefaultAsync(p => p.IdProducto == IdProducto);
+
+                if (producto == null)
+                {
+                    TempData["ErrorMessage"] = "El producto no existe o ya fue eliminado.";
+                    return View();
+                }
+
+                _context.Productos.Remove(producto);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException)
+            {
+                var producto = await _context.Productos
+                    .Include(p => p.Medidas)
+                    .Include(p => p.Categorias)
+                    .Include(p => p.Proveedor)
+                    .FirstOrDefaultAsync(p => p.IdProducto == IdProducto);
+
+                TempData["ErrorMessage"] = "No se puede eliminar este producto porque está siendo utilizado en otras partes del sistema.";
+                return View(producto);
+            }
+            catch (Exception)
+            {
+                var producto = await _context.Productos
+                    .Include(p => p.Medidas)
+                    .Include(p => p.Categorias)
+                    .Include(p => p.Proveedor)
+                    .FirstOrDefaultAsync(p => p.IdProducto == IdProducto);
+
+                TempData["ErrorMessage"] = "Ha ocurrido un error inesperado al intentar eliminar el producto.";
+                return View(producto);
+            }
+        }
 
         private bool ProductoExists(int IdProducto)
         {

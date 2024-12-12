@@ -55,6 +55,7 @@ namespace TotalHRInsight.Controllers
         // GET: Ingresos/Create
         public IActionResult Create()
         {
+            ViewData["SucursalId"] = new SelectList(_context.Sucursales, "IdSucursal", "NombreSucursal");
             ViewData["CierreId"] = new SelectList(_context.CierreCajas, "IdCierraCaja", "UsuarioCreacionId");
             ViewData["TipoIngresoId"] = new SelectList(_context.TipoIngresos, "IdTipoIngreso", "NombreIngreso");
             return View();

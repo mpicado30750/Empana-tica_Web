@@ -48,7 +48,7 @@
                     </div>
 
                     <form asp-action="Delete" method="post" class="mt-4">
-                        <input type="hidden" name="IdProducto" value="@Model.IdGasto" />
+                        <input type="hidden" name="IdGasto" value="@Model.IdGasto" />
                         <div class="d-grid gap-2 d-sm-flex justify-content-sm-between">
                             <a asp-action="Index" class="btn btn-light btn-lg px-4 shadow-sm" onclick="showLoader()">
                                 <i class="bi bi-arrow-left-circle me-2"></i>Cancelar

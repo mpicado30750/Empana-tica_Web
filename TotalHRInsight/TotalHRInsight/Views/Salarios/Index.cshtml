@@ -7,11 +7,11 @@
 <div class="container-fluid" style="max-height:150px; max-width:1500px;">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="mb-0">Lista de Salarios</h3>
-        <div class="d-flex gap-2">
+        @* <div class="d-flex gap-2">
             <a asp-action="Create" class="btn btn-primary px-3 py-2 d-flex align-items-center" onclick="showLoader()">
                 <i class="bi bi-plus-circle-fill me-2"></i>Nuevo Salario
             </a>
-        </div>
+        </div> *@
     </div>
 
     <div class="row g-4" style="max-height: 80vh; overflow-y: auto;">
@@ -50,11 +50,11 @@
 
                     <div class="card-footer bg-light border-0">
                         <div class="d-flex justify-content-between gap-2">
-                            <a asp-action="Edit" asp-route-id="@(item?.IdSalario ?? 0)"
+                            @* <a asp-action="Edit" asp-route-id="@(item?.IdSalario ?? 0)"
                                class="btn btn-outline-warning flex-grow-1 d-flex align-items-center justify-content-center"
                                onclick="showLoader()">
                                 <i class="bi bi-pencil-square me-2"></i>Editar
-                            </a>
+                            </a> *@
                             <a asp-action="Details" asp-route-id="@(item?.IdSalario ?? 0)"
                                class="btn btn-outline-primary flex-grow-1 d-flex align-items-center justify-content-center"
                                onclick="showLoader()">

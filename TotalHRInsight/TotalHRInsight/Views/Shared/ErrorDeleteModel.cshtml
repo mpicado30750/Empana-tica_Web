@@ -1,0 +1,38 @@
+﻿@model TotalHRInsight.Models.ErrorDeleteModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-danger shadow">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>Error
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <h4>@Model.Message</h4>
+                        @if (Model.ShowDetails)
+                        {
+                            <div class="alert alert-warning mt-3">
+                                <small class="text-muted">Detalles técnicos:</small><br />
+                                @Model.Details
+                            </div>
+                        }
+                        <div class="text-muted small mt-2">
+                            ID de Referencia: @Model.RequestId
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <a asp-controller="Productos" asp-action="Index" class="btn btn-primary">
+                            <i class="bi bi-arrow-left-circle me-2"></i>Volver al listado
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
