@@ -260,37 +260,37 @@ namespace TotalHRInsight.Controllers
                     Console.WriteLine("Orientación de página establecida a paisaje");
 
                     // Agregar imágenes y ajustar tamaño
-                    var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
-                    var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
+                    //var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
+                    //var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
 
-                    Console.WriteLine($"Ruta de imagen 1: {imagePath1}");
-                    Console.WriteLine($"Ruta de imagen 2: {imagePath2}");
+                    //Console.WriteLine($"Ruta de imagen 1: {imagePath1}");
+                    //Console.WriteLine($"Ruta de imagen 2: {imagePath2}");
 
-                    if (System.IO.File.Exists(imagePath1))
-                    {
-                        var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
-                        Console.WriteLine("Imagen 1 agregada al Excel");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Imagen 1 no encontrada");
-                    }
+                    //if (System.IO.File.Exists(imagePath1))
+                    //{
+                    //    var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
+                    //    Console.WriteLine("Imagen 1 agregada al Excel");
+                    //}
+                    //else
+                    //{
+                    //    Console.WriteLine("Imagen 1 no encontrada");
+                    //}
 
-                    if (System.IO.File.Exists(imagePath2))
-                    {
-                        var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
-                        Console.WriteLine("Imagen 2 agregada al Excel");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Imagen 2 no encontrada");
-                    }
+                    //if (System.IO.File.Exists(imagePath2))
+                    //{
+                    //    var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
+                    //    Console.WriteLine("Imagen 2 agregada al Excel");
+                    //}
+                    //else
+                    //{
+                    //    Console.WriteLine("Imagen 2 no encontrada");
+                    //}
 
-                    // Ajustar celdas para las imágenes
-                    worksheet.Row(1).Height = 60;
-                    worksheet.Column(1).Width = 12;
-                    worksheet.Column(7).Width = 12;
-                    Console.WriteLine("Celdas ajustadas para las imágenes");
+                    //// Ajustar celdas para las imágenes
+                    //worksheet.Row(1).Height = 60;
+                    //worksheet.Column(1).Width = 12;
+                    //worksheet.Column(7).Width = 12;
+                    //Console.WriteLine("Celdas ajustadas para las imágenes");
 
                     // Título
                     var titleCell = worksheet.Cell("A3");
@@ -394,29 +394,29 @@ namespace TotalHRInsight.Controllers
                     worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
                     Console.WriteLine("Orientación de página establecida a paisaje");
 
-                    // Agregar las imágenes y ajustar tamaño
-                    var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
-                    var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
+                    //// Agregar las imágenes y ajustar tamaño
+                    //var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
+                    //var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
 
-                    Console.WriteLine($"Ruta de imagen 1: {imagePath1}");
-                    Console.WriteLine($"Ruta de imagen 2: {imagePath2}");
+                    //Console.WriteLine($"Ruta de imagen 1: {imagePath1}");
+                    //Console.WriteLine($"Ruta de imagen 2: {imagePath2}");
 
-                    if (!System.IO.File.Exists(imagePath1) || !System.IO.File.Exists(imagePath2))
-                    {
-                        Console.WriteLine("Una o más imágenes no se encuentran en la ubicación especificada.");
-                        throw new FileNotFoundException("Una o más imágenes no se encuentran en la ubicación especificada.");
-                    }
+                    //if (!System.IO.File.Exists(imagePath1) || !System.IO.File.Exists(imagePath2))
+                    //{
+                    //    Console.WriteLine("Una o más imágenes no se encuentran en la ubicación especificada.");
+                    //    throw new FileNotFoundException("Una o más imágenes no se encuentran en la ubicación especificada.");
+                    //}
 
-                    var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
-                    Console.WriteLine("Imagen 1 agregada al Excel");
-                    var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
-                    Console.WriteLine("Imagen 2 agregada al Excel");
+                    //var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
+                    //Console.WriteLine("Imagen 1 agregada al Excel");
+                    //var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
+                    //Console.WriteLine("Imagen 2 agregada al Excel");
 
-                    // Ajustar las celdas para las imágenes
-                    worksheet.Row(1).Height = 60;
-                    worksheet.Column(1).Width = 12;
-                    worksheet.Column(7).Width = 12;
-                    Console.WriteLine("Celdas ajustadas para las imágenes");
+                    //// Ajustar las celdas para las imágenes
+                    //worksheet.Row(1).Height = 60;
+                    //worksheet.Column(1).Width = 12;
+                    //worksheet.Column(7).Width = 12;
+                    //Console.WriteLine("Celdas ajustadas para las imágenes");
 
                     // Título
                     var titleCell = worksheet.Cell("A2");

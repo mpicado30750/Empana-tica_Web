@@ -417,32 +417,32 @@ namespace TotalHRInsight.Controllers
                     worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
                     Console.WriteLine("Orientación de página establecida a paisaje");
 
-                    // Agregar las imágenes y ajustar tamaño
-                    var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
-                    var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
+                    //// Agregar las imágenes y ajustar tamaño
+                    //var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
+                    //var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
 
-                    Console.WriteLine($"Ruta de imagen 1: {imagePath1}");
-                    Console.WriteLine($"Ruta de imagen 2: {imagePath2}");
+                    //Console.WriteLine($"Ruta de imagen 1: {imagePath1}");
+                    //Console.WriteLine($"Ruta de imagen 2: {imagePath2}");
 
-                    if (System.IO.File.Exists(imagePath1))
-                    {
-                        var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
-                        Console.WriteLine("Imagen 1 agregada al Excel");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Imagen 1 no encontrada");
-                    }
+                    //if (System.IO.File.Exists(imagePath1))
+                    //{
+                    //    var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
+                    //    Console.WriteLine("Imagen 1 agregada al Excel");
+                    //}
+                    //else
+                    //{
+                    //    Console.WriteLine("Imagen 1 no encontrada");
+                    //}
 
-                    if (System.IO.File.Exists(imagePath2))
-                    {
-                        var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
-                        Console.WriteLine("Imagen 2 agregada al Excel");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Imagen 2 no encontrada");
-                    }
+                    //if (System.IO.File.Exists(imagePath2))
+                    //{
+                    //    var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
+                    //    Console.WriteLine("Imagen 2 agregada al Excel");
+                    //}
+                    //else
+                    //{
+                    //    Console.WriteLine("Imagen 2 no encontrada");
+                    //}
 
                     // Ajustar las celdas para las imágenes
                     worksheet.Row(1).Height = 60;
@@ -542,18 +542,18 @@ namespace TotalHRInsight.Controllers
                     var worksheet = workbook.Worksheets.Add($"Pedido_{IdPedido}");
                     worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
 
-                    // Agregar imágenes
-                    var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
-                    var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
-                    if (System.IO.File.Exists(imagePath1))
-                        worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
-                    if (System.IO.File.Exists(imagePath2))
-                        worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
+                    //// Agregar imágenes
+                    //var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
+                    //var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
+                    //if (System.IO.File.Exists(imagePath1))
+                    //    worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
+                    //if (System.IO.File.Exists(imagePath2))
+                    //    worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
 
-                    // Ajustar celdas para las imágenes
-                    worksheet.Row(1).Height = 60;
-                    worksheet.Column(1).Width = 12;
-                    worksheet.Column(7).Width = 12;
+                    //// Ajustar celdas para las imágenes
+                    //worksheet.Row(1).Height = 60;
+                    //worksheet.Column(1).Width = 12;
+                    //worksheet.Column(7).Width = 12;
 
                     // Título
                     var titleCell = worksheet.Cell("A2");

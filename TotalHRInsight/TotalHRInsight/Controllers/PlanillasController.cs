@@ -488,14 +488,14 @@ namespace TotalHRInsight.Controllers
                     var worksheet = workbook.Worksheets.Add("Colilla de Pago");
                     worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
 
-                    // Add images (optional)
-                    var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
-                    var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
-                    if (System.IO.File.Exists(imagePath1) && System.IO.File.Exists(imagePath2))
-                    {
-                        worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
-                        worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("F1")).Scale(0.1);
-                    }
+                    //// Add images (optional)
+                    //var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
+                    //var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
+                    //if (System.IO.File.Exists(imagePath1) && System.IO.File.Exists(imagePath2))
+                    //{
+                    //    worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
+                    //    worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("F1")).Scale(0.1);
+                    //}
 
                     worksheet.Row(1).Height = 60;
                     worksheet.Column(1).Width = 12;

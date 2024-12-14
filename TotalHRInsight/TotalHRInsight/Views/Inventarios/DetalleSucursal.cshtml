@@ -12,9 +12,9 @@
             </h1>
         </div>
         <div class="col-md-4 text-end">
-            <a asp-action="Export" class="btn btn-success btn-lg shadow-sm" onclick="showLoader()">
+            @* <a asp-action="Export" class="btn btn-success btn-lg shadow-sm" onclick="showLoader()">
                 <i class="bi bi-download me-2"></i>Exportar Inventario
-            </a>
+            </a> *@
         </div>
     </div>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 inventory-scroll" style="max-height: 70vh; overflow-y: auto;">
@@ -48,13 +48,9 @@
                     </div>
                     <div class="card-footer bg-light border-top-0">
                         <div class="d-flex justify-content-between">
-                            <a asp-action="Edit" asp-route-IdInventario="@item.IdInventario" class="btn btn-outline-warning btn-sm" onclick="showLoader()">
+                            @* <a asp-action="Edit" asp-route-IdInventario="@item.IdInventario" class="btn btn-outline-warning btn-sm" onclick="showLoader()">
                                 <i class="bi bi-pencil-square me-1"></i> Editar
-                            </a>
-                            <a asp-action="Details" asp-route-IdInventario="@item.IdInventario" class="btn btn-info btn-sm" onclick="showLoader()">
-                                <i class="bi bi-info-circle me-1"></i> Detalles
-                            </a>
-
+                            </a> *@
                             <a asp-action="Details" asp-route-IdInventario="@item.IdInventario" class="btn btn-outline-info btn-sm" onclick="showLoader()">
                                 <i class="bi bi-info-circle me-1"></i> Información
                     </a>
