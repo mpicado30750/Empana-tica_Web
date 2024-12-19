@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -29,28 +30,45 @@ namespace TotalHRInsight.Controllers
         public async Task<IActionResult> Index()
         {
 			
-			var asistencias = await _context.Asistencias
-                .Include(a => a.UsuarioCreacion)
-                .ToListAsync();
+            return View();
+        }
 
-            var viewModel = asistencias.Select(a => new AsistenciaModel
+        [HttpGet]
+        public async Task<JsonResult> FiltroAsistencia(string nombre, DateTime? fechaIngreso, DateTime? fechaSalida)
+        {
+            try
             {
+                var asistencias = await _context.Asistencias
+                    .Include(a => a.UsuarioCreacion)
+                    .Where(a =>
+                        (string.IsNullOrWhiteSpace(nombre) || a.UsuarioCreacion.Nombre.Contains(nombre)) &&
+                        (!fechaIngreso.HasValue || a.FechaEntrada.Date >= fechaIngreso.Value.Date) &&
+                        (!fechaSalida.HasValue || a.FechaSalida.Date <= fechaSalida.Value.Date))
+                    .OrderByDescending(a => a.FechaEntrada) 
+                    .Select(a => new AsistenciaModel
+                    {
+                        Id = a.IdAsistencia,
+                        FechaEntrada = a.FechaEntrada,
+                        FechaSalida = a.FechaSalida,
+                        LatitudEntrada = ExtractLatitude(a.UbicacionEntrada),
+                        LongitudEntrada = ExtractLongitude(a.UbicacionEntrada),
+                        LatitudSalida = ExtractLatitude(a.UbicacionSalida),
+                        LongitudSalida = ExtractLongitude(a.UbicacionSalida),
+                        UsuarioCreacionId = a.UsuarioCreacionId,
+                        UsuarioCreacion = a.UsuarioCreacion.UserName,
+                        Nombre = a.UsuarioCreacion.Nombre,
+                        PrimerApellido = a.UsuarioCreacion.PrimerApellido,
+                        SegundoApellido = a.UsuarioCreacion.SegundoApellido
+                    })
+                    //.OrderBy(a => a.LatitudEntrada)
+                    .ToListAsync();
 
-                Id = a.IdAsistencia,
-                FechaEntrada = a.FechaEntrada,
-                FechaSalida = a.FechaSalida,
-                LatitudEntrada = ExtractLatitude(a.UbicacionEntrada),
-                LongitudEntrada = ExtractLongitude(a.UbicacionEntrada), // Manejo de valor null
-                LatitudSalida = ExtractLatitude(a.UbicacionSalida),
-                LongitudSalida = ExtractLongitude(a.UbicacionSalida), // Manejo de valor null
-                UsuarioCreacionId = a.UsuarioCreacionId,
-                UsuarioCreacion = a.UsuarioCreacion.UserName,
-                Nombre = a.UsuarioCreacion.Nombre,
-                PrimerApellido = a.UsuarioCreacion.PrimerApellido,
-                SegundoApellido = a.UsuarioCreacion.SegundoApellido
-			}).ToList();
-
-            return View(viewModel);
+                return Json(asistencias);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message });
+            }
         }
 
         public static double ExtractLatitude(string input)
@@ -282,124 +300,168 @@ namespace TotalHRInsight.Controllers
             return _context.Asistencias.Any(e => e.IdAsistencia == id);
         }
 
-        public async Task<IActionResult> ExportToExcel()
+        public async Task<IActionResult> ExportToExcel(string nombre, DateTime? fechaIngreso, DateTime? fechaSalida)
         {
             try
             {
-                Console.WriteLine("Inicio del método ExportToExcel");
-
                 var asistencias = await _context.Asistencias
                     .Include(a => a.UsuarioCreacion)
+                    .Where(a =>
+                        (string.IsNullOrWhiteSpace(nombre) || a.UsuarioCreacion.Nombre.Contains(nombre)) &&
+                        (!fechaIngreso.HasValue || a.FechaEntrada.Date >= fechaIngreso.Value.Date) &&
+                        (!fechaSalida.HasValue || a.FechaSalida.Date <= fechaSalida.Value.Date))
+                    .OrderByDescending(a => a.FechaEntrada)
+                    .Select(a => new AsistenciaModel
+                    {
+                        Id = a.IdAsistencia,
+                        FechaEntrada = a.FechaEntrada,
+                        FechaSalida = a.FechaSalida,
+                        LatitudEntrada = ExtractLatitude(a.UbicacionEntrada),
+                        LongitudEntrada = ExtractLongitude(a.UbicacionEntrada),
+                        LatitudSalida = ExtractLatitude(a.UbicacionSalida),
+                        LongitudSalida = ExtractLongitude(a.UbicacionSalida),
+                        UsuarioCreacionId = a.UsuarioCreacionId,
+                        UsuarioCreacion = a.UsuarioCreacion.UserName,
+                        Nombre = a.UsuarioCreacion.Nombre,
+                        PrimerApellido = a.UsuarioCreacion.PrimerApellido,
+                        SegundoApellido = a.UsuarioCreacion.SegundoApellido
+                    })
                     .ToListAsync();
-                Console.WriteLine($"Cantidad de asistencias obtenidas: {asistencias.Count}");
 
                 using (var workbook = new XLWorkbook())
                 {
-                    var worksheet = workbook.Worksheets.Add("Asistencias");
+                    var worksheet = workbook.Worksheets.Add("Reporte de Asistencias");
 
+                    // Configuración de página
                     worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
-                    Console.WriteLine("Orientación de página establecida a paisaje");
+                    worksheet.PageSetup.FitToPages(1, 1);
 
-                    //// Verificar si las imágenes existen antes de agregarlas
-                    //var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
-                    //var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
+                    // Agregar logos
+                    var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
+                    var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
 
-                    //Console.WriteLine($"Ruta de imagen 1: {imagePath1}");
-                    //Console.WriteLine($"Ruta de imagen 2: {imagePath2}");
+                    if (System.IO.File.Exists(imagePath1))
+                    {
+                        worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
+                    }
+                    if (System.IO.File.Exists(imagePath2))
+                    {
+                        worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
+                    }
 
-                    //if (System.IO.File.Exists(imagePath1))
-                    //{
-                    //    var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
-                    //    Console.WriteLine("Imagen 1 agregada al Excel");
-                    //}
-                    //else
-                    //{
-                    //    Console.WriteLine("Imagen 1 no encontrada");
-                    //}
-
-                    //if (System.IO.File.Exists(imagePath2))
-                    //{
-                    //    var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
-                    //    Console.WriteLine("Imagen 2 agregada al Excel");
-                    //}
-                    //else
-                    //{
-                    //    Console.WriteLine("Imagen 2 no encontrada");
-                    //}
-
-                    // Ajustar las celdas para las imágenes
+                    // Configurar altura y ancho inicial
                     worksheet.Row(1).Height = 60;
-                    worksheet.Column(1).Width = 12;
-                    worksheet.Column(7).Width = 12;
-                    Console.WriteLine("Celdas ajustadas para las imágenes");
+                    worksheet.Column(1).Width = 15;
+                    worksheet.Column(7).Width = 15;
 
-                    // Título
-                    var titleCell = worksheet.Cell("A3");
-                    titleCell.Value = "Informe de Asistencias";
-                    titleCell.Style.Font.Bold = true;
-                    titleCell.Style.Font.FontSize = 16;
-                    titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                    titleCell.Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4");
-                    titleCell.Style.Font.FontColor = XLColor.White;
-                    Console.WriteLine("Título del informe configurado");
+                    // Título del reporte con formato
+                    var titleRange = worksheet.Range("A3:G3").Merge();
+                    titleRange.Value = "Reporte de Control de Asistencias";
+                    titleRange.Style
+                        .Font.SetBold(true)
+                        .Font.SetFontSize(16)
+                        .Fill.SetBackgroundColor(XLColor.FromHtml("#4472C4"))
+                        .Font.SetFontColor(XLColor.White)
+                        .Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+                    // Información del filtrado
+                    var filterRow = 4;
+                    if (!string.IsNullOrEmpty(nombre) || fechaIngreso.HasValue || fechaSalida.HasValue)
+                    {
+                        worksheet.Cell($"A{filterRow}").Value = "Filtros aplicados:";
+                        worksheet.Cell($"A{filterRow}").Style.Font.Bold = true;
+
+                        var filterText = "";
+                        if (!string.IsNullOrEmpty(nombre)) filterText += $"Nombre: {nombre}, ";
+                        if (fechaIngreso.HasValue) filterText += $"Desde: {fechaIngreso.Value:dd/MM/yyyy}, ";
+                        if (fechaSalida.HasValue) filterText += $"Hasta: {fechaSalida.Value:dd/MM/yyyy}";
+
+                        worksheet.Cell($"B{filterRow}").Value = filterText.TrimEnd(',', ' ');
+                        filterRow++;
+                    }
 
                     // Cabeceras de la tabla
-                    var headerRow = worksheet.Row(5);
-                    headerRow.Cell(1).Value = "Fecha de Entrada";
-                    headerRow.Cell(2).Value = "Fecha de Salida";
-                    headerRow.Cell(3).Value = "Nombre";
-                    headerRow.Cell(4).Value = "Primer Apellido";
-                    headerRow.Cell(5).Value = "Segundo Apellido";
-                    headerRow.Style.Font.Bold = true;
-                    headerRow.Style.Font.FontSize = 12;
-                    headerRow.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                    headerRow.Style.Font.FontColor = XLColor.White;
-                    Console.WriteLine("Cabeceras de la tabla configuradas");
+                    var headers = new[] {
+                "Fecha de Entrada", "Hora de Entrada",
+                "Fecha de Salida", "Hora de Salida",
+                "Nombre Completo", "Usuario",
+                "Ubicación Entrada", "Ubicación Salida"
+            };
+
+                    var headerRow = worksheet.Range($"A{filterRow + 1}:H{filterRow + 1}");
+                    for (int i = 0; i < headers.Length; i++)
+                    {
+                        headerRow.Cell(1, i + 1).Value = headers[i];
+                    }
+
+                    headerRow.Style
+                        .Font.SetBold(true)
+                        .Font.SetFontSize(12)
+                        .Fill.SetBackgroundColor(XLColor.FromHtml("#D9E1F2"))
+                        .Font.SetFontColor(XLColor.Black)
+                        .Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
 
                     // Datos
-                    int rowIdx = 6;
+                    int rowIdx = filterRow + 2;
                     foreach (var asistencia in asistencias)
                     {
-                        var dataRow = worksheet.Row(rowIdx);
-                        dataRow.Cell(1).Value = asistencia.FechaEntrada.ToString("yyyy-MM-dd HH:mm:ss");
-                        dataRow.Cell(2).Value = asistencia.FechaSalida.ToString("yyyy-MM-dd HH:mm:ss") ?? "";
-                        dataRow.Cell(3).Value = asistencia.UsuarioCreacion.Nombre;
-                        dataRow.Cell(4).Value = asistencia.UsuarioCreacion.PrimerApellido;
-                        dataRow.Cell(5).Value = asistencia.UsuarioCreacion.SegundoApellido;
+                        var row = worksheet.Row(rowIdx);
+
+                        // Fecha y hora separadas para mejor lectura
+                        row.Cell(1).Value = asistencia.FechaEntrada.ToString("dd/MM/yyyy");
+                        row.Cell(2).Value = asistencia.FechaEntrada.ToString("HH:mm:ss");
+                        row.Cell(3).Value = asistencia.FechaSalida.ToString("dd/MM/yyyy") ?? "-";
+                        row.Cell(4).Value = asistencia.FechaSalida.ToString("HH:mm:ss") ?? "-";
+
+                        // Nombre completo formateado
+                        row.Cell(5).Value = $"{asistencia.Nombre} {asistencia.PrimerApellido} {asistencia.SegundoApellido}".Trim();
+                        row.Cell(6).Value = asistencia.UsuarioCreacion;
+
+                        // Ubicaciones formateadas
+                        row.Cell(7).Value = $"{asistencia.LatitudEntrada}, {asistencia.LongitudEntrada}";
+                        row.Cell(8).Value = asistencia.LatitudSalida.HasValue ?
+                            $"{asistencia.LatitudSalida}, {asistencia.LongitudSalida}" : "-";
+
                         rowIdx++;
                     }
-                    Console.WriteLine("Datos de asistencias agregados al Excel");
 
-                    // Establecer el estilo de tabla para los datos
-                    var tableRange = worksheet.Range("A5:E" + rowIdx);
-                    var table = tableRange.CreateTable();
-                    table.Theme = XLTableTheme.TableStyleMedium2;
-                    Console.WriteLine("Estilo de tabla establecido");
+                    // Estilo de la tabla
+                    var tableRange = worksheet.Range($"A{filterRow + 1}:H{rowIdx - 1}");
+                    tableRange.Style.Border.SetOutsideBorder(XLBorderStyleValues.Thin);
+                    tableRange.Style.Border.SetInsideBorder(XLBorderStyleValues.Thin);
+                    tableRange.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
 
-                    // Ajustar el ancho de las columnas después de agregar los datos
+                    // Alternar colores de filas para mejor lectura
+                    for (int i = filterRow + 2; i < rowIdx; i++)
+                    {
+                        if (i % 2 == 0)
+                        {
+                            worksheet.Range($"A{i}:H{i}").Style
+                                .Fill.SetBackgroundColor(XLColor.FromHtml("#F2F2F2"));
+                        }
+                    }
+
+                    // Ajustar el ancho de las columnas
                     worksheet.Columns().AdjustToContents();
-                    Console.WriteLine("Columnas ajustadas al contenido");
 
-                    // Guardar el archivo Excel en un MemoryStream y devolver como FileResult
+                    // Generar el archivo
                     using (var stream = new MemoryStream())
                     {
                         workbook.SaveAs(stream);
                         var content = stream.ToArray();
-                        Console.WriteLine("Archivo Excel guardado en memoria");
 
-                        // Agregar la fecha al nombre del archivo
-                        string fileName = $"Asistencias_{DateTime.Now:ddMMyyyy}.xlsx";
-
-                        // Devolver el archivo como un archivo descargable
-                        return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                        string fileName = $"Control_Asistencias_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+                        return File(
+                            content,
+                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                            fileName
+                        );
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Capturar la excepción y mostrar un mensaje de error
-                Console.WriteLine($"Error: {ex.Message}\n{ex.StackTrace}");
-                return Content($"Ocurrió un error al generar el archivo Excel: {ex.Message}\n{ex.StackTrace}");
+                return BadRequest($"Error al generar el archivo Excel: {ex.Message}");
             }
         }
 

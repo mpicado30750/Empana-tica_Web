@@ -15,7 +15,8 @@
                 <a asp-action="Create" class="btn btn-primary" onclick="showLoader()">
                     <i class="bi bi-plus-circle me-2"></i>Registro Manual
                 </a>
-                <a asp-action="ExportToExcel" class="btn btn-success" onclick="showLoader()">
+                <a
+                   class="btn btn-success" onclick="descargarExcel()">
                     <i class="bi bi-download me-2"></i>Descargar Datos
                 </a>
             </div>
@@ -37,48 +38,7 @@
                 </div>
                 <div class="card-body pt-0" style="max-height: 65vh; overflow-y: auto;">
                     <div id="cardContainer">
-                        @foreach (var item in Model)
-                        {
-                            <div class="card mb-3 border-0 shadow-sm hover-lift asistencia-card"
-                                 id="card-@item.Id"
-                                 data-lat-entrada="@item.LatitudEntrada.ToString().Replace(',', '.')"
-                                 data-lng-entrada="@item.LongitudEntrada.ToString().Replace(',', '.')"
-                                 data-lat-salida="@item.LatitudSalida.ToString().Replace(',', '.')"
-                                 data-lng-salida="@item.LongitudSalida.ToString().Replace(',', '.')">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h5 class="card-title mb-0" id="nombre-@item.Id">
-                                            @item.Nombre @item.PrimerApellido @item.SegundoApellido
-                                        </h5>
-                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
-                                            <i class="bi bi-info-circle"></i>
-                                        </a>
-                                    </div>
-                                    <div class="list-group list-group-flush mb-3">
-                                        <div class="list-group-item d-flex justify-content-between px-0">
-                                            <span class="text-muted">Entrada:</span>
-                                            <strong id="fecha-entrada-@item.Id" class="fecha-entrada">
-                                                @item.FechaEntrada.ToString("dd/MM/yyyy HH:mm")
-                                            </strong>
-                                        </div>
-                                        <div class="list-group-item d-flex justify-content-between px-0">
-                                            <span class="text-muted">Salida:</span>
-                                            <strong id="fecha-salida-@item.Id" class="fecha-salida">
-                                                @item.FechaSalida.ToString("dd/MM/yyyy HH:mm")
-                                            </strong>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between gap-2">
-                                        @* <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm flex-grow-1">
-                                            <i class="bi bi-trash me-2"></i>Eliminar
-                                        </a> *@
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm flex-grow-1">
-                                            <i class="bi bi-pencil-square me-2"></i>Editar
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        }
+                        
                     </div>
                 </div>
             </div>
@@ -168,82 +128,149 @@
         }
     }
     function filterCards() {
-        try {
-            var searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
-            var startDateInput = document.getElementById('startDateInput').value;
-            var endDateInput = document.getElementById('endDateInput').value;
+        var searchInput = document.getElementById('searchInput').value.trim();
+        var startDateInput = document.getElementById('startDateInput').value;
+        var endDateInput = document.getElementById('endDateInput').value;
 
-            var startDate = startDateInput ? new Date(startDateInput) : null;
-            var endDate = endDateInput ? new Date(endDateInput) : null;
+        $.ajax({
+            url: '/Asistencias/FiltroAsistencia',
+            type: 'GET',
+            data: {
+                nombre: searchInput,
+                fechaIngreso: startDateInput || null,
+                fechaSalida: endDateInput || null
+            },
+            beforeSend: function () {
+                // Mostrar spinner en el contenedor de tarjetas
+                // $('#cardContainer').html(`
+                //     <div class="text-center p-5">
+                //         <div class="spinner-border text-danger" role="status">
+                //             <span class="visually-hidden">Cargando...</span>
+                //         </div>
+                //         <p class="mt-3">Buscando registros...</p>
+                //     </div>
+                // `);
+            },
+            success: function (data) {
+                try {
+                var cardContainer = document.getElementById('cardContainer');
+                cardContainer.innerHTML = ''; // Limpiar contenedor actual
 
-            var cards = document.getElementsByClassName('asistencia-card');
-            var filteredData = [];
+                data.forEach(function (item) {
+                    var cardHtml = `
+                        <div class="card mb-3 border-0 shadow-sm hover-lift asistencia-card"
+                             id="card-${item.id}"
+                             data-lat-entrada="${item.latitudEntrada}"
+                             data-lng-entrada="${item.longitudEntrada}"
+                             data-lat-salida="${item.latitudSalida}"
+                             data-lng-salida="${item.longitudSalida}">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="card-title mb-0" id="nombre-${item.id}">
+                                        ${item.nombre} ${item.primerApellido} ${item.segundoApellido}
+                                    </h5>
+                                    // <a href="/Asistencias/Details/${item.id}" class="btn btn-outline-info btn-sm">
+                                    //     <i class="bi bi-info-circle"></i>
+                                    // </a>
+                                </div>
+                                <div class="list-group list-group-flush mb-3">
+                                    <div class="list-group-item d-flex justify-content-between px-0">
+                                        <span class="text-muted">Entrada:</span>
+                                        <strong id="fecha-entrada-${item.id}" class="fecha-entrada">
+                                            ${new Date(item.fechaEntrada).toLocaleString()}
+                                        </strong>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between px-0">
+                                        <span class="text-muted">Salida:</span>
+                                        <strong id="fecha-salida-${item.id}" class="fecha-salida">
+                                            ${new Date(item.fechaSalida).toLocaleString()}
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between gap-2">
+                                    <a href="/Asistencias/Edit/${item.id}" class="btn btn-outline-warning btn-sm flex-grow-1">
+                                        <i class="bi bi-pencil-square me-2"></i>Editar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    cardContainer.innerHTML += cardHtml;
+                });
 
-            for (var i = 0; i < cards.length; i++) {
-                var card = cards[i];
-                var cardId = card.id.split('-')[1];
-
-                var nombre = document.getElementById(`nombre-${cardId}`).textContent.trim().toLowerCase();
-                var fechaEntrada = document.getElementById(`fecha-entrada-${cardId}`).textContent.trim();
-                var fechaSalida = document.getElementById(`fecha-salida-${cardId}`).textContent.trim();
-
-                // Convertir las fechas de entrada y salida a objetos Date (sólo una vez)
-                var entradaDate = parseDate(fechaEntrada);
-                var salidaDate = parseDate(fechaSalida);
-
-                var isVisible = true;
-
-                // Filtrado por nombre
-                if (searchInput && !nombre.includes(searchInput)) {
-                    isVisible = false;
-                }
-
-                // Filtrado por rango de fechas
-                if (startDate || endDate) {
-                    if (
-                        (startDate && salidaDate < startDate) ||
-                        (endDate && entradaDate > endDate) ||
-                        (startDate && endDate && (salidaDate < startDate || entradaDate > endDate))
-                    ) {
-                        isVisible = false;
-                    }
-                }
-
-                card.style.display = isVisible ? "block" : "none";
-
-                if (isVisible) {
-                    filteredData.push({
-                        latitudEntrada: card.getAttribute('data-lat-entrada'),
-                        longitudEntrada: card.getAttribute('data-lng-entrada'),
-                        latitudSalida: card.getAttribute('data-lat-salida'),
-                        longitudSalida: card.getAttribute('data-lng-salida'),
-                        nombre: nombre,
-                        primerApellido: card.getAttribute('data-primer-apellido'),
-                        segundoApellido: card.getAttribute('data-segundo-apellido'),
-                        fechaEntrada: fechaEntrada,
-                        fechaSalida: fechaSalida
-                    });
-                }
+                // Actualizar marcadores en el mapa
+                updateMarkers(data);
+                // Ocultar el loader después de procesar los datos
+            } catch(error) {
+                    $('#cardContainer').html(`
+                    <div class="alert alert-danger text-center">
+                        Error al realizar la búsqueda. Por favor, intente nuevamente.
+                    </div>
+                `);
             }
-
-            updateMarkers(filteredData);
-        } catch (error) {
-            console.error("Error en filterCards: ", error);
-        }
+            },
+            error: function (error) {
+                $('#cardContainer').html(`
+                    <div class="alert alert-danger text-center">
+                        Error al realizar la búsqueda. Por favor, intente nuevamente.
+                    </div>
+                `);
+            }
+        });
     }
 
-    // Función para convertir la fecha desde el formato dd/MM/yyyy HH:mm a un objeto Date
-    function parseDate(dateString) {
-        try {
-            var [datePart, timePart] = dateString.split(' ');
-            var [day, month, year] = datePart.split('/').map(Number);
-            var [hours, minutes] = timePart.split(':').map(Number);
+    function descargarExcel() {
+        const nombre = document.getElementById('searchInput').value;
+        const fechaEntrada = document.getElementById('startDateInput').value;
+        const fechaSalida = document.getElementById('endDateInput').value;
 
-            return new Date(year, month - 1, day, hours, minutes);
-        } catch (error) {
-            console.error("Error al parsear la fecha: ", error);
-            return null;
-        }
+        $.ajax({
+            url: 'Asistencias/ExportToExcel',
+            type: 'GET',
+            data: {
+                nombre: nombre,
+                fechaIngreso: fechaEntrada || null,
+                fechaSalida: fechaSalida || null
+            },
+            xhrFields: {
+                responseType: 'blob' // Importante para recibir el archivo
+            },
+            beforeSend: function () {
+                // Aquí puedes mostrar un loader
+                LoaderManager.show('Generando Excel...');
+            },
+            success: function (blob) {
+                // Crear URL del blob
+                const url = window.URL.createObjectURL(blob);
+
+                // Crear enlace temporal
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+
+                // Nombre del archivo
+                a.download = 'Control_Asistencias_' + new Date().toISOString().split('T')[0] + '.xlsx';
+
+                // Agregar a documento, hacer clic y remover
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error al descargar el archivo:', error);
+                // Usar el modal de Bootstrap para mostrar el error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al generar el archivo Excel'
+                });
+            },
+            complete: function () {
+                LoaderManager.hide();
+            }
+        });
+
     }
 
 

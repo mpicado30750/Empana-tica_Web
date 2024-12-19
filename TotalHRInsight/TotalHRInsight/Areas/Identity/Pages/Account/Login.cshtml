@@ -23,7 +23,7 @@
     }
 
     .login-container {
-        padding: 2rem 0;
+        padding: 1rem 0;
     }
 
     .login-card {
@@ -80,7 +80,6 @@
     .btn-inicio {
         background-color: var(--primary-500);
         border: none;
-        color: white;
         border-radius: 0.5rem;
         padding: 0.875rem 2rem;
         font-weight: 600;
@@ -94,6 +93,7 @@
         .btn-inicio:hover {
             background-color: var(--primary-600);
             transform: translateY(-2px);
+            color: white;
         }
 
         .btn-inicio:active {
@@ -150,8 +150,8 @@
     }
 </style>
 
-<div class="container-fluid login-container">
-    <div class="row justify-content-center">
+<div class="login-container">
+    <div class="justify-content-center row" style="max-width:100%;">
         <div class="col-11 col-md-8 col-lg-5 col-xl-4">
             <div class="login-card">
                 <h1 class="login-title">@ViewData["Title"]</h1>

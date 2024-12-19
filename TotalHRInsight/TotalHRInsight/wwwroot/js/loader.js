@@ -1,7 +1,15 @@
- wwwroot/js/loader.js
+// Variables globales
+let loaderModalInstance = null;
+
+// Función para mostrar el loader
 function showLoader() {
-    setTimeout(function () {
-        var loaderModal = new bootstrap.Modal(document.getElementById('loaderModal'));
-        loaderModal.show();
-    }, 500);
+    var loaderModal = new bootstrap.Modal(document.getElementById('loaderModal'));
+    loaderModal.show();
 }
+
+// Función para ocultar el loader
+function hideLoader() {
+    var loaderModal = new bootstrap.Modal(document.getElementById('loaderModal'));
+    loaderModal.hide();
+}
+
