@@ -60,7 +60,6 @@ namespace TotalHRInsight.Controllers
                         PrimerApellido = a.UsuarioCreacion.PrimerApellido,
                         SegundoApellido = a.UsuarioCreacion.SegundoApellido
                     })
-                    //.OrderBy(a => a.LatitudEntrada)
                     .ToListAsync();
 
                 return Json(asistencias);

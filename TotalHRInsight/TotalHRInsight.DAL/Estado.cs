@@ -17,7 +17,5 @@ namespace TotalHRInsight.DAL
         [DisplayName("Estado")]
         public string EstadoSolicitud { get; set; }
 
-        public ICollection<Pedido> Pedido { get; set; } = new List<Pedido>();
-
     }
 }
