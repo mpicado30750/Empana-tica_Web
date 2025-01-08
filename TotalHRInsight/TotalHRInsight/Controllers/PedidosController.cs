@@ -44,18 +44,31 @@ namespace TotalHRInsight.Controllers
 		{
 			try
 			{
-				var pedidos = await _context.Pedidos
+				List<Pedido> pedidos = new List<Pedido>();
+
+				if (idSucursal == null && !fechaInicio.HasValue && !fechaFinal.HasValue)
+				{
+					pedidos = await _context.Pedidos
 					.Include(a => a.Estado)
 					.Include(a => a.Sucursal)
 					.Include(a => a.UsuarioCreacion)
 					.OrderBy(o => o.FechaPedido)
-					.Where(w => (w.Sucursal.NombreSucursal != "Centro de Produccion"
-					|| w.Sucursal.IdSucursal.Equals(idSucursal)) &&
+					.Where(w => w.Sucursal.NombreSucursal != "Centro de Produccion")
+					.ToListAsync();
+				}
+				else
+				{
+
+				pedidos = await _context.Pedidos
+					.Include(a => a.Estado)
+					.Include(a => a.Sucursal)
+					.Include(a => a.UsuarioCreacion)
+					.OrderBy(o => o.FechaPedido)
+					.Where(w => w.Sucursal.IdSucursal.Equals(idSucursal) &&
 					(!fechaInicio.HasValue || w.FechaPedido.Date >= fechaInicio.Value.Date) &&
 					(!fechaFinal.HasValue || w.FechaPedido.Date <= fechaFinal.Value.Date))
 					.ToListAsync();
-
-				//return Json(new { error = "Message" });
+				}
 
 				return Json(pedidos);
 
@@ -423,229 +436,258 @@ namespace TotalHRInsight.Controllers
 		}
 
 
-		public async Task<IActionResult> ExportToExcel()
+		public async Task<IActionResult> ExportToExcel(int idSucursal, DateTime? fechaInicio, DateTime? fechaFinal)
 		{
 			try
 			{
-				Console.WriteLine("Inicio del método ExportToExcel");
-
-				var pedidos = await _context.Pedidos
-					.Include(p => p.Estado)
-					.Include(p => p.Sucursal)
-					.Include(p => p.UsuarioCreacion)
-					.ToListAsync();
-				Console.WriteLine($"Cantidad de pedidos obtenidos: {pedidos.Count}");
+				var pedidos = await ObtenerPedidos(idSucursal, fechaInicio, fechaFinal);
 
 				using (var workbook = new XLWorkbook())
 				{
-					var worksheet = workbook.Worksheets.Add("Pedidos");
-					worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
-					Console.WriteLine("Orientación de página establecida a paisaje");
+					var worksheet = ConfigurarHojaExcel(workbook);
+					ConfigurarEncabezado(worksheet);
+					AgregarDatosPedidos(worksheet, pedidos);
+					AplicarEstilosTabla(worksheet, pedidos.Count);
 
-					//// Agregar las imágenes y ajustar tamaño
-					//var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
-					//var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
-
-					//Console.WriteLine($"Ruta de imagen 1: {imagePath1}");
-					//Console.WriteLine($"Ruta de imagen 2: {imagePath2}");
-
-					//if (System.IO.File.Exists(imagePath1))
-					//{
-					//    var picture1 = worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
-					//    Console.WriteLine("Imagen 1 agregada al Excel");
-					//}
-					//else
-					//{
-					//    Console.WriteLine("Imagen 1 no encontrada");
-					//}
-
-					//if (System.IO.File.Exists(imagePath2))
-					//{
-					//    var picture2 = worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
-					//    Console.WriteLine("Imagen 2 agregada al Excel");
-					//}
-					//else
-					//{
-					//    Console.WriteLine("Imagen 2 no encontrada");
-					//}
-
-					// Ajustar las celdas para las imágenes
-					worksheet.Row(1).Height = 60;
-					worksheet.Column(1).Width = 12;
-					worksheet.Column(7).Width = 12;
-					Console.WriteLine("Celdas ajustadas para las imágenes");
-
-					// Título
-					var titleCell = worksheet.Cell("A3");
-					titleCell.Value = "Informe de Pedidos";
-					titleCell.Style.Font.Bold = true;
-					titleCell.Style.Font.FontSize = 16;
-					titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-					titleCell.Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4");
-					titleCell.Style.Font.FontColor = XLColor.White;
-					Console.WriteLine("Título del informe configurado");
-
-					// Cabeceras de la tabla
-					var headerRow = worksheet.Row(5);
-					headerRow.Cell(1).Value = "IdPedido";
-					headerRow.Cell(2).Value = "FechaPedido";
-					headerRow.Cell(3).Value = "FechaEntrega";
-					headerRow.Cell(4).Value = "UsuarioCreacion";
-					headerRow.Cell(5).Value = "Sucursal";
-					headerRow.Cell(6).Value = "Estado";
-					headerRow.Cell(7).Value = "MontoTotal";
-					headerRow.Style.Font.Bold = true;
-					headerRow.Style.Font.FontSize = 12;
-					headerRow.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-					headerRow.Style.Font.FontColor = XLColor.White;
-					Console.WriteLine("Cabeceras de la tabla configuradas");
-
-					// Datos
-					int rowIdx = 6;
-					foreach (var pedido in pedidos)
-					{
-						var dataRow = worksheet.Row(rowIdx);
-						dataRow.Cell(1).Value = pedido.IdPedido;
-						dataRow.Cell(2).Value = pedido.FechaPedido.ToString("yyyy-MM-dd");
-						dataRow.Cell(3).Value = pedido.FechaEntrega.ToString("yyyy-MM-dd");
-						dataRow.Cell(4).Value = pedido.UsuarioCreacion.Nombre;
-						dataRow.Cell(5).Value = pedido.Sucursal.NombreSucursal;
-						dataRow.Cell(6).Value = pedido.Estado.EstadoSolicitud;
-						dataRow.Cell(7).Value = pedido.MontoTotal;
-						rowIdx++;
-					}
-					Console.WriteLine("Datos de pedidos agregados al Excel");
-
-					// Establecer el estilo de tabla para los datos
-					var tableRange = worksheet.Range("A5:G" + rowIdx);
-					var table = tableRange.CreateTable();
-					table.Theme = XLTableTheme.TableStyleMedium2;
-					Console.WriteLine("Estilo de tabla establecido");
-
-					// Ajustar el ancho de las columnas después de agregar los datos
-					worksheet.Columns().AdjustToContents();
-					Console.WriteLine("Columnas ajustadas al contenido");
-
-					// Guardar el archivo Excel en un MemoryStream y devolver como FileResult
-					using (var stream = new MemoryStream())
-					{
-						workbook.SaveAs(stream);
-						var content = stream.ToArray();
-						Console.WriteLine("Archivo Excel guardado en memoria");
-						string fileName = $"Pedido_{DateTime.Now:ddMMyyyy}.xlsx";
-						return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Pedidos.xlsx");
-					}
+					return GenerarArchivoExcel(workbook);
 				}
 			}
 			catch (Exception ex)
 			{
 				Console.WriteLine($"Error: {ex.Message}\n{ex.StackTrace}");
-				return Content($"Ocurrió un error al generar el archivo Excel: {ex.Message}\n{ex.StackTrace}");
+				return BadRequest($"Error al generar Excel: {ex.Message}");
 			}
 		}
 
-
-		public async Task<IActionResult> ExportPedido(int IdPedido)
+		private async Task<List<Pedido>> ObtenerPedidos(int idSucursal, DateTime? fechaInicio, DateTime? fechaFinal)
 		{
-			var pedido = await _context.Pedidos
+			return await _context.Pedidos
+				.Include(a => a.Estado)
+				.Include(a => a.Sucursal)
+				.Include(a => a.UsuarioCreacion)
+				.OrderBy(o => o.FechaPedido)
+				.Where(w => w.Sucursal.IdSucursal.Equals(idSucursal) &&
+					(!fechaInicio.HasValue || w.FechaPedido.Date >= fechaInicio.Value.Date) &&
+					(!fechaFinal.HasValue || w.FechaPedido.Date <= fechaFinal.Value.Date))
+				.ToListAsync();
+		}
+
+		private IXLWorksheet ConfigurarHojaExcel(XLWorkbook workbook)
+		{
+			var worksheet = workbook.Worksheets.Add("Pedidos");
+			worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+
+			// Ajustes iniciales
+			worksheet.Row(1).Height = 60;
+			worksheet.Columns().AdjustToContents();
+
+			return worksheet;
+		}
+
+		private void ConfigurarEncabezado(IXLWorksheet worksheet)
+		{
+			// Título principal
+			var titulo = worksheet.Cell("A1");
+			titulo.Value = "Reporte de Pedidos";
+			titulo.Style
+				.Font.SetBold(true)
+				.Font.SetFontSize(16)
+				.Fill.SetBackgroundColor(XLColor.FromHtml("#4472C4"))
+				.Font.SetFontColor(XLColor.White)
+				.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+			// Cabeceras
+			var headers = new[] { "N° Pedido", "Fecha Pedido", "Fecha Entrega", "Usuario", "Sucursal", "Estado", "Monto Total" };
+			for (int i = 0; i < headers.Length; i++)
+			{
+				var cell = worksheet.Cell(3, i + 1);
+				cell.Value = headers[i];
+				cell.Style
+					.Font.SetBold(true)
+					.Font.SetFontSize(12)
+					.Fill.SetBackgroundColor(XLColor.FromHtml("#D9E1F2"))
+					.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+			}
+		}
+
+		private void AgregarDatosPedidos(IXLWorksheet worksheet, List<Pedido> pedidos)
+		{
+			int rowIdx = 4;
+			foreach (var pedido in pedidos)
+			{
+				worksheet.Cell(rowIdx, 1).Value = pedido.IdPedido;
+				worksheet.Cell(rowIdx, 2).Value = pedido.FechaPedido.ToString("dd/MM/yyyy");
+				worksheet.Cell(rowIdx, 3).Value = pedido.FechaEntrega.ToString("dd/MM/yyyy");
+				worksheet.Cell(rowIdx, 4).Value = pedido.UsuarioCreacion.Nombre;
+				worksheet.Cell(rowIdx, 5).Value = pedido.Sucursal.NombreSucursal;
+				worksheet.Cell(rowIdx, 6).Value = pedido.Estado.EstadoSolicitud;
+				worksheet.Cell(rowIdx, 7).SetValue(pedido.MontoTotal)
+					.Style.NumberFormat.SetFormat("#,##0.00");
+
+				rowIdx++;
+			}
+		}
+
+		private void AplicarEstilosTabla(IXLWorksheet worksheet, int totalRows)
+		{
+			var rango = worksheet.Range(3, 1, totalRows + 3, 7);
+			var tabla = rango.CreateTable();
+			tabla.Theme = XLTableTheme.TableStyleMedium2;
+
+			worksheet.Columns().AdjustToContents();
+
+			// Alternar colores de filas
+			for (int row = 4; row <= totalRows + 3; row++)
+			{
+				if (row % 2 == 0)
+				{
+					worksheet.Row(row).Style.Fill.SetBackgroundColor(XLColor.FromHtml("#F2F2F2"));
+				}
+			}
+		}
+
+		private FileResult GenerarArchivoExcel(XLWorkbook workbook)
+		{
+			using (var stream = new MemoryStream())
+			{
+				workbook.SaveAs(stream);
+				var content = stream.ToArray();
+				string fileName = $"Reporte_Pedidos_{DateTime.Now:yyyyMMdd}.xlsx";
+
+				return new FileContentResult(content,
+					"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+				{
+					FileDownloadName = fileName
+				};
+			}
+		}
+
+		public async Task<IActionResult> ExportPedido(int idSucursal)
+		{
+			var pedido = await ObtenerPedidoDetallado(idSucursal);
+			if (pedido == null) return NotFound();
+
+			try
+			{
+				using var workbook = new XLWorkbook();
+				var worksheet = ConfigurarHojaDetalle(workbook, pedido.IdPedido);
+				AgregarInformacionPedido(worksheet, pedido);
+				AgregarDetalleProductos(worksheet, pedido.PedidosProductos);
+
+				return GenerarArchivoPedido(workbook, pedido.IdPedido);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest($"Error al exportar pedido: {ex.Message}");
+			}
+		}
+
+		private async Task<Pedido> ObtenerPedidoDetallado(int idSucursal)
+		{
+			return await _context.Pedidos
 				.Include(p => p.Estado)
 				.Include(p => p.Sucursal)
 				.Include(p => p.UsuarioCreacion)
 				.Include(p => p.PedidosProductos)
 					.ThenInclude(pp => pp.Producto)
-				.FirstOrDefaultAsync(p => p.IdPedido == IdPedido);
+				.FirstOrDefaultAsync(p => p.IdPedido == idSucursal);
+		}
 
-			if (pedido == null)
+		private IXLWorksheet ConfigurarHojaDetalle(XLWorkbook workbook, int idPedido)
+		{
+			var worksheet = workbook.Worksheets.Add($"Pedido_{idPedido}");
+			worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
+
+			var titleCell = worksheet.Cell("A2");
+			titleCell.Value = $"Detalle del Pedido #{idPedido}";
+			titleCell.Style
+				.Font.SetBold(true)
+				.Font.SetFontSize(16)
+				.Fill.SetBackgroundColor(XLColor.FromHtml("#4472C4"))
+				.Font.SetFontColor(XLColor.White)
+				.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+			worksheet.Range("A2:G2").Merge();
+
+			return worksheet;
+		}
+
+		private void AgregarInformacionPedido(IXLWorksheet worksheet, Pedido pedido)
+		{
+			var infoFields = new Dictionary<string, string>
+   {
+	   {"Fecha Pedido", pedido.FechaPedido.ToString("dd/MM/yyyy")},
+	   {"Fecha Entrega", pedido.FechaEntrega.ToString("dd/MM/yyyy")},
+	   {"Usuario", pedido.UsuarioCreacion.Nombre},
+	   {"Sucursal", pedido.Sucursal.NombreSucursal},
+	   {"Estado", pedido.Estado.EstadoSolicitud}
+   };
+
+			int row = 3;
+			foreach (var field in infoFields)
 			{
-				return NotFound();
+				worksheet.Cell(row, 1).Value = $"{field.Key}:";
+				worksheet.Cell(row, 2).Value = field.Value;
+				worksheet.Cell(row, 1).Style.Font.SetBold(true);
+				row++;
 			}
 
-			try
+			worksheet.Cell(row, 1).Value = "Monto Total:";
+			worksheet.Cell(row, 2).Value = pedido.MontoTotal;
+			worksheet.Cell(row, 2).Style.NumberFormat.SetFormat("₡ #,##0.00");
+			worksheet.Cell(row, 1).Style.Font.SetBold(true);
+		}
+
+		private void AgregarDetalleProductos(IXLWorksheet worksheet, ICollection<PedidosProductos> productos)
+		{
+			var headers = new[] { "Código", "Producto", "Precio Unitario", "Cantidad" };
+			var headerRow = worksheet.Row(10);
+
+			for (int i = 0; i < headers.Length; i++)
 			{
-				using (var workbook = new XLWorkbook())
+				var cell = headerRow.Cell(i + 1);
+				cell.Value = headers[i];
+				cell.Style
+					.Font.SetBold(true)
+					.Font.SetFontSize(12)
+					.Fill.SetBackgroundColor(XLColor.FromHtml("#4472C4"))
+					.Font.SetFontColor(XLColor.White)
+					.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+			}
+
+			int rowIdx = 11;
+			foreach (var producto in productos)
+			{
+				var row = worksheet.Row(rowIdx);
+				row.Cell(1).Value = producto.ProductosID;
+				row.Cell(2).Value = producto.Producto.NombreProducto;
+				row.Cell(3).SetValue(producto.Producto.PrecioUnitario)
+					.Style.NumberFormat.SetFormat("₡ #,##0.00");
+				row.Cell(4).Value = producto.Cantidad;
+
+				if (rowIdx % 2 == 0)
 				{
-					var worksheet = workbook.Worksheets.Add($"Pedido_{IdPedido}");
-					worksheet.PageSetup.PageOrientation = XLPageOrientation.Landscape;
-
-					//// Agregar imágenes
-					//var imagePath1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/Empana-tica_Logo.png");
-					//var imagePath2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/pyme.png");
-					//if (System.IO.File.Exists(imagePath1))
-					//    worksheet.AddPicture(imagePath1).MoveTo(worksheet.Cell("A1")).Scale(0.15);
-					//if (System.IO.File.Exists(imagePath2))
-					//    worksheet.AddPicture(imagePath2).MoveTo(worksheet.Cell("G1")).Scale(0.1);
-
-					//// Ajustar celdas para las imágenes
-					//worksheet.Row(1).Height = 60;
-					//worksheet.Column(1).Width = 12;
-					//worksheet.Column(7).Width = 12;
-
-					// Título
-					var titleCell = worksheet.Cell("A2");
-					titleCell.Value = $"Detalles del Pedido #{IdPedido}";
-					titleCell.Style.Font.Bold = true;
-					titleCell.Style.Font.FontSize = 16;
-					titleCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-					titleCell.Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4");
-					titleCell.Style.Font.FontColor = XLColor.White;
-					worksheet.Range("A2:G2").Merge();
-
-					// Información del pedido
-					worksheet.Cell("A3").Value = "Fecha Pedido:";
-					worksheet.Cell("B3").Value = pedido.FechaPedido.ToString("yyyy-MM-dd");
-					worksheet.Cell("A4").Value = "Fecha Entrega:";
-					worksheet.Cell("B4").Value = pedido.FechaEntrega.ToString("yyyy-MM-dd");
-					worksheet.Cell("A5").Value = "Usuario Creación:";
-					worksheet.Cell("B5").Value = pedido.UsuarioCreacion.Nombre;
-					worksheet.Cell("A6").Value = "Sucursal:";
-					worksheet.Cell("B6").Value = pedido.Sucursal.NombreSucursal;
-					worksheet.Cell("A7").Value = "Estado:";
-					worksheet.Cell("B7").Value = pedido.Estado.EstadoSolicitud;
-					worksheet.Cell("A8").Value = "Monto Total:";
-					worksheet.Cell("B8").Value = pedido.MontoTotal;
-					worksheet.Cell("B8").Style.NumberFormat.Format = "₡ #,##0.00";
-
-					// Cabeceras de la tabla de productos
-					var headerRow = worksheet.Row(10);
-					headerRow.Cell(1).Value = "IdProducto";
-					headerRow.Cell(2).Value = "NombreProducto";
-					headerRow.Cell(3).Value = "PrecioUnitario";
-					headerRow.Cell(4).Value = "Cantidad";
-					headerRow.Style.Font.Bold = true;
-					headerRow.Style.Font.FontSize = 12;
-					headerRow.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-					headerRow.Style.Font.FontColor = XLColor.White;
-					worksheet.Range("A10:D10").Style.Fill.BackgroundColor = XLColor.FromHtml("#4472C4");
-
-					// Datos de los productos
-					int rowIdx = 11;
-					foreach (var pedidoProducto in pedido.PedidosProductos)
-					{
-						var dataRow = worksheet.Row(rowIdx);
-						dataRow.Cell(1).Value = pedidoProducto.ProductosID;
-						dataRow.Cell(2).Value = pedidoProducto.Producto.NombreProducto;
-						dataRow.Cell(3).Value = pedidoProducto.Producto.PrecioUnitario;
-						dataRow.Cell(3).Style.NumberFormat.Format = "₡ #,##0.00";
-						dataRow.Cell(4).Value = pedidoProducto.Cantidad;
-						rowIdx++;
-					}
-
-					worksheet.Columns().AdjustToContents();
-
-					using (var stream = new MemoryStream())
-					{
-						workbook.SaveAs(stream);
-						var content = stream.ToArray();
-						string fileName = $"Pedidos_{DateTime.Now:ddMMyyyy}.xlsx";
-						return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Pedido_{IdPedido}.xlsx");
-					}
+					worksheet.Range(rowIdx, 1, rowIdx, 4)
+						.Style.Fill.SetBackgroundColor(XLColor.FromHtml("#F2F2F2"));
 				}
+
+				rowIdx++;
 			}
-			catch (Exception ex)
+
+			worksheet.Columns().AdjustToContents();
+		}
+
+		private FileResult GenerarArchivoPedido(XLWorkbook workbook, int idPedido)
+		{
+			using var stream = new MemoryStream();
+			workbook.SaveAs(stream);
+			var content = stream.ToArray();
+
+			return new FileContentResult(content,
+				"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 			{
-				// Manejo de errores
-				return StatusCode(500, $"Error al exportar el pedido: {ex.Message}");
-			}
+				FileDownloadName = $"Pedido_{idPedido}_{DateTime.Now:yyyyMMdd}.xlsx"
+			};
 		}
 
 

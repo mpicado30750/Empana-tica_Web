@@ -16,8 +16,8 @@
                     <i class="bi bi-plus-circle me-2"></i>Registro Manual
                 </a>
                 <a
-                   class="btn btn-success" onclick="descargarExcel()">
-                    <i class="bi bi-download me-2"></i>Descargar Datos
+                  id="BtnDescargarAsistencia" class="btn btn-success" onclick="descargarExcel()">
+                    <i class="bi bi-download me-2"></i>Exportar Datos
                 </a>
             </div>
         </div>
@@ -58,6 +58,7 @@
 <script src="~/lib/leaflet/leaflet.js"></script>
 <script src="~/lib/leaflet/leaflet.min.js"></script>
 <script src="~/js/loader.js"></script>
+
 <script>
 
     function toggleSearchPanel() {
@@ -88,7 +89,7 @@
     var markers = [];
     var jsModel = @Html.Raw(Json.Serialize(Model));
 
-    updateMarkers(jsModel);
+    // updateMarkers(jsModel);
 
     function updateMarkers(data) {
         markers.forEach(marker => {
@@ -142,14 +143,14 @@
             },
             beforeSend: function () {
                 // Mostrar spinner en el contenedor de tarjetas
-                // $('#cardContainer').html(`
-                //     <div class="text-center p-5">
-                //         <div class="spinner-border text-danger" role="status">
-                //             <span class="visually-hidden">Cargando...</span>
-                //         </div>
-                //         <p class="mt-3">Buscando registros...</p>
-                //     </div>
-                // `);
+                $('#cardContainer').html(`
+                    <div class="text-center p-5">
+                        <div class="spinner-border text-danger" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                        <p class="mt-3">Buscando registros...</p>
+                    </div>
+                `);
             },
             success: function (data) {
                 try {
@@ -221,6 +222,9 @@
         const fechaEntrada = document.getElementById('startDateInput').value;
         const fechaSalida = document.getElementById('endDateInput').value;
 
+        // btn.disabled = true;
+        // btn.querySelector('span').textContent = 'Descargando...';
+
         $.ajax({
             url: 'Asistencias/ExportToExcel',
             type: 'GET',
@@ -233,8 +237,9 @@
                 responseType: 'blob' // Importante para recibir el archivo
             },
             beforeSend: function () {
-                // Aquí puedes mostrar un loader
-                LoaderManager.show('Generando Excel...');
+                $('#BtnDescargarAsistencia').addClass('disabled placeholder');
+                $('#BtnDescargarAsistencia').html('<i class="bi bi-download me-2" > </i>Descargando');
+                
             },
             success: function (blob) {
                 // Crear URL del blob
@@ -264,12 +269,17 @@
                 });
             },
             complete: function () {
-                LoaderManager.hide();
+                $('#BtnDescargarAsistencia').removeClass('disabled placeholder')
+                $('#BtnDescargarAsistencia').html('<i class="bi bi-download me-2" > </i>Exportar Datos');
             }
         });
 
     }
 
+    document.addEventListener('DOMContentLoaded', () => {
+        filterCards();
+        updateMarkers(jsModel);
+    });
 
 </script>
 

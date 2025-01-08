@@ -37,8 +37,35 @@ namespace TotalHRInsight.Controllers
         public async Task<JsonResult> FiltroAsistencia(string nombre, DateTime? fechaIngreso, DateTime? fechaSalida)
         {
             try
-            {
-                var asistencias = await _context.Asistencias
+            {                
+                List<AsistenciaModel> asistencias = new List<AsistenciaModel>();
+
+				if (nombre == null && !fechaIngreso.HasValue & !fechaSalida.HasValue)
+                {
+                    asistencias = await _context.Asistencias
+                        .Include(a => a.UsuarioCreacion)
+                        .Where(a => a.FechaEntrada.Date >= DateTime.Today)
+                        .OrderByDescending(a => a.FechaEntrada)
+						.Select(a => new AsistenciaModel
+						{
+							Id = a.IdAsistencia,
+							FechaEntrada = a.FechaEntrada,
+							FechaSalida = a.FechaSalida,
+							LatitudEntrada = ExtractLatitude(a.UbicacionEntrada),
+							LongitudEntrada = ExtractLongitude(a.UbicacionEntrada),
+							LatitudSalida = ExtractLatitude(a.UbicacionSalida),
+							LongitudSalida = ExtractLongitude(a.UbicacionSalida),
+							UsuarioCreacionId = a.UsuarioCreacionId,
+							UsuarioCreacion = a.UsuarioCreacion.UserName,
+							Nombre = a.UsuarioCreacion.Nombre,
+							PrimerApellido = a.UsuarioCreacion.PrimerApellido,
+							SegundoApellido = a.UsuarioCreacion.SegundoApellido
+						})
+					.ToListAsync();
+				}
+                else
+                {
+				 asistencias = await _context.Asistencias
                     .Include(a => a.UsuarioCreacion)
                     .Where(a =>
                         (string.IsNullOrWhiteSpace(nombre) || a.UsuarioCreacion.Nombre.Contains(nombre)) &&
@@ -62,6 +89,7 @@ namespace TotalHRInsight.Controllers
                     })
                     .ToListAsync();
 
+                }
                 return Json(asistencias);
             }
             catch (Exception ex)

@@ -6,16 +6,16 @@
 <div class="container-fluid bg-light">
 	<div class="row align-items-center mb-4">
 		<div class="col-md-2">
-			<h1 class="display-6 text-gray-500 mb-0">Pedidos</h1>
+			<h1 class=" text-gray-500 mb-0">Pedidos</h1>
 		</div>
 		<div class="col-md-6 card-header bg-white border-0">
 			<div class="input-group ">
 				@* <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre"> *@
-				<select id="searchInput" class="form-select form-select-lg" asp-items="@((SelectList)ViewData["sucursales"])">
+				<select id="searchInput" class="form-select form-select-sm" asp-items="@((SelectList)ViewData["sucursales"])">
 				</select>
 				<input type="date" id="startDateInput" class="form-control">
 				<input type="date" id="endDateInput" class="form-control">
-				<button class="btn btn-dark" type="button" onclick="buscarPedidos()">
+				<button id="BtnFiltroPedidos" class="btn btn-dark" type="button" onclick="buscarPedidos()">
 					<i class="bi bi-search"></i>
 				</button>
 			</div>
@@ -25,9 +25,9 @@
 				<a asp-action="Create" class="btn btn-primary" onclick="showLoader()">
 					<i class="bi bi-plus-circle me-2"></i>Nuevo Pedido
 				</a>
-				<a asp-action="Devolucion" class="btn btn-secondary" onclick="showLoader()">
-					<i class="bi bi-file-earmark-excel-fill me-2"></i>Devoluciones
-				</a>
+				@* <a asp-action="Devolucion" class="btn btn-secondary" onclick="showLoader()">
+				<i class="bi bi-file-earmark-excel-fill me-2"></i>Devoluciones
+				</a> *@
 				<a asp-action="ExportToExcel" class="btn btn-success" onclick="showLoader()">
 					<i class="bi bi-cloud-arrow-down-fill me-2"></i>Descargar
 				</a>
@@ -41,145 +41,161 @@
 				<div id="contenedorListaPedidos" class="row g-4">
 				</div>
 			</div>
+		</div>
+	</div>
+</div>
 
-			@Html.Partial("_LoaderModal")
+@Html.Partial("_LoaderModal")
 
-			@section Scripts {
-				<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
-				<script src="~/js/loader.js"></script>
-				<script>
-					document.addEventListener('DOMContentLoaded', function () {
-						const cards = document.querySelectorAll('.hover-lift');
-						cards.forEach(card => {
-							card.addEventListener('mouseenter', function () {
-								this.classList.add('shadow');
-							});
-							card.addEventListener('mouseleave', function () {
-								this.classList.remove('shadow');
-							});
-						});
-					});
-					// Primero define las funciones JavaScript antes de usarlas
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+<script src="~/js/loader.js"></script>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		buscarPedidos();
+	});
+	// Primero define las funciones JavaScript antes de usarlas
 
-					function buscarPedidos() {
-						var searchInput = document.getElementById('searchInput').value;
-						var startDateInput = document.getElementById('startDateInput').value;
-						var endDateInput = document.getElementById('endDateInput').value;
+	function buscarPedidos() {
+		var searchInput = document.getElementById('searchInput').value;
+		var startDateInput = document.getElementById('startDateInput').value;
+		var endDateInput = document.getElementById('endDateInput').value;
 
-						// Función para formatear fechas
-						function formatDate(dateString) {
-							const date = new Date(dateString);
-							return date.toLocaleDateString('es-CR', {
-								day: '2-digit',
-								month: '2-digit',
-								year: 'numeric'
-							});
-						}
+		// Función para formatear fechas
+		function formatDate(dateString) {
+			const date = new Date(dateString);
+			return date.toLocaleDateString('es-CR', {
+				day: '2-digit',
+				month: '2-digit',
+				year: 'numeric'
+			});
+		}
 
-						function GetHeaderColor(estado) {
-							switch (estado) {
-								case "En proceso":
-									return "bg-warning";
-								case "Aceptado":
-									return "bg-success";
-								case "Cancelado":
-									return "bg-danger";
-								default:
-									return "bg-secondary";
-							}
-						}
-
-						function GetBadgeColor(estado) {
-							switch (estado) {
-								case "En proceso":
-									return "bg-warning text-dark";
-								case "Aceptado":
-									return "bg-success";
-								case "Cancelado":
-									return "bg-danger";
-								default:
-									return "bg-secondary";
-							}
-						}
-
-						$.ajax({
-							url: '/Pedidos/FiltrarPedidos',
-							type: 'GET',
-							data: {
-								idSucursal: searchInput,
-								fechaInicio: startDateInput || null,
-								fechaFinal: endDateInput || null
-							},
-							beforeSend: function () {
-								console.log("Ejecutando")
-							},
-							success: function (data) {
-								var carContainer = document.getElementById('contenedorListaPedidos');
-								carContainer.innerHTML = '';
-
-								data.forEach(function (item) {
-									var newCard = `
-														<div class="col-sm-12 col-md-6 col-lg-4">
-															<div class="card border-0 shadow-sm hover-lift">
-																<div class="card-header ${GetHeaderColor(item.estado.estadoSolicitud)} text-white d-flex justify-content-between align-items-center">
-																	<h5 class="card-title mb-0">Pedido #${item.idPedido}</h5>
-																	<a asp-action="ExportPedido" asp-route-IdPedido="${item.idPedido}" class="btn btn-link text-white p-0">
-																		<i class="bi bi-cloud-arrow-down-fill fs-4"></i>
-																	</a>
-																</div>
-																<div class="card-body">
-																	<div class="mb-3">
-																		<h6 class="text-muted small text-uppercase">Información de Pedido</h6>
-																		<p class="mb-0 text-dark"><strong>Nombre:</strong> ${item.usuarioCreacion.nombre} ${item.usuarioCreacion.primerApellido} ${item.usuarioCreacion.segundoApellido} </p>
-																	</div>
-																	<div class="mb-3">
-																		<h6 class="text-muted small text-uppercase">Detalles del Pedido</h6>
-																		<div class="list-group list-group-flush">
-																			<div class="list-group-item d-flex justify-content-between px-0">
-																				<span class="text-muted">Sucursal</span>
-																				<strong>${item.sucursal.nombreSucursal}</strong>
-																			</div>
-																			<div class="list-group-item d-flex justify-content-between px-0">
-																				<span class="text-muted">Fecha de Pedido</span>
-																				<strong>${formatDate(item.fechaPedido)}</strong>
-																			</div>
-																			<div class="list-group-item d-flex justify-content-between px-0">
-																				<span class="text-muted">Fecha de Entrega</span>
-																				<strong>${formatDate(item.fechaEntrega)}</strong>
-																			</div>
-																			<div class="list-group-item d-flex justify-content-between px-0">
-																				<span class="text-muted">Estado</span>
-																				<span class="badge ${GetBadgeColor(item.estado.estadoSolicitud)}">
-																					${item.estado.estadoSolicitud}
-																				</span>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-																					<div class="card-footer bg-transparent border-0">
-											<div class="d-flex justify-content-between gap-2">
-												<a href="/Pedidos/Edit?IdPedido=${item.idPedido}" class="btn btn-sm btn-outline-warning flex-grow-1" onclick="showLoader()">
-													<i class="bi bi-pencil-square me-2"></i>Editar
-												</a>
-												<a href="/Pedidos/Details?IdPedido=${item.idPedido}" class="btn btn-sm btn-outline-info flex-grow-1" onclick="showLoader()">
-													<i class="bi bi-info-circle me-2"></i>Detalles
-												</a>
-												<a href="/Pedidos/Delete?IdPedido=${item.idPedido}" class="btn btn-sm btn-outline-danger flex-grow-1" onclick="showLoader()">
-													<i class="bi bi-trash me-2"></i>Eliminar
-												</a>
-											</div>
-										</div>
-															</div>
-														</div>`;
-
-									carContainer.innerHTML += newCard;
-								});
-							},
-							error: function (xhr, status, error) {
-								console.error('Error en la llamada:', error);
-								console.error('Respuesta del servidor:', xhr.responseText);
-							}
-						})
-					}
-				</script>
+		function GetHeaderColor(estado) {
+			switch (estado) {
+				case "En proceso":
+					return "bg-warning";
+				case "Aceptado":
+					return "bg-success";
+				case "Cancelado":
+					return "bg-danger";
+				default:
+					return "bg-secondary";
 			}
+		}
+
+		function GetBadgeColor(estado) {
+			switch (estado) {
+				case "En proceso":
+					return "bg-warning text-dark";
+				case "Aceptado":
+					return "bg-success";
+				case "Cancelado":
+					return "bg-danger";
+				default:
+					return "bg-secondary";
+			}
+		}
+
+		$.ajax({
+			url: '/Pedidos/FiltrarPedidos',
+			type: 'GET',
+			data: {
+				idSucursal: searchInput,
+				fechaInicio: startDateInput || null,
+				fechaFinal: endDateInput || null
+			},
+			beforeSend: function () {
+				$('#BtnFiltroPedidos').html(`<div class="spinner-border  text-light" >
+	  <span class="visually-hidden">Loading...</span>
+	</div>`);
+			},
+			success: function (data) {
+				var carContainer = document.getElementById('contenedorListaPedidos');
+				carContainer.innerHTML = '';
+
+				data.forEach(function (item) {
+					var newCard = `
+						<div class="col-sm-12 col-md-6 col-lg-4">
+						<div class="card border-0 shadow-sm hover-lift">
+						<div class="card-header ${GetHeaderColor(item.estado.estadoSolicitud)} text-white d-flex justify-content-between align-items-center">
+						<h5 class="card-title mb-0">Pedido #${item.idPedido}</h5>
+						<a asp-action="ExportPedido" asp-route-IdPedido="${item.idPedido}" class="btn btn-link text-white p-0">
+							<i class="bi bi-cloud-arrow-down-fill fs-4"></i>
+						</a>
+						</div>
+						<div class="card-body">
+						<div class="mb-3">
+							<h6 class="text-muted small text-uppercase">Información de Pedido</h6>
+							<p class="mb-0 text-dark"><strong>Nombre:</strong> ${item.usuarioCreacion.nombre} ${item.usuarioCreacion.primerApellido} ${item.usuarioCreacion.segundoApellido} </p>
+						</div>
+						<div class="mb-3">
+							<h6 class="text-muted small text-uppercase">Detalles del Pedido</h6>
+							<div class="list-group list-group-flush">
+							<div class="list-group-item d-flex justify-content-between px-0">
+								<span class="text-muted">Sucursal</span>
+								<strong>${item.sucursal.nombreSucursal}</strong>
+						</div>
+						<div class="list-group-item d-flex justify-content-between px-0">
+							<span class="text-muted">Fecha de Pedido</span>
+							<strong>${formatDate(item.fechaPedido)}</strong>
+						</div>
+						<div class="list-group-item d-flex justify-content-between px-0">
+						<span class="text-muted">Fecha de Entrega</span>
+						<strong>${formatDate(item.fechaEntrega)}</strong>
+						</div>
+						<div class="list-group-item d-flex justify-content-between px-0">
+						<span class="text-muted">Estado</span>
+							<span class="badge ${GetBadgeColor(item.estado.estadoSolicitud)}">
+							${item.estado.estadoSolicitud}
+						</span>
+						</div>
+						</div>
+						</div>
+						</div>
+						<div class="card-footer bg-transparent border-0">
+						<div class="d-flex justify-content-between gap-2">
+						<a href="/Pedidos/Edit?IdPedido=${item.idPedido}" class="btn btn-sm btn-outline-warning flex-grow-1" onclick="showLoader()">
+						<i class="bi bi-pencil-square me-2"></i>Editar
+						</a>
+						<a href="/Pedidos/Details?IdPedido=${item.idPedido}" class="btn btn-sm btn-outline-info flex-grow-1" onclick="showLoader()">
+						<i class="bi bi-info-circle me-2"></i>Detalles
+						</a>
+						<a href="/Pedidos/Delete?IdPedido=${item.idPedido}" class="btn btn-sm btn-outline-danger flex-grow-1" onclick="showLoader()">
+						<i class="bi bi-trash me-2"></i>Eliminar
+						</a>
+						</div>
+						</div>
+						</div>
+						</div>`;
+
+					carContainer.innerHTML += newCard;
+				});
+			},
+			error: function (xhr, status, error) {
+				console.error('Error en la llamada:', error);
+				console.error('Respuesta del servidor:', xhr.responseText);
+			},
+			complete:function() {
+				$('#BtnFiltroPedidos').html(`<i class="bi bi-search" > </i>`);
+			}
+		})
+	}
+
+	// function exportarExcel() {
+	// 	var searchInput = document.getElementById('searchInput').value;
+	// 	var startDateInput = document.getElementById('startDateInput').value;
+	// 	var endDateInput = document.getElementById('endDateInput').value;
+
+	// 	$.ajax({
+	// 		type: function () { },
+	// 		data: {
+
+	// 		},
+	// 		xhr: {},
+	// 		beforeSend: function () { },
+	// 		success: function () { },
+	// 		error: function (
+	// 	});
+	// }
+
+</script>
